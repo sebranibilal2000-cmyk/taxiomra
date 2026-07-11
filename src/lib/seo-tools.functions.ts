@@ -44,7 +44,7 @@ export const runSeoAudit = createServerFn({ method: "GET" })
       .is("deleted_at", null);
     const { data: posts } = await supabase
       .from("blog_posts")
-      .select("id,slug,title_en,title_ar,meta_title,meta_description,cover_image,published");
+      .select("id,slug,title_en,title_ar,meta_title,meta_description,og_image_url,published");
 
     type Row = { entity: "cms_page" | "blog_post"; id: string; slug: string; label: string };
     const missingTitle: Row[] = [];
