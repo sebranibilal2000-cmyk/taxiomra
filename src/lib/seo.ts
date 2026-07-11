@@ -132,7 +132,8 @@ export function buildCmsHead(p: {
 }) {
   const title = p.meta_title || p.title_en;
   const desc = p.meta_description || p.subtitle_en || "";
-  const canonical = p.canonical_url || `/p/${p.slug}`;
+  // Canonical + og:url are emitted by the public layout (URL-aware). Only add
+  // page-specific meta here to avoid duplicate canonical/og:url tags.
   const meta: Array<Record<string, string>> = [
     { title },
     { name: "description", content: desc },
@@ -140,8 +141,9 @@ export function buildCmsHead(p: {
     { property: "og:title", content: p.og_title || title },
     { property: "og:description", content: p.og_description || desc },
     { property: "og:type", content: "website" },
-    { property: "og:url", content: canonical },
     { name: "twitter:card", content: p.twitter_card || "summary_large_image" },
+    { name: "twitter:title", content: p.og_title || title },
+    { name: "twitter:description", content: p.og_description || desc },
   ];
   if (p.keywords?.length) meta.push({ name: "keywords", content: p.keywords.join(", ") });
   if (p.og_image_url) meta.push({ property: "og:image", content: p.og_image_url }, { name: "twitter:image", content: p.og_image_url });
@@ -151,7 +153,7 @@ export function buildCmsHead(p: {
       type: "application/ld+json",
       children: JSON.stringify(
         p.schema_type === "Service"
-          ? serviceJsonLd({ name: title, description: desc, url: canonical })
+          ? serviceJsonLd({ name: title, description: desc, url: `/${p.slug}` })
           : p.schema_type === "FAQPage"
           ? { "@context": "https://schema.org", "@type": "FAQPage", name: title }
           : localBusinessJsonLd(),
@@ -161,7 +163,7 @@ export function buildCmsHead(p: {
   if (p.custom_schema && typeof p.custom_schema === "object") {
     scripts.push({ type: "application/ld+json", children: JSON.stringify(p.custom_schema) });
   }
-  return { meta, links: [{ rel: "canonical", href: canonical }], scripts };
+  return { meta, links: [] as Array<Record<string, string>>, scripts };
 }
 
 export const _loc = (l: Loc) => l;
