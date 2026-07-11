@@ -74,6 +74,7 @@ import { Route as AuthenticatedAdminCorporateRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminContactsRouteImport } from './routes/_authenticated/admin.contacts'
 import { Route as AuthenticatedAdminCitiesRouteImport } from './routes/_authenticated/admin.cities'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin.categories'
+import { Route as AuthenticatedAdminCalendarRouteImport } from './routes/_authenticated/admin.calendar'
 import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin.bookings'
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin.blog'
 import { Route as AuthenticatedAdminBackupRouteImport } from './routes/_authenticated/admin.backup'
@@ -467,6 +468,12 @@ const AuthenticatedAdminCategoriesRoute =
     path: '/admin/categories',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminCalendarRoute =
+  AuthenticatedAdminCalendarRouteImport.update({
+    id: '/admin/calendar',
+    path: '/admin/calendar',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminBookingsRoute =
   AuthenticatedAdminBookingsRouteImport.update({
     id: '/admin/bookings',
@@ -586,6 +593,7 @@ export interface FileRoutesByFullPath {
   '/admin/backup': typeof AuthenticatedAdminBackupRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRouteWithChildren
+  '/admin/calendar': typeof AuthenticatedAdminCalendarRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/cities': typeof AuthenticatedAdminCitiesRoute
   '/admin/contacts': typeof AuthenticatedAdminContactsRoute
@@ -670,6 +678,7 @@ export interface FileRoutesByTo {
   '/admin/backup': typeof AuthenticatedAdminBackupRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRouteWithChildren
+  '/admin/calendar': typeof AuthenticatedAdminCalendarRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/cities': typeof AuthenticatedAdminCitiesRoute
   '/admin/contacts': typeof AuthenticatedAdminContactsRoute
@@ -756,6 +765,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/backup': typeof AuthenticatedAdminBackupRoute
   '/_authenticated/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRouteWithChildren
+  '/_authenticated/admin/calendar': typeof AuthenticatedAdminCalendarRoute
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/_authenticated/admin/cities': typeof AuthenticatedAdminCitiesRoute
   '/_authenticated/admin/contacts': typeof AuthenticatedAdminContactsRoute
@@ -843,6 +853,7 @@ export interface FileRouteTypes {
     | '/admin/backup'
     | '/admin/blog'
     | '/admin/bookings'
+    | '/admin/calendar'
     | '/admin/categories'
     | '/admin/cities'
     | '/admin/contacts'
@@ -927,6 +938,7 @@ export interface FileRouteTypes {
     | '/admin/backup'
     | '/admin/blog'
     | '/admin/bookings'
+    | '/admin/calendar'
     | '/admin/categories'
     | '/admin/cities'
     | '/admin/contacts'
@@ -1012,6 +1024,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/backup'
     | '/_authenticated/admin/blog'
     | '/_authenticated/admin/bookings'
+    | '/_authenticated/admin/calendar'
     | '/_authenticated/admin/categories'
     | '/_authenticated/admin/cities'
     | '/_authenticated/admin/contacts'
@@ -1551,6 +1564,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/calendar': {
+      id: '/_authenticated/admin/calendar'
+      path: '/admin/calendar'
+      fullPath: '/admin/calendar'
+      preLoaderRoute: typeof AuthenticatedAdminCalendarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/bookings': {
       id: '/_authenticated/admin/bookings'
       path: '/admin/bookings'
@@ -1758,6 +1778,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminBackupRoute: typeof AuthenticatedAdminBackupRoute
   AuthenticatedAdminBlogRoute: typeof AuthenticatedAdminBlogRoute
   AuthenticatedAdminBookingsRoute: typeof AuthenticatedAdminBookingsRouteWithChildren
+  AuthenticatedAdminCalendarRoute: typeof AuthenticatedAdminCalendarRoute
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
   AuthenticatedAdminCitiesRoute: typeof AuthenticatedAdminCitiesRoute
   AuthenticatedAdminContactsRoute: typeof AuthenticatedAdminContactsRoute
@@ -1813,6 +1834,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminBackupRoute: AuthenticatedAdminBackupRoute,
   AuthenticatedAdminBlogRoute: AuthenticatedAdminBlogRoute,
   AuthenticatedAdminBookingsRoute: AuthenticatedAdminBookingsRouteWithChildren,
+  AuthenticatedAdminCalendarRoute: AuthenticatedAdminCalendarRoute,
   AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
   AuthenticatedAdminCitiesRoute: AuthenticatedAdminCitiesRoute,
   AuthenticatedAdminContactsRoute: AuthenticatedAdminContactsRoute,
