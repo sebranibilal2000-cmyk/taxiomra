@@ -598,18 +598,133 @@ export type Database = {
           },
         ]
       }
-      drivers: {
+      driver_documents: {
         Row: {
           created_at: string
+          created_by: string | null
+          document_number: string | null
+          driver_id: string
+          expires_on: string | null
+          file_path: string | null
+          id: string
+          issued_on: string | null
+          kind: Database["public"]["Enums"]["driver_doc_kind"]
+          notes: string | null
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          document_number?: string | null
+          driver_id: string
+          expires_on?: string | null
+          file_path?: string | null
+          id?: string
+          issued_on?: string | null
+          kind: Database["public"]["Enums"]["driver_doc_kind"]
+          notes?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          document_number?: string | null
+          driver_id?: string
+          expires_on?: string | null
+          file_path?: string | null
+          id?: string
+          issued_on?: string | null
+          kind?: Database["public"]["Enums"]["driver_doc_kind"]
+          notes?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "driver_documents_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "drivers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      driver_vehicle_assignments: {
+        Row: {
+          assigned_by: string | null
+          created_at: string
+          driver_id: string
+          ended_at: string | null
+          id: string
+          notes: string | null
+          started_at: string
+          vehicle_id: string
+        }
+        Insert: {
+          assigned_by?: string | null
+          created_at?: string
+          driver_id: string
+          ended_at?: string | null
+          id?: string
+          notes?: string | null
+          started_at?: string
+          vehicle_id: string
+        }
+        Update: {
+          assigned_by?: string | null
+          created_at?: string
+          driver_id?: string
+          ended_at?: string | null
+          id?: string
+          notes?: string | null
+          started_at?: string
+          vehicle_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "driver_vehicle_assignments_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "drivers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "driver_vehicle_assignments_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      drivers: {
+        Row: {
+          address: string | null
+          avg_rating: number | null
+          cancelled_trips: number
+          completed_trips: number
+          created_at: string
           email: string | null
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
+          employment_status: Database["public"]["Enums"]["employment_status"]
           full_name: string
           hired_at: string | null
           id: string
+          insurance_expiry: string | null
           is_active: boolean
+          languages: string[]
+          license_class: string | null
           license_expiry: string | null
           license_number: string | null
+          medical_expiry: string | null
+          national_id: string | null
+          no_show_trips: number
           notes: string | null
           phone: string | null
+          photo_url: string | null
           rating: number | null
           status: Database["public"]["Enums"]["driver_status"]
           total_earnings: number
@@ -617,18 +732,34 @@ export type Database = {
           updated_at: string
           user_id: string | null
           vehicle_id: string | null
+          whatsapp: string | null
+          work_permit_expiry: string | null
         }
         Insert: {
+          address?: string | null
+          avg_rating?: number | null
+          cancelled_trips?: number
+          completed_trips?: number
           created_at?: string
           email?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          employment_status?: Database["public"]["Enums"]["employment_status"]
           full_name: string
           hired_at?: string | null
           id?: string
+          insurance_expiry?: string | null
           is_active?: boolean
+          languages?: string[]
+          license_class?: string | null
           license_expiry?: string | null
           license_number?: string | null
+          medical_expiry?: string | null
+          national_id?: string | null
+          no_show_trips?: number
           notes?: string | null
           phone?: string | null
+          photo_url?: string | null
           rating?: number | null
           status?: Database["public"]["Enums"]["driver_status"]
           total_earnings?: number
@@ -636,18 +767,34 @@ export type Database = {
           updated_at?: string
           user_id?: string | null
           vehicle_id?: string | null
+          whatsapp?: string | null
+          work_permit_expiry?: string | null
         }
         Update: {
+          address?: string | null
+          avg_rating?: number | null
+          cancelled_trips?: number
+          completed_trips?: number
           created_at?: string
           email?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          employment_status?: Database["public"]["Enums"]["employment_status"]
           full_name?: string
           hired_at?: string | null
           id?: string
+          insurance_expiry?: string | null
           is_active?: boolean
+          languages?: string[]
+          license_class?: string | null
           license_expiry?: string | null
           license_number?: string | null
+          medical_expiry?: string | null
+          national_id?: string | null
+          no_show_trips?: number
           notes?: string | null
           phone?: string | null
+          photo_url?: string | null
           rating?: number | null
           status?: Database["public"]["Enums"]["driver_status"]
           total_earnings?: number
@@ -655,6 +802,8 @@ export type Database = {
           updated_at?: string
           user_id?: string | null
           vehicle_id?: string | null
+          whatsapp?: string | null
+          work_permit_expiry?: string | null
         }
         Relationships: [
           {
@@ -1127,53 +1276,201 @@ export type Database = {
           },
         ]
       }
+      vehicle_documents: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          document_number: string | null
+          expires_on: string | null
+          file_path: string | null
+          id: string
+          issued_on: string | null
+          kind: Database["public"]["Enums"]["vehicle_doc_kind"]
+          notes: string | null
+          title: string | null
+          updated_at: string
+          vehicle_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          document_number?: string | null
+          expires_on?: string | null
+          file_path?: string | null
+          id?: string
+          issued_on?: string | null
+          kind: Database["public"]["Enums"]["vehicle_doc_kind"]
+          notes?: string | null
+          title?: string | null
+          updated_at?: string
+          vehicle_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          document_number?: string | null
+          expires_on?: string | null
+          file_path?: string | null
+          id?: string
+          issued_on?: string | null
+          kind?: Database["public"]["Enums"]["vehicle_doc_kind"]
+          notes?: string | null
+          title?: string | null
+          updated_at?: string
+          vehicle_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_documents_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vehicle_maintenance: {
+        Row: {
+          cost: number
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          kind: Database["public"]["Enums"]["maintenance_kind"]
+          mileage: number | null
+          next_due_date: string | null
+          next_due_mileage: number | null
+          notes: string | null
+          service_date: string
+          updated_at: string
+          vehicle_id: string
+          vendor: string | null
+        }
+        Insert: {
+          cost?: number
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          kind: Database["public"]["Enums"]["maintenance_kind"]
+          mileage?: number | null
+          next_due_date?: string | null
+          next_due_mileage?: number | null
+          notes?: string | null
+          service_date?: string
+          updated_at?: string
+          vehicle_id: string
+          vendor?: string | null
+        }
+        Update: {
+          cost?: number
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          kind?: Database["public"]["Enums"]["maintenance_kind"]
+          mileage?: number | null
+          next_due_date?: string | null
+          next_due_mileage?: number | null
+          notes?: string | null
+          service_date?: string
+          updated_at?: string
+          vehicle_id?: string
+          vendor?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_maintenance_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       vehicles: {
         Row: {
           category_id: string | null
           color: string | null
           created_at: string
+          current_mileage: number
+          fuel_type: string | null
           id: string
+          inspection_expiry: string | null
+          insurance_expiry: string | null
+          internal_code: string | null
           last_maintenance_date: string | null
+          luggage_capacity: number
           make: string | null
           model: string | null
           next_maintenance_date: string | null
+          next_maintenance_mileage: number | null
           notes: string | null
           plate_number: string
+          registration_expiry: string | null
+          road_tax_expiry: string | null
           seats: number
           status: Database["public"]["Enums"]["vehicle_status"]
+          taxi_permit_expiry: string | null
+          transmission: string | null
           updated_at: string
+          vin: string | null
           year: number | null
         }
         Insert: {
           category_id?: string | null
           color?: string | null
           created_at?: string
+          current_mileage?: number
+          fuel_type?: string | null
           id?: string
+          inspection_expiry?: string | null
+          insurance_expiry?: string | null
+          internal_code?: string | null
           last_maintenance_date?: string | null
+          luggage_capacity?: number
           make?: string | null
           model?: string | null
           next_maintenance_date?: string | null
+          next_maintenance_mileage?: number | null
           notes?: string | null
           plate_number: string
+          registration_expiry?: string | null
+          road_tax_expiry?: string | null
           seats?: number
           status?: Database["public"]["Enums"]["vehicle_status"]
+          taxi_permit_expiry?: string | null
+          transmission?: string | null
           updated_at?: string
+          vin?: string | null
           year?: number | null
         }
         Update: {
           category_id?: string | null
           color?: string | null
           created_at?: string
+          current_mileage?: number
+          fuel_type?: string | null
           id?: string
+          inspection_expiry?: string | null
+          insurance_expiry?: string | null
+          internal_code?: string | null
           last_maintenance_date?: string | null
+          luggage_capacity?: number
           make?: string | null
           model?: string | null
           next_maintenance_date?: string | null
+          next_maintenance_mileage?: number | null
           notes?: string | null
           plate_number?: string
+          registration_expiry?: string | null
+          road_tax_expiry?: string | null
           seats?: number
           status?: Database["public"]["Enums"]["vehicle_status"]
+          taxi_permit_expiry?: string | null
+          transmission?: string | null
           updated_at?: string
+          vin?: string | null
           year?: number | null
         }
         Relationships: [
@@ -1201,6 +1498,10 @@ export type Database = {
       is_staff: { Args: { _user_id: string }; Returns: boolean }
       recompute_customer_stats: {
         Args: { _customer_id: string }
+        Returns: undefined
+      }
+      recompute_driver_stats: {
+        Args: { _driver_id: string }
         Returns: undefined
       }
     }
@@ -1231,15 +1532,56 @@ export type Database = {
         | "compliment"
         | "follow_up"
       customer_tier: "regular" | "vip" | "corporate" | "blacklisted"
+      driver_doc_kind:
+        | "license"
+        | "national_id"
+        | "medical"
+        | "work_permit"
+        | "insurance"
+        | "other"
       driver_status:
         | "offline"
         | "available"
         | "on_trip"
         | "on_break"
         | "suspended"
+        | "assigned"
+        | "en_route"
+        | "waiting"
+        | "vacation"
+      employment_status:
+        | "active"
+        | "probation"
+        | "suspended"
+        | "terminated"
+        | "vacation"
+      maintenance_kind:
+        | "oil_change"
+        | "tire"
+        | "brake"
+        | "battery"
+        | "inspection"
+        | "general"
+        | "repair"
+        | "other"
       payment_method: "cash" | "card" | "wallet" | "bank_transfer"
       payment_status: "pending" | "paid" | "failed" | "refunded"
-      vehicle_status: "active" | "maintenance" | "retired"
+      vehicle_doc_kind:
+        | "registration"
+        | "insurance"
+        | "inspection"
+        | "taxi_permit"
+        | "road_tax"
+        | "other"
+      vehicle_status:
+        | "active"
+        | "maintenance"
+        | "retired"
+        | "available"
+        | "assigned"
+        | "on_trip"
+        | "out_of_service"
+        | "reserved"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1396,16 +1738,62 @@ export const Constants = {
         "follow_up",
       ],
       customer_tier: ["regular", "vip", "corporate", "blacklisted"],
+      driver_doc_kind: [
+        "license",
+        "national_id",
+        "medical",
+        "work_permit",
+        "insurance",
+        "other",
+      ],
       driver_status: [
         "offline",
         "available",
         "on_trip",
         "on_break",
         "suspended",
+        "assigned",
+        "en_route",
+        "waiting",
+        "vacation",
+      ],
+      employment_status: [
+        "active",
+        "probation",
+        "suspended",
+        "terminated",
+        "vacation",
+      ],
+      maintenance_kind: [
+        "oil_change",
+        "tire",
+        "brake",
+        "battery",
+        "inspection",
+        "general",
+        "repair",
+        "other",
       ],
       payment_method: ["cash", "card", "wallet", "bank_transfer"],
       payment_status: ["pending", "paid", "failed", "refunded"],
-      vehicle_status: ["active", "maintenance", "retired"],
+      vehicle_doc_kind: [
+        "registration",
+        "insurance",
+        "inspection",
+        "taxi_permit",
+        "road_tax",
+        "other",
+      ],
+      vehicle_status: [
+        "active",
+        "maintenance",
+        "retired",
+        "available",
+        "assigned",
+        "on_trip",
+        "out_of_service",
+        "reserved",
+      ],
     },
   },
 } as const
