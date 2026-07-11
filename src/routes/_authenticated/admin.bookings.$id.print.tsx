@@ -76,7 +76,7 @@ function PrintBooking() {
       {b.notes && <div className="mt-6 border-t pt-3 text-xs"><strong>Notes:</strong> {b.notes}</div>}
 
       <div className="mt-10 text-center text-xs text-neutral-500">
-        {SITE.brand} · {SITE.phone} · {SITE.website}
+        {SITE.brand.en} · {SITE.phone} · {SITE.email}
       </div>
 
       <div className="no-print mt-6 text-center">
