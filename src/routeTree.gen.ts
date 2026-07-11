@@ -82,6 +82,7 @@ import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin.analytics'
 import { Route as AuthenticatedAdminAirportsRouteImport } from './routes/_authenticated/admin.airports'
 import { Route as AuthenticatedAdminAiAssistantRouteImport } from './routes/_authenticated/admin.ai-assistant'
+import { Route as ApiPublicHooksProcessQueuesRouteImport } from './routes/api/public/hooks/process-queues'
 import { Route as PublicChar123LocaleChar125ServicesSlugRouteImport } from './routes/_public.{-$locale}.services.$slug'
 import { Route as PublicChar123LocaleChar125RoutesSlugRouteImport } from './routes/_public.{-$locale}.routes.$slug'
 import { Route as PublicChar123LocaleChar125PSlugRouteImport } from './routes/_public.{-$locale}.p.$slug'
@@ -515,6 +516,12 @@ const AuthenticatedAdminAiAssistantRoute =
     path: '/admin/ai-assistant',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicHooksProcessQueuesRoute =
+  ApiPublicHooksProcessQueuesRouteImport.update({
+    id: '/api/public/hooks/process-queues',
+    path: '/api/public/hooks/process-queues',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const PublicChar123LocaleChar125ServicesSlugRoute =
   PublicChar123LocaleChar125ServicesSlugRouteImport.update({
     id: '/$slug',
@@ -673,6 +680,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
+  '/api/public/hooks/process-queues': typeof ApiPublicHooksProcessQueuesRoute
   '/admin/bookings/$id/print': typeof AuthenticatedAdminBookingsIdPrintRoute
 }
 export interface FileRoutesByTo {
@@ -759,6 +767,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
+  '/api/public/hooks/process-queues': typeof ApiPublicHooksProcessQueuesRoute
   '/admin/bookings/$id/print': typeof AuthenticatedAdminBookingsIdPrintRoute
 }
 export interface FileRoutesById {
@@ -847,6 +856,7 @@ export interface FileRoutesById {
   '/_public/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/_public/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/_public/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
+  '/api/public/hooks/process-queues': typeof ApiPublicHooksProcessQueuesRoute
   '/_authenticated/admin/bookings/$id/print': typeof AuthenticatedAdminBookingsIdPrintRoute
 }
 export interface FileRouteTypes {
@@ -936,6 +946,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/p/$slug'
     | '/{-$locale}/routes/$slug'
     | '/{-$locale}/services/$slug'
+    | '/api/public/hooks/process-queues'
     | '/admin/bookings/$id/print'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -1022,6 +1033,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/p/$slug'
     | '/{-$locale}/routes/$slug'
     | '/{-$locale}/services/$slug'
+    | '/api/public/hooks/process-queues'
     | '/admin/bookings/$id/print'
   id:
     | '__root__'
@@ -1109,6 +1121,7 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/p/$slug'
     | '/_public/{-$locale}/routes/$slug'
     | '/_public/{-$locale}/services/$slug'
+    | '/api/public/hooks/process-queues'
     | '/_authenticated/admin/bookings/$id/print'
   fileRoutesById: FileRoutesById
 }
@@ -1118,6 +1131,7 @@ export interface RootRouteChildren {
   SitemapImagesDotxmlRoute: typeof SitemapImagesDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   PublicChar123LocaleChar125Route: typeof PublicChar123LocaleChar125RouteWithChildren
+  ApiPublicHooksProcessQueuesRoute: typeof ApiPublicHooksProcessQueuesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1633,6 +1647,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAiAssistantRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/hooks/process-queues': {
+      id: '/api/public/hooks/process-queues'
+      path: '/api/public/hooks/process-queues'
+      fullPath: '/api/public/hooks/process-queues'
+      preLoaderRoute: typeof ApiPublicHooksProcessQueuesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_public/{-$locale}/services/$slug': {
       id: '/_public/{-$locale}/services/$slug'
       path: '/$slug'
@@ -2023,6 +2044,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapImagesDotxmlRoute: SitemapImagesDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   PublicChar123LocaleChar125Route: PublicChar123LocaleChar125RouteWithChildren,
+  ApiPublicHooksProcessQueuesRoute: ApiPublicHooksProcessQueuesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
