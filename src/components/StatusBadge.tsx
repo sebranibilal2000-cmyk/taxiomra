@@ -32,8 +32,15 @@ const map: Record<string, { label: string; variant: any; className?: string }> =
   terminated: { label: "Terminated", variant: "destructive" },
   // Payment
   paid: { label: "Paid", variant: "secondary", className: "bg-success/20 text-success border-success/30" },
-  refunded: { label: "Refunded", variant: "secondary" },
+  partially_paid: { label: "Partially paid", variant: "secondary", className: "bg-warning/20 text-warning-foreground border-warning/30" },
+  refunded: { label: "Refunded", variant: "secondary", className: "bg-chart-3/20 text-chart-3 border-chart-3/30" },
   failed: { label: "Failed", variant: "destructive" },
+  // Invoice
+  draft: { label: "Draft", variant: "secondary" },
+  issued: { label: "Issued", variant: "secondary", className: "bg-chart-2/15 text-chart-2 border-chart-2/30" },
+  overdue: { label: "Overdue", variant: "destructive" },
+  // Payroll
+  approved: { label: "Approved", variant: "secondary", className: "bg-chart-2/15 text-chart-2 border-chart-2/30" },
 };
 
 export function StatusBadge({ value }: { value: string | null | undefined }) {
