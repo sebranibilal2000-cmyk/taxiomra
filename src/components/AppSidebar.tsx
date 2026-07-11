@@ -5,6 +5,7 @@ import {
   FileText, HelpCircle, Newspaper, Globe, Radio, Wrench, GaugeCircle,
   PieChart, Receipt, Building2, Undo2, Wallet, Briefcase,
   Sparkles, Image as ImageIcon2, Megaphone, Handshake, Inbox, LayoutTemplate,
+  Bot, MessageCircle,
 } from "lucide-react";
 
 import {
@@ -61,6 +62,10 @@ export function AppSidebar() {
       { title: "Promotions", url: "/admin/promotions", icon: Megaphone },
       { title: "Partners", url: "/admin/partners", icon: Handshake },
       { title: "Contact Inbox", url: "/admin/contacts", icon: Inbox },
+    ]},
+    { label: locale === "ar" ? "الذكاء الاصطناعي" : "Intelligence", items: [
+      { title: locale === "ar" ? "المساعد الذكي" : "AI Assistant", url: "/admin/ai-assistant", icon: Bot },
+      { title: locale === "ar" ? "قوالب واتساب" : "WhatsApp Templates", url: "/admin/whatsapp-templates", icon: MessageCircle },
     ]},
     { label: t("system"), items: [
       { title: t("notifications"), url: "/admin/notifications", icon: Bell },
