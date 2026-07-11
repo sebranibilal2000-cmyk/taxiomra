@@ -10,7 +10,7 @@ import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
 
-export const Route = createFileRoute("/_authenticated/settings")({ component: Settings });
+export const Route = createFileRoute("/_authenticated/admin/settings")({ component: Settings });
 
 function Settings() {
   const { t, locale } = useI18n();

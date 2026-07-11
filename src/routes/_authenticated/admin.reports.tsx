@@ -9,7 +9,7 @@ import { useI18n } from "@/lib/i18n";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-export const Route = createFileRoute("/_authenticated/reports")({ component: Reports });
+export const Route = createFileRoute("/_authenticated/admin/reports")({ component: Reports });
 
 function Reports() {
   const { t, locale } = useI18n();

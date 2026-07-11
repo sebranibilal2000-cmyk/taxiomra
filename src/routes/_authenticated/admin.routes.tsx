@@ -13,7 +13,7 @@ import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
 
-export const Route = createFileRoute("/_authenticated/routes")({ component: RoutesPage });
+export const Route = createFileRoute("/_authenticated/admin/routes")({ component: RoutesPage });
 
 function RoutesPage() {
   const { t } = useI18n();

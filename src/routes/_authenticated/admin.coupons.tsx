@@ -14,7 +14,7 @@ import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
 
-export const Route = createFileRoute("/_authenticated/coupons")({ component: Coupons });
+export const Route = createFileRoute("/_authenticated/admin/coupons")({ component: Coupons });
 
 function Coupons() {
   const { t } = useI18n();

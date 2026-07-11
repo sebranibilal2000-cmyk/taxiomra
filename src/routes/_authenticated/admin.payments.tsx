@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/payments")({ component: Payments });
+export const Route = createFileRoute("/_authenticated/admin/payments")({ component: Payments });
 
 function Payments() {
   const { t } = useI18n();

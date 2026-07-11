@@ -8,7 +8,7 @@ import { useI18n } from "@/lib/i18n";
 
 const ROLES = ["admin", "manager", "dispatcher", "accountant", "driver"];
 
-export const Route = createFileRoute("/_authenticated/roles")({ component: Roles });
+export const Route = createFileRoute("/_authenticated/admin/roles")({ component: Roles });
 
 function Roles() {
   const { t, locale } = useI18n();
