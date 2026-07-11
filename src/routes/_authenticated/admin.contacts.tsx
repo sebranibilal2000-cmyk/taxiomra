@@ -4,13 +4,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { PageHeader } from "@/components/PageHeader";
 import { DataTable, type Column } from "@/components/DataTable";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Mail, Phone, Trash2, ExternalLink } from "lucide-react";
+import { Mail, Phone, Trash2, ExternalLink, Download, Search } from "lucide-react";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { WhatsAppSendMenu } from "@/components/WhatsAppSendMenu";
+import { downloadCsv } from "@/lib/csv";
 
 export const Route = createFileRoute("/_authenticated/admin/contacts")({ component: ContactsAdmin });
 
@@ -18,11 +21,18 @@ const STATUSES = ["new", "in_progress", "converted", "closed", "spam"] as const;
 
 function ContactsAdmin() {
   const qc = useQueryClient();
+  const [selected, setSelected] = useState<any>(null);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+
   const q = useQuery({
     queryKey: ["contacts-admin"],
     queryFn: async () => (await supabase.from("contact_submissions").select("*").order("created_at", { ascending: false })).data ?? [],
   });
-  const [selected, setSelected] = useState<any>(null);
+  const staff = useQuery({
+    queryKey: ["staff-lookup"],
+    queryFn: async () => (await supabase.from("profiles").select("id, full_name, email").order("full_name")).data ?? [],
+  });
 
   const updateOne = async (id: string, patch: Record<string, any>) => {
     const { error } = await supabase.from("contact_submissions").update({ ...patch, handled_at: new Date().toISOString() } as any).eq("id", id);
@@ -35,6 +45,26 @@ function ContactsAdmin() {
     const { error } = await supabase.from("contact_submissions").delete().eq("id", id);
     if (error) return toast.error(error.message);
     qc.invalidateQueries({ queryKey: ["contacts-admin"] });
+  };
+
+  const filtered = useMemo(() => {
+    const rows = q.data ?? [];
+    const s = search.trim().toLowerCase();
+    return rows.filter((r: any) => {
+      if (statusFilter !== "all" && r.status !== statusFilter) return false;
+      if (!s) return true;
+      return [r.name, r.email, r.phone, r.subject, r.message].filter(Boolean).some((v: string) => v.toLowerCase().includes(s));
+    });
+  }, [q.data, search, statusFilter]);
+
+  const exportCsv = () => {
+    downloadCsv(`contacts-${new Date().toISOString().slice(0, 10)}.csv`,
+      filtered.map((r: any) => ({
+        created_at: r.created_at, name: r.name, email: r.email, phone: r.phone,
+        subject: r.subject, message: r.message, status: r.status,
+        source: r.source, page_url: r.page_url, notes: r.notes,
+      })));
+    toast.success(`Exported ${filtered.length} rows`);
   };
 
   const badge = (s: string) => {
@@ -61,6 +91,10 @@ function ContactsAdmin() {
     ) },
     { key: "msg", header: "Message", render: (r) => <span className="text-sm line-clamp-2 max-w-md">{r.message}</span> },
     { key: "status", header: "Status", render: (r) => badge(r.status) },
+    { key: "assigned", header: "Assigned", render: (r) => {
+      const p = (staff.data ?? []).find((x: any) => x.id === r.assigned_to);
+      return <span className="text-xs">{p?.full_name ?? p?.email ?? "—"}</span>;
+    } },
     { key: "a", header: "", render: (r) => (
       <div className="flex gap-1">
         <Button size="icon" variant="ghost" onClick={() => setSelected(r)}><ExternalLink className="h-4 w-4" /></Button>
@@ -73,26 +107,35 @@ function ContactsAdmin() {
 
   return (
     <div>
-      <PageHeader title="Contact Submissions" description="Inbound messages from the public contact form — stored in CRM for follow-up." />
+      <PageHeader title="Contact Submissions" description="Inbound requests — assign to staff, reply on WhatsApp/email, and convert to bookings."
+        actions={<Button variant="outline" size="sm" onClick={exportCsv}><Download className="h-4 w-4 me-1" />CSV</Button>} />
+
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
         {counts.map((c) => (
-          <div key={c.s} className="rounded-2xl border border-border bg-card p-4">
+          <button key={c.s} onClick={() => setStatusFilter(statusFilter === c.s ? "all" : c.s)}
+            className={`rounded-2xl border p-4 text-start transition ${statusFilter === c.s ? "border-gold bg-gold/5" : "border-border bg-card"}`}>
             <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{c.s.replace("_", " ")}</div>
             <div className="font-display text-3xl mt-1">{c.n}</div>
-          </div>
+          </button>
         ))}
       </div>
-      <DataTable data={q.data ?? []} columns={cols} loading={q.isLoading} onRowClick={(r) => setSelected(r)} />
+
+      <div className="flex gap-2 mb-3">
+        <div className="relative">
+          <Search className="absolute start-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search…" className="ps-9 w-80" />
+        </div>
+        <div className="text-sm text-muted-foreground self-center">{filtered.length} of {(q.data ?? []).length}</div>
+      </div>
+
+      <DataTable data={filtered} columns={cols} loading={q.isLoading} onRowClick={(r) => setSelected(r)} />
 
       <Dialog open={!!selected} onOpenChange={(o) => !o && setSelected(null)}>
         <DialogContent className="max-w-xl">
           {selected && (
             <>
               <DialogHeader>
-                <DialogTitle className="flex items-center gap-3">
-                  {selected.name}
-                  {badge(selected.status)}
-                </DialogTitle>
+                <DialogTitle className="flex items-center gap-3">{selected.name}{badge(selected.status)}</DialogTitle>
               </DialogHeader>
               <div className="space-y-3 text-sm">
                 <div className="flex flex-wrap gap-4 text-muted-foreground">
@@ -101,20 +144,36 @@ function ContactsAdmin() {
                 </div>
                 {selected.page_url && <Badge variant="outline" className="text-xs">{selected.page_url}</Badge>}
                 <div className="rounded-lg border border-border bg-muted/30 p-4 whitespace-pre-line">{selected.message}</div>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="text-xs uppercase tracking-wider text-muted-foreground">Status</label>
+                    <Select defaultValue={selected.status} onValueChange={(v) => updateOne(selected.id, { status: v })}>
+                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{s.replace("_", " ")}</SelectItem>)}</SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <label className="text-xs uppercase tracking-wider text-muted-foreground">Assigned to</label>
+                    <Select defaultValue={selected.assigned_to ?? "unassigned"} onValueChange={(v) => updateOne(selected.id, { assigned_to: v === "unassigned" ? null : v })}>
+                      <SelectTrigger><SelectValue placeholder="—" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="unassigned">Unassigned</SelectItem>
+                        {(staff.data ?? []).map((p: any) => <SelectItem key={p.id} value={p.id}>{p.full_name ?? p.email}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
                 <div>
                   <label className="text-xs uppercase tracking-wider text-muted-foreground">Internal notes</label>
                   <Textarea defaultValue={selected.notes ?? ""} rows={3} onBlur={(e) => updateOne(selected.id, { notes: e.target.value })} />
                 </div>
-                <div>
-                  <label className="text-xs uppercase tracking-wider text-muted-foreground">Status</label>
-                  <Select defaultValue={selected.status} onValueChange={(v) => updateOne(selected.id, { status: v })}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{s.replace("_", " ")}</SelectItem>)}</SelectContent>
-                  </Select>
-                </div>
               </div>
-              <DialogFooter>
-                <Button asChild variant="outline"><a href={`https://wa.me/${(selected.phone || "").replace(/\D/g, "")}`} target="_blank" rel="noopener">Reply via WhatsApp</a></Button>
+              <DialogFooter className="flex-wrap gap-2">
+                <WhatsAppSendMenu phone={selected.phone} contactId={selected.id}
+                  vars={{ customer_name: selected.name, message: selected.message ?? "" }} />
+                {selected.email && <Button asChild variant="outline"><a href={`mailto:${selected.email}?subject=Re: ${encodeURIComponent(selected.subject ?? "your inquiry")}`}><Mail className="h-4 w-4 me-1" />Email reply</a></Button>}
               </DialogFooter>
             </>
           )}

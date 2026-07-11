@@ -267,12 +267,140 @@ export type Database = {
           },
         ]
       }
+      booking_attachments: {
+        Row: {
+          booking_id: string
+          created_at: string
+          file_name: string
+          file_size: number | null
+          file_url: string
+          id: string
+          mime_type: string | null
+          uploaded_by: string | null
+        }
+        Insert: {
+          booking_id: string
+          created_at?: string
+          file_name: string
+          file_size?: number | null
+          file_url: string
+          id?: string
+          mime_type?: string | null
+          uploaded_by?: string | null
+        }
+        Update: {
+          booking_id?: string
+          created_at?: string
+          file_name?: string
+          file_size?: number | null
+          file_url?: string
+          id?: string
+          mime_type?: string | null
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_attachments_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      booking_notes: {
+        Row: {
+          author_id: string | null
+          body: string
+          booking_id: string
+          created_at: string
+          id: string
+          pinned: boolean
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          body: string
+          booking_id: string
+          created_at?: string
+          id?: string
+          pinned?: boolean
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          body?: string
+          booking_id?: string
+          created_at?: string
+          id?: string
+          pinned?: boolean
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_notes_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      booking_reminders: {
+        Row: {
+          booking_id: string
+          channel: string
+          created_at: string
+          created_by: string | null
+          id: string
+          note: string | null
+          remind_at: string
+          sent_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          booking_id: string
+          channel?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          note?: string | null
+          remind_at: string
+          sent_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          booking_id?: string
+          channel?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          note?: string | null
+          remind_at?: string
+          sent_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_reminders_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bookings: {
         Row: {
           airport_fee: number
           assigned_at: string | null
           base_fare: number
+          cancellation_category: string | null
           cancellation_reason: string | null
+          cancelled_by: string | null
           category_id: string | null
           code: string
           completed_at: string | null
@@ -293,9 +421,13 @@ export type Database = {
           notes: string | null
           pickup_at: string
           pickup_location: string
+          priority_level: number
+          reminder_at: string | null
           route_id: string | null
+          source: string | null
           started_at: string | null
           status: Database["public"]["Enums"]["booking_status"]
+          tags: string[]
           time_fare: number
           total_fare: number
           updated_at: string
@@ -307,7 +439,9 @@ export type Database = {
           airport_fee?: number
           assigned_at?: string | null
           base_fare?: number
+          cancellation_category?: string | null
           cancellation_reason?: string | null
+          cancelled_by?: string | null
           category_id?: string | null
           code?: string
           completed_at?: string | null
@@ -328,9 +462,13 @@ export type Database = {
           notes?: string | null
           pickup_at?: string
           pickup_location: string
+          priority_level?: number
+          reminder_at?: string | null
           route_id?: string | null
+          source?: string | null
           started_at?: string | null
           status?: Database["public"]["Enums"]["booking_status"]
+          tags?: string[]
           time_fare?: number
           total_fare?: number
           updated_at?: string
@@ -342,7 +480,9 @@ export type Database = {
           airport_fee?: number
           assigned_at?: string | null
           base_fare?: number
+          cancellation_category?: string | null
           cancellation_reason?: string | null
+          cancelled_by?: string | null
           category_id?: string | null
           code?: string
           completed_at?: string | null
@@ -363,9 +503,13 @@ export type Database = {
           notes?: string | null
           pickup_at?: string
           pickup_location?: string
+          priority_level?: number
+          reminder_at?: string | null
           route_id?: string | null
+          source?: string | null
           started_at?: string | null
           status?: Database["public"]["Enums"]["booking_status"]
+          tags?: string[]
           time_fare?: number
           total_fare?: number
           updated_at?: string
@@ -552,6 +696,7 @@ export type Database = {
       }
       contact_submissions: {
         Row: {
+          assigned_to: string | null
           created_at: string
           customer_id: string | null
           email: string | null
@@ -565,12 +710,14 @@ export type Database = {
           page_url: string | null
           phone: string | null
           source: string | null
+          source_channel: string | null
           status: Database["public"]["Enums"]["contact_status"]
           subject: string | null
           updated_at: string
           user_agent: string | null
         }
         Insert: {
+          assigned_to?: string | null
           created_at?: string
           customer_id?: string | null
           email?: string | null
@@ -584,12 +731,14 @@ export type Database = {
           page_url?: string | null
           phone?: string | null
           source?: string | null
+          source_channel?: string | null
           status?: Database["public"]["Enums"]["contact_status"]
           subject?: string | null
           updated_at?: string
           user_agent?: string | null
         }
         Update: {
+          assigned_to?: string | null
           created_at?: string
           customer_id?: string | null
           email?: string | null
@@ -603,6 +752,7 @@ export type Database = {
           page_url?: string | null
           phone?: string | null
           source?: string | null
+          source_channel?: string | null
           status?: Database["public"]["Enums"]["contact_status"]
           subject?: string | null
           updated_at?: string
@@ -3098,6 +3248,77 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "vehicle_categories"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      whatsapp_messages: {
+        Row: {
+          body: string
+          booking_id: string | null
+          contact_id: string | null
+          created_at: string
+          customer_id: string | null
+          direction: string
+          id: string
+          locale: string
+          phone: string
+          sent_by: string | null
+          template_code: string | null
+        }
+        Insert: {
+          body: string
+          booking_id?: string | null
+          contact_id?: string | null
+          created_at?: string
+          customer_id?: string | null
+          direction?: string
+          id?: string
+          locale?: string
+          phone: string
+          sent_by?: string | null
+          template_code?: string | null
+        }
+        Update: {
+          body?: string
+          booking_id?: string | null
+          contact_id?: string | null
+          created_at?: string
+          customer_id?: string | null
+          direction?: string
+          id?: string
+          locale?: string
+          phone?: string
+          sent_by?: string | null
+          template_code?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_messages_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "whatsapp_messages_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contact_submissions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "whatsapp_messages_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "whatsapp_messages_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "v_customer_intelligence"
+            referencedColumns: ["customer_id"]
           },
         ]
       }
