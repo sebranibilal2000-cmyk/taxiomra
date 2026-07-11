@@ -23,6 +23,7 @@ export function AppSidebar() {
     { label: t("overview"), items: [{ title: t("dashboard"), url: "/admin/dashboard", icon: LayoutDashboard }] },
     { label: t("operations"), items: [
       { title: t("bookings"), url: "/admin/bookings", icon: CalendarCheck },
+      { title: locale === "ar" ? "مركز الإرسال" : "Dispatch", url: "/admin/dispatch", icon: Radio },
       { title: t("customers"), url: "/admin/customers", icon: Users },
       { title: t("drivers"), url: "/admin/drivers", icon: IdCard },
     ]},
