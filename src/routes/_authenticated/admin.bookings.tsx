@@ -11,23 +11,33 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, UserPlus2 } from "lucide-react";
+import { Plus, UserPlus2, Star, StarOff, ListTree } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
+import { ActivityTimeline } from "@/components/ActivityTimeline";
+import { Badge } from "@/components/ui/badge";
 
 export const Route = createFileRoute("/_authenticated/admin/bookings")({ component: BookingsPage });
+
+const BOOKING_STATUSES = ["pending", "confirmed", "assigned", "en_route", "on_trip", "picked_up", "completed", "cancelled", "no_show"] as const;
+const STATUS_LABELS: Record<string,string> = {
+  pending: "Pending", confirmed: "Confirmed", assigned: "Driver Assigned", en_route: "En Route",
+  on_trip: "On Trip", picked_up: "Picked Up", completed: "Completed", cancelled: "Cancelled", no_show: "No Show",
+};
 
 function BookingsPage() {
   const { t, locale } = useI18n();
   const qc = useQueryClient();
   const [open, setOpen] = useState(false);
+  const [detailId, setDetailId] = useState<string | null>(null);
 
   const bookings = useQuery({
     queryKey: ["bookings"],
     queryFn: async () => {
       const { data } = await supabase
         .from("bookings")
-        .select("id, code, status, total_fare, pickup_location, dropoff_location, pickup_at, distance_km, customer:customers(full_name), driver:drivers(full_name), category:vehicle_categories(code)")
+        .select("id, code, status, total_fare, pickup_location, dropoff_location, pickup_at, distance_km, is_priority, customer:customers(full_name), driver:drivers(full_name), category:vehicle_categories(code)")
+        .order("is_priority", { ascending: false })
         .order("created_at", { ascending: false });
       return data ?? [];
     },
@@ -37,8 +47,14 @@ function BookingsPage() {
   const customers = useQuery({ queryKey: ["cust-lookup"], queryFn: async () => (await supabase.from("customers").select("id, full_name, phone").order("full_name")).data ?? [] });
   const drivers = useQuery({ queryKey: ["drv-lookup"], queryFn: async () => (await supabase.from("drivers").select("id, full_name").eq("is_active", true).order("full_name")).data ?? [] });
 
+  const togglePriority = async (r: any) => {
+    const { error } = await supabase.from("bookings").update({ is_priority: !r.is_priority }).eq("id", r.id);
+    if (error) toast.error(error.message); else qc.invalidateQueries({ queryKey: ["bookings"] });
+  };
+
   const columns: Column<any>[] = [
-    { key: "code", header: t("code"), render: (r) => <span className="font-mono text-xs">{r.code}</span> },
+    { key: "priority", header: "", render: (r) => r.is_priority ? <Star className="h-4 w-4 fill-gold text-gold" /> : null },
+    { key: "code", header: t("code"), render: (r) => <button onClick={() => setDetailId(r.id)} className="font-mono text-xs hover:text-gold">{r.code}</button> },
     { key: "customer", header: t("customer"), render: (r) => r.customer?.full_name ?? "—" },
     { key: "driver", header: t("driver"), render: (r) => r.driver?.full_name ?? "—" },
     { key: "category", header: t("category"), render: (r) => r.category?.code ?? "—" },
@@ -67,23 +83,100 @@ function BookingsPage() {
       />
       <DataTable data={bookings.data ?? []} columns={columns} loading={bookings.isLoading}
         actions={(r) => (
-          <Select value={r.status} onValueChange={async (v) => {
-            const patch: any = { status: v };
-            if (v === "on_trip") patch.started_at = new Date().toISOString();
-            if (v === "completed") patch.completed_at = new Date().toISOString();
-            const { error } = await supabase.from("bookings").update(patch).eq("id", r.id);
-            if (error) toast.error(error.message); else { toast.success("Updated"); qc.invalidateQueries({ queryKey: ["bookings"] }); }
-          }}>
-            <SelectTrigger className="w-32 h-8"><SelectValue /></SelectTrigger>
-            <SelectContent>
-              {["pending", "assigned", "en_route", "on_trip", "completed", "cancelled", "no_show"].map((s) => (
-                <SelectItem key={s} value={s}>{s}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div className="flex items-center gap-1">
+            <Button variant="ghost" size="icon" className="h-8 w-8" title="Priority" onClick={() => togglePriority(r)}>
+              {r.is_priority ? <Star className="h-4 w-4 fill-gold text-gold" /> : <StarOff className="h-4 w-4" />}
+            </Button>
+            <Button variant="ghost" size="icon" className="h-8 w-8" title="Timeline" onClick={() => setDetailId(r.id)}>
+              <ListTree className="h-4 w-4" />
+            </Button>
+            <Select value={r.status} onValueChange={async (v) => {
+              const { error } = await supabase.from("bookings").update({ status: v as any }).eq("id", r.id);
+              if (error) toast.error(error.message); else { toast.success("Updated"); qc.invalidateQueries({ queryKey: ["bookings"] }); }
+            }}>
+              <SelectTrigger className="w-36 h-8"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                {BOOKING_STATUSES.map((s) => <SelectItem key={s} value={s}>{STATUS_LABELS[s]}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
         )}
       />
+
+      <BookingDetailDialog bookingId={detailId} onOpenChange={(o) => !o && setDetailId(null)} />
     </div>
+  );
+}
+
+function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | null; onOpenChange: (o: boolean) => void }) {
+  const qc = useQueryClient();
+  const q = useQuery({
+    queryKey: ["booking-detail", bookingId],
+    enabled: !!bookingId,
+    queryFn: async () => {
+      const { data } = await supabase.from("bookings")
+        .select("*, customer:customers(full_name, phone), driver:drivers(full_name, phone), vehicle:vehicles(plate_number, make, model), category:vehicle_categories(code)")
+        .eq("id", bookingId!).maybeSingle();
+      return data;
+    },
+  });
+  const b = q.data;
+
+  return (
+    <Dialog open={!!bookingId} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 font-display">
+            {b?.is_priority && <Star className="h-5 w-5 fill-gold text-gold" />}
+            Booking <span className="font-mono text-base">{b?.code}</span>
+            <StatusBadge value={b?.status} />
+          </DialogTitle>
+        </DialogHeader>
+        {b && (
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Customer</div><div>{b.customer?.full_name ?? "—"}</div><div className="text-xs text-muted-foreground">{b.customer?.phone}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Driver</div><div>{b.driver?.full_name ?? "—"}</div><div className="text-xs text-muted-foreground">{b.driver?.phone}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Pickup</div><div>{b.pickup_location}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Dropoff</div><div>{b.dropoff_location}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Vehicle</div><div>{b.vehicle ? `${b.vehicle.make} ${b.vehicle.model} · ${b.vehicle.plate_number}` : "—"}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Category</div><div>{b.category?.code ?? "—"}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Distance</div><div>{Number(b.distance_km || 0).toFixed(1)} km</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Total</div><div className="font-display text-lg">{Number(b.total_fare || 0).toFixed(2)}</div></div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Badge variant="outline">Created {new Date(b.created_at).toLocaleString()}</Badge>
+                {b.confirmed_at && <Badge variant="outline">Confirmed</Badge>}
+                {b.assigned_at && <Badge variant="outline">Assigned</Badge>}
+                {b.completed_at && <Badge variant="outline">Completed</Badge>}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Select value={b.status} onValueChange={async (v) => {
+                  const { error } = await supabase.from("bookings").update({ status: v as any }).eq("id", b.id);
+                  if (error) toast.error(error.message); else { toast.success("Status updated"); qc.invalidateQueries({ queryKey: ["bookings"] }); qc.invalidateQueries({ queryKey: ["booking-detail", b.id] }); qc.invalidateQueries({ queryKey: ["activity", "booking", b.id] }); }
+                }}>
+                  <SelectTrigger className="w-40 h-9"><SelectValue /></SelectTrigger>
+                  <SelectContent>{BOOKING_STATUSES.map((s) => <SelectItem key={s} value={s}>{STATUS_LABELS[s]}</SelectItem>)}</SelectContent>
+                </Select>
+                <Button variant="outline" size="sm" onClick={async () => {
+                  const { error } = await supabase.from("bookings").update({ is_priority: !b.is_priority }).eq("id", b.id);
+                  if (error) toast.error(error.message); else { qc.invalidateQueries({ queryKey: ["bookings"] }); qc.invalidateQueries({ queryKey: ["booking-detail", b.id] }); }
+                }}>
+                  {b.is_priority ? <><StarOff className="h-4 w-4 me-1"/>Remove priority</> : <><Star className="h-4 w-4 me-1"/>Mark priority</>}
+                </Button>
+              </div>
+              {b.notes && <div className="rounded-lg border border-border/60 p-3 text-sm bg-muted/30"><div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Notes</div>{b.notes}</div>}
+              {b.cancellation_reason && <div className="rounded-lg border border-destructive/40 p-3 text-sm bg-destructive/5"><div className="text-[10px] uppercase tracking-wider text-destructive mb-1">Cancellation reason</div>{b.cancellation_reason}</div>}
+            </div>
+            <div>
+              <div className="text-[10px] uppercase tracking-[0.22em] text-gold mb-2">Activity Timeline</div>
+              <ActivityTimeline entityType="booking" entityId={b.id} />
+            </div>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }
 

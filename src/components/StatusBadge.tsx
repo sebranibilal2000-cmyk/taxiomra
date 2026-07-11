@@ -1,8 +1,11 @@
 import { Badge } from "@/components/ui/badge";
 
 const map: Record<string, { label: string; variant: any; className?: string }> = {
+  new: { label: "New", variant: "secondary", className: "bg-muted text-foreground border-border" },
   pending: { label: "Pending", variant: "secondary", className: "bg-warning/20 text-warning-foreground border-warning/30" },
-  assigned: { label: "Assigned", variant: "secondary", className: "bg-chart-2/20 text-chart-2 border-chart-2/30" },
+  confirmed: { label: "Confirmed", variant: "secondary", className: "bg-chart-2/15 text-chart-2 border-chart-2/30" },
+  assigned: { label: "Driver Assigned", variant: "secondary", className: "bg-chart-2/20 text-chart-2 border-chart-2/30" },
+  picked_up: { label: "Picked Up", variant: "secondary", className: "bg-primary/25 text-primary border-primary/40" },
   en_route: { label: "En route", variant: "secondary", className: "bg-chart-2/20 text-chart-2 border-chart-2/30" },
   on_trip: { label: "On trip", variant: "secondary", className: "bg-primary/20 text-primary border-primary/30" },
   completed: { label: "Completed", variant: "secondary", className: "bg-success/20 text-success border-success/30" },
