@@ -20,7 +20,7 @@ function BackupPage() {
       const a = document.createElement("a");
       const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
       a.href = url;
-      a.download = `sur3a-backup-${stamp}.json`;
+      a.download = `jeddah-travels-backup-${stamp}.json`;
       document.body.appendChild(a);
       a.click();
       a.remove();

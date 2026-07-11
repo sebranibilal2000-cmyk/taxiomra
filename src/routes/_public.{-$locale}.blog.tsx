@@ -12,7 +12,7 @@ export const Route = createFileRoute("/_public/{-$locale}/blog")({
     meta: [
       { title: "Journal — Travel Tips, Airport Guides & Chauffeur Stories" },
       { name: "description", content: "Travel notes, airport guides, and industry insights from our chauffeur team." },
-      { property: "og:title", content: "The Journal — Sur3a Taxi" },
+      { property: "og:title", content: "The Journal — Jeddah Travels" },
       ],
     links: [],
   }),

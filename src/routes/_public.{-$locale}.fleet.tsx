@@ -24,7 +24,7 @@ export const Route = createFileRoute("/_public/{-$locale}/fleet")({
     meta: [
       { title: "Our Fleet — Executive Sedans, SUVs & Vans" },
       { name: "description", content: "A meticulously maintained fleet of executive sedans, SUVs and vans. Licensed chauffeurs, premium comfort." },
-      { property: "og:title", content: "The Fleet — Sur3a Taxi" },
+      { property: "og:title", content: "The Fleet — Jeddah Travels" },
       ],
     links: [],
   }),

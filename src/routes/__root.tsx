@@ -43,10 +43,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Sur3a Taxi — Luxury Chauffeur & Airport Transfers 24/7" },
+      { title: "Jeddah Travels — Luxury Chauffeur & Airport Transfers 24/7" },
       { name: "description", content: "Premium chauffeur service, airport transfers, and business travel. Book instantly via WhatsApp or phone — licensed drivers, fixed fares, 24/7." },
       { name: "theme-color", content: "#0d0d0d" },
-      { property: "og:title", content: "Sur3a Taxi — Luxury Chauffeur Service" },
+      { property: "og:title", content: "Jeddah Travels — Luxury Chauffeur Service" },
       { property: "og:description", content: "Premium airport transfers and business travel. Book via WhatsApp or phone, 24/7." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

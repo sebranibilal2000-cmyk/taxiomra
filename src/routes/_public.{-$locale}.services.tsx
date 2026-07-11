@@ -20,7 +20,7 @@ export const Route = createFileRoute("/_public/{-$locale}/services")({
     meta: [
       { title: "Services — Airport, Corporate & Private Chauffeur" },
       { name: "description", content: "Full range of chauffeur services: airport transfers, corporate contracts, hotel pickups, events, and private hourly hire." },
-      { property: "og:title", content: "Services — Sur3a Taxi" },
+      { property: "og:title", content: "Services — Jeddah Travels" },
       ],
     links: [],
   }),
