@@ -31,6 +31,7 @@ import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminServicesRouteImport } from './routes/_authenticated/admin.services'
 import { Route as AuthenticatedAdminRoutesRouteImport } from './routes/_authenticated/admin.routes'
+import { Route as AuthenticatedAdminRoutePagesRouteImport } from './routes/_authenticated/admin.route-pages'
 import { Route as AuthenticatedAdminRolesRouteImport } from './routes/_authenticated/admin.roles'
 import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin.reports'
 import { Route as AuthenticatedAdminRefundsRouteImport } from './routes/_authenticated/admin.refunds'
@@ -206,6 +207,12 @@ const AuthenticatedAdminRoutesRoute =
   AuthenticatedAdminRoutesRouteImport.update({
     id: '/admin/routes',
     path: '/admin/routes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminRoutePagesRoute =
+  AuthenticatedAdminRoutePagesRouteImport.update({
+    id: '/admin/route-pages',
+    path: '/admin/route-pages',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminRolesRoute = AuthenticatedAdminRolesRouteImport.update({
@@ -538,6 +545,7 @@ export interface FileRoutesByFullPath {
   '/admin/refunds': typeof AuthenticatedAdminRefundsRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/admin/roles': typeof AuthenticatedAdminRolesRoute
+  '/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
   '/admin/routes': typeof AuthenticatedAdminRoutesRoute
   '/admin/services': typeof AuthenticatedAdminServicesRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
@@ -610,6 +618,7 @@ export interface FileRoutesByTo {
   '/admin/refunds': typeof AuthenticatedAdminRefundsRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/admin/roles': typeof AuthenticatedAdminRolesRoute
+  '/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
   '/admin/routes': typeof AuthenticatedAdminRoutesRoute
   '/admin/services': typeof AuthenticatedAdminServicesRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
@@ -684,6 +693,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/refunds': typeof AuthenticatedAdminRefundsRoute
   '/_authenticated/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/_authenticated/admin/roles': typeof AuthenticatedAdminRolesRoute
+  '/_authenticated/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
   '/_authenticated/admin/routes': typeof AuthenticatedAdminRoutesRoute
   '/_authenticated/admin/services': typeof AuthenticatedAdminServicesRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
@@ -759,6 +769,7 @@ export interface FileRouteTypes {
     | '/admin/refunds'
     | '/admin/reports'
     | '/admin/roles'
+    | '/admin/route-pages'
     | '/admin/routes'
     | '/admin/services'
     | '/admin/settings'
@@ -831,6 +842,7 @@ export interface FileRouteTypes {
     | '/admin/refunds'
     | '/admin/reports'
     | '/admin/roles'
+    | '/admin/route-pages'
     | '/admin/routes'
     | '/admin/services'
     | '/admin/settings'
@@ -904,6 +916,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/refunds'
     | '/_authenticated/admin/reports'
     | '/_authenticated/admin/roles'
+    | '/_authenticated/admin/route-pages'
     | '/_authenticated/admin/routes'
     | '/_authenticated/admin/services'
     | '/_authenticated/admin/settings'
@@ -1096,6 +1109,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/routes'
       fullPath: '/admin/routes'
       preLoaderRoute: typeof AuthenticatedAdminRoutesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/route-pages': {
+      id: '/_authenticated/admin/route-pages'
+      path: '/admin/route-pages'
+      fullPath: '/admin/route-pages'
+      preLoaderRoute: typeof AuthenticatedAdminRoutePagesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/roles': {
@@ -1539,6 +1559,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRefundsRoute: typeof AuthenticatedAdminRefundsRoute
   AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRoute
   AuthenticatedAdminRolesRoute: typeof AuthenticatedAdminRolesRoute
+  AuthenticatedAdminRoutePagesRoute: typeof AuthenticatedAdminRoutePagesRoute
   AuthenticatedAdminRoutesRoute: typeof AuthenticatedAdminRoutesRoute
   AuthenticatedAdminServicesRoute: typeof AuthenticatedAdminServicesRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
@@ -1587,6 +1608,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRefundsRoute: AuthenticatedAdminRefundsRoute,
   AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRoute,
   AuthenticatedAdminRolesRoute: AuthenticatedAdminRolesRoute,
+  AuthenticatedAdminRoutePagesRoute: AuthenticatedAdminRoutePagesRoute,
   AuthenticatedAdminRoutesRoute: AuthenticatedAdminRoutesRoute,
   AuthenticatedAdminServicesRoute: AuthenticatedAdminServicesRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
