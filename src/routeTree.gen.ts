@@ -21,6 +21,7 @@ import { Route as PublicContactRouteImport } from './routes/_public.contact'
 import { Route as PublicBlogRouteImport } from './routes/_public.blog'
 import { Route as PublicAboutRouteImport } from './routes/_public.about'
 import { Route as PublicPSlugRouteImport } from './routes/_public.p.$slug'
+import { Route as PublicBlogSlugRouteImport } from './routes/_public.blog.$slug'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminRoutesRouteImport } from './routes/_authenticated/admin.routes'
@@ -95,6 +96,11 @@ const PublicPSlugRoute = PublicPSlugRouteImport.update({
   id: '/p/$slug',
   path: '/p/$slug',
   getParentRoute: () => PublicRoute,
+} as any)
+const PublicBlogSlugRoute = PublicBlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => PublicBlogRoute,
 } as any)
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   id: '/admin/users',
@@ -193,7 +199,7 @@ export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
   '/auth': typeof AuthRoute
   '/about': typeof PublicAboutRoute
-  '/blog': typeof PublicBlogRoute
+  '/blog': typeof PublicBlogRouteWithChildren
   '/contact': typeof PublicContactRoute
   '/faq': typeof PublicFaqRoute
   '/fleet': typeof PublicFleetRoute
@@ -215,13 +221,14 @@ export interface FileRoutesByFullPath {
   '/admin/routes': typeof AuthenticatedAdminRoutesRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/blog/$slug': typeof PublicBlogSlugRoute
   '/p/$slug': typeof PublicPSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
   '/auth': typeof AuthRoute
   '/about': typeof PublicAboutRoute
-  '/blog': typeof PublicBlogRoute
+  '/blog': typeof PublicBlogRouteWithChildren
   '/contact': typeof PublicContactRoute
   '/faq': typeof PublicFaqRoute
   '/fleet': typeof PublicFleetRoute
@@ -243,6 +250,7 @@ export interface FileRoutesByTo {
   '/admin/routes': typeof AuthenticatedAdminRoutesRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/blog/$slug': typeof PublicBlogSlugRoute
   '/p/$slug': typeof PublicPSlugRoute
 }
 export interface FileRoutesById {
@@ -251,7 +259,7 @@ export interface FileRoutesById {
   '/_public': typeof PublicRouteWithChildren
   '/auth': typeof AuthRoute
   '/_public/about': typeof PublicAboutRoute
-  '/_public/blog': typeof PublicBlogRoute
+  '/_public/blog': typeof PublicBlogRouteWithChildren
   '/_public/contact': typeof PublicContactRoute
   '/_public/faq': typeof PublicFaqRoute
   '/_public/fleet': typeof PublicFleetRoute
@@ -274,6 +282,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/routes': typeof AuthenticatedAdminRoutesRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_public/blog/$slug': typeof PublicBlogSlugRoute
   '/_public/p/$slug': typeof PublicPSlugRoute
 }
 export interface FileRouteTypes {
@@ -304,6 +313,7 @@ export interface FileRouteTypes {
     | '/admin/routes'
     | '/admin/settings'
     | '/admin/users'
+    | '/blog/$slug'
     | '/p/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -332,6 +342,7 @@ export interface FileRouteTypes {
     | '/admin/routes'
     | '/admin/settings'
     | '/admin/users'
+    | '/blog/$slug'
     | '/p/$slug'
   id:
     | '__root__'
@@ -362,6 +373,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/routes'
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/users'
+    | '/_public/blog/$slug'
     | '/_public/p/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -456,6 +468,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/p/$slug'
       preLoaderRoute: typeof PublicPSlugRouteImport
       parentRoute: typeof PublicRoute
+    }
+    '/_public/blog/$slug': {
+      id: '/_public/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof PublicBlogSlugRouteImport
+      parentRoute: typeof PublicBlogRoute
     }
     '/_authenticated/admin/users': {
       id: '/_authenticated/admin/users'
@@ -613,9 +632,21 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface PublicBlogRouteChildren {
+  PublicBlogSlugRoute: typeof PublicBlogSlugRoute
+}
+
+const PublicBlogRouteChildren: PublicBlogRouteChildren = {
+  PublicBlogSlugRoute: PublicBlogSlugRoute,
+}
+
+const PublicBlogRouteWithChildren = PublicBlogRoute._addFileChildren(
+  PublicBlogRouteChildren,
+)
+
 interface PublicRouteChildren {
   PublicAboutRoute: typeof PublicAboutRoute
-  PublicBlogRoute: typeof PublicBlogRoute
+  PublicBlogRoute: typeof PublicBlogRouteWithChildren
   PublicContactRoute: typeof PublicContactRoute
   PublicFaqRoute: typeof PublicFaqRoute
   PublicFleetRoute: typeof PublicFleetRoute
@@ -627,7 +658,7 @@ interface PublicRouteChildren {
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicAboutRoute: PublicAboutRoute,
-  PublicBlogRoute: PublicBlogRoute,
+  PublicBlogRoute: PublicBlogRouteWithChildren,
   PublicContactRoute: PublicContactRoute,
   PublicFaqRoute: PublicFaqRoute,
   PublicFleetRoute: PublicFleetRoute,

@@ -37,7 +37,7 @@ function Blog() {
           {data.map((p: any) => (
             <Link key={p.id} to="/blog/$slug" params={{ slug: p.slug }} className="group">
               <Card className="h-full overflow-hidden hover:shadow-lg transition">
-                {p.cover_image_url && <div className="aspect-[16/9] bg-muted overflow-hidden"><img src={p.cover_image_url} alt={ar ? p.title_ar : p.title_en} loading="lazy" className="h-full w-full object-cover group-hover:scale-105 transition" /></div>}
+                {p.cover_url && <div className="aspect-[16/9] bg-muted overflow-hidden"><img src={p.cover_url} alt={ar ? p.title_ar : p.title_en} loading="lazy" className="h-full w-full object-cover group-hover:scale-105 transition" /></div>}
                 <CardContent className="pt-5">
                   <h2 className="font-bold text-lg mb-2 line-clamp-2 group-hover:text-primary transition">{ar ? p.title_ar : p.title_en}</h2>
                   <p className="text-sm text-muted-foreground line-clamp-3">{ar ? p.excerpt_ar : p.excerpt_en}</p>
