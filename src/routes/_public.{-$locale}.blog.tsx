@@ -6,7 +6,7 @@ import { ArrowRight, Clock } from "lucide-react";
 
 const opts = () => queryOptions({ queryKey: ["public", "blog"], queryFn: () => listBlogPosts() });
 
-export const Route = createFileRoute("/_public/blog")({
+export const Route = createFileRoute("/_public/{-$locale}/blog")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
   head: () => ({
     meta: [

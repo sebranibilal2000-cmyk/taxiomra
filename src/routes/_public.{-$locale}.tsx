@@ -5,7 +5,7 @@ import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { CookieConsent } from "@/components/CookieConsent";
 import { SITE } from "@/lib/site-info";
 
-export const Route = createFileRoute("/_public")({
+export const Route = createFileRoute("/_public/{-$locale}")({
   component: PublicLayout,
   head: () => ({
     scripts: [

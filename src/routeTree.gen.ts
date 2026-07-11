@@ -11,23 +11,21 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as PublicRouteImport } from './routes/_public'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as PublicIndexRouteImport } from './routes/_public.index'
-import { Route as PublicTermsRouteImport } from './routes/_public.terms'
-import { Route as PublicServicesRouteImport } from './routes/_public.services'
-import { Route as PublicRefundRouteImport } from './routes/_public.refund'
-import { Route as PublicPrivacyRouteImport } from './routes/_public.privacy'
-import { Route as PublicPricingRouteImport } from './routes/_public.pricing'
-import { Route as PublicFleetRouteImport } from './routes/_public.fleet'
-import { Route as PublicFaqRouteImport } from './routes/_public.faq'
-import { Route as PublicContactRouteImport } from './routes/_public.contact'
-import { Route as PublicCancellationRouteImport } from './routes/_public.cancellation'
-import { Route as PublicBlogRouteImport } from './routes/_public.blog'
-import { Route as PublicAirportTransfersRouteImport } from './routes/_public.airport-transfers'
-import { Route as PublicAboutRouteImport } from './routes/_public.about'
-import { Route as PublicPSlugRouteImport } from './routes/_public.p.$slug'
-import { Route as PublicBlogSlugRouteImport } from './routes/_public.blog.$slug'
+import { Route as PublicChar123LocaleChar125RouteImport } from './routes/_public.{-$locale}'
+import { Route as PublicChar123LocaleChar125IndexRouteImport } from './routes/_public.{-$locale}.index'
+import { Route as PublicChar123LocaleChar125TermsRouteImport } from './routes/_public.{-$locale}.terms'
+import { Route as PublicChar123LocaleChar125ServicesRouteImport } from './routes/_public.{-$locale}.services'
+import { Route as PublicChar123LocaleChar125RefundRouteImport } from './routes/_public.{-$locale}.refund'
+import { Route as PublicChar123LocaleChar125PrivacyRouteImport } from './routes/_public.{-$locale}.privacy'
+import { Route as PublicChar123LocaleChar125PricingRouteImport } from './routes/_public.{-$locale}.pricing'
+import { Route as PublicChar123LocaleChar125FleetRouteImport } from './routes/_public.{-$locale}.fleet'
+import { Route as PublicChar123LocaleChar125FaqRouteImport } from './routes/_public.{-$locale}.faq'
+import { Route as PublicChar123LocaleChar125ContactRouteImport } from './routes/_public.{-$locale}.contact'
+import { Route as PublicChar123LocaleChar125CancellationRouteImport } from './routes/_public.{-$locale}.cancellation'
+import { Route as PublicChar123LocaleChar125BlogRouteImport } from './routes/_public.{-$locale}.blog'
+import { Route as PublicChar123LocaleChar125AirportTransfersRouteImport } from './routes/_public.{-$locale}.airport-transfers'
+import { Route as PublicChar123LocaleChar125AboutRouteImport } from './routes/_public.{-$locale}.about'
 import { Route as AuthenticatedAdminWhatsappTemplatesRouteImport } from './routes/_authenticated/admin.whatsapp-templates'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
@@ -68,6 +66,8 @@ import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authentica
 import { Route as AuthenticatedAdminBackupRouteImport } from './routes/_authenticated/admin.backup'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
 import { Route as AuthenticatedAdminAiAssistantRouteImport } from './routes/_authenticated/admin.ai-assistant'
+import { Route as PublicChar123LocaleChar125PSlugRouteImport } from './routes/_public.{-$locale}.p.$slug'
+import { Route as PublicChar123LocaleChar125BlogSlugRouteImport } from './routes/_public.{-$locale}.blog.$slug'
 import { Route as AuthenticatedAdminInvoicesIdRouteImport } from './routes/_authenticated/admin.invoices.$id'
 import { Route as AuthenticatedAdminFleetIdRouteImport } from './routes/_authenticated/admin.fleet.$id'
 import { Route as AuthenticatedAdminDriversIdRouteImport } from './routes/_authenticated/admin.drivers.$id'
@@ -83,89 +83,94 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PublicRoute = PublicRouteImport.update({
-  id: '/_public',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PublicIndexRoute = PublicIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicTermsRoute = PublicTermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicServicesRoute = PublicServicesRouteImport.update({
-  id: '/services',
-  path: '/services',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicRefundRoute = PublicRefundRouteImport.update({
-  id: '/refund',
-  path: '/refund',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicPrivacyRoute = PublicPrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicPricingRoute = PublicPricingRouteImport.update({
-  id: '/pricing',
-  path: '/pricing',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicFleetRoute = PublicFleetRouteImport.update({
-  id: '/fleet',
-  path: '/fleet',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicFaqRoute = PublicFaqRouteImport.update({
-  id: '/faq',
-  path: '/faq',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicContactRoute = PublicContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicCancellationRoute = PublicCancellationRouteImport.update({
-  id: '/cancellation',
-  path: '/cancellation',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicBlogRoute = PublicBlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicAirportTransfersRoute = PublicAirportTransfersRouteImport.update({
-  id: '/airport-transfers',
-  path: '/airport-transfers',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicAboutRoute = PublicAboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicPSlugRoute = PublicPSlugRouteImport.update({
-  id: '/p/$slug',
-  path: '/p/$slug',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicBlogSlugRoute = PublicBlogSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => PublicBlogRoute,
-} as any)
+const PublicChar123LocaleChar125Route =
+  PublicChar123LocaleChar125RouteImport.update({
+    id: '/_public/{-$locale}',
+    path: '/{-$locale}',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PublicChar123LocaleChar125IndexRoute =
+  PublicChar123LocaleChar125IndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125TermsRoute =
+  PublicChar123LocaleChar125TermsRouteImport.update({
+    id: '/terms',
+    path: '/terms',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125ServicesRoute =
+  PublicChar123LocaleChar125ServicesRouteImport.update({
+    id: '/services',
+    path: '/services',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125RefundRoute =
+  PublicChar123LocaleChar125RefundRouteImport.update({
+    id: '/refund',
+    path: '/refund',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125PrivacyRoute =
+  PublicChar123LocaleChar125PrivacyRouteImport.update({
+    id: '/privacy',
+    path: '/privacy',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125PricingRoute =
+  PublicChar123LocaleChar125PricingRouteImport.update({
+    id: '/pricing',
+    path: '/pricing',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125FleetRoute =
+  PublicChar123LocaleChar125FleetRouteImport.update({
+    id: '/fleet',
+    path: '/fleet',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125FaqRoute =
+  PublicChar123LocaleChar125FaqRouteImport.update({
+    id: '/faq',
+    path: '/faq',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125ContactRoute =
+  PublicChar123LocaleChar125ContactRouteImport.update({
+    id: '/contact',
+    path: '/contact',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125CancellationRoute =
+  PublicChar123LocaleChar125CancellationRouteImport.update({
+    id: '/cancellation',
+    path: '/cancellation',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125BlogRoute =
+  PublicChar123LocaleChar125BlogRouteImport.update({
+    id: '/blog',
+    path: '/blog',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125AirportTransfersRoute =
+  PublicChar123LocaleChar125AirportTransfersRouteImport.update({
+    id: '/airport-transfers',
+    path: '/airport-transfers',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125AboutRoute =
+  PublicChar123LocaleChar125AboutRouteImport.update({
+    id: '/about',
+    path: '/about',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
 const AuthenticatedAdminWhatsappTemplatesRoute =
   AuthenticatedAdminWhatsappTemplatesRouteImport.update({
     id: '/admin/whatsapp-templates',
@@ -397,6 +402,18 @@ const AuthenticatedAdminAiAssistantRoute =
     path: '/admin/ai-assistant',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const PublicChar123LocaleChar125PSlugRoute =
+  PublicChar123LocaleChar125PSlugRouteImport.update({
+    id: '/p/$slug',
+    path: '/p/$slug',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125BlogSlugRoute =
+  PublicChar123LocaleChar125BlogSlugRouteImport.update({
+    id: '/$slug',
+    path: '/$slug',
+    getParentRoute: () => PublicChar123LocaleChar125BlogRoute,
+  } as any)
 const AuthenticatedAdminInvoicesIdRoute =
   AuthenticatedAdminInvoicesIdRouteImport.update({
     id: '/$id',
@@ -423,21 +440,10 @@ const AuthenticatedAdminCustomersIdRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof PublicIndexRoute
+  '/': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/about': typeof PublicAboutRoute
-  '/airport-transfers': typeof PublicAirportTransfersRoute
-  '/blog': typeof PublicBlogRouteWithChildren
-  '/cancellation': typeof PublicCancellationRoute
-  '/contact': typeof PublicContactRoute
-  '/faq': typeof PublicFaqRoute
-  '/fleet': typeof PublicFleetRoute
-  '/pricing': typeof PublicPricingRoute
-  '/privacy': typeof PublicPrivacyRoute
-  '/refund': typeof PublicRefundRoute
-  '/services': typeof PublicServicesRoute
-  '/terms': typeof PublicTermsRoute
+  '/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
   '/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/backup': typeof AuthenticatedAdminBackupRoute
@@ -478,29 +484,30 @@ export interface FileRoutesByFullPath {
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/admin/whatsapp-templates': typeof AuthenticatedAdminWhatsappTemplatesRoute
-  '/blog/$slug': typeof PublicBlogSlugRoute
-  '/p/$slug': typeof PublicPSlugRoute
+  '/{-$locale}/about': typeof PublicChar123LocaleChar125AboutRoute
+  '/{-$locale}/airport-transfers': typeof PublicChar123LocaleChar125AirportTransfersRoute
+  '/{-$locale}/blog': typeof PublicChar123LocaleChar125BlogRouteWithChildren
+  '/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
+  '/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
+  '/{-$locale}/faq': typeof PublicChar123LocaleChar125FaqRoute
+  '/{-$locale}/fleet': typeof PublicChar123LocaleChar125FleetRoute
+  '/{-$locale}/pricing': typeof PublicChar123LocaleChar125PricingRoute
+  '/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
+  '/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
+  '/{-$locale}/services': typeof PublicChar123LocaleChar125ServicesRoute
+  '/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
+  '/{-$locale}/': typeof PublicChar123LocaleChar125IndexRoute
   '/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
   '/admin/drivers/$id': typeof AuthenticatedAdminDriversIdRoute
   '/admin/fleet/$id': typeof AuthenticatedAdminFleetIdRoute
   '/admin/invoices/$id': typeof AuthenticatedAdminInvoicesIdRoute
+  '/{-$locale}/blog/$slug': typeof PublicChar123LocaleChar125BlogSlugRoute
+  '/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof PublicIndexRoute
+  '/': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/about': typeof PublicAboutRoute
-  '/airport-transfers': typeof PublicAirportTransfersRoute
-  '/blog': typeof PublicBlogRouteWithChildren
-  '/cancellation': typeof PublicCancellationRoute
-  '/contact': typeof PublicContactRoute
-  '/faq': typeof PublicFaqRoute
-  '/fleet': typeof PublicFleetRoute
-  '/pricing': typeof PublicPricingRoute
-  '/privacy': typeof PublicPrivacyRoute
-  '/refund': typeof PublicRefundRoute
-  '/services': typeof PublicServicesRoute
-  '/terms': typeof PublicTermsRoute
   '/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/backup': typeof AuthenticatedAdminBackupRoute
@@ -541,32 +548,32 @@ export interface FileRoutesByTo {
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/admin/whatsapp-templates': typeof AuthenticatedAdminWhatsappTemplatesRoute
-  '/blog/$slug': typeof PublicBlogSlugRoute
-  '/p/$slug': typeof PublicPSlugRoute
+  '/{-$locale}/about': typeof PublicChar123LocaleChar125AboutRoute
+  '/{-$locale}/airport-transfers': typeof PublicChar123LocaleChar125AirportTransfersRoute
+  '/{-$locale}/blog': typeof PublicChar123LocaleChar125BlogRouteWithChildren
+  '/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
+  '/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
+  '/{-$locale}/faq': typeof PublicChar123LocaleChar125FaqRoute
+  '/{-$locale}/fleet': typeof PublicChar123LocaleChar125FleetRoute
+  '/{-$locale}/pricing': typeof PublicChar123LocaleChar125PricingRoute
+  '/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
+  '/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
+  '/{-$locale}/services': typeof PublicChar123LocaleChar125ServicesRoute
+  '/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
+  '/{-$locale}': typeof PublicChar123LocaleChar125IndexRoute
   '/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
   '/admin/drivers/$id': typeof AuthenticatedAdminDriversIdRoute
   '/admin/fleet/$id': typeof AuthenticatedAdminFleetIdRoute
   '/admin/invoices/$id': typeof AuthenticatedAdminInvoicesIdRoute
+  '/{-$locale}/blog/$slug': typeof PublicChar123LocaleChar125BlogSlugRoute
+  '/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/_public': typeof PublicRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/_public/about': typeof PublicAboutRoute
-  '/_public/airport-transfers': typeof PublicAirportTransfersRoute
-  '/_public/blog': typeof PublicBlogRouteWithChildren
-  '/_public/cancellation': typeof PublicCancellationRoute
-  '/_public/contact': typeof PublicContactRoute
-  '/_public/faq': typeof PublicFaqRoute
-  '/_public/fleet': typeof PublicFleetRoute
-  '/_public/pricing': typeof PublicPricingRoute
-  '/_public/privacy': typeof PublicPrivacyRoute
-  '/_public/refund': typeof PublicRefundRoute
-  '/_public/services': typeof PublicServicesRoute
-  '/_public/terms': typeof PublicTermsRoute
-  '/_public/': typeof PublicIndexRoute
+  '/_public/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
   '/_authenticated/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/backup': typeof AuthenticatedAdminBackupRoute
@@ -607,12 +614,25 @@ export interface FileRoutesById {
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/admin/whatsapp-templates': typeof AuthenticatedAdminWhatsappTemplatesRoute
-  '/_public/blog/$slug': typeof PublicBlogSlugRoute
-  '/_public/p/$slug': typeof PublicPSlugRoute
+  '/_public/{-$locale}/about': typeof PublicChar123LocaleChar125AboutRoute
+  '/_public/{-$locale}/airport-transfers': typeof PublicChar123LocaleChar125AirportTransfersRoute
+  '/_public/{-$locale}/blog': typeof PublicChar123LocaleChar125BlogRouteWithChildren
+  '/_public/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
+  '/_public/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
+  '/_public/{-$locale}/faq': typeof PublicChar123LocaleChar125FaqRoute
+  '/_public/{-$locale}/fleet': typeof PublicChar123LocaleChar125FleetRoute
+  '/_public/{-$locale}/pricing': typeof PublicChar123LocaleChar125PricingRoute
+  '/_public/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
+  '/_public/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
+  '/_public/{-$locale}/services': typeof PublicChar123LocaleChar125ServicesRoute
+  '/_public/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
+  '/_public/{-$locale}/': typeof PublicChar123LocaleChar125IndexRoute
   '/_authenticated/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
   '/_authenticated/admin/drivers/$id': typeof AuthenticatedAdminDriversIdRoute
   '/_authenticated/admin/fleet/$id': typeof AuthenticatedAdminFleetIdRoute
   '/_authenticated/admin/invoices/$id': typeof AuthenticatedAdminInvoicesIdRoute
+  '/_public/{-$locale}/blog/$slug': typeof PublicChar123LocaleChar125BlogSlugRoute
+  '/_public/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -620,18 +640,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/sitemap.xml'
-    | '/about'
-    | '/airport-transfers'
-    | '/blog'
-    | '/cancellation'
-    | '/contact'
-    | '/faq'
-    | '/fleet'
-    | '/pricing'
-    | '/privacy'
-    | '/refund'
-    | '/services'
-    | '/terms'
+    | '/{-$locale}'
     | '/admin/ai-assistant'
     | '/admin/audit'
     | '/admin/backup'
@@ -672,29 +681,30 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/users'
     | '/admin/whatsapp-templates'
-    | '/blog/$slug'
-    | '/p/$slug'
+    | '/{-$locale}/about'
+    | '/{-$locale}/airport-transfers'
+    | '/{-$locale}/blog'
+    | '/{-$locale}/cancellation'
+    | '/{-$locale}/contact'
+    | '/{-$locale}/faq'
+    | '/{-$locale}/fleet'
+    | '/{-$locale}/pricing'
+    | '/{-$locale}/privacy'
+    | '/{-$locale}/refund'
+    | '/{-$locale}/services'
+    | '/{-$locale}/terms'
+    | '/{-$locale}/'
     | '/admin/customers/$id'
     | '/admin/drivers/$id'
     | '/admin/fleet/$id'
     | '/admin/invoices/$id'
+    | '/{-$locale}/blog/$slug'
+    | '/{-$locale}/p/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/sitemap.xml'
-    | '/about'
-    | '/airport-transfers'
-    | '/blog'
-    | '/cancellation'
-    | '/contact'
-    | '/faq'
-    | '/fleet'
-    | '/pricing'
-    | '/privacy'
-    | '/refund'
-    | '/services'
-    | '/terms'
     | '/admin/ai-assistant'
     | '/admin/audit'
     | '/admin/backup'
@@ -735,31 +745,31 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/users'
     | '/admin/whatsapp-templates'
-    | '/blog/$slug'
-    | '/p/$slug'
+    | '/{-$locale}/about'
+    | '/{-$locale}/airport-transfers'
+    | '/{-$locale}/blog'
+    | '/{-$locale}/cancellation'
+    | '/{-$locale}/contact'
+    | '/{-$locale}/faq'
+    | '/{-$locale}/fleet'
+    | '/{-$locale}/pricing'
+    | '/{-$locale}/privacy'
+    | '/{-$locale}/refund'
+    | '/{-$locale}/services'
+    | '/{-$locale}/terms'
+    | '/{-$locale}'
     | '/admin/customers/$id'
     | '/admin/drivers/$id'
     | '/admin/fleet/$id'
     | '/admin/invoices/$id'
+    | '/{-$locale}/blog/$slug'
+    | '/{-$locale}/p/$slug'
   id:
     | '__root__'
     | '/_authenticated'
-    | '/_public'
     | '/auth'
     | '/sitemap.xml'
-    | '/_public/about'
-    | '/_public/airport-transfers'
-    | '/_public/blog'
-    | '/_public/cancellation'
-    | '/_public/contact'
-    | '/_public/faq'
-    | '/_public/fleet'
-    | '/_public/pricing'
-    | '/_public/privacy'
-    | '/_public/refund'
-    | '/_public/services'
-    | '/_public/terms'
-    | '/_public/'
+    | '/_public/{-$locale}'
     | '/_authenticated/admin/ai-assistant'
     | '/_authenticated/admin/audit'
     | '/_authenticated/admin/backup'
@@ -800,19 +810,32 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/users'
     | '/_authenticated/admin/whatsapp-templates'
-    | '/_public/blog/$slug'
-    | '/_public/p/$slug'
+    | '/_public/{-$locale}/about'
+    | '/_public/{-$locale}/airport-transfers'
+    | '/_public/{-$locale}/blog'
+    | '/_public/{-$locale}/cancellation'
+    | '/_public/{-$locale}/contact'
+    | '/_public/{-$locale}/faq'
+    | '/_public/{-$locale}/fleet'
+    | '/_public/{-$locale}/pricing'
+    | '/_public/{-$locale}/privacy'
+    | '/_public/{-$locale}/refund'
+    | '/_public/{-$locale}/services'
+    | '/_public/{-$locale}/terms'
+    | '/_public/{-$locale}/'
     | '/_authenticated/admin/customers/$id'
     | '/_authenticated/admin/drivers/$id'
     | '/_authenticated/admin/fleet/$id'
     | '/_authenticated/admin/invoices/$id'
+    | '/_public/{-$locale}/blog/$slug'
+    | '/_public/{-$locale}/p/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  PublicRoute: typeof PublicRouteWithChildren
   AuthRoute: typeof AuthRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  PublicChar123LocaleChar125Route: typeof PublicChar123LocaleChar125RouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -831,13 +854,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_public': {
-      id: '/_public'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof PublicRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
@@ -845,110 +861,103 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_public/': {
-      id: '/_public/'
+    '/_public/{-$locale}': {
+      id: '/_public/{-$locale}'
+      path: '/{-$locale}'
+      fullPath: '/{-$locale}'
+      preLoaderRoute: typeof PublicChar123LocaleChar125RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_public/{-$locale}/': {
+      id: '/_public/{-$locale}/'
       path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof PublicIndexRouteImport
-      parentRoute: typeof PublicRoute
+      fullPath: '/{-$locale}/'
+      preLoaderRoute: typeof PublicChar123LocaleChar125IndexRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
     }
-    '/_public/terms': {
-      id: '/_public/terms'
+    '/_public/{-$locale}/terms': {
+      id: '/_public/{-$locale}/terms'
       path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof PublicTermsRouteImport
-      parentRoute: typeof PublicRoute
+      fullPath: '/{-$locale}/terms'
+      preLoaderRoute: typeof PublicChar123LocaleChar125TermsRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
     }
-    '/_public/services': {
-      id: '/_public/services'
+    '/_public/{-$locale}/services': {
+      id: '/_public/{-$locale}/services'
       path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof PublicServicesRouteImport
-      parentRoute: typeof PublicRoute
+      fullPath: '/{-$locale}/services'
+      preLoaderRoute: typeof PublicChar123LocaleChar125ServicesRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
     }
-    '/_public/refund': {
-      id: '/_public/refund'
+    '/_public/{-$locale}/refund': {
+      id: '/_public/{-$locale}/refund'
       path: '/refund'
-      fullPath: '/refund'
-      preLoaderRoute: typeof PublicRefundRouteImport
-      parentRoute: typeof PublicRoute
+      fullPath: '/{-$locale}/refund'
+      preLoaderRoute: typeof PublicChar123LocaleChar125RefundRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
     }
-    '/_public/privacy': {
-      id: '/_public/privacy'
+    '/_public/{-$locale}/privacy': {
+      id: '/_public/{-$locale}/privacy'
       path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PublicPrivacyRouteImport
-      parentRoute: typeof PublicRoute
+      fullPath: '/{-$locale}/privacy'
+      preLoaderRoute: typeof PublicChar123LocaleChar125PrivacyRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
     }
-    '/_public/pricing': {
-      id: '/_public/pricing'
+    '/_public/{-$locale}/pricing': {
+      id: '/_public/{-$locale}/pricing'
       path: '/pricing'
-      fullPath: '/pricing'
-      preLoaderRoute: typeof PublicPricingRouteImport
-      parentRoute: typeof PublicRoute
+      fullPath: '/{-$locale}/pricing'
+      preLoaderRoute: typeof PublicChar123LocaleChar125PricingRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
     }
-    '/_public/fleet': {
-      id: '/_public/fleet'
+    '/_public/{-$locale}/fleet': {
+      id: '/_public/{-$locale}/fleet'
       path: '/fleet'
-      fullPath: '/fleet'
-      preLoaderRoute: typeof PublicFleetRouteImport
-      parentRoute: typeof PublicRoute
+      fullPath: '/{-$locale}/fleet'
+      preLoaderRoute: typeof PublicChar123LocaleChar125FleetRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
     }
-    '/_public/faq': {
-      id: '/_public/faq'
+    '/_public/{-$locale}/faq': {
+      id: '/_public/{-$locale}/faq'
       path: '/faq'
-      fullPath: '/faq'
-      preLoaderRoute: typeof PublicFaqRouteImport
-      parentRoute: typeof PublicRoute
+      fullPath: '/{-$locale}/faq'
+      preLoaderRoute: typeof PublicChar123LocaleChar125FaqRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
     }
-    '/_public/contact': {
-      id: '/_public/contact'
+    '/_public/{-$locale}/contact': {
+      id: '/_public/{-$locale}/contact'
       path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof PublicContactRouteImport
-      parentRoute: typeof PublicRoute
+      fullPath: '/{-$locale}/contact'
+      preLoaderRoute: typeof PublicChar123LocaleChar125ContactRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
     }
-    '/_public/cancellation': {
-      id: '/_public/cancellation'
+    '/_public/{-$locale}/cancellation': {
+      id: '/_public/{-$locale}/cancellation'
       path: '/cancellation'
-      fullPath: '/cancellation'
-      preLoaderRoute: typeof PublicCancellationRouteImport
-      parentRoute: typeof PublicRoute
+      fullPath: '/{-$locale}/cancellation'
+      preLoaderRoute: typeof PublicChar123LocaleChar125CancellationRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
     }
-    '/_public/blog': {
-      id: '/_public/blog'
+    '/_public/{-$locale}/blog': {
+      id: '/_public/{-$locale}/blog'
       path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof PublicBlogRouteImport
-      parentRoute: typeof PublicRoute
+      fullPath: '/{-$locale}/blog'
+      preLoaderRoute: typeof PublicChar123LocaleChar125BlogRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
     }
-    '/_public/airport-transfers': {
-      id: '/_public/airport-transfers'
+    '/_public/{-$locale}/airport-transfers': {
+      id: '/_public/{-$locale}/airport-transfers'
       path: '/airport-transfers'
-      fullPath: '/airport-transfers'
-      preLoaderRoute: typeof PublicAirportTransfersRouteImport
-      parentRoute: typeof PublicRoute
+      fullPath: '/{-$locale}/airport-transfers'
+      preLoaderRoute: typeof PublicChar123LocaleChar125AirportTransfersRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
     }
-    '/_public/about': {
-      id: '/_public/about'
+    '/_public/{-$locale}/about': {
+      id: '/_public/{-$locale}/about'
       path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof PublicAboutRouteImport
-      parentRoute: typeof PublicRoute
-    }
-    '/_public/p/$slug': {
-      id: '/_public/p/$slug'
-      path: '/p/$slug'
-      fullPath: '/p/$slug'
-      preLoaderRoute: typeof PublicPSlugRouteImport
-      parentRoute: typeof PublicRoute
-    }
-    '/_public/blog/$slug': {
-      id: '/_public/blog/$slug'
-      path: '/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof PublicBlogSlugRouteImport
-      parentRoute: typeof PublicBlogRoute
+      fullPath: '/{-$locale}/about'
+      preLoaderRoute: typeof PublicChar123LocaleChar125AboutRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
     }
     '/_authenticated/admin/whatsapp-templates': {
       id: '/_authenticated/admin/whatsapp-templates'
@@ -1230,6 +1239,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAiAssistantRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_public/{-$locale}/p/$slug': {
+      id: '/_public/{-$locale}/p/$slug'
+      path: '/p/$slug'
+      fullPath: '/{-$locale}/p/$slug'
+      preLoaderRoute: typeof PublicChar123LocaleChar125PSlugRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
+    }
+    '/_public/{-$locale}/blog/$slug': {
+      id: '/_public/{-$locale}/blog/$slug'
+      path: '/$slug'
+      fullPath: '/{-$locale}/blog/$slug'
+      preLoaderRoute: typeof PublicChar123LocaleChar125BlogSlugRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125BlogRoute
+    }
     '/_authenticated/admin/invoices/$id': {
       id: '/_authenticated/admin/invoices/$id'
       path: '/$id'
@@ -1409,60 +1432,74 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
-interface PublicBlogRouteChildren {
-  PublicBlogSlugRoute: typeof PublicBlogSlugRoute
+interface PublicChar123LocaleChar125BlogRouteChildren {
+  PublicChar123LocaleChar125BlogSlugRoute: typeof PublicChar123LocaleChar125BlogSlugRoute
 }
 
-const PublicBlogRouteChildren: PublicBlogRouteChildren = {
-  PublicBlogSlugRoute: PublicBlogSlugRoute,
+const PublicChar123LocaleChar125BlogRouteChildren: PublicChar123LocaleChar125BlogRouteChildren =
+  {
+    PublicChar123LocaleChar125BlogSlugRoute:
+      PublicChar123LocaleChar125BlogSlugRoute,
+  }
+
+const PublicChar123LocaleChar125BlogRouteWithChildren =
+  PublicChar123LocaleChar125BlogRoute._addFileChildren(
+    PublicChar123LocaleChar125BlogRouteChildren,
+  )
+
+interface PublicChar123LocaleChar125RouteChildren {
+  PublicChar123LocaleChar125AboutRoute: typeof PublicChar123LocaleChar125AboutRoute
+  PublicChar123LocaleChar125AirportTransfersRoute: typeof PublicChar123LocaleChar125AirportTransfersRoute
+  PublicChar123LocaleChar125BlogRoute: typeof PublicChar123LocaleChar125BlogRouteWithChildren
+  PublicChar123LocaleChar125CancellationRoute: typeof PublicChar123LocaleChar125CancellationRoute
+  PublicChar123LocaleChar125ContactRoute: typeof PublicChar123LocaleChar125ContactRoute
+  PublicChar123LocaleChar125FaqRoute: typeof PublicChar123LocaleChar125FaqRoute
+  PublicChar123LocaleChar125FleetRoute: typeof PublicChar123LocaleChar125FleetRoute
+  PublicChar123LocaleChar125PricingRoute: typeof PublicChar123LocaleChar125PricingRoute
+  PublicChar123LocaleChar125PrivacyRoute: typeof PublicChar123LocaleChar125PrivacyRoute
+  PublicChar123LocaleChar125RefundRoute: typeof PublicChar123LocaleChar125RefundRoute
+  PublicChar123LocaleChar125ServicesRoute: typeof PublicChar123LocaleChar125ServicesRoute
+  PublicChar123LocaleChar125TermsRoute: typeof PublicChar123LocaleChar125TermsRoute
+  PublicChar123LocaleChar125IndexRoute: typeof PublicChar123LocaleChar125IndexRoute
+  PublicChar123LocaleChar125PSlugRoute: typeof PublicChar123LocaleChar125PSlugRoute
 }
 
-const PublicBlogRouteWithChildren = PublicBlogRoute._addFileChildren(
-  PublicBlogRouteChildren,
-)
+const PublicChar123LocaleChar125RouteChildren: PublicChar123LocaleChar125RouteChildren =
+  {
+    PublicChar123LocaleChar125AboutRoute: PublicChar123LocaleChar125AboutRoute,
+    PublicChar123LocaleChar125AirportTransfersRoute:
+      PublicChar123LocaleChar125AirportTransfersRoute,
+    PublicChar123LocaleChar125BlogRoute:
+      PublicChar123LocaleChar125BlogRouteWithChildren,
+    PublicChar123LocaleChar125CancellationRoute:
+      PublicChar123LocaleChar125CancellationRoute,
+    PublicChar123LocaleChar125ContactRoute:
+      PublicChar123LocaleChar125ContactRoute,
+    PublicChar123LocaleChar125FaqRoute: PublicChar123LocaleChar125FaqRoute,
+    PublicChar123LocaleChar125FleetRoute: PublicChar123LocaleChar125FleetRoute,
+    PublicChar123LocaleChar125PricingRoute:
+      PublicChar123LocaleChar125PricingRoute,
+    PublicChar123LocaleChar125PrivacyRoute:
+      PublicChar123LocaleChar125PrivacyRoute,
+    PublicChar123LocaleChar125RefundRoute:
+      PublicChar123LocaleChar125RefundRoute,
+    PublicChar123LocaleChar125ServicesRoute:
+      PublicChar123LocaleChar125ServicesRoute,
+    PublicChar123LocaleChar125TermsRoute: PublicChar123LocaleChar125TermsRoute,
+    PublicChar123LocaleChar125IndexRoute: PublicChar123LocaleChar125IndexRoute,
+    PublicChar123LocaleChar125PSlugRoute: PublicChar123LocaleChar125PSlugRoute,
+  }
 
-interface PublicRouteChildren {
-  PublicAboutRoute: typeof PublicAboutRoute
-  PublicAirportTransfersRoute: typeof PublicAirportTransfersRoute
-  PublicBlogRoute: typeof PublicBlogRouteWithChildren
-  PublicCancellationRoute: typeof PublicCancellationRoute
-  PublicContactRoute: typeof PublicContactRoute
-  PublicFaqRoute: typeof PublicFaqRoute
-  PublicFleetRoute: typeof PublicFleetRoute
-  PublicPricingRoute: typeof PublicPricingRoute
-  PublicPrivacyRoute: typeof PublicPrivacyRoute
-  PublicRefundRoute: typeof PublicRefundRoute
-  PublicServicesRoute: typeof PublicServicesRoute
-  PublicTermsRoute: typeof PublicTermsRoute
-  PublicIndexRoute: typeof PublicIndexRoute
-  PublicPSlugRoute: typeof PublicPSlugRoute
-}
-
-const PublicRouteChildren: PublicRouteChildren = {
-  PublicAboutRoute: PublicAboutRoute,
-  PublicAirportTransfersRoute: PublicAirportTransfersRoute,
-  PublicBlogRoute: PublicBlogRouteWithChildren,
-  PublicCancellationRoute: PublicCancellationRoute,
-  PublicContactRoute: PublicContactRoute,
-  PublicFaqRoute: PublicFaqRoute,
-  PublicFleetRoute: PublicFleetRoute,
-  PublicPricingRoute: PublicPricingRoute,
-  PublicPrivacyRoute: PublicPrivacyRoute,
-  PublicRefundRoute: PublicRefundRoute,
-  PublicServicesRoute: PublicServicesRoute,
-  PublicTermsRoute: PublicTermsRoute,
-  PublicIndexRoute: PublicIndexRoute,
-  PublicPSlugRoute: PublicPSlugRoute,
-}
-
-const PublicRouteWithChildren =
-  PublicRoute._addFileChildren(PublicRouteChildren)
+const PublicChar123LocaleChar125RouteWithChildren =
+  PublicChar123LocaleChar125Route._addFileChildren(
+    PublicChar123LocaleChar125RouteChildren,
+  )
 
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  PublicRoute: PublicRouteWithChildren,
   AuthRoute: AuthRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  PublicChar123LocaleChar125Route: PublicChar123LocaleChar125RouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

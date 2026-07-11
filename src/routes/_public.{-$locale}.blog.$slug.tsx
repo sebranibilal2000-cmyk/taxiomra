@@ -13,7 +13,7 @@ const opts = (slug: string) => queryOptions({
   },
 });
 
-export const Route = createFileRoute("/_public/blog/$slug")({
+export const Route = createFileRoute("/_public/{-$locale}/blog/$slug")({
   loader: ({ context, params }) => context.queryClient.ensureQueryData(opts(params.slug)),
   head: ({ loaderData, params }) => {
     if (!loaderData) return { meta: [{ title: "Not found" }, { name: "robots", content: "noindex" }] };
