@@ -29,13 +29,15 @@ function BookingsPage() {
   const { t, locale } = useI18n();
   const qc = useQueryClient();
   const [open, setOpen] = useState(false);
+  const [detailId, setDetailId] = useState<string | null>(null);
 
   const bookings = useQuery({
     queryKey: ["bookings"],
     queryFn: async () => {
       const { data } = await supabase
         .from("bookings")
-        .select("id, code, status, total_fare, pickup_location, dropoff_location, pickup_at, distance_km, customer:customers(full_name), driver:drivers(full_name), category:vehicle_categories(code)")
+        .select("id, code, status, total_fare, pickup_location, dropoff_location, pickup_at, distance_km, is_priority, customer:customers(full_name), driver:drivers(full_name), category:vehicle_categories(code)")
+        .order("is_priority", { ascending: false })
         .order("created_at", { ascending: false });
       return data ?? [];
     },
@@ -45,8 +47,14 @@ function BookingsPage() {
   const customers = useQuery({ queryKey: ["cust-lookup"], queryFn: async () => (await supabase.from("customers").select("id, full_name, phone").order("full_name")).data ?? [] });
   const drivers = useQuery({ queryKey: ["drv-lookup"], queryFn: async () => (await supabase.from("drivers").select("id, full_name").eq("is_active", true).order("full_name")).data ?? [] });
 
+  const togglePriority = async (r: any) => {
+    const { error } = await supabase.from("bookings").update({ is_priority: !r.is_priority }).eq("id", r.id);
+    if (error) toast.error(error.message); else qc.invalidateQueries({ queryKey: ["bookings"] });
+  };
+
   const columns: Column<any>[] = [
-    { key: "code", header: t("code"), render: (r) => <span className="font-mono text-xs">{r.code}</span> },
+    { key: "priority", header: "", render: (r) => r.is_priority ? <Star className="h-4 w-4 fill-gold text-gold" /> : null },
+    { key: "code", header: t("code"), render: (r) => <button onClick={() => setDetailId(r.id)} className="font-mono text-xs hover:text-gold">{r.code}</button> },
     { key: "customer", header: t("customer"), render: (r) => r.customer?.full_name ?? "—" },
     { key: "driver", header: t("driver"), render: (r) => r.driver?.full_name ?? "—" },
     { key: "category", header: t("category"), render: (r) => r.category?.code ?? "—" },
