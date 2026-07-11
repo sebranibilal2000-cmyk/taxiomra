@@ -53,6 +53,62 @@ export type Database = {
         }
         Relationships: []
       }
+      ai_conversations: {
+        Row: {
+          created_at: string
+          id: string
+          title: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          title?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ai_messages: {
+        Row: {
+          content: Json
+          conversation_id: string
+          created_at: string
+          id: string
+          role: string
+        }
+        Insert: {
+          content: Json
+          conversation_id: string
+          created_at?: string
+          id?: string
+          role: string
+        }
+        Update: {
+          content?: Json
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "ai_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audit_logs: {
         Row: {
           action: string
@@ -340,6 +396,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "bookings_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "v_customer_intelligence"
+            referencedColumns: ["customer_id"]
+          },
+          {
             foreignKeyName: "bookings_driver_id_fkey"
             columns: ["driver_id"]
             isOneToOne: false
@@ -347,11 +410,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "bookings_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "v_driver_intelligence"
+            referencedColumns: ["driver_id"]
+          },
+          {
             foreignKeyName: "bookings_route_id_fkey"
             columns: ["route_id"]
             isOneToOne: false
             referencedRelation: "routes"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "v_fleet_intelligence"
+            referencedColumns: ["vehicle_id"]
           },
           {
             foreignKeyName: "bookings_vehicle_id_fkey"
@@ -515,6 +592,13 @@ export type Database = {
             referencedRelation: "customers"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "contact_submissions_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "v_customer_intelligence"
+            referencedColumns: ["customer_id"]
+          },
         ]
       }
       corporate_accounts: {
@@ -658,6 +742,13 @@ export type Database = {
             referencedRelation: "customers"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "customer_documents_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "v_customer_intelligence"
+            referencedColumns: ["customer_id"]
+          },
         ]
       }
       customer_notes: {
@@ -695,6 +786,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "customers"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "customer_notes_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "v_customer_intelligence"
+            referencedColumns: ["customer_id"]
           },
         ]
       }
@@ -826,6 +924,13 @@ export type Database = {
             referencedRelation: "drivers"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "customers_favorite_driver_id_fkey"
+            columns: ["favorite_driver_id"]
+            isOneToOne: false
+            referencedRelation: "v_driver_intelligence"
+            referencedColumns: ["driver_id"]
+          },
         ]
       }
       driver_documents: {
@@ -878,6 +983,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "drivers"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "driver_documents_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "v_driver_intelligence"
+            referencedColumns: ["driver_id"]
           },
         ]
       }
@@ -947,6 +1059,13 @@ export type Database = {
             referencedRelation: "drivers"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "driver_payroll_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "v_driver_intelligence"
+            referencedColumns: ["driver_id"]
+          },
         ]
       }
       driver_vehicle_assignments: {
@@ -987,6 +1106,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "drivers"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "driver_vehicle_assignments_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "v_driver_intelligence"
+            referencedColumns: ["driver_id"]
+          },
+          {
+            foreignKeyName: "driver_vehicle_assignments_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "v_fleet_intelligence"
+            referencedColumns: ["vehicle_id"]
           },
           {
             foreignKeyName: "driver_vehicle_assignments_vehicle_id_fkey"
@@ -1108,6 +1241,13 @@ export type Database = {
             foreignKeyName: "drivers_vehicle_id_fkey"
             columns: ["vehicle_id"]
             isOneToOne: false
+            referencedRelation: "v_fleet_intelligence"
+            referencedColumns: ["vehicle_id"]
+          },
+          {
+            foreignKeyName: "drivers_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
             referencedRelation: "vehicles"
             referencedColumns: ["id"]
           },
@@ -1175,6 +1315,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "drivers"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expenses_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "v_driver_intelligence"
+            referencedColumns: ["driver_id"]
+          },
+          {
+            foreignKeyName: "expenses_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "v_fleet_intelligence"
+            referencedColumns: ["vehicle_id"]
           },
           {
             foreignKeyName: "expenses_vehicle_id_fkey"
@@ -1442,6 +1596,72 @@ export type Database = {
             referencedRelation: "customers"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "invoices_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "v_customer_intelligence"
+            referencedColumns: ["customer_id"]
+          },
+        ]
+      }
+      marketing_campaigns: {
+        Row: {
+          audience_filter: Json
+          campaign_type: string
+          created_at: string
+          cron_expression: string | null
+          id: string
+          is_active: boolean
+          last_run_at: string | null
+          name: string
+          next_run_at: string | null
+          schedule_type: string
+          scheduled_at: string | null
+          stats: Json
+          template_code: string | null
+          updated_at: string
+        }
+        Insert: {
+          audience_filter?: Json
+          campaign_type: string
+          created_at?: string
+          cron_expression?: string | null
+          id?: string
+          is_active?: boolean
+          last_run_at?: string | null
+          name: string
+          next_run_at?: string | null
+          schedule_type?: string
+          scheduled_at?: string | null
+          stats?: Json
+          template_code?: string | null
+          updated_at?: string
+        }
+        Update: {
+          audience_filter?: Json
+          campaign_type?: string
+          created_at?: string
+          cron_expression?: string | null
+          id?: string
+          is_active?: boolean
+          last_run_at?: string | null
+          name?: string
+          next_run_at?: string | null
+          schedule_type?: string
+          scheduled_at?: string | null
+          stats?: Json
+          template_code?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketing_campaigns_template_code_fkey"
+            columns: ["template_code"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_templates"
+            referencedColumns: ["code"]
+          },
         ]
       }
       media_library: {
@@ -1651,11 +1871,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "payments_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "v_customer_intelligence"
+            referencedColumns: ["customer_id"]
+          },
+          {
             foreignKeyName: "payments_driver_id_fkey"
             columns: ["driver_id"]
             isOneToOne: false
             referencedRelation: "drivers"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "v_driver_intelligence"
+            referencedColumns: ["driver_id"]
           },
         ]
       }
@@ -1723,6 +1957,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      pricing_suggestions: {
+        Row: {
+          conditions: Json
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          suggested_amount: number | null
+          suggested_percent: number | null
+          suggestion_type: string
+          updated_at: string
+        }
+        Insert: {
+          conditions?: Json
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          suggested_amount?: number | null
+          suggested_percent?: number | null
+          suggestion_type: string
+          updated_at?: string
+        }
+        Update: {
+          conditions?: Json
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          suggested_amount?: number | null
+          suggested_percent?: number | null
+          suggestion_type?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -1864,6 +2137,76 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "payments"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      review_requests: {
+        Row: {
+          booking_id: string
+          channel: string
+          comment: string | null
+          created_at: string
+          customer_id: string | null
+          external_url: string | null
+          follow_up_notes: string | null
+          id: string
+          rating: number | null
+          responded_at: string | null
+          sent_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          booking_id: string
+          channel?: string
+          comment?: string | null
+          created_at?: string
+          customer_id?: string | null
+          external_url?: string | null
+          follow_up_notes?: string | null
+          id?: string
+          rating?: number | null
+          responded_at?: string | null
+          sent_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          booking_id?: string
+          channel?: string
+          comment?: string | null
+          created_at?: string
+          customer_id?: string | null
+          external_url?: string | null
+          follow_up_notes?: string | null
+          id?: string
+          rating?: number | null
+          responded_at?: string | null
+          sent_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "review_requests_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "review_requests_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "review_requests_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "v_customer_intelligence"
+            referencedColumns: ["customer_id"]
           },
         ]
       }
@@ -2010,6 +2353,36 @@ export type Database = {
           key?: string
           updated_at?: string
           value?: Json
+        }
+        Relationships: []
+      }
+      system_health_checks: {
+        Row: {
+          component: string
+          created_at: string
+          id: string
+          latency_ms: number | null
+          message: string | null
+          metadata: Json | null
+          status: string
+        }
+        Insert: {
+          component: string
+          created_at?: string
+          id?: string
+          latency_ms?: number | null
+          message?: string | null
+          metadata?: Json | null
+          status: string
+        }
+        Update: {
+          component?: string
+          created_at?: string
+          id?: string
+          latency_ms?: number | null
+          message?: string | null
+          metadata?: Json | null
+          status?: string
         }
         Relationships: []
       }
@@ -2195,6 +2568,13 @@ export type Database = {
             foreignKeyName: "vehicle_documents_vehicle_id_fkey"
             columns: ["vehicle_id"]
             isOneToOne: false
+            referencedRelation: "v_fleet_intelligence"
+            referencedColumns: ["vehicle_id"]
+          },
+          {
+            foreignKeyName: "vehicle_documents_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
             referencedRelation: "vehicles"
             referencedColumns: ["id"]
           },
@@ -2250,6 +2630,13 @@ export type Database = {
           vendor?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "vehicle_maintenance_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "v_fleet_intelligence"
+            referencedColumns: ["vehicle_id"]
+          },
           {
             foreignKeyName: "vehicle_maintenance_vehicle_id_fkey"
             columns: ["vehicle_id"]
@@ -2354,9 +2741,181 @@ export type Database = {
           },
         ]
       }
+      whatsapp_templates: {
+        Row: {
+          body_ar: string
+          body_en: string
+          category: string
+          code: string
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          sort_order: number
+          updated_at: string
+          variables: string[]
+        }
+        Insert: {
+          body_ar: string
+          body_en: string
+          category?: string
+          code: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          sort_order?: number
+          updated_at?: string
+          variables?: string[]
+        }
+        Update: {
+          body_ar?: string
+          body_en?: string
+          category?: string
+          code?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          sort_order?: number
+          updated_at?: string
+          variables?: string[]
+        }
+        Relationships: []
+      }
     }
     Views: {
-      [_ in never]: never
+      v_customer_intelligence: {
+        Row: {
+          average_spend: number | null
+          cancellation_rate: number | null
+          customer_id: string | null
+          favorite_category_id: string | null
+          favorite_dropoff: string | null
+          favorite_pickup: string | null
+          last_booking_at: string | null
+          lifetime_value: number | null
+          next_booking_at: string | null
+          preferred_payment_method: string | null
+          preferred_pickup_hour: number | null
+          risk_score: number | null
+          total_trips: number | null
+          vip_score: number | null
+        }
+        Insert: {
+          average_spend?: number | null
+          cancellation_rate?: never
+          customer_id?: string | null
+          favorite_category_id?: string | null
+          favorite_dropoff?: string | null
+          favorite_pickup?: string | null
+          last_booking_at?: string | null
+          lifetime_value?: number | null
+          next_booking_at?: never
+          preferred_payment_method?: never
+          preferred_pickup_hour?: never
+          risk_score?: never
+          total_trips?: number | null
+          vip_score?: never
+        }
+        Update: {
+          average_spend?: number | null
+          cancellation_rate?: never
+          customer_id?: string | null
+          favorite_category_id?: string | null
+          favorite_dropoff?: string | null
+          favorite_pickup?: string | null
+          last_booking_at?: string | null
+          lifetime_value?: number | null
+          next_booking_at?: never
+          preferred_payment_method?: never
+          preferred_pickup_hour?: never
+          risk_score?: never
+          total_trips?: number | null
+          vip_score?: never
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customers_favorite_category_id_fkey"
+            columns: ["favorite_category_id"]
+            isOneToOne: false
+            referencedRelation: "vehicle_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      v_driver_intelligence: {
+        Row: {
+          average_rating: number | null
+          cancellation_rate: number | null
+          cancelled_trips: number | null
+          completed_trips: number | null
+          completion_rate: number | null
+          driver_id: string | null
+          performance_score: number | null
+          revenue_generated: number | null
+          total_trips: number | null
+          trips_this_month: number | null
+          trips_today: number | null
+        }
+        Insert: {
+          average_rating?: number | null
+          cancellation_rate?: never
+          cancelled_trips?: number | null
+          completed_trips?: number | null
+          completion_rate?: never
+          driver_id?: string | null
+          performance_score?: never
+          revenue_generated?: number | null
+          total_trips?: number | null
+          trips_this_month?: never
+          trips_today?: never
+        }
+        Update: {
+          average_rating?: number | null
+          cancellation_rate?: never
+          cancelled_trips?: number | null
+          completed_trips?: number | null
+          completion_rate?: never
+          driver_id?: string | null
+          performance_score?: never
+          revenue_generated?: number | null
+          total_trips?: number | null
+          trips_this_month?: never
+          trips_today?: never
+        }
+        Relationships: []
+      }
+      v_fleet_intelligence: {
+        Row: {
+          fuel_cost: number | null
+          maintenance_cost: number | null
+          next_maintenance: string | null
+          revenue: number | null
+          total_trips: number | null
+          utilization_pct: number | null
+          vehicle_id: string | null
+        }
+        Insert: {
+          fuel_cost?: never
+          maintenance_cost?: never
+          next_maintenance?: never
+          revenue?: never
+          total_trips?: never
+          utilization_pct?: never
+          vehicle_id?: string | null
+        }
+        Update: {
+          fuel_cost?: never
+          maintenance_cost?: never
+          next_maintenance?: never
+          revenue?: never
+          total_trips?: never
+          utilization_pct?: never
+          vehicle_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
