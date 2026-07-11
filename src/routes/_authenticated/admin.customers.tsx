@@ -102,10 +102,23 @@ function CustomersPage() {
         title={t("customers")}
         description={locale === "ar" ? "قاعدة بيانات العملاء الكاملة" : "Enterprise customer CRM"}
         actions={
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild><Button><Plus className="h-4 w-4 me-1" />{t("new")}</Button></DialogTrigger>
-            <NewCustomerDialog onDone={() => { setOpen(false); qc.invalidateQueries({ queryKey: ["customers"] }); }} />
-          </Dialog>
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" onClick={() => {
+              downloadCsv(`customers-${new Date().toISOString().slice(0,10)}.csv`, filtered.map((r: any) => ({
+                full_name: r.full_name, tier: r.tier, phone: r.phone, alt_phone: r.alt_phone, whatsapp: r.whatsapp, email: r.email,
+                company: r.company, vat_number: r.vat_number, city: r.city, country: r.country,
+                total_trips: r.total_trips, completed_trips: r.completed_trips, cancelled_trips: r.cancelled_trips,
+                total_spent: r.total_spent, avg_booking_value: r.avg_booking_value,
+                first_booking_at: r.first_booking_at, last_booking_at: r.last_booking_at,
+                preferred_language: r.preferred_language, tags: (r.tags ?? []).join("|"), notes: r.notes,
+              })));
+              toast.success(`${filtered.length} rows`);
+            }}><Download className="h-4 w-4 me-1" />CSV</Button>
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogTrigger asChild><Button><Plus className="h-4 w-4 me-1" />{t("new")}</Button></DialogTrigger>
+              <NewCustomerDialog onDone={() => { setOpen(false); qc.invalidateQueries({ queryKey: ["customers"] }); }} />
+            </Dialog>
+          </div>
         }
       />
 
