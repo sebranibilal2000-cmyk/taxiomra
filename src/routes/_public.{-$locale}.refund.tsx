@@ -10,10 +10,9 @@ export const Route = createFileRoute("/_public/{-$locale}/refund")({
       { property: "og:title", content: "Refund Policy" },
       { property: "og:description", content: "Refund policy for taxi and chauffeur bookings." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/refund" },
       { name: "robots", content: "index,follow" },
     ],
-    links: [{ rel: "canonical", href: "/refund" }],
+    links: [],
   }),
   component: RefundPage,
 });

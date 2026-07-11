@@ -13,10 +13,9 @@ export const Route = createFileRoute("/_public/{-$locale}/airport-transfers")({
       { property: "og:title", content: "Airport Transfers" },
       { property: "og:description", content: "Meet-and-greet chauffeur transfers with flight tracking and fixed fares." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/airport-transfers" },
       { name: "keywords", content: "airport transfer, airport taxi, chauffeur, meet and greet, Riyadh airport" },
     ],
-    links: [{ rel: "canonical", href: "/airport-transfers" }],
+    links: [],
     scripts: [
       { type: "application/ld+json", children: JSON.stringify(serviceJsonLd({
         name: "Airport Transfers",

@@ -11,9 +11,8 @@ export const Route = createFileRoute("/_public/{-$locale}/about")({
       { name: "description", content: "Learn about our taxi company: our story, mission, licensed drivers, and commitment to safe reliable rides 24/7." },
       { property: "og:title", content: "About — Sur3a Taxi" },
       { property: "og:description", content: "Our story, mission, and commitment to reliable transportation." },
-      { property: "og:url", content: "/about" },
-    ],
-    links: [{ rel: "canonical", href: "/about" }],
+      ],
+    links: [],
   }),
   component: About,
 });

@@ -8,10 +8,9 @@ export const Route = createFileRoute("/_public/{-$locale}/terms")({
       { title: "Terms of Service — Sur3a Taxi" },
       { name: "description", content: "The terms that govern the use of our chauffeur services." },
       { property: "og:title", content: "Terms of Service" },
-      { property: "og:url", content: "/terms" },
       { name: "robots", content: "index,follow" },
     ],
-    links: [{ rel: "canonical", href: "/terms" }],
+    links: [],
   }),
   component: Terms,
 });

@@ -37,10 +37,9 @@ export const Route = createFileRoute("/_public/{-$locale}/")({
       { property: "og:title", content: "Sur3a Taxi — Luxury Chauffeur Service" },
       { property: "og:description", content: "Airport transfers, business travel and private rides. Book via WhatsApp or phone." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
       { property: "og:image", content: "https://sur3a-taxi.example/og-home.jpg" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [],
   }),
   component: Home,
 });

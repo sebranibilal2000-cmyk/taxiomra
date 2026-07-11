@@ -16,9 +16,8 @@ export const Route = createFileRoute("/_public/{-$locale}/contact")({
       { title: "Contact — Book Your Chauffeur 24/7" },
       { name: "description", content: "Reach our dispatch desk via WhatsApp, phone or email. Available around the clock." },
       { property: "og:title", content: "Contact — Sur3a Taxi" },
-      { property: "og:url", content: "/contact" },
-    ],
-    links: [{ rel: "canonical", href: "/contact" }],
+      ],
+    links: [],
     scripts: [{
       type: "application/ld+json",
       children: JSON.stringify({

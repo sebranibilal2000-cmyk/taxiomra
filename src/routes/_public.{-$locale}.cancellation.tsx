@@ -10,10 +10,9 @@ export const Route = createFileRoute("/_public/{-$locale}/cancellation")({
       { property: "og:title", content: "Cancellation Policy" },
       { property: "og:description", content: "Cancellation policy for taxi and chauffeur bookings." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/cancellation" },
       { name: "robots", content: "index,follow" },
     ],
-    links: [{ rel: "canonical", href: "/cancellation" }],
+    links: [],
   }),
   component: CancellationPage,
 });

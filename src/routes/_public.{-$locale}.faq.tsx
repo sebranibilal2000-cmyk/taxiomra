@@ -13,9 +13,8 @@ export const Route = createFileRoute("/_public/{-$locale}/faq")({
       { title: "FAQ — Booking, Pricing & Chauffeur Questions" },
       { name: "description", content: "Answers to common questions about booking, pricing, wait time, and payment." },
       { property: "og:title", content: "FAQ — Sur3a Taxi" },
-      { property: "og:url", content: "/faq" },
-    ],
-    links: [{ rel: "canonical", href: "/faq" }],
+      ],
+    links: [],
     scripts: loaderData ? [{
       type: "application/ld+json",
       children: JSON.stringify({

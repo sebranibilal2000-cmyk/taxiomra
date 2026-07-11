@@ -8,10 +8,9 @@ export const Route = createFileRoute("/_public/{-$locale}/privacy")({
       { title: "Privacy Policy — Sur3a Taxi" },
       { name: "description", content: "How we collect, use, and protect your personal data." },
       { property: "og:title", content: "Privacy Policy" },
-      { property: "og:url", content: "/privacy" },
       { name: "robots", content: "index,follow" },
     ],
-    links: [{ rel: "canonical", href: "/privacy" }],
+    links: [],
   }),
   component: Privacy,
 });
