@@ -1,6 +1,7 @@
-// Public read-only data via server publishable Supabase client (SSR-friendly).
+// Public read-only data + public write (contact form) via server publishable Supabase client.
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
+import { z } from "zod";
 import type { Database } from "@/integrations/supabase/types";
 
 function serverPublic() {
@@ -34,7 +35,7 @@ export const listBlogPosts = createServerFn({ method: "GET" }).handler(async () 
   const sb = serverPublic();
   const { data } = await sb
     .from("blog_posts")
-    .select("id,slug,title_ar,title_en,excerpt_ar,excerpt_en,cover_url,tags,published_at")
+    .select("id,slug,title_ar,title_en,excerpt_ar,excerpt_en,cover_url,tags,published_at,reading_time_min,featured,category_id")
     .eq("published", true)
     .order("published_at", { ascending: false });
   return data ?? [];
@@ -69,3 +70,54 @@ export const listVehicleCategories = createServerFn({ method: "GET" }).handler(a
     .order("sort_order");
   return data ?? [];
 });
+
+export const listHeroSlides = createServerFn({ method: "GET" }).handler(async () => {
+  const sb = serverPublic();
+  const { data } = await sb.from("hero_slides").select("*").eq("active", true).order("sort_order");
+  return data ?? [];
+});
+
+export const listHomepageSections = createServerFn({ method: "GET" }).handler(async () => {
+  const sb = serverPublic();
+  const { data } = await sb.from("homepage_sections").select("*").eq("enabled", true).order("sort_order");
+  return data ?? [];
+});
+
+export const listPromotions = createServerFn({ method: "GET" }).handler(async () => {
+  const sb = serverPublic();
+  const { data } = await sb
+    .from("promotions").select("*").eq("active", true).order("sort_order");
+  return data ?? [];
+});
+
+export const listPartners = createServerFn({ method: "GET" }).handler(async () => {
+  const sb = serverPublic();
+  const { data } = await sb.from("partners").select("*").eq("active", true).order("sort_order");
+  return data ?? [];
+});
+
+const contactSchema = z.object({
+  name: z.string().trim().min(2).max(120),
+  email: z.string().trim().email().max(200).optional().or(z.literal("")),
+  phone: z.string().trim().max(40).optional().or(z.literal("")),
+  subject: z.string().trim().max(200).optional().or(z.literal("")),
+  message: z.string().trim().min(5).max(4000),
+  page_url: z.string().trim().max(400).optional().or(z.literal("")),
+});
+
+export const submitContact = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => contactSchema.parse(input))
+  .handler(async ({ data }) => {
+    const sb = serverPublic();
+    const { error } = await sb.from("contact_submissions").insert({
+      name: data.name,
+      email: data.email || null,
+      phone: data.phone || null,
+      subject: data.subject || null,
+      message: data.message,
+      page_url: data.page_url || null,
+      source: "contact_form",
+    });
+    if (error) throw error;
+    return { ok: true };
+  });

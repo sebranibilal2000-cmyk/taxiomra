@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Phone, MessageCircle, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
+import { submitContact } from "@/lib/public.functions";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -42,13 +43,28 @@ function Contact() {
     { icon: Mail, title: ar ? "البريد" : "Email", value: SITE.email, href: `mailto:${SITE.email}`, cta: ar ? "أرسل بريداً" : "Send email" },
   ];
 
-  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const msg = `${form.get("name")} · ${form.get("email")}\n${form.get("message")}`;
+    const formEl = e.currentTarget;
+    const form = new FormData(formEl);
     setSending(true);
-    window.open(waLink(msg), "_blank");
-    setTimeout(() => { setSending(false); toast.success(ar ? "تم فتح واتساب" : "Opened WhatsApp"); (e.target as HTMLFormElement).reset(); }, 400);
+    try {
+      await submitContact({
+        data: {
+          name: String(form.get("name") || ""),
+          email: String(form.get("email") || ""),
+          phone: String(form.get("phone") || ""),
+          message: String(form.get("message") || ""),
+          page_url: typeof window !== "undefined" ? window.location.href : "",
+        },
+      });
+      toast.success(ar ? "استلمنا رسالتك — سنعاود التواصل قريباً" : "Message received — we'll be in touch shortly");
+      formEl.reset();
+    } catch (err: any) {
+      toast.error(err?.message || (ar ? "تعذر الإرسال" : "Could not send"));
+    } finally {
+      setSending(false);
+    }
   };
 
   return (

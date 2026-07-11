@@ -14,12 +14,15 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as PublicIndexRouteImport } from './routes/_public.index'
+import { Route as PublicTermsRouteImport } from './routes/_public.terms'
 import { Route as PublicServicesRouteImport } from './routes/_public.services'
+import { Route as PublicPrivacyRouteImport } from './routes/_public.privacy'
 import { Route as PublicPricingRouteImport } from './routes/_public.pricing'
 import { Route as PublicFleetRouteImport } from './routes/_public.fleet'
 import { Route as PublicFaqRouteImport } from './routes/_public.faq'
 import { Route as PublicContactRouteImport } from './routes/_public.contact'
 import { Route as PublicBlogRouteImport } from './routes/_public.blog'
+import { Route as PublicAirportTransfersRouteImport } from './routes/_public.airport-transfers'
 import { Route as PublicAboutRouteImport } from './routes/_public.about'
 import { Route as PublicPSlugRouteImport } from './routes/_public.p.$slug'
 import { Route as PublicBlogSlugRouteImport } from './routes/_public.blog.$slug'
@@ -80,9 +83,19 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PublicRoute,
 } as any)
+const PublicTermsRoute = PublicTermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => PublicRoute,
+} as any)
 const PublicServicesRoute = PublicServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicPrivacyRoute = PublicPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => PublicRoute,
 } as any)
 const PublicPricingRoute = PublicPricingRouteImport.update({
@@ -108,6 +121,11 @@ const PublicContactRoute = PublicContactRouteImport.update({
 const PublicBlogRoute = PublicBlogRouteImport.update({
   id: '/blog',
   path: '/blog',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicAirportTransfersRoute = PublicAirportTransfersRouteImport.update({
+  id: '/airport-transfers',
+  path: '/airport-transfers',
   getParentRoute: () => PublicRoute,
 } as any)
 const PublicAboutRoute = PublicAboutRouteImport.update({
@@ -322,12 +340,15 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/about': typeof PublicAboutRoute
+  '/airport-transfers': typeof PublicAirportTransfersRoute
   '/blog': typeof PublicBlogRouteWithChildren
   '/contact': typeof PublicContactRoute
   '/faq': typeof PublicFaqRoute
   '/fleet': typeof PublicFleetRoute
   '/pricing': typeof PublicPricingRoute
+  '/privacy': typeof PublicPrivacyRoute
   '/services': typeof PublicServicesRoute
+  '/terms': typeof PublicTermsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
@@ -369,12 +390,15 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/about': typeof PublicAboutRoute
+  '/airport-transfers': typeof PublicAirportTransfersRoute
   '/blog': typeof PublicBlogRouteWithChildren
   '/contact': typeof PublicContactRoute
   '/faq': typeof PublicFaqRoute
   '/fleet': typeof PublicFleetRoute
   '/pricing': typeof PublicPricingRoute
+  '/privacy': typeof PublicPrivacyRoute
   '/services': typeof PublicServicesRoute
+  '/terms': typeof PublicTermsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
@@ -418,12 +442,15 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_public/about': typeof PublicAboutRoute
+  '/_public/airport-transfers': typeof PublicAirportTransfersRoute
   '/_public/blog': typeof PublicBlogRouteWithChildren
   '/_public/contact': typeof PublicContactRoute
   '/_public/faq': typeof PublicFaqRoute
   '/_public/fleet': typeof PublicFleetRoute
   '/_public/pricing': typeof PublicPricingRoute
+  '/_public/privacy': typeof PublicPrivacyRoute
   '/_public/services': typeof PublicServicesRoute
+  '/_public/terms': typeof PublicTermsRoute
   '/_public/': typeof PublicIndexRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/blog': typeof AuthenticatedAdminBlogRoute
@@ -468,12 +495,15 @@ export interface FileRouteTypes {
     | '/auth'
     | '/sitemap.xml'
     | '/about'
+    | '/airport-transfers'
     | '/blog'
     | '/contact'
     | '/faq'
     | '/fleet'
     | '/pricing'
+    | '/privacy'
     | '/services'
+    | '/terms'
     | '/admin/audit'
     | '/admin/blog'
     | '/admin/bookings'
@@ -515,12 +545,15 @@ export interface FileRouteTypes {
     | '/auth'
     | '/sitemap.xml'
     | '/about'
+    | '/airport-transfers'
     | '/blog'
     | '/contact'
     | '/faq'
     | '/fleet'
     | '/pricing'
+    | '/privacy'
     | '/services'
+    | '/terms'
     | '/admin/audit'
     | '/admin/blog'
     | '/admin/bookings'
@@ -563,12 +596,15 @@ export interface FileRouteTypes {
     | '/auth'
     | '/sitemap.xml'
     | '/_public/about'
+    | '/_public/airport-transfers'
     | '/_public/blog'
     | '/_public/contact'
     | '/_public/faq'
     | '/_public/fleet'
     | '/_public/pricing'
+    | '/_public/privacy'
     | '/_public/services'
+    | '/_public/terms'
     | '/_public/'
     | '/_authenticated/admin/audit'
     | '/_authenticated/admin/blog'
@@ -651,11 +687,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/_public/terms': {
+      id: '/_public/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof PublicTermsRouteImport
+      parentRoute: typeof PublicRoute
+    }
     '/_public/services': {
       id: '/_public/services'
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof PublicServicesRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/privacy': {
+      id: '/_public/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PublicPrivacyRouteImport
       parentRoute: typeof PublicRoute
     }
     '/_public/pricing': {
@@ -691,6 +741,13 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/blog'
       preLoaderRoute: typeof PublicBlogRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/airport-transfers': {
+      id: '/_public/airport-transfers'
+      path: '/airport-transfers'
+      fullPath: '/airport-transfers'
+      preLoaderRoute: typeof PublicAirportTransfersRouteImport
       parentRoute: typeof PublicRoute
     }
     '/_public/about': {
@@ -1087,24 +1144,30 @@ const PublicBlogRouteWithChildren = PublicBlogRoute._addFileChildren(
 
 interface PublicRouteChildren {
   PublicAboutRoute: typeof PublicAboutRoute
+  PublicAirportTransfersRoute: typeof PublicAirportTransfersRoute
   PublicBlogRoute: typeof PublicBlogRouteWithChildren
   PublicContactRoute: typeof PublicContactRoute
   PublicFaqRoute: typeof PublicFaqRoute
   PublicFleetRoute: typeof PublicFleetRoute
   PublicPricingRoute: typeof PublicPricingRoute
+  PublicPrivacyRoute: typeof PublicPrivacyRoute
   PublicServicesRoute: typeof PublicServicesRoute
+  PublicTermsRoute: typeof PublicTermsRoute
   PublicIndexRoute: typeof PublicIndexRoute
   PublicPSlugRoute: typeof PublicPSlugRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicAboutRoute: PublicAboutRoute,
+  PublicAirportTransfersRoute: PublicAirportTransfersRoute,
   PublicBlogRoute: PublicBlogRouteWithChildren,
   PublicContactRoute: PublicContactRoute,
   PublicFaqRoute: PublicFaqRoute,
   PublicFleetRoute: PublicFleetRoute,
   PublicPricingRoute: PublicPricingRoute,
+  PublicPrivacyRoute: PublicPrivacyRoute,
   PublicServicesRoute: PublicServicesRoute,
+  PublicTermsRoute: PublicTermsRoute,
   PublicIndexRoute: PublicIndexRoute,
   PublicPSlugRoute: PublicPSlugRoute,
 }
