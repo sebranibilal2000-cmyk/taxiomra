@@ -2,7 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, CalendarCheck, Users, IdCard, Car, Layers, Route as RouteIcon,
   DollarSign, TicketPercent, CreditCard, Bell, BarChart3, UserCog, ShieldCheck, Settings, ScrollText,
-  FileText, HelpCircle, Newspaper, Globe, Radio,
+  FileText, HelpCircle, Newspaper, Globe, Radio, Wrench, GaugeCircle,
 } from "lucide-react";
 
 import {
