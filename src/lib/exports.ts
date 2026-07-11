@@ -11,7 +11,7 @@ export function exportCsv(filename: string, rows: any[], columns?: Column[]) {
 }
 
 export function exportExcel(filename: string, rows: any[], columns?: Column[], sheetName = "Sheet1") {
-  const cols = columns ?? Object.keys(rows[0] ?? {}).map((k) => ({ key: k }));
+  const cols: Column[] = columns ?? Object.keys(rows[0] ?? {}).map((k) => ({ key: k, label: k }));
   const data = rows.map((r) => Object.fromEntries(cols.map((c) => [c.label ?? c.key, r[c.key] ?? ""])));
   const ws = XLSX.utils.json_to_sheet(data);
   const wb = XLSX.utils.book_new();
