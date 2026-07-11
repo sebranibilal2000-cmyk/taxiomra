@@ -405,7 +405,7 @@ function EditVehicleDialog({ vehicle, onSaved }: { vehicle: any; onSaved: () => 
         registration_expiry: f.registration_expiry || null,
         insurance_expiry: f.insurance_expiry || null,
         inspection_expiry: f.inspection_expiry || null,
-        current_mileage: f.current_mileage ? Number(f.current_mileage) : null,
+        current_mileage: f.current_mileage ? Number(f.current_mileage) : 0,
         next_maintenance_date: f.next_maintenance_date || null,
         next_maintenance_mileage: f.next_maintenance_mileage ? Number(f.next_maintenance_mileage) : null,
         notes: f.notes || null,
