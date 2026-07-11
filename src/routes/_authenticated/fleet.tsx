@@ -84,7 +84,7 @@ function Fleet() {
       <DataTable data={q.data ?? []} columns={columns} loading={q.isLoading}
         actions={(r) => (
           <Select value={r.status} onValueChange={async (v) => {
-            const { error } = await supabase.from("vehicles").update({ status: v }).eq("id", r.id);
+            const { error } = await supabase.from("vehicles").update({ status: v as any }).eq("id", r.id);
             if (error) toast.error(error.message); else qc.invalidateQueries({ queryKey: ["vehicles"] });
           }}>
             <SelectTrigger className="w-36 h-8"><SelectValue /></SelectTrigger>
