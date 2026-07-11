@@ -66,6 +66,7 @@ import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin.blog'
 import { Route as AuthenticatedAdminBackupRouteImport } from './routes/_authenticated/admin.backup'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
+import { Route as AuthenticatedAdminAirportsRouteImport } from './routes/_authenticated/admin.airports'
 import { Route as AuthenticatedAdminAiAssistantRouteImport } from './routes/_authenticated/admin.ai-assistant'
 import { Route as PublicChar123LocaleChar125ServicesSlugRouteImport } from './routes/_public.{-$locale}.services.$slug'
 import { Route as PublicChar123LocaleChar125RoutesSlugRouteImport } from './routes/_public.{-$locale}.routes.$slug'
@@ -408,6 +409,12 @@ const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
   path: '/admin/audit',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminAirportsRoute =
+  AuthenticatedAdminAirportsRouteImport.update({
+    id: '/admin/airports',
+    path: '/admin/airports',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminAiAssistantRoute =
   AuthenticatedAdminAiAssistantRouteImport.update({
     id: '/admin/ai-assistant',
@@ -487,6 +494,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
   '/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
+  '/admin/airports': typeof AuthenticatedAdminAirportsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/backup': typeof AuthenticatedAdminBackupRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
@@ -557,6 +565,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
+  '/admin/airports': typeof AuthenticatedAdminAirportsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/backup': typeof AuthenticatedAdminBackupRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
@@ -629,6 +638,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_public/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
   '/_authenticated/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
+  '/_authenticated/admin/airports': typeof AuthenticatedAdminAirportsRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/backup': typeof AuthenticatedAdminBackupRoute
   '/_authenticated/admin/blog': typeof AuthenticatedAdminBlogRoute
@@ -702,6 +712,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/{-$locale}'
     | '/admin/ai-assistant'
+    | '/admin/airports'
     | '/admin/audit'
     | '/admin/backup'
     | '/admin/blog'
@@ -772,6 +783,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/sitemap.xml'
     | '/admin/ai-assistant'
+    | '/admin/airports'
     | '/admin/audit'
     | '/admin/backup'
     | '/admin/blog'
@@ -843,6 +855,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/_public/{-$locale}'
     | '/_authenticated/admin/ai-assistant'
+    | '/_authenticated/admin/airports'
     | '/_authenticated/admin/audit'
     | '/_authenticated/admin/backup'
     | '/_authenticated/admin/blog'
@@ -1317,6 +1330,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/airports': {
+      id: '/_authenticated/admin/airports'
+      path: '/admin/airports'
+      fullPath: '/admin/airports'
+      preLoaderRoute: typeof AuthenticatedAdminAirportsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/ai-assistant': {
       id: '/_authenticated/admin/ai-assistant'
       path: '/admin/ai-assistant'
@@ -1462,6 +1482,7 @@ const AuthenticatedAdminInvoicesRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminAiAssistantRoute: typeof AuthenticatedAdminAiAssistantRoute
+  AuthenticatedAdminAirportsRoute: typeof AuthenticatedAdminAirportsRoute
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
   AuthenticatedAdminBackupRoute: typeof AuthenticatedAdminBackupRoute
   AuthenticatedAdminBlogRoute: typeof AuthenticatedAdminBlogRoute
@@ -1506,6 +1527,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminAiAssistantRoute: AuthenticatedAdminAiAssistantRoute,
+  AuthenticatedAdminAirportsRoute: AuthenticatedAdminAirportsRoute,
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
   AuthenticatedAdminBackupRoute: AuthenticatedAdminBackupRoute,
   AuthenticatedAdminBlogRoute: AuthenticatedAdminBlogRoute,
