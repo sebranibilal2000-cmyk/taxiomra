@@ -78,7 +78,7 @@ export const runSeoAudit = createServerFn({ method: "GET" })
     }
     for (const p of posts ?? []) {
       const r: Row = { entity: "blog_post", id: p.id, slug: p.slug, label: `blog: ${p.title_en || p.slug}` };
-      consider(r, p.meta_title || p.title_en, p.meta_description, p.cover_image, p.slug);
+      consider(r, p.meta_title || p.title_en, p.meta_description, p.og_image_url, p.slug);
     }
     for (const [k, rows] of titleMap) if (rows.length > 1) duplicateTitles.push({ title: k, rows });
     for (const [k, rows] of descMap) if (rows.length > 1) duplicateDescriptions.push({ description: k, rows });
