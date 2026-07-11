@@ -8,7 +8,7 @@ import { useI18n } from "@/lib/i18n";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/users")({ component: Users });
+export const Route = createFileRoute("/_authenticated/admin/users")({ component: Users });
 
 const ROLES = ["admin", "manager", "dispatcher", "accountant", "driver"] as const;
 

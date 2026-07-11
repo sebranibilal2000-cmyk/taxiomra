@@ -34,7 +34,7 @@ function AuthPage() {
     if (error) { toast.error(error.message); return; }
     await refresh();
     toast.success(locale === "ar" ? "تم تسجيل الدخول" : "Signed in");
-    navigate({ to: "/dashboard" });
+    navigate({ to: "/admin/dashboard" });
   };
 
   const handleSignUp = async (e: React.FormEvent) => {

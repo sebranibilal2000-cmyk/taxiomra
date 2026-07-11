@@ -6,7 +6,7 @@ import { DataTable, type Column } from "@/components/DataTable";
 import { Badge } from "@/components/ui/badge";
 import { useI18n } from "@/lib/i18n";
 
-export const Route = createFileRoute("/_authenticated/notifications")({ component: Notifs });
+export const Route = createFileRoute("/_authenticated/admin/notifications")({ component: Notifs });
 
 function Notifs() {
   const { t } = useI18n();

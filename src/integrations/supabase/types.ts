@@ -44,6 +44,66 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_posts: {
+        Row: {
+          author_id: string | null
+          content_ar: string | null
+          content_en: string | null
+          cover_url: string | null
+          created_at: string
+          excerpt_ar: string | null
+          excerpt_en: string | null
+          id: string
+          meta_description: string | null
+          meta_title: string | null
+          published: boolean
+          published_at: string | null
+          slug: string
+          tags: string[] | null
+          title_ar: string
+          title_en: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          content_ar?: string | null
+          content_en?: string | null
+          cover_url?: string | null
+          created_at?: string
+          excerpt_ar?: string | null
+          excerpt_en?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published?: boolean
+          published_at?: string | null
+          slug: string
+          tags?: string[] | null
+          title_ar: string
+          title_en: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          content_ar?: string | null
+          content_en?: string | null
+          cover_url?: string | null
+          created_at?: string
+          excerpt_ar?: string | null
+          excerpt_en?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published?: boolean
+          published_at?: string | null
+          slug?: string
+          tags?: string[] | null
+          title_ar?: string
+          title_en?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       bookings: {
         Row: {
           airport_fee: number
@@ -182,6 +242,66 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      cms_pages: {
+        Row: {
+          body_ar: string | null
+          body_en: string | null
+          created_at: string
+          hero_image_url: string | null
+          id: string
+          meta_description: string | null
+          meta_title: string | null
+          og_image_url: string | null
+          page_type: Database["public"]["Enums"]["cms_page_type"]
+          published: boolean
+          slug: string
+          sort_order: number
+          subtitle_ar: string | null
+          subtitle_en: string | null
+          title_ar: string
+          title_en: string
+          updated_at: string
+        }
+        Insert: {
+          body_ar?: string | null
+          body_en?: string | null
+          created_at?: string
+          hero_image_url?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
+          page_type?: Database["public"]["Enums"]["cms_page_type"]
+          published?: boolean
+          slug: string
+          sort_order?: number
+          subtitle_ar?: string | null
+          subtitle_en?: string | null
+          title_ar: string
+          title_en: string
+          updated_at?: string
+        }
+        Update: {
+          body_ar?: string | null
+          body_en?: string | null
+          created_at?: string
+          hero_image_url?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
+          page_type?: Database["public"]["Enums"]["cms_page_type"]
+          published?: boolean
+          slug?: string
+          sort_order?: number
+          subtitle_ar?: string | null
+          subtitle_en?: string | null
+          title_ar?: string
+          title_en?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       coupons: {
         Row: {
@@ -328,6 +448,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      faqs: {
+        Row: {
+          answer_ar: string
+          answer_en: string
+          category: string | null
+          created_at: string
+          id: string
+          published: boolean
+          question_ar: string
+          question_en: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          answer_ar: string
+          answer_en: string
+          category?: string | null
+          created_at?: string
+          id?: string
+          published?: boolean
+          question_ar: string
+          question_en: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          answer_ar?: string
+          answer_en?: string
+          category?: string | null
+          created_at?: string
+          id?: string
+          published?: boolean
+          question_ar?: string
+          question_en?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
       }
       notifications: {
         Row: {
@@ -560,6 +719,42 @@ export type Database = {
         }
         Relationships: []
       }
+      seo_meta: {
+        Row: {
+          created_at: string
+          id: string
+          json_ld: Json | null
+          meta_description: string | null
+          meta_title: string | null
+          og_image_url: string | null
+          path: string
+          robots: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          json_ld?: Json | null
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
+          path: string
+          robots?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          json_ld?: Json | null
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
+          path?: string
+          robots?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       settings: {
         Row: {
           description: string | null
@@ -578,6 +773,51 @@ export type Database = {
           key?: string
           updated_at?: string
           value?: Json
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          id: string
+          name: string
+          published: boolean
+          quote_ar: string
+          quote_en: string
+          rating: number
+          role_ar: string | null
+          role_en: string | null
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          published?: boolean
+          quote_ar: string
+          quote_en: string
+          rating?: number
+          role_ar?: string | null
+          role_en?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          published?: boolean
+          quote_ar?: string
+          quote_en?: string
+          rating?: number
+          role_ar?: string | null
+          role_en?: string | null
+          sort_order?: number
+          updated_at?: string
         }
         Relationships: []
       }
@@ -753,6 +993,13 @@ export type Database = {
         | "completed"
         | "cancelled"
         | "no_show"
+      cms_page_type:
+        | "generic"
+        | "service"
+        | "airport"
+        | "city"
+        | "route_page"
+        | "category"
       driver_status:
         | "offline"
         | "available"
@@ -898,6 +1145,14 @@ export const Constants = {
         "completed",
         "cancelled",
         "no_show",
+      ],
+      cms_page_type: [
+        "generic",
+        "service",
+        "airport",
+        "city",
+        "route_page",
+        "category",
       ],
       driver_status: [
         "offline",

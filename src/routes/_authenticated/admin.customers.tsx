@@ -13,7 +13,7 @@ import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 
-export const Route = createFileRoute("/_authenticated/customers")({ component: CustomersPage });
+export const Route = createFileRoute("/_authenticated/admin/customers")({ component: CustomersPage });
 
 function CustomersPage() {
   const { t, locale } = useI18n();

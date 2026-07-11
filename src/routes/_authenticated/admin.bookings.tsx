@@ -15,7 +15,7 @@ import { Plus, UserPlus2 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/bookings")({ component: BookingsPage });
+export const Route = createFileRoute("/_authenticated/admin/bookings")({ component: BookingsPage });
 
 function BookingsPage() {
   const { t, locale } = useI18n();

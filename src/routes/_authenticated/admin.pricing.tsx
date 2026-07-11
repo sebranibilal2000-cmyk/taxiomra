@@ -8,7 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/pricing")({ component: Pricing });
+export const Route = createFileRoute("/_authenticated/admin/pricing")({ component: Pricing });
 
 function Pricing() {
   const { t, locale } = useI18n();

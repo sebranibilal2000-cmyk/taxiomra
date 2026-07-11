@@ -14,7 +14,7 @@ import { Plus } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/drivers")({ component: Drivers });
+export const Route = createFileRoute("/_authenticated/admin/drivers")({ component: Drivers });
 
 function Drivers() {
   const { t } = useI18n();

@@ -8,7 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/categories")({ component: Categories });
+export const Route = createFileRoute("/_authenticated/admin/categories")({ component: Categories });
 
 function Categories() {
   const { t } = useI18n();
