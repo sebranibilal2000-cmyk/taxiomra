@@ -11,11 +11,19 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, UserPlus2 } from "lucide-react";
+import { Plus, UserPlus2, Star, StarOff, ListTree } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
+import { ActivityTimeline } from "@/components/ActivityTimeline";
+import { Badge } from "@/components/ui/badge";
 
 export const Route = createFileRoute("/_authenticated/admin/bookings")({ component: BookingsPage });
+
+const BOOKING_STATUSES = ["pending", "confirmed", "assigned", "en_route", "on_trip", "picked_up", "completed", "cancelled", "no_show"] as const;
+const STATUS_LABELS: Record<string,string> = {
+  pending: "Pending", confirmed: "Confirmed", assigned: "Driver Assigned", en_route: "En Route",
+  on_trip: "On Trip", picked_up: "Picked Up", completed: "Completed", cancelled: "Cancelled", no_show: "No Show",
+};
 
 function BookingsPage() {
   const { t, locale } = useI18n();
