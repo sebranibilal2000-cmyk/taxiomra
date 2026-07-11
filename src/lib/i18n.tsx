@@ -1,11 +1,49 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, type ReactNode } from "react";
+import { useParams, useRouter, useRouterState } from "@tanstack/react-router";
 
 export type Locale = "ar" | "en";
+export const LOCALES: Locale[] = ["ar", "en"];
+export const DEFAULT_LOCALE: Locale = "ar";
+
+export function isLocale(v: unknown): v is Locale {
+  return v === "ar" || v === "en";
+}
+
+/** Extract locale from a pathname like /ar/foo, /en, /about → returns locale or undefined. */
+export function localeFromPath(pathname: string): Locale | undefined {
+  const seg = pathname.split("/").filter(Boolean)[0];
+  return isLocale(seg) ? seg : undefined;
+}
+
+/** Strip the locale prefix from a pathname; returns "/rest" (leading slash preserved). */
+export function stripLocale(pathname: string): string {
+  const loc = localeFromPath(pathname);
+  if (!loc) return pathname || "/";
+  const rest = pathname.slice(("/" + loc).length);
+  return rest === "" ? "/" : rest;
+}
+
+/** Build a fully-qualified path with the given locale prefix. */
+export function withLocale(locale: Locale, pathname: string): string {
+  const rest = stripLocale(pathname);
+  if (rest === "/" || rest === "") return `/${locale}`;
+  return `/${locale}${rest}`;
+}
+
+/** Parse the Accept-Language header and return the best-supported locale. */
+export function pickLocaleFromAcceptLanguage(header: string | null | undefined): Locale {
+  if (!header) return DEFAULT_LOCALE;
+  const parts = header.split(",").map((p) => p.trim().split(";")[0].toLowerCase());
+  for (const p of parts) {
+    if (p.startsWith("ar")) return "ar";
+    if (p.startsWith("en")) return "en";
+  }
+  return DEFAULT_LOCALE;
+}
 
 type Dict = Record<string, { ar: string; en: string }>;
 
 const dict: Dict = {
-  // nav
   dashboard: { ar: "لوحة التحكم", en: "Dashboard" },
   bookings: { ar: "الحجوزات", en: "Bookings" },
   customers: { ar: "العملاء", en: "Customers" },
@@ -22,14 +60,12 @@ const dict: Dict = {
   roles: { ar: "الأدوار والصلاحيات", en: "Roles & Permissions" },
   settings: { ar: "الإعدادات", en: "Settings" },
   audit: { ar: "سجل التدقيق", en: "Audit Logs" },
-  // widgets
   trips_today: { ar: "رحلات اليوم", en: "Trips Today" },
   revenue: { ar: "الإيرادات", en: "Revenue" },
   available_drivers: { ar: "سائقون متاحون", en: "Available Drivers" },
   active_trips: { ar: "رحلات نشطة", en: "Active Trips" },
   pending_bookings: { ar: "حجوزات معلقة", en: "Pending Bookings" },
   total_customers: { ar: "إجمالي العملاء", en: "Total Customers" },
-  // common
   search: { ar: "بحث…", en: "Search…" },
   signout: { ar: "تسجيل الخروج", en: "Sign out" },
   signin: { ar: "تسجيل الدخول", en: "Sign in" },
@@ -88,23 +124,54 @@ type Ctx = {
 
 const I18nCtx = createContext<Ctx | null>(null);
 
+/**
+ * URL-first i18n provider. Locale is resolved from:
+ *   1. Path prefix /ar or /en (authoritative)
+ *   2. localStorage("locale") as user preference
+ *   3. DEFAULT_LOCALE ("ar")
+ * `setLocale` navigates to the same path with the swapped locale prefix and
+ * persists the preference to localStorage.
+ */
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(() => {
-    if (typeof window === "undefined") return "ar";
-    return (localStorage.getItem("locale") as Locale) || "ar";
-  });
+  const router = useRouter();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  // strict:false because I18nProvider wraps every route, not just localized ones.
+  const params = useParams({ strict: false }) as { locale?: string };
 
-  useEffect(() => {
-    const dir = locale === "ar" ? "rtl" : "ltr";
-    document.documentElement.setAttribute("lang", locale);
-    document.documentElement.setAttribute("dir", dir);
-    localStorage.setItem("locale", locale);
-  }, [locale]);
+  const locale: Locale = useMemo(() => {
+    if (isLocale(params.locale)) return params.locale;
+    const fromUrl = localeFromPath(pathname);
+    if (fromUrl) return fromUrl;
+    if (typeof window !== "undefined") {
+      const stored = window.localStorage.getItem("locale");
+      if (isLocale(stored)) return stored;
+    }
+    return DEFAULT_LOCALE;
+  }, [params.locale, pathname]);
 
-  const t = (key: string) => dict[key]?.[locale] ?? key;
   const dir = locale === "ar" ? "rtl" : "ltr";
 
-  return <I18nCtx.Provider value={{ locale, dir, t, setLocale: setLocaleState }}>{children}</I18nCtx.Provider>;
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.documentElement.setAttribute("lang", locale);
+    document.documentElement.setAttribute("dir", dir);
+    try {
+      window.localStorage.setItem("locale", locale);
+    } catch {}
+  }, [locale, dir]);
+
+  const setLocale = (l: Locale) => {
+    if (l === locale) return;
+    try {
+      window.localStorage.setItem("locale", l);
+    } catch {}
+    const target = withLocale(l, pathname);
+    router.navigate({ to: target, replace: false });
+  };
+
+  const t = (key: string) => dict[key]?.[locale] ?? key;
+
+  return <I18nCtx.Provider value={{ locale, dir, t, setLocale }}>{children}</I18nCtx.Provider>;
 }
 
 export function useI18n() {
