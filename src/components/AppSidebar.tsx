@@ -7,6 +7,7 @@ import {
   Sparkles, Image as ImageIcon2, Megaphone, Handshake, Inbox, LayoutTemplate,
   Bot, MessageCircle, Activity, AlertTriangle, DatabaseBackup,
   Building, Plane, MapPin, ConciergeBell, Quote, UsersRound, ListTree,
+  Search, ArrowRightLeft, Wand2,
 } from "lucide-react";
 
 import {

@@ -34,6 +34,7 @@ import { Route as AuthenticatedAdminTestimonialsRouteImport } from './routes/_au
 import { Route as AuthenticatedAdminTeamRouteImport } from './routes/_authenticated/admin.team'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminServicesRouteImport } from './routes/_authenticated/admin.services'
+import { Route as AuthenticatedAdminSeoGeneratorRouteImport } from './routes/_authenticated/admin.seo-generator'
 import { Route as AuthenticatedAdminSeoRouteImport } from './routes/_authenticated/admin.seo'
 import { Route as AuthenticatedAdminRoutesRouteImport } from './routes/_authenticated/admin.routes'
 import { Route as AuthenticatedAdminRoutePagesRouteImport } from './routes/_authenticated/admin.route-pages'
@@ -230,6 +231,12 @@ const AuthenticatedAdminServicesRoute =
   AuthenticatedAdminServicesRouteImport.update({
     id: '/admin/services',
     path: '/admin/services',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminSeoGeneratorRoute =
+  AuthenticatedAdminSeoGeneratorRouteImport.update({
+    id: '/admin/seo-generator',
+    path: '/admin/seo-generator',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminSeoRoute = AuthenticatedAdminSeoRouteImport.update({
@@ -596,6 +603,7 @@ export interface FileRoutesByFullPath {
   '/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
   '/admin/routes': typeof AuthenticatedAdminRoutesRoute
   '/admin/seo': typeof AuthenticatedAdminSeoRoute
+  '/admin/seo-generator': typeof AuthenticatedAdminSeoGeneratorRoute
   '/admin/services': typeof AuthenticatedAdminServicesRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/team': typeof AuthenticatedAdminTeamRoute
@@ -676,6 +684,7 @@ export interface FileRoutesByTo {
   '/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
   '/admin/routes': typeof AuthenticatedAdminRoutesRoute
   '/admin/seo': typeof AuthenticatedAdminSeoRoute
+  '/admin/seo-generator': typeof AuthenticatedAdminSeoGeneratorRoute
   '/admin/services': typeof AuthenticatedAdminServicesRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/team': typeof AuthenticatedAdminTeamRoute
@@ -758,6 +767,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
   '/_authenticated/admin/routes': typeof AuthenticatedAdminRoutesRoute
   '/_authenticated/admin/seo': typeof AuthenticatedAdminSeoRoute
+  '/_authenticated/admin/seo-generator': typeof AuthenticatedAdminSeoGeneratorRoute
   '/_authenticated/admin/services': typeof AuthenticatedAdminServicesRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/team': typeof AuthenticatedAdminTeamRoute
@@ -841,6 +851,7 @@ export interface FileRouteTypes {
     | '/admin/route-pages'
     | '/admin/routes'
     | '/admin/seo'
+    | '/admin/seo-generator'
     | '/admin/services'
     | '/admin/settings'
     | '/admin/team'
@@ -921,6 +932,7 @@ export interface FileRouteTypes {
     | '/admin/route-pages'
     | '/admin/routes'
     | '/admin/seo'
+    | '/admin/seo-generator'
     | '/admin/services'
     | '/admin/settings'
     | '/admin/team'
@@ -1002,6 +1014,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/route-pages'
     | '/_authenticated/admin/routes'
     | '/_authenticated/admin/seo'
+    | '/_authenticated/admin/seo-generator'
     | '/_authenticated/admin/services'
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/team'
@@ -1218,6 +1231,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/services'
       fullPath: '/admin/services'
       preLoaderRoute: typeof AuthenticatedAdminServicesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/seo-generator': {
+      id: '/_authenticated/admin/seo-generator'
+      path: '/admin/seo-generator'
+      fullPath: '/admin/seo-generator'
+      preLoaderRoute: typeof AuthenticatedAdminSeoGeneratorRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/seo': {
@@ -1701,6 +1721,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoutePagesRoute: typeof AuthenticatedAdminRoutePagesRoute
   AuthenticatedAdminRoutesRoute: typeof AuthenticatedAdminRoutesRoute
   AuthenticatedAdminSeoRoute: typeof AuthenticatedAdminSeoRoute
+  AuthenticatedAdminSeoGeneratorRoute: typeof AuthenticatedAdminSeoGeneratorRoute
   AuthenticatedAdminServicesRoute: typeof AuthenticatedAdminServicesRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminTeamRoute: typeof AuthenticatedAdminTeamRoute
@@ -1755,6 +1776,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoutePagesRoute: AuthenticatedAdminRoutePagesRoute,
   AuthenticatedAdminRoutesRoute: AuthenticatedAdminRoutesRoute,
   AuthenticatedAdminSeoRoute: AuthenticatedAdminSeoRoute,
+  AuthenticatedAdminSeoGeneratorRoute: AuthenticatedAdminSeoGeneratorRoute,
   AuthenticatedAdminServicesRoute: AuthenticatedAdminServicesRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminTeamRoute: AuthenticatedAdminTeamRoute,
