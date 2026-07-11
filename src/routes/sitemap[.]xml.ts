@@ -38,14 +38,30 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/cancellation", changefreq: "yearly", priority: "0.3" },
         ];
         try {
-          const [{ data: pages }, { data: posts }] = await Promise.all([
-            sb.from("cms_pages").select("slug,updated_at").eq("published", true),
+          const [{ data: pages }, { data: posts }, { data: cats }] = await Promise.all([
+            sb.from("cms_pages").select("slug,page_type,updated_at").eq("published", true),
             sb.from("blog_posts").select("slug,updated_at").eq("published", true),
+            sb.from("vehicle_categories").select("code,created_at").eq("is_active", true),
           ]);
-          for (const p of pages ?? [])
-            entries.push({ path: `/p/${p.slug}`, lastmod: p.updated_at?.slice(0, 10), changefreq: "monthly", priority: "0.7" });
+          const typeToPrefix: Record<string, string> = {
+            service: "/services",
+            city: "/cities",
+            airport: "/airports",
+            route_page: "/routes",
+          };
+          for (const p of pages ?? []) {
+            const prefix = typeToPrefix[(p as any).page_type] ?? "/p";
+            entries.push({
+              path: `${prefix}/${p.slug}`,
+              lastmod: p.updated_at?.slice(0, 10),
+              changefreq: "monthly",
+              priority: "0.7",
+            });
+          }
           for (const p of posts ?? [])
             entries.push({ path: `/blog/${p.slug}`, lastmod: p.updated_at?.slice(0, 10), changefreq: "monthly", priority: "0.6" });
+          for (const c of cats ?? [])
+            entries.push({ path: `/fleet/${(c as any).code}`, changefreq: "monthly", priority: "0.7" });
         } catch {
           /* Data API unreachable — fall back to the static entries. */
         }

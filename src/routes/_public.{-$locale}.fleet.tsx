@@ -3,7 +3,7 @@ import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { listVehicleCategories } from "@/lib/public.functions";
 import { Button } from "@/components/ui/button";
 import { Users, Briefcase, ArrowRight, CheckCircle2, MessageCircle } from "lucide-react";
-import { useI18n } from "@/lib/i18n";
+import { useI18n, withLocale } from "@/lib/i18n";
 import { waLink } from "@/lib/site-info";
 import sedanImg from "@/assets/fleet-sedan.jpg";
 import suvImg from "@/assets/fleet-suv.jpg";
@@ -82,11 +82,18 @@ function Fleet() {
                     <li key={f.en} className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-gold shrink-0" /><span className="text-muted-foreground">{ar ? f.ar : f.en}</span></li>
                   ))}
                 </ul>
-                <Button asChild size="lg" className="rounded-full h-12 px-6">
-                  <a href={waLink(ar ? `أرغب بحجز ${tr?.name}` : `Booking inquiry — ${tr?.name}`)} target="_blank" rel="noopener">
-                    <MessageCircle className="h-5 w-5 me-2" /> {ar ? "احجز هذه السيارة" : "Reserve this vehicle"}
-                  </a>
-                </Button>
+                <div className="flex flex-wrap gap-3">
+                  <Button asChild size="lg" className="rounded-full h-12 px-6">
+                    <a href={waLink(ar ? `أرغب بحجز ${tr?.name}` : `Booking inquiry — ${tr?.name}`)} target="_blank" rel="noopener">
+                      <MessageCircle className="h-5 w-5 me-2" /> {ar ? "احجز هذه السيارة" : "Reserve this vehicle"}
+                    </a>
+                  </Button>
+                  <Button asChild size="lg" variant="outline" className="rounded-full h-12 px-6">
+                    <a href={withLocale(locale, `/fleet/${c.code}`)}>
+                      {ar ? "التفاصيل" : "View details"} <ArrowRight className="h-4 w-4 ms-2 rtl:rotate-180" />
+                    </a>
+                  </Button>
+                </div>
               </div>
             </article>
           );
