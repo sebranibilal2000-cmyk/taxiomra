@@ -32,12 +32,12 @@ export const Route = createFileRoute("/_public/{-$locale}/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(homeOpts()),
   head: () => ({
     meta: [
-      { title: "Sur3a Taxi — Luxury Chauffeur Service, Airport Transfers 24/7" },
+      { title: "Jeddah Travels — Luxury Chauffeur Service, Airport Transfers 24/7" },
       { name: "description", content: "Premium chauffeur & taxi service. Airport transfers, business travel and private rides. Book instantly via WhatsApp or phone — licensed drivers, fixed fares, 24/7." },
-      { property: "og:title", content: "Sur3a Taxi — Luxury Chauffeur Service" },
+      { property: "og:title", content: "Jeddah Travels — Luxury Chauffeur Service" },
       { property: "og:description", content: "Airport transfers, business travel and private rides. Book via WhatsApp or phone." },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://sur3a-taxi.example/og-home.jpg" },
+      { property: "og:image", content: "https://mazarat-sa.online/og-home.jpg" },
     ],
     links: [],
   }),

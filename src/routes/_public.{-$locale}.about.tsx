@@ -7,9 +7,9 @@ import { SITE } from "@/lib/site-info";
 export const Route = createFileRoute("/_public/{-$locale}/about")({
   head: () => ({
     meta: [
-      { title: "About Us — Sur3a Taxi Company" },
+      { title: "About Us — Jeddah Travels Company" },
       { name: "description", content: "Learn about our taxi company: our story, mission, licensed drivers, and commitment to safe reliable rides 24/7." },
-      { property: "og:title", content: "About — Sur3a Taxi" },
+      { property: "og:title", content: "About — Jeddah Travels" },
       { property: "og:description", content: "Our story, mission, and commitment to reliable transportation." },
       ],
     links: [],

@@ -5,7 +5,7 @@ import { SITE } from "@/lib/site-info";
 export const Route = createFileRoute("/_public/{-$locale}/refund")({
   head: () => ({
     meta: [
-      { title: "Refund Policy — Sur3a Taxi" },
+      { title: "Refund Policy — Jeddah Travels" },
       { name: "description", content: "Our refund policy for taxi bookings, cancellations, and disputed charges." },
       { property: "og:title", content: "Refund Policy" },
       { property: "og:description", content: "Refund policy for taxi and chauffeur bookings." },

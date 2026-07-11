@@ -2,14 +2,14 @@
 // Staff can edit these via the CMS-managed Settings page (public/company keys)
 // in a later iteration; kept as constants here for reliable SSR rendering.
 export const SITE = {
-  brand: { ar: "سُرعة تاكسي", en: "Sur3a Taxi" },
+  brand: { ar: "أسفار جدة", en: "Jeddah Travels" },
   tagline: {
     ar: "شركة تاكسي احترافية — حجز عبر الواتساب والاتصال ٢٤/٧",
     en: "Professional taxi company — book by WhatsApp or phone 24/7",
   },
   phone: "+966500000000",
   whatsapp: "966500000000", // digits only, for wa.me
-  email: "info@sur3a-taxi.example",
+  email: "info@mazarat-sa.online",
   address: {
     ar: "الرياض، المملكة العربية السعودية",
     en: "Riyadh, Saudi Arabia",

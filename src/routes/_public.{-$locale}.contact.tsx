@@ -15,7 +15,7 @@ export const Route = createFileRoute("/_public/{-$locale}/contact")({
     meta: [
       { title: "Contact — Book Your Chauffeur 24/7" },
       { name: "description", content: "Reach our dispatch desk via WhatsApp, phone or email. Available around the clock." },
-      { property: "og:title", content: "Contact — Sur3a Taxi" },
+      { property: "og:title", content: "Contact — Jeddah Travels" },
       ],
     links: [],
     scripts: [{
