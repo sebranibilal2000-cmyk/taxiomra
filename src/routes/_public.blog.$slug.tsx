@@ -27,7 +27,7 @@ export const Route = createFileRoute("/_public/blog/$slug")({
         { property: "og:description", content: desc },
         { property: "og:type", content: "article" },
         { property: "og:url", content: `/blog/${params.slug}` },
-        ...(loaderData.cover_image_url ? [{ property: "og:image", content: loaderData.cover_image_url }] : []),
+        ...(loaderData.cover_url ? [{ property: "og:image", content: loaderData.cover_url }] : []),
       ],
       links: [{ rel: "canonical", href: `/blog/${params.slug}` }],
       scripts: [{
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/_public/blog/$slug")({
           "@type": "Article",
           headline: title,
           description: desc,
-          image: loaderData.cover_image_url || undefined,
+          image: loaderData.cover_url || undefined,
           datePublished: loaderData.published_at,
           author: { "@type": "Organization", name: SITE.brand.en },
         }),
@@ -59,10 +59,10 @@ function BlogPost() {
   const { data: p } = useSuspenseQuery(opts(params.slug));
   return (
     <article className="container mx-auto px-4 py-12 max-w-3xl">
-      {p.cover_image_url && <img src={p.cover_image_url} alt={ar ? p.title_ar : p.title_en} className="w-full aspect-[16/9] object-cover rounded-2xl mb-8" />}
+      {p.cover_url && <img src={p.cover_url} alt={ar ? p.title_ar : p.title_en} className="w-full aspect-[16/9] object-cover rounded-2xl mb-8" />}
       <h1 className="text-3xl md:text-4xl font-bold mb-4">{ar ? p.title_ar : p.title_en}</h1>
       {p.published_at && <div className="text-sm text-muted-foreground mb-8">{new Date(p.published_at).toLocaleDateString(locale === "ar" ? "ar" : "en")}</div>}
-      <div className="prose prose-neutral dark:prose-invert max-w-none whitespace-pre-line leading-relaxed text-foreground">{ar ? p.body_ar : p.body_en}</div>
+      <div className="prose prose-neutral dark:prose-invert max-w-none whitespace-pre-line leading-relaxed text-foreground">{ar ? p.content_ar : p.content_en}</div>
     </article>
   );
 }
