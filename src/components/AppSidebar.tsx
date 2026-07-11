@@ -48,6 +48,15 @@ export function AppSidebar() {
       ],
     },
     {
+      label: "CMS / Website",
+      items: [
+        { title: "Pages", url: "/admin/pages", icon: FileText },
+        { title: "Blog", url: "/admin/blog", icon: Newspaper },
+        { title: "FAQ", url: "/admin/faqs", icon: HelpCircle },
+        { title: "Preview site", url: "/", icon: Globe },
+      ],
+    },
+    {
       label: t("system"),
       items: [
         { title: t("notifications"), url: "/admin/notifications", icon: Bell },
@@ -59,6 +68,7 @@ export function AppSidebar() {
       ],
     },
   ];
+
 
   return (
     <Sidebar collapsible="icon">
