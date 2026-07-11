@@ -7,7 +7,7 @@ import { CalendarCheck, DollarSign, Users, Car, Clock, ListChecks } from "lucide
 import { useI18n } from "@/lib/i18n";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/StatusBadge";
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, LineChart, Line, Legend,
 } from "recharts";
@@ -32,11 +32,10 @@ function Dashboard() {
         supabase.from("drivers").select("id", { count: "exact", head: true }).eq("status", "available"),
         supabase.from("customers").select("id", { count: "exact", head: true }),
         supabase.from("payments").select("amount").eq("status", "paid").gte("created_at", iso),
-        supabase.from("bookings").select("created_at, final_fare, status").gte("created_at", new Date(Date.now() - 7 * 864e5).toISOString()),
+        supabase.from("bookings").select("created_at, total_fare").gte("created_at", new Date(Date.now() - 7 * 864e5).toISOString()),
       ]);
 
       const revenueToday = (revenueRes.data ?? []).reduce((a, b: any) => a + Number(b.amount || 0), 0);
-      // build 7-day chart
       const byDay = new Map<string, { trips: number; revenue: number }>();
       for (let i = 6; i >= 0; i--) {
         const d = new Date(); d.setDate(d.getDate() - i); d.setHours(0, 0, 0, 0);
@@ -44,7 +43,7 @@ function Dashboard() {
       }
       (weekly.data ?? []).forEach((row: any) => {
         const k = new Date(row.created_at).toISOString().slice(0, 10);
-        const cur = byDay.get(k); if (cur) { cur.trips += 1; cur.revenue += Number(row.final_fare || 0); }
+        const cur = byDay.get(k); if (cur) { cur.trips += 1; cur.revenue += Number(row.total_fare || 0); }
       });
       const chart = Array.from(byDay.entries()).map(([day, v]) => ({ day: day.slice(5), ...v }));
 
@@ -64,7 +63,7 @@ function Dashboard() {
     queryKey: ["dashboard-recent"],
     queryFn: async () => {
       const { data } = await supabase.from("bookings")
-        .select("id, code, status, final_fare, pickup_address, dropoff_address, created_at")
+        .select("id, code, status, total_fare, pickup_location, dropoff_location, created_at")
         .order("created_at", { ascending: false }).limit(8);
       return data ?? [];
     },
@@ -99,7 +98,7 @@ function Dashboard() {
                 <XAxis dataKey="day" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="trips" fill="hsl(var(--primary))" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="trips" fill="var(--color-primary)" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -114,7 +113,7 @@ function Dashboard() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="revenue" stroke="hsl(var(--chart-3))" strokeWidth={2} />
+                <Line type="monotone" dataKey="revenue" stroke="var(--color-chart-3)" strokeWidth={2} />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -138,14 +137,14 @@ function Dashboard() {
               {(recent.data ?? []).map((b: any) => (
                 <TableRow key={b.id}>
                   <TableCell className="font-mono text-xs">{b.code}</TableCell>
-                  <TableCell className="max-w-40 truncate">{b.pickup_address}</TableCell>
-                  <TableCell className="max-w-40 truncate">{b.dropoff_address}</TableCell>
-                  <TableCell>{b.final_fare ? fmt(Number(b.final_fare)) : "—"}</TableCell>
-                  <TableCell><Badge variant="secondary">{b.status}</Badge></TableCell>
+                  <TableCell className="max-w-40 truncate">{b.pickup_location}</TableCell>
+                  <TableCell className="max-w-40 truncate">{b.dropoff_location}</TableCell>
+                  <TableCell>{b.total_fare ? fmt(Number(b.total_fare)) : "—"}</TableCell>
+                  <TableCell><StatusBadge value={b.status} /></TableCell>
                 </TableRow>
               ))}
               {(recent.data ?? []).length === 0 && (
-                <TableRow><TableCell colSpan={5} className="text-center text-muted-foreground py-6">{t("no_data")}</TableCell></TableRow>
+                <tr><td colSpan={5} className="text-center text-muted-foreground py-6">{t("no_data")}</td></tr>
               )}
             </TableBody>
           </Table>
