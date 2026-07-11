@@ -719,6 +719,42 @@ export type Database = {
         }
         Relationships: []
       }
+      seo_meta: {
+        Row: {
+          created_at: string
+          id: string
+          json_ld: Json | null
+          meta_description: string | null
+          meta_title: string | null
+          og_image_url: string | null
+          path: string
+          robots: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          json_ld?: Json | null
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
+          path: string
+          robots?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          json_ld?: Json | null
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
+          path?: string
+          robots?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       settings: {
         Row: {
           description: string | null
@@ -737,6 +773,51 @@ export type Database = {
           key?: string
           updated_at?: string
           value?: Json
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          id: string
+          name: string
+          published: boolean
+          quote_ar: string
+          quote_en: string
+          rating: number
+          role_ar: string | null
+          role_en: string | null
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          published?: boolean
+          quote_ar: string
+          quote_en: string
+          rating?: number
+          role_ar?: string | null
+          role_en?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          published?: boolean
+          quote_ar?: string
+          quote_en?: string
+          rating?: number
+          role_ar?: string | null
+          role_en?: string | null
+          sort_order?: number
+          updated_at?: string
         }
         Relationships: []
       }
