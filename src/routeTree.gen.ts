@@ -38,6 +38,7 @@ import { Route as AuthenticatedAdminCustomersRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminCouponsRouteImport } from './routes/_authenticated/admin.coupons'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin.categories'
 import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin.bookings'
+import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin.blog'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -195,6 +196,11 @@ const AuthenticatedAdminBookingsRoute =
     path: '/admin/bookings',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminBlogRoute = AuthenticatedAdminBlogRouteImport.update({
+  id: '/admin/blog',
+  path: '/admin/blog',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
   id: '/admin/audit',
   path: '/admin/audit',
@@ -213,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PublicPricingRoute
   '/services': typeof PublicServicesRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/coupons': typeof AuthenticatedAdminCouponsRoute
@@ -243,6 +250,7 @@ export interface FileRoutesByTo {
   '/pricing': typeof PublicPricingRoute
   '/services': typeof PublicServicesRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/coupons': typeof AuthenticatedAdminCouponsRoute
@@ -276,6 +284,7 @@ export interface FileRoutesById {
   '/_public/services': typeof PublicServicesRoute
   '/_public/': typeof PublicIndexRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/_authenticated/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/_authenticated/admin/coupons': typeof AuthenticatedAdminCouponsRoute
@@ -308,6 +317,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/services'
     | '/admin/audit'
+    | '/admin/blog'
     | '/admin/bookings'
     | '/admin/categories'
     | '/admin/coupons'
@@ -338,6 +348,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/services'
     | '/admin/audit'
+    | '/admin/blog'
     | '/admin/bookings'
     | '/admin/categories'
     | '/admin/coupons'
@@ -370,6 +381,7 @@ export interface FileRouteTypes {
     | '/_public/services'
     | '/_public/'
     | '/_authenticated/admin/audit'
+    | '/_authenticated/admin/blog'
     | '/_authenticated/admin/bookings'
     | '/_authenticated/admin/categories'
     | '/_authenticated/admin/coupons'
@@ -601,6 +613,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminBookingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/blog': {
+      id: '/_authenticated/admin/blog'
+      path: '/admin/blog'
+      fullPath: '/admin/blog'
+      preLoaderRoute: typeof AuthenticatedAdminBlogRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/audit': {
       id: '/_authenticated/admin/audit'
       path: '/admin/audit'
@@ -613,6 +632,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
+  AuthenticatedAdminBlogRoute: typeof AuthenticatedAdminBlogRoute
   AuthenticatedAdminBookingsRoute: typeof AuthenticatedAdminBookingsRoute
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
   AuthenticatedAdminCouponsRoute: typeof AuthenticatedAdminCouponsRoute
@@ -632,6 +652,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
+  AuthenticatedAdminBlogRoute: AuthenticatedAdminBlogRoute,
   AuthenticatedAdminBookingsRoute: AuthenticatedAdminBookingsRoute,
   AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
   AuthenticatedAdminCouponsRoute: AuthenticatedAdminCouponsRoute,

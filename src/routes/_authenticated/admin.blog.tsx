@@ -26,7 +26,7 @@ function BlogAdmin() {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Row | null>(null);
 
-  const save = async (form: FormData) => {
+  const save = async (form: FormData): Promise<void> => {
     const payload: any = {
       slug: (form.get("slug") as string) || slugify(form.get("title_en") as string),
       title_en: form.get("title_en"),
@@ -44,7 +44,7 @@ function BlogAdmin() {
     const res = editing
       ? await supabase.from("blog_posts").update(payload).eq("id", editing.id)
       : await supabase.from("blog_posts").insert(payload);
-    if (res.error) return toast.error(res.error.message);
+    if (res.error) { toast.error(res.error.message); return; }
     toast.success("Saved");
     setOpen(false); setEditing(null);
     qc.invalidateQueries({ queryKey: ["blog-admin"] });
@@ -53,7 +53,7 @@ function BlogAdmin() {
   const del = async (id: string) => {
     if (!confirm("Delete this post?")) return;
     const { error } = await supabase.from("blog_posts").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["blog-admin"] });
   };
 
@@ -70,7 +70,7 @@ function BlogAdmin() {
 
   return (
     <div>
-      <PageHeader title="Blog Posts" description="Manage your blog / news articles for the public website.">
+      <div className="flex justify-between items-center mb-6"><PageHeader title="Blog Posts" description="Manage your blog / news articles for the public website." />
         <Dialog open={open} onOpenChange={(o) => { setOpen(o); if (!o) setEditing(null); }}>
           <DialogTrigger asChild><Button><Plus className="h-4 w-4 me-2" /> New Post</Button></DialogTrigger>
           <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
@@ -99,7 +99,7 @@ function BlogAdmin() {
             </form>
           </DialogContent>
         </Dialog>
-      </PageHeader>
+      </div>
       <DataTable data={q.data ?? []} columns={cols} loading={q.isLoading} />
     </div>
   );
