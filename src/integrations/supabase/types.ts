@@ -77,6 +77,60 @@ export type Database = {
         }
         Relationships: []
       }
+      ai_drafts: {
+        Row: {
+          applied_at: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          input: Json
+          kind: string
+          locale: string | null
+          notes: string | null
+          output: Json
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          target_entity: string | null
+          target_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          applied_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          input?: Json
+          kind: string
+          locale?: string | null
+          notes?: string | null
+          output?: Json
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          target_entity?: string | null
+          target_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          applied_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          input?: Json
+          kind?: string
+          locale?: string | null
+          notes?: string | null
+          output?: Json
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          target_entity?: string | null
+          target_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       ai_messages: {
         Row: {
           content: Json
@@ -2008,6 +2062,66 @@ export type Database = {
           id?: string
           location?: string
           name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      notification_queue: {
+        Row: {
+          attempts: number
+          channel: string
+          created_at: string
+          created_by: string | null
+          id: string
+          last_error: string | null
+          max_attempts: number
+          payload: Json
+          recipient: string
+          related_entity: string | null
+          related_id: string | null
+          scheduled_for: string
+          sent_at: string | null
+          status: string
+          subject: string | null
+          template: string | null
+          updated_at: string
+        }
+        Insert: {
+          attempts?: number
+          channel: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          last_error?: string | null
+          max_attempts?: number
+          payload?: Json
+          recipient: string
+          related_entity?: string | null
+          related_id?: string | null
+          scheduled_for?: string
+          sent_at?: string | null
+          status?: string
+          subject?: string | null
+          template?: string | null
+          updated_at?: string
+        }
+        Update: {
+          attempts?: number
+          channel?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          last_error?: string | null
+          max_attempts?: number
+          payload?: Json
+          recipient?: string
+          related_entity?: string | null
+          related_id?: string | null
+          scheduled_for?: string
+          sent_at?: string | null
+          status?: string
+          subject?: string | null
+          template?: string | null
           updated_at?: string
         }
         Relationships: []

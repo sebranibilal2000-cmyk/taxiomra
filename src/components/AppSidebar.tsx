@@ -82,7 +82,9 @@ export function AppSidebar() {
     ]},
     { label: locale === "ar" ? "الذكاء الاصطناعي" : "Intelligence", items: [
       { title: locale === "ar" ? "المساعد الذكي" : "AI Assistant", url: "/admin/ai-assistant", icon: Bot },
+      { title: locale === "ar" ? "استوديو الذكاء" : "AI Studio", url: "/admin/ai-studio", icon: Sparkles },
       { title: locale === "ar" ? "قوالب واتساب" : "WhatsApp Templates", url: "/admin/whatsapp-templates", icon: MessageCircle },
+      { title: locale === "ar" ? "قائمة الإشعارات" : "Notification Queue", url: "/admin/notification-queue", icon: BellRing },
     ]},
     { label: t("system"), items: [
       { title: t("notifications"), url: "/admin/notifications", icon: Bell },

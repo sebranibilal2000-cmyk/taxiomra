@@ -52,6 +52,7 @@ import { Route as AuthenticatedAdminPartnersRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminPagesRouteImport } from './routes/_authenticated/admin.pages'
 import { Route as AuthenticatedAdminOperationsRouteImport } from './routes/_authenticated/admin.operations'
 import { Route as AuthenticatedAdminNotificationsRouteImport } from './routes/_authenticated/admin.notifications'
+import { Route as AuthenticatedAdminNotificationQueueRouteImport } from './routes/_authenticated/admin.notification-queue'
 import { Route as AuthenticatedAdminMenusRouteImport } from './routes/_authenticated/admin.menus'
 import { Route as AuthenticatedAdminMediaRouteImport } from './routes/_authenticated/admin.media'
 import { Route as AuthenticatedAdminMaintenanceRouteImport } from './routes/_authenticated/admin.maintenance'
@@ -81,7 +82,9 @@ import { Route as AuthenticatedAdminBackupRouteImport } from './routes/_authenti
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
 import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin.analytics'
 import { Route as AuthenticatedAdminAirportsRouteImport } from './routes/_authenticated/admin.airports'
+import { Route as AuthenticatedAdminAiStudioRouteImport } from './routes/_authenticated/admin.ai-studio'
 import { Route as AuthenticatedAdminAiAssistantRouteImport } from './routes/_authenticated/admin.ai-assistant'
+import { Route as ApiPublicHooksProcessQueuesRouteImport } from './routes/api/public/hooks/process-queues'
 import { Route as PublicChar123LocaleChar125ServicesSlugRouteImport } from './routes/_public.{-$locale}.services.$slug'
 import { Route as PublicChar123LocaleChar125RoutesSlugRouteImport } from './routes/_public.{-$locale}.routes.$slug'
 import { Route as PublicChar123LocaleChar125PSlugRouteImport } from './routes/_public.{-$locale}.p.$slug'
@@ -342,6 +345,12 @@ const AuthenticatedAdminNotificationsRoute =
     path: '/admin/notifications',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminNotificationQueueRoute =
+  AuthenticatedAdminNotificationQueueRouteImport.update({
+    id: '/admin/notification-queue',
+    path: '/admin/notification-queue',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminMenusRoute = AuthenticatedAdminMenusRouteImport.update({
   id: '/admin/menus',
   path: '/admin/menus',
@@ -509,11 +518,23 @@ const AuthenticatedAdminAirportsRoute =
     path: '/admin/airports',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminAiStudioRoute =
+  AuthenticatedAdminAiStudioRouteImport.update({
+    id: '/admin/ai-studio',
+    path: '/admin/ai-studio',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminAiAssistantRoute =
   AuthenticatedAdminAiAssistantRouteImport.update({
     id: '/admin/ai-assistant',
     path: '/admin/ai-assistant',
     getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const ApiPublicHooksProcessQueuesRoute =
+  ApiPublicHooksProcessQueuesRouteImport.update({
+    id: '/api/public/hooks/process-queues',
+    path: '/api/public/hooks/process-queues',
+    getParentRoute: () => rootRouteImport,
   } as any)
 const PublicChar123LocaleChar125ServicesSlugRoute =
   PublicChar123LocaleChar125ServicesSlugRouteImport.update({
@@ -595,6 +616,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
   '/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
+  '/admin/ai-studio': typeof AuthenticatedAdminAiStudioRoute
   '/admin/airports': typeof AuthenticatedAdminAirportsRoute
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
@@ -624,6 +646,7 @@ export interface FileRoutesByFullPath {
   '/admin/maintenance': typeof AuthenticatedAdminMaintenanceRoute
   '/admin/media': typeof AuthenticatedAdminMediaRoute
   '/admin/menus': typeof AuthenticatedAdminMenusRoute
+  '/admin/notification-queue': typeof AuthenticatedAdminNotificationQueueRoute
   '/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/admin/operations': typeof AuthenticatedAdminOperationsRoute
   '/admin/pages': typeof AuthenticatedAdminPagesRoute
@@ -673,6 +696,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
+  '/api/public/hooks/process-queues': typeof ApiPublicHooksProcessQueuesRoute
   '/admin/bookings/$id/print': typeof AuthenticatedAdminBookingsIdPrintRoute
 }
 export interface FileRoutesByTo {
@@ -681,6 +705,7 @@ export interface FileRoutesByTo {
   '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
+  '/admin/ai-studio': typeof AuthenticatedAdminAiStudioRoute
   '/admin/airports': typeof AuthenticatedAdminAirportsRoute
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
@@ -710,6 +735,7 @@ export interface FileRoutesByTo {
   '/admin/maintenance': typeof AuthenticatedAdminMaintenanceRoute
   '/admin/media': typeof AuthenticatedAdminMediaRoute
   '/admin/menus': typeof AuthenticatedAdminMenusRoute
+  '/admin/notification-queue': typeof AuthenticatedAdminNotificationQueueRoute
   '/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/admin/operations': typeof AuthenticatedAdminOperationsRoute
   '/admin/pages': typeof AuthenticatedAdminPagesRoute
@@ -759,6 +785,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
+  '/api/public/hooks/process-queues': typeof ApiPublicHooksProcessQueuesRoute
   '/admin/bookings/$id/print': typeof AuthenticatedAdminBookingsIdPrintRoute
 }
 export interface FileRoutesById {
@@ -769,6 +796,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_public/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
   '/_authenticated/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
+  '/_authenticated/admin/ai-studio': typeof AuthenticatedAdminAiStudioRoute
   '/_authenticated/admin/airports': typeof AuthenticatedAdminAirportsRoute
   '/_authenticated/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
@@ -798,6 +826,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/maintenance': typeof AuthenticatedAdminMaintenanceRoute
   '/_authenticated/admin/media': typeof AuthenticatedAdminMediaRoute
   '/_authenticated/admin/menus': typeof AuthenticatedAdminMenusRoute
+  '/_authenticated/admin/notification-queue': typeof AuthenticatedAdminNotificationQueueRoute
   '/_authenticated/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/_authenticated/admin/operations': typeof AuthenticatedAdminOperationsRoute
   '/_authenticated/admin/pages': typeof AuthenticatedAdminPagesRoute
@@ -847,6 +876,7 @@ export interface FileRoutesById {
   '/_public/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/_public/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/_public/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
+  '/api/public/hooks/process-queues': typeof ApiPublicHooksProcessQueuesRoute
   '/_authenticated/admin/bookings/$id/print': typeof AuthenticatedAdminBookingsIdPrintRoute
 }
 export interface FileRouteTypes {
@@ -858,6 +888,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/{-$locale}'
     | '/admin/ai-assistant'
+    | '/admin/ai-studio'
     | '/admin/airports'
     | '/admin/analytics'
     | '/admin/audit'
@@ -887,6 +918,7 @@ export interface FileRouteTypes {
     | '/admin/maintenance'
     | '/admin/media'
     | '/admin/menus'
+    | '/admin/notification-queue'
     | '/admin/notifications'
     | '/admin/operations'
     | '/admin/pages'
@@ -936,6 +968,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/p/$slug'
     | '/{-$locale}/routes/$slug'
     | '/{-$locale}/services/$slug'
+    | '/api/public/hooks/process-queues'
     | '/admin/bookings/$id/print'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -944,6 +977,7 @@ export interface FileRouteTypes {
     | '/sitemap-images.xml'
     | '/sitemap.xml'
     | '/admin/ai-assistant'
+    | '/admin/ai-studio'
     | '/admin/airports'
     | '/admin/analytics'
     | '/admin/audit'
@@ -973,6 +1007,7 @@ export interface FileRouteTypes {
     | '/admin/maintenance'
     | '/admin/media'
     | '/admin/menus'
+    | '/admin/notification-queue'
     | '/admin/notifications'
     | '/admin/operations'
     | '/admin/pages'
@@ -1022,6 +1057,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/p/$slug'
     | '/{-$locale}/routes/$slug'
     | '/{-$locale}/services/$slug'
+    | '/api/public/hooks/process-queues'
     | '/admin/bookings/$id/print'
   id:
     | '__root__'
@@ -1031,6 +1067,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/_public/{-$locale}'
     | '/_authenticated/admin/ai-assistant'
+    | '/_authenticated/admin/ai-studio'
     | '/_authenticated/admin/airports'
     | '/_authenticated/admin/analytics'
     | '/_authenticated/admin/audit'
@@ -1060,6 +1097,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/maintenance'
     | '/_authenticated/admin/media'
     | '/_authenticated/admin/menus'
+    | '/_authenticated/admin/notification-queue'
     | '/_authenticated/admin/notifications'
     | '/_authenticated/admin/operations'
     | '/_authenticated/admin/pages'
@@ -1109,6 +1147,7 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/p/$slug'
     | '/_public/{-$locale}/routes/$slug'
     | '/_public/{-$locale}/services/$slug'
+    | '/api/public/hooks/process-queues'
     | '/_authenticated/admin/bookings/$id/print'
   fileRoutesById: FileRoutesById
 }
@@ -1118,6 +1157,7 @@ export interface RootRouteChildren {
   SitemapImagesDotxmlRoute: typeof SitemapImagesDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   PublicChar123LocaleChar125Route: typeof PublicChar123LocaleChar125RouteWithChildren
+  ApiPublicHooksProcessQueuesRoute: typeof ApiPublicHooksProcessQueuesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1423,6 +1463,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminNotificationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/notification-queue': {
+      id: '/_authenticated/admin/notification-queue'
+      path: '/admin/notification-queue'
+      fullPath: '/admin/notification-queue'
+      preLoaderRoute: typeof AuthenticatedAdminNotificationQueueRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/menus': {
       id: '/_authenticated/admin/menus'
       path: '/admin/menus'
@@ -1626,12 +1673,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAirportsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/ai-studio': {
+      id: '/_authenticated/admin/ai-studio'
+      path: '/admin/ai-studio'
+      fullPath: '/admin/ai-studio'
+      preLoaderRoute: typeof AuthenticatedAdminAiStudioRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/ai-assistant': {
       id: '/_authenticated/admin/ai-assistant'
       path: '/admin/ai-assistant'
       fullPath: '/admin/ai-assistant'
       preLoaderRoute: typeof AuthenticatedAdminAiAssistantRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/public/hooks/process-queues': {
+      id: '/api/public/hooks/process-queues'
+      path: '/api/public/hooks/process-queues'
+      fullPath: '/api/public/hooks/process-queues'
+      preLoaderRoute: typeof ApiPublicHooksProcessQueuesRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_public/{-$locale}/services/$slug': {
       id: '/_public/{-$locale}/services/$slug'
@@ -1793,6 +1854,7 @@ const AuthenticatedAdminInvoicesRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminAiAssistantRoute: typeof AuthenticatedAdminAiAssistantRoute
+  AuthenticatedAdminAiStudioRoute: typeof AuthenticatedAdminAiStudioRoute
   AuthenticatedAdminAirportsRoute: typeof AuthenticatedAdminAirportsRoute
   AuthenticatedAdminAnalyticsRoute: typeof AuthenticatedAdminAnalyticsRoute
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
@@ -1822,6 +1884,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminMaintenanceRoute: typeof AuthenticatedAdminMaintenanceRoute
   AuthenticatedAdminMediaRoute: typeof AuthenticatedAdminMediaRoute
   AuthenticatedAdminMenusRoute: typeof AuthenticatedAdminMenusRoute
+  AuthenticatedAdminNotificationQueueRoute: typeof AuthenticatedAdminNotificationQueueRoute
   AuthenticatedAdminNotificationsRoute: typeof AuthenticatedAdminNotificationsRoute
   AuthenticatedAdminOperationsRoute: typeof AuthenticatedAdminOperationsRoute
   AuthenticatedAdminPagesRoute: typeof AuthenticatedAdminPagesRoute
@@ -1850,6 +1913,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminAiAssistantRoute: AuthenticatedAdminAiAssistantRoute,
+  AuthenticatedAdminAiStudioRoute: AuthenticatedAdminAiStudioRoute,
   AuthenticatedAdminAirportsRoute: AuthenticatedAdminAirportsRoute,
   AuthenticatedAdminAnalyticsRoute: AuthenticatedAdminAnalyticsRoute,
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
@@ -1881,6 +1945,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminMaintenanceRoute: AuthenticatedAdminMaintenanceRoute,
   AuthenticatedAdminMediaRoute: AuthenticatedAdminMediaRoute,
   AuthenticatedAdminMenusRoute: AuthenticatedAdminMenusRoute,
+  AuthenticatedAdminNotificationQueueRoute:
+    AuthenticatedAdminNotificationQueueRoute,
   AuthenticatedAdminNotificationsRoute: AuthenticatedAdminNotificationsRoute,
   AuthenticatedAdminOperationsRoute: AuthenticatedAdminOperationsRoute,
   AuthenticatedAdminPagesRoute: AuthenticatedAdminPagesRoute,
@@ -2023,6 +2089,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapImagesDotxmlRoute: SitemapImagesDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   PublicChar123LocaleChar125Route: PublicChar123LocaleChar125RouteWithChildren,
+  ApiPublicHooksProcessQueuesRoute: ApiPublicHooksProcessQueuesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
