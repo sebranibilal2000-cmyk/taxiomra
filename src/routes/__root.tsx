@@ -1,8 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
-  Outlet, createRootRouteWithContext, useRouter, HeadContent, Scripts,
+  Outlet, createRootRouteWithContext, useRouter, useRouterState, HeadContent, Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { localeFromPath, DEFAULT_LOCALE } from "@/lib/i18n";
 
 import appCss from "../styles.css?url";
 import { reportLovableError, installGlobalErrorHandlers } from "../lib/lovable-error-reporting";
