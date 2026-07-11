@@ -13,6 +13,7 @@ import {
   type Locale,
 } from "@/lib/i18n";
 import { resolveLocale } from "@/lib/locale-detect.functions";
+import { resolveRedirect } from "@/lib/seo-tools.functions";
 
 export const Route = createFileRoute("/_public/{-$locale}")({
   beforeLoad: async ({ params, location }) => {
