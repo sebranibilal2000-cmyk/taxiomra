@@ -1,8 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { listCmsPages } from "@/lib/public.functions";
-import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Plane, Building2, Briefcase, MapPin, Car, Sparkles } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 const opts = () => queryOptions({
@@ -13,14 +12,15 @@ const opts = () => queryOptions({
   }),
 });
 
+const ICON: Record<string, any> = { service: Sparkles, airport: Plane, city: MapPin, route: Car, hotel: Building2, corporate: Briefcase };
+
 export const Route = createFileRoute("/_public/services")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
   head: () => ({
     meta: [
-      { title: "Taxi Services — Airport, Hotel & Corporate Transfers" },
-      { name: "description", content: "Full range of taxi services: airport transfers, hotel transfers, corporate contracts, city rides. Book 24/7 via WhatsApp." },
-      { property: "og:title", content: "Taxi Services" },
-      { property: "og:description", content: "Airport, hotel and corporate transfers with fixed fares." },
+      { title: "Services — Airport, Corporate & Private Chauffeur" },
+      { name: "description", content: "Full range of chauffeur services: airport transfers, corporate contracts, hotel pickups, events, and private hourly hire." },
+      { property: "og:title", content: "Services — Sur3a Taxi" },
       { property: "og:url", content: "/services" },
     ],
     links: [{ rel: "canonical", href: "/services" }],
@@ -34,27 +34,39 @@ function Services() {
   const { data } = useSuspenseQuery(opts());
   const all = [...data.services, ...data.airports];
   return (
-    <div className="container mx-auto px-4 py-16 max-w-6xl">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-3">{ar ? "خدماتنا" : "Our Services"}</h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto">{ar ? "خدمات نقل شاملة تناسب كل الاحتياجات" : "Complete transportation solutions for every need"}</p>
+    <section className="container-tight py-16 md:py-24">
+      <div className="max-w-3xl space-y-5 mb-14">
+        <span className="eyebrow"><span className="h-px w-8 bg-gold" />{ar ? "الخدمات" : "Services"}</span>
+        <h1 className="font-display text-5xl md:text-6xl leading-tight text-balance">
+          {ar ? "خدمات نقل مصممة بعناية، لكل مناسبة." : "Carefully crafted transportation, for every occasion."}
+        </h1>
+        <p className="text-lg text-muted-foreground">
+          {ar ? "استعرض مجموعتنا الكاملة من خدمات النقل الفاخرة." : "Explore our complete range of premium chauffeur services."}
+        </p>
       </div>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {all.map((s) => (
-          <Link key={s.id} to="/p/$slug" params={{ slug: s.slug }}>
-            <Card className="h-full hover:border-primary hover:shadow-lg transition group">
-              <CardContent className="pt-6">
-                <div className="inline-block rounded-lg bg-primary/10 text-primary text-xs font-semibold px-2 py-1 mb-3">{s.page_type}</div>
-                <h2 className="font-bold text-lg mb-2">{ar ? s.title_ar : s.title_en}</h2>
-                <p className="text-sm text-muted-foreground mb-4">{ar ? s.subtitle_ar : s.subtitle_en}</p>
-                <span className="text-sm font-medium text-primary inline-flex items-center gap-1">
-                  {ar ? "تفاصيل" : "Details"} <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
+        {all.map((s, i) => {
+          const Icon = ICON[s.slug] ?? ICON[s.page_type] ?? Sparkles;
+          return (
+            <Link key={s.id} to="/p/$slug" params={{ slug: s.slug }} className="group">
+              <article className="hover-lift h-full flex flex-col rounded-2xl border border-border bg-card p-7">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground group-hover:bg-gold group-hover:text-primary transition-colors">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground">0{i + 1}</span>
+                </div>
+                <div className="text-xs uppercase tracking-wider text-gold mb-2">{s.page_type}</div>
+                <h2 className="font-display text-2xl mb-3">{ar ? s.title_ar : s.title_en}</h2>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-1">{ar ? s.subtitle_ar : s.subtitle_en}</p>
+                <span className="inline-flex items-center gap-2 text-sm font-medium">
+                  {ar ? "تفاصيل" : "Discover"} <ArrowRight className="h-4 w-4 rtl:rotate-180 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
                 </span>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
+              </article>
+            </Link>
+          );
+        })}
       </div>
-    </div>
+    </section>
   );
 }

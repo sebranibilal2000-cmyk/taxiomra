@@ -1,27 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Phone, MessageCircle, Mail, MapPin, Clock } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Phone, MessageCircle, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/_public/contact")({
   head: () => ({
     meta: [
-      { title: "Contact Us — Book Your Taxi 24/7" },
-      { name: "description", content: "Contact our taxi dispatch team via WhatsApp, phone or email. Available 24/7 for bookings and inquiries." },
-      { property: "og:title", content: "Contact Sur3a Taxi" },
+      { title: "Contact — Book Your Chauffeur 24/7" },
+      { name: "description", content: "Reach our dispatch desk via WhatsApp, phone or email. Available around the clock." },
+      { property: "og:title", content: "Contact — Sur3a Taxi" },
       { property: "og:url", content: "/contact" },
     ],
     links: [{ rel: "canonical", href: "/contact" }],
     scripts: [{
       type: "application/ld+json",
       children: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        name: SITE.brand.en,
-        telephone: SITE.phone,
-        email: SITE.email,
+        "@context": "https://schema.org", "@type": "LocalBusiness",
+        name: SITE.brand.en, telephone: SITE.phone, email: SITE.email,
         address: { "@type": "PostalAddress", addressLocality: SITE.city, addressCountry: SITE.country },
         geo: { "@type": "GeoCoordinates", latitude: SITE.latitude, longitude: SITE.longitude },
         openingHours: "Mo-Su 00:00-23:59",
@@ -34,37 +35,101 @@ export const Route = createFileRoute("/_public/contact")({
 function Contact() {
   const { locale } = useI18n();
   const ar = locale === "ar";
+  const [sending, setSending] = useState(false);
   const channels = [
-    { icon: MessageCircle, title: "WhatsApp", value: "+" + SITE.whatsapp, href: waLink(), cta: ar ? "افتح واتساب" : "Open WhatsApp", color: "bg-green-600 hover:bg-green-700" },
+    { icon: MessageCircle, title: "WhatsApp", value: "+" + SITE.whatsapp, href: waLink(), cta: ar ? "افتح واتساب" : "Open WhatsApp", featured: true },
     { icon: Phone, title: ar ? "الاتصال" : "Phone", value: SITE.phone, href: telLink(), cta: ar ? "اتصل الآن" : "Call now" },
     { icon: Mail, title: ar ? "البريد" : "Email", value: SITE.email, href: `mailto:${SITE.email}`, cta: ar ? "أرسل بريداً" : "Send email" },
   ];
+
+  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    const msg = `${form.get("name")} · ${form.get("email")}\n${form.get("message")}`;
+    setSending(true);
+    window.open(waLink(msg), "_blank");
+    setTimeout(() => { setSending(false); toast.success(ar ? "تم فتح واتساب" : "Opened WhatsApp"); (e.target as HTMLFormElement).reset(); }, 400);
+  };
+
   return (
-    <div className="container mx-auto px-4 py-16 max-w-5xl">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-3">{ar ? "تواصل معنا" : "Contact Us"}</h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto">{ar ? "فريقنا متاح ٢٤ ساعة لخدمتك — اختر الطريقة الأنسب لك." : "Our team is available 24/7 — pick the channel that works best for you."}</p>
-      </div>
-      <div className="grid gap-6 md:grid-cols-3 mb-12">
-        {channels.map((c) => (
-          <Card key={c.title}><CardContent className="pt-6 text-center">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-4"><c.icon className="h-7 w-7" /></div>
-            <h3 className="font-bold mb-2">{c.title}</h3>
-            <div className="text-sm text-muted-foreground mb-4 break-all">{c.value}</div>
-            <Button asChild className={`w-full ${c.color ?? ""}`}><a href={c.href} target="_blank" rel="noopener">{c.cta}</a></Button>
-          </CardContent></Card>
-        ))}
-      </div>
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card><CardContent className="pt-6">
-          <h3 className="font-bold mb-4 flex items-center gap-2"><Clock className="h-5 w-5 text-primary" /> {ar ? "ساعات العمل" : "Business hours"}</h3>
-          <p className="text-muted-foreground">{SITE.hours[locale]}</p>
-        </CardContent></Card>
-        <Card><CardContent className="pt-6">
-          <h3 className="font-bold mb-4 flex items-center gap-2"><MapPin className="h-5 w-5 text-primary" /> {ar ? "الموقع" : "Location"}</h3>
-          <p className="text-muted-foreground">{SITE.address[locale]}</p>
-        </CardContent></Card>
-      </div>
-    </div>
+    <>
+      <section className="container-tight py-16 md:py-24">
+        <div className="max-w-3xl space-y-5 mb-14">
+          <span className="eyebrow"><span className="h-px w-8 bg-gold" />{ar ? "تواصل معنا" : "Contact"}</span>
+          <h1 className="font-display text-5xl md:text-6xl leading-tight text-balance">
+            {ar ? "فريقنا في خدمتك، على مدار الساعة." : "Our team is at your service, around the clock."}
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-xl">
+            {ar ? "اختر الطريقة الأنسب لك للتواصل. متوسط زمن الرد أقل من دقيقة." : "Pick whichever channel suits you — average response time is under a minute."}
+          </p>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-12">
+          <div className="lg:col-span-5 space-y-4">
+            {channels.map((c) => (
+              <a
+                key={c.title}
+                href={c.href}
+                target="_blank"
+                rel="noopener"
+                className={`hover-lift group flex items-center gap-5 rounded-2xl border p-5 ${c.featured ? "bg-primary text-primary-foreground border-primary" : "border-border bg-card"}`}
+              >
+                <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl ${c.featured ? "bg-gold text-primary" : "bg-primary text-primary-foreground group-hover:bg-gold group-hover:text-primary transition-colors"}`}>
+                  <c.icon className="h-6 w-6" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className={`text-[10px] uppercase tracking-[0.22em] ${c.featured ? "text-gold" : "text-muted-foreground"}`}>{c.title}</div>
+                  <div className={`font-display text-xl mt-0.5 truncate ${c.featured ? "" : ""}`}>{c.value}</div>
+                  <div className={`text-xs mt-1 ${c.featured ? "text-primary-foreground/60" : "text-muted-foreground"}`}>{c.cta}</div>
+                </div>
+                <ArrowRight className="h-4 w-4 rtl:rotate-180 shrink-0" />
+              </a>
+            ))}
+
+            <div className="grid gap-4 sm:grid-cols-2 pt-2">
+              <div className="rounded-2xl border border-border bg-card p-5">
+                <Clock className="h-5 w-5 text-gold mb-3" />
+                <div className="text-xs uppercase tracking-wider text-muted-foreground">{ar ? "ساعات العمل" : "Hours"}</div>
+                <div className="font-display text-lg mt-1">{SITE.hours[locale]}</div>
+              </div>
+              <div className="rounded-2xl border border-border bg-card p-5">
+                <MapPin className="h-5 w-5 text-gold mb-3" />
+                <div className="text-xs uppercase tracking-wider text-muted-foreground">{ar ? "الموقع" : "Location"}</div>
+                <div className="font-display text-lg mt-1">{SITE.address[locale]}</div>
+              </div>
+            </div>
+          </div>
+
+          <form onSubmit={submit} className="lg:col-span-7 rounded-2xl border border-border bg-card p-6 md:p-8 space-y-5">
+            <div className="space-y-1.5">
+              <div className="text-xs uppercase tracking-[0.22em] text-gold">{ar ? "اترك رسالة" : "Leave a message"}</div>
+              <h2 className="font-display text-3xl">{ar ? "سنعاود التواصل معك" : "We'll get back to you"}</h2>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="name">{ar ? "الاسم" : "Name"}</Label>
+                <Input id="name" name="name" required placeholder={ar ? "اسمك الكامل" : "Your full name"} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email">{ar ? "البريد" : "Email"}</Label>
+                <Input id="email" name="email" type="email" required placeholder="you@example.com" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">{ar ? "الهاتف" : "Phone"}</Label>
+              <Input id="phone" name="phone" placeholder={SITE.phone} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="message">{ar ? "كيف يمكننا مساعدتك؟" : "How can we help?"}</Label>
+              <Textarea id="message" name="message" required rows={5} placeholder={ar ? "تفاصيل رحلتك..." : "Tell us about your trip…"} />
+            </div>
+            <Button type="submit" size="lg" disabled={sending} className="rounded-full w-full sm:w-auto h-12 px-6">
+              <MessageCircle className="h-5 w-5 me-2" /> {ar ? "إرسال عبر واتساب" : "Send via WhatsApp"}
+            </Button>
+            <p className="text-xs text-muted-foreground">{ar ? "نستخدم واتساب للرد السريع — رسالتك لن تُرسل إلى بريد إلكتروني." : "We use WhatsApp for the fastest response — no email queue delays."}</p>
+          </form>
+        </div>
+      </section>
+    </>
   );
 }
