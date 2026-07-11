@@ -1,9 +1,10 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
 import { useAuth } from "@/lib/auth";
-import { Moon, Sun, Languages, LogOut, Bell } from "lucide-react";
+import { Moon, Sun, Languages, LogOut, Bell, Search, ExternalLink } from "lucide-react";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
@@ -17,35 +18,41 @@ export function Topbar() {
   const navigate = useNavigate();
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b bg-background/80 px-3 backdrop-blur">
-      <SidebarTrigger />
-      <div className="flex-1" />
-      <Button variant="ghost" size="icon" onClick={() => setLocale(locale === "ar" ? "en" : "ar")} title={t("toggle_lang")}>
+    <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border/60 bg-background/85 px-4 backdrop-blur-xl">
+      <SidebarTrigger className="text-muted-foreground hover:text-foreground" />
+      <div className="relative hidden md:block flex-1 max-w-md">
+        <Search className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Input
+          placeholder={locale === "ar" ? "بحث سريع…" : "Quick search…"}
+          className="ps-9 rounded-full bg-muted/50 border-transparent focus-visible:bg-background focus-visible:border-border h-9"
+        />
+      </div>
+      <div className="flex-1 md:hidden" />
+      <Button asChild variant="ghost" size="sm" className="hidden lg:inline-flex rounded-full text-muted-foreground">
+        <a href="/" target="_blank" rel="noopener"><ExternalLink className="h-4 w-4 me-2" />{locale === "ar" ? "الموقع" : "View site"}</a>
+      </Button>
+      <Button variant="ghost" size="icon" onClick={() => setLocale(locale === "ar" ? "en" : "ar")} title={t("toggle_lang")} className="rounded-full">
         <Languages className="h-4 w-4" />
       </Button>
-      <Button variant="ghost" size="icon" onClick={toggle}>
+      <Button variant="ghost" size="icon" onClick={toggle} className="rounded-full" aria-label="Toggle theme">
         {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
       </Button>
-      <Button variant="ghost" size="icon">
+      <Button variant="ghost" size="icon" className="relative rounded-full" aria-label="Notifications">
         <Bell className="h-4 w-4" />
+        <span className="absolute top-1.5 end-1.5 h-1.5 w-1.5 rounded-full bg-gold" />
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon">
-            <Avatar className="h-8 w-8">
-              <AvatarFallback>{(user?.email?.[0] ?? "?").toUpperCase()}</AvatarFallback>
+          <Button variant="ghost" size="icon" className="rounded-full">
+            <Avatar className="h-8 w-8 ring-2 ring-gold/40">
+              <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">{(user?.email?.[0] ?? "?").toUpperCase()}</AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
+        <DropdownMenuContent align="end" className="min-w-56">
+          <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">{user?.email}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={async () => {
-              await signOut();
-              navigate({ to: "/auth" });
-            }}
-          >
+          <DropdownMenuItem onClick={async () => { await signOut(); navigate({ to: "/auth" }); }}>
             <LogOut className="me-2 h-4 w-4" /> {t("signout")}
           </DropdownMenuItem>
         </DropdownMenuContent>
