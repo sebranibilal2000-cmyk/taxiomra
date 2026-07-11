@@ -31,6 +31,7 @@ import { Route as AuthenticatedCouponsRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedCategoriesRouteImport } from './routes/_authenticated/categories'
 import { Route as AuthenticatedBookingsRouteImport } from './routes/_authenticated/bookings'
 import { Route as AuthenticatedAuditRouteImport } from './routes/_authenticated/audit'
+import { Route as PublicPSlugRouteImport } from './routes/_public.p.$slug'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -141,6 +142,11 @@ const AuthenticatedAuditRoute = AuthenticatedAuditRouteImport.update({
   path: '/audit',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const PublicPSlugRoute = PublicPSlugRouteImport.update({
+  id: '/p/$slug',
+  path: '/p/$slug',
+  getParentRoute: () => PublicRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
@@ -163,6 +169,7 @@ export interface FileRoutesByFullPath {
   '/users': typeof AuthenticatedUsersRoute
   '/about': typeof PublicAboutRoute
   '/services': typeof PublicServicesRoute
+  '/p/$slug': typeof PublicPSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
@@ -185,6 +192,7 @@ export interface FileRoutesByTo {
   '/users': typeof AuthenticatedUsersRoute
   '/about': typeof PublicAboutRoute
   '/services': typeof PublicServicesRoute
+  '/p/$slug': typeof PublicPSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -210,6 +218,7 @@ export interface FileRoutesById {
   '/_public/about': typeof PublicAboutRoute
   '/_public/services': typeof PublicServicesRoute
   '/_public/': typeof PublicIndexRoute
+  '/_public/p/$slug': typeof PublicPSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -234,6 +243,7 @@ export interface FileRouteTypes {
     | '/users'
     | '/about'
     | '/services'
+    | '/p/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -256,6 +266,7 @@ export interface FileRouteTypes {
     | '/users'
     | '/about'
     | '/services'
+    | '/p/$slug'
   id:
     | '__root__'
     | '/_authenticated'
@@ -280,6 +291,7 @@ export interface FileRouteTypes {
     | '/_public/about'
     | '/_public/services'
     | '/_public/'
+    | '/_public/p/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -444,6 +456,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAuditRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_public/p/$slug': {
+      id: '/_public/p/$slug'
+      path: '/p/$slug'
+      fullPath: '/p/$slug'
+      preLoaderRoute: typeof PublicPSlugRouteImport
+      parentRoute: typeof PublicRoute
+    }
   }
 }
 
@@ -492,12 +511,14 @@ interface PublicRouteChildren {
   PublicAboutRoute: typeof PublicAboutRoute
   PublicServicesRoute: typeof PublicServicesRoute
   PublicIndexRoute: typeof PublicIndexRoute
+  PublicPSlugRoute: typeof PublicPSlugRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicAboutRoute: PublicAboutRoute,
   PublicServicesRoute: PublicServicesRoute,
   PublicIndexRoute: PublicIndexRoute,
+  PublicPSlugRoute: PublicPSlugRoute,
 }
 
 const PublicRouteWithChildren =
