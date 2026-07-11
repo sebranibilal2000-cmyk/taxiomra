@@ -275,7 +275,7 @@ function MaintenancePanel({ vehicleId, rows, onChange }: { vehicleId: string; ro
           {rows.map((m) => (
             <div key={m.id} className="py-3 flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <div className="text-sm font-medium">{m.title || m.kind} <span className="text-muted-foreground text-xs">· {m.kind}</span></div>
+                <div className="text-sm font-medium">{m.description || m.kind} <span className="text-muted-foreground text-xs">· {m.kind}</span></div>
                 <div className="text-xs text-muted-foreground">{new Date(m.service_date).toLocaleDateString()} {m.vendor ? `· ${m.vendor}` : ""} {m.mileage ? `· ${Number(m.mileage).toLocaleString()} km` : ""}</div>
                 {m.notes && <div className="text-xs mt-1">{m.notes}</div>}
               </div>
