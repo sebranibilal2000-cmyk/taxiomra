@@ -3,6 +3,7 @@ import {
   LayoutDashboard, CalendarCheck, Users, IdCard, Car, Layers, Route as RouteIcon,
   DollarSign, TicketPercent, CreditCard, Bell, BarChart3, UserCog, ShieldCheck, Settings, ScrollText,
   FileText, HelpCircle, Newspaper, Globe, Radio, Wrench, GaugeCircle,
+  PieChart, Receipt, Building2, Undo2, Wallet, Briefcase,
 } from "lucide-react";
 
 import {
@@ -35,9 +36,16 @@ export function AppSidebar() {
       { title: t("routes"), url: "/admin/routes", icon: RouteIcon },
     ]},
     { label: t("finance"), items: [
+      { title: locale === "ar" ? "لوحة المالية" : "Finance Overview", url: "/admin/finance", icon: PieChart },
+      { title: t("payments"), url: "/admin/payments", icon: CreditCard },
+      { title: locale === "ar" ? "الفواتير" : "Invoices", url: "/admin/invoices", icon: Receipt },
+      { title: locale === "ar" ? "المصروفات" : "Expenses", url: "/admin/expenses", icon: Wallet },
+      { title: locale === "ar" ? "المرتجعات" : "Refunds", url: "/admin/refunds", icon: Undo2 },
+      { title: locale === "ar" ? "الحسابات المؤسسية" : "Corporate", url: "/admin/corporate", icon: Building2 },
+      { title: locale === "ar" ? "الرواتب" : "Payroll", url: "/admin/payroll", icon: Briefcase },
       { title: t("pricing"), url: "/admin/pricing", icon: DollarSign },
       { title: t("coupons"), url: "/admin/coupons", icon: TicketPercent },
-      { title: t("payments"), url: "/admin/payments", icon: CreditCard },
+      { title: locale === "ar" ? "إعدادات المالية" : "Finance Settings", url: "/admin/finance-settings", icon: Settings },
     ]},
     { label: "CMS", items: [
       { title: "Pages", url: "/admin/pages", icon: FileText },
