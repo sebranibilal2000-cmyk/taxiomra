@@ -12,27 +12,23 @@ import {
   withLocale,
   type Locale,
 } from "@/lib/i18n";
-import { getRequestOrigin } from "@/lib/origin.functions";
+import { resolveLocale } from "@/lib/locale-detect.functions";
 
 export const Route = createFileRoute("/_public/{-$locale}")({
-  // Detect the request origin server-side so canonical / hreflang / og:url
-  // are absolute URLs (required by crawlers).
   beforeLoad: async ({ params, location }) => {
-    // Bad locale slug → redirect to the same URL without the bogus prefix,
-    // letting the fallback path below pick the preferred locale.
+    // Bad locale slug → redirect to root; the layout without a param will
+    // re-run this beforeLoad and pick the preferred locale below.
     if (params.locale !== undefined && !isLocale(params.locale)) {
       throw redirect({ to: "/", replace: true });
     }
 
-    // Missing prefix: pick preferred locale and 301-redirect.
+    // Missing prefix → resolve preferred locale and redirect.
     if (!params.locale) {
       let preferred: Locale = DEFAULT_LOCALE;
       if (typeof window === "undefined") {
-        // SSR: read Accept-Language from the incoming request if available.
+        // SSR: derive from Accept-Language via a server function.
         try {
-          const { getRequest } = await import("@tanstack/react-start/server");
-          const req = getRequest();
-          preferred = pickLocaleFromAcceptLanguage(req?.headers.get("accept-language"));
+          preferred = (await resolveLocale()) as Locale;
         } catch {
           preferred = DEFAULT_LOCALE;
         }
@@ -43,21 +39,15 @@ export const Route = createFileRoute("/_public/{-$locale}")({
       const target = withLocale(preferred, location.pathname);
       throw redirect({ to: target, replace: true });
     }
-
-    const origin = await getRequestOrigin().catch(() => "");
-    return { locale: params.locale as Locale, origin };
   },
-  loader: ({ context }) => ({ locale: (context as any).locale as Locale, origin: (context as any).origin as string }),
-  head: ({ loaderData, params }) => {
-    const locale = (loaderData?.locale ?? params.locale ?? DEFAULT_LOCALE) as Locale;
-    const origin = loaderData?.origin ?? "";
-    // Build absolute URLs when possible; fall back to path-relative.
-    const pathForLocale = (l: Locale) => `${origin}/${l}`;
-    const canonical = origin ? pathForLocale(locale) : `/${locale}`;
+  head: ({ params, match }) => {
+    const locale = (params.locale ?? DEFAULT_LOCALE) as Locale;
+    const pathname = match?.pathname ?? `/${locale}`;
+    const canonical = pathname;
     const alternates = LOCALES.map((l) => ({
       rel: "alternate",
       hrefLang: l,
-      href: origin ? pathForLocale(l) : `/${l}`,
+      href: withLocale(l, pathname),
     }));
     return {
       meta: [
@@ -67,7 +57,7 @@ export const Route = createFileRoute("/_public/{-$locale}")({
       links: [
         { rel: "canonical", href: canonical },
         ...alternates,
-        { rel: "alternate", hrefLang: "x-default", href: origin ? `${origin}/${DEFAULT_LOCALE}` : `/${DEFAULT_LOCALE}` },
+        { rel: "alternate", hrefLang: "x-default", href: `/${DEFAULT_LOCALE}` },
       ],
       scripts: [
         {
