@@ -41,6 +41,7 @@ import { Route as AuthenticatedAdminRoutesRouteImport } from './routes/_authenti
 import { Route as AuthenticatedAdminRoutePagesRouteImport } from './routes/_authenticated/admin.route-pages'
 import { Route as AuthenticatedAdminRolesRouteImport } from './routes/_authenticated/admin.roles'
 import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin.reports'
+import { Route as AuthenticatedAdminRemindersRouteImport } from './routes/_authenticated/admin.reminders'
 import { Route as AuthenticatedAdminRefundsRouteImport } from './routes/_authenticated/admin.refunds'
 import { Route as AuthenticatedAdminRedirectsRouteImport } from './routes/_authenticated/admin.redirects'
 import { Route as AuthenticatedAdminPromotionsRouteImport } from './routes/_authenticated/admin.promotions'
@@ -272,6 +273,12 @@ const AuthenticatedAdminReportsRoute =
   AuthenticatedAdminReportsRouteImport.update({
     id: '/admin/reports',
     path: '/admin/reports',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminRemindersRoute =
+  AuthenticatedAdminRemindersRouteImport.update({
+    id: '/admin/reminders',
+    path: '/admin/reminders',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminRefundsRoute =
@@ -611,6 +618,7 @@ export interface FileRoutesByFullPath {
   '/admin/promotions': typeof AuthenticatedAdminPromotionsRoute
   '/admin/redirects': typeof AuthenticatedAdminRedirectsRoute
   '/admin/refunds': typeof AuthenticatedAdminRefundsRoute
+  '/admin/reminders': typeof AuthenticatedAdminRemindersRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/admin/roles': typeof AuthenticatedAdminRolesRoute
   '/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
@@ -694,6 +702,7 @@ export interface FileRoutesByTo {
   '/admin/promotions': typeof AuthenticatedAdminPromotionsRoute
   '/admin/redirects': typeof AuthenticatedAdminRedirectsRoute
   '/admin/refunds': typeof AuthenticatedAdminRefundsRoute
+  '/admin/reminders': typeof AuthenticatedAdminRemindersRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/admin/roles': typeof AuthenticatedAdminRolesRoute
   '/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
@@ -779,6 +788,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/promotions': typeof AuthenticatedAdminPromotionsRoute
   '/_authenticated/admin/redirects': typeof AuthenticatedAdminRedirectsRoute
   '/_authenticated/admin/refunds': typeof AuthenticatedAdminRefundsRoute
+  '/_authenticated/admin/reminders': typeof AuthenticatedAdminRemindersRoute
   '/_authenticated/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/_authenticated/admin/roles': typeof AuthenticatedAdminRolesRoute
   '/_authenticated/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
@@ -865,6 +875,7 @@ export interface FileRouteTypes {
     | '/admin/promotions'
     | '/admin/redirects'
     | '/admin/refunds'
+    | '/admin/reminders'
     | '/admin/reports'
     | '/admin/roles'
     | '/admin/route-pages'
@@ -948,6 +959,7 @@ export interface FileRouteTypes {
     | '/admin/promotions'
     | '/admin/redirects'
     | '/admin/refunds'
+    | '/admin/reminders'
     | '/admin/reports'
     | '/admin/roles'
     | '/admin/route-pages'
@@ -1032,6 +1044,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/promotions'
     | '/_authenticated/admin/redirects'
     | '/_authenticated/admin/refunds'
+    | '/_authenticated/admin/reminders'
     | '/_authenticated/admin/reports'
     | '/_authenticated/admin/roles'
     | '/_authenticated/admin/route-pages'
@@ -1305,6 +1318,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/reports'
       fullPath: '/admin/reports'
       preLoaderRoute: typeof AuthenticatedAdminReportsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/reminders': {
+      id: '/_authenticated/admin/reminders'
+      path: '/admin/reminders'
+      fullPath: '/admin/reminders'
+      preLoaderRoute: typeof AuthenticatedAdminRemindersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/refunds': {
@@ -1770,6 +1790,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminPromotionsRoute: typeof AuthenticatedAdminPromotionsRoute
   AuthenticatedAdminRedirectsRoute: typeof AuthenticatedAdminRedirectsRoute
   AuthenticatedAdminRefundsRoute: typeof AuthenticatedAdminRefundsRoute
+  AuthenticatedAdminRemindersRoute: typeof AuthenticatedAdminRemindersRoute
   AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRoute
   AuthenticatedAdminRolesRoute: typeof AuthenticatedAdminRolesRoute
   AuthenticatedAdminRoutePagesRoute: typeof AuthenticatedAdminRoutePagesRoute
@@ -1826,6 +1847,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminPromotionsRoute: AuthenticatedAdminPromotionsRoute,
   AuthenticatedAdminRedirectsRoute: AuthenticatedAdminRedirectsRoute,
   AuthenticatedAdminRefundsRoute: AuthenticatedAdminRefundsRoute,
+  AuthenticatedAdminRemindersRoute: AuthenticatedAdminRemindersRoute,
   AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRoute,
   AuthenticatedAdminRolesRoute: AuthenticatedAdminRolesRoute,
   AuthenticatedAdminRoutePagesRoute: AuthenticatedAdminRoutePagesRoute,
