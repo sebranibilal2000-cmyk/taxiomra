@@ -109,6 +109,26 @@ function PagesAdmin() {
                 <div><label className="text-sm">Meta title</label><Input name="meta_title" defaultValue={editing?.meta_title} /></div>
                 <div><label className="text-sm">Meta description</label><Input name="meta_description" defaultValue={editing?.meta_description} /></div>
               </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div><label className="text-sm">OG title</label><Input name="og_title" defaultValue={editing?.og_title} /></div>
+                <div><label className="text-sm">OG description</label><Input name="og_description" defaultValue={editing?.og_description} /></div>
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                <div><label className="text-sm">Canonical URL</label><Input name="canonical_url" defaultValue={editing?.canonical_url} placeholder="/p/slug" /></div>
+                <div><label className="text-sm">Robots</label><Input name="robots" defaultValue={editing?.robots ?? "index,follow"} /></div>
+                <div><label className="text-sm">Schema.org</label>
+                  <Select defaultValue={editing?.schema_type ?? ""} name="schema_type">
+                    <SelectTrigger><SelectValue placeholder="—" /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Service">Service</SelectItem>
+                      <SelectItem value="TaxiService">TaxiService</SelectItem>
+                      <SelectItem value="LocalBusiness">LocalBusiness</SelectItem>
+                      <SelectItem value="FAQPage">FAQPage</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div><label className="text-sm">Keywords (comma-separated)</label><Input name="keywords" defaultValue={editing?.keywords?.join(", ") ?? ""} /></div>
               <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="published" defaultChecked={editing?.published} /> Published</label>
               <DialogFooter><Button type="submit">Save</Button></DialogFooter>
             </form>
