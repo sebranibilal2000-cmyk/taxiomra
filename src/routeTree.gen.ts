@@ -43,6 +43,7 @@ import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_auth
 import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin.bookings'
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin.blog'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
+import { Route as AuthenticatedAdminFleetIdRouteImport } from './routes/_authenticated/admin.fleet.$id'
 import { Route as AuthenticatedAdminDriversIdRouteImport } from './routes/_authenticated/admin.drivers.$id'
 import { Route as AuthenticatedAdminCustomersIdRouteImport } from './routes/_authenticated/admin.customers.$id'
 
@@ -227,6 +228,12 @@ const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
   path: '/admin/audit',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminFleetIdRoute =
+  AuthenticatedAdminFleetIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => AuthenticatedAdminFleetRoute,
+  } as any)
 const AuthenticatedAdminDriversIdRoute =
   AuthenticatedAdminDriversIdRouteImport.update({
     id: '/$id',
@@ -261,7 +268,7 @@ export interface FileRoutesByFullPath {
   '/admin/dispatch': typeof AuthenticatedAdminDispatchRoute
   '/admin/drivers': typeof AuthenticatedAdminDriversRouteWithChildren
   '/admin/faqs': typeof AuthenticatedAdminFaqsRoute
-  '/admin/fleet': typeof AuthenticatedAdminFleetRoute
+  '/admin/fleet': typeof AuthenticatedAdminFleetRouteWithChildren
   '/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/admin/pages': typeof AuthenticatedAdminPagesRoute
   '/admin/payments': typeof AuthenticatedAdminPaymentsRoute
@@ -275,6 +282,7 @@ export interface FileRoutesByFullPath {
   '/p/$slug': typeof PublicPSlugRoute
   '/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
   '/admin/drivers/$id': typeof AuthenticatedAdminDriversIdRoute
+  '/admin/fleet/$id': typeof AuthenticatedAdminFleetIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
@@ -297,7 +305,7 @@ export interface FileRoutesByTo {
   '/admin/dispatch': typeof AuthenticatedAdminDispatchRoute
   '/admin/drivers': typeof AuthenticatedAdminDriversRouteWithChildren
   '/admin/faqs': typeof AuthenticatedAdminFaqsRoute
-  '/admin/fleet': typeof AuthenticatedAdminFleetRoute
+  '/admin/fleet': typeof AuthenticatedAdminFleetRouteWithChildren
   '/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/admin/pages': typeof AuthenticatedAdminPagesRoute
   '/admin/payments': typeof AuthenticatedAdminPaymentsRoute
@@ -311,6 +319,7 @@ export interface FileRoutesByTo {
   '/p/$slug': typeof PublicPSlugRoute
   '/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
   '/admin/drivers/$id': typeof AuthenticatedAdminDriversIdRoute
+  '/admin/fleet/$id': typeof AuthenticatedAdminFleetIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -336,7 +345,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/dispatch': typeof AuthenticatedAdminDispatchRoute
   '/_authenticated/admin/drivers': typeof AuthenticatedAdminDriversRouteWithChildren
   '/_authenticated/admin/faqs': typeof AuthenticatedAdminFaqsRoute
-  '/_authenticated/admin/fleet': typeof AuthenticatedAdminFleetRoute
+  '/_authenticated/admin/fleet': typeof AuthenticatedAdminFleetRouteWithChildren
   '/_authenticated/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/_authenticated/admin/pages': typeof AuthenticatedAdminPagesRoute
   '/_authenticated/admin/payments': typeof AuthenticatedAdminPaymentsRoute
@@ -350,6 +359,7 @@ export interface FileRoutesById {
   '/_public/p/$slug': typeof PublicPSlugRoute
   '/_authenticated/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
   '/_authenticated/admin/drivers/$id': typeof AuthenticatedAdminDriversIdRoute
+  '/_authenticated/admin/fleet/$id': typeof AuthenticatedAdminFleetIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -388,6 +398,7 @@ export interface FileRouteTypes {
     | '/p/$slug'
     | '/admin/customers/$id'
     | '/admin/drivers/$id'
+    | '/admin/fleet/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -424,6 +435,7 @@ export interface FileRouteTypes {
     | '/p/$slug'
     | '/admin/customers/$id'
     | '/admin/drivers/$id'
+    | '/admin/fleet/$id'
   id:
     | '__root__'
     | '/_authenticated'
@@ -462,6 +474,7 @@ export interface FileRouteTypes {
     | '/_public/p/$slug'
     | '/_authenticated/admin/customers/$id'
     | '/_authenticated/admin/drivers/$id'
+    | '/_authenticated/admin/fleet/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -711,6 +724,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/fleet/$id': {
+      id: '/_authenticated/admin/fleet/$id'
+      path: '/$id'
+      fullPath: '/admin/fleet/$id'
+      preLoaderRoute: typeof AuthenticatedAdminFleetIdRouteImport
+      parentRoute: typeof AuthenticatedAdminFleetRoute
+    }
     '/_authenticated/admin/drivers/$id': {
       id: '/_authenticated/admin/drivers/$id'
       path: '/$id'
@@ -756,6 +776,20 @@ const AuthenticatedAdminDriversRouteWithChildren =
     AuthenticatedAdminDriversRouteChildren,
   )
 
+interface AuthenticatedAdminFleetRouteChildren {
+  AuthenticatedAdminFleetIdRoute: typeof AuthenticatedAdminFleetIdRoute
+}
+
+const AuthenticatedAdminFleetRouteChildren: AuthenticatedAdminFleetRouteChildren =
+  {
+    AuthenticatedAdminFleetIdRoute: AuthenticatedAdminFleetIdRoute,
+  }
+
+const AuthenticatedAdminFleetRouteWithChildren =
+  AuthenticatedAdminFleetRoute._addFileChildren(
+    AuthenticatedAdminFleetRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
   AuthenticatedAdminBlogRoute: typeof AuthenticatedAdminBlogRoute
@@ -767,7 +801,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminDispatchRoute: typeof AuthenticatedAdminDispatchRoute
   AuthenticatedAdminDriversRoute: typeof AuthenticatedAdminDriversRouteWithChildren
   AuthenticatedAdminFaqsRoute: typeof AuthenticatedAdminFaqsRoute
-  AuthenticatedAdminFleetRoute: typeof AuthenticatedAdminFleetRoute
+  AuthenticatedAdminFleetRoute: typeof AuthenticatedAdminFleetRouteWithChildren
   AuthenticatedAdminNotificationsRoute: typeof AuthenticatedAdminNotificationsRoute
   AuthenticatedAdminPagesRoute: typeof AuthenticatedAdminPagesRoute
   AuthenticatedAdminPaymentsRoute: typeof AuthenticatedAdminPaymentsRoute
@@ -791,7 +825,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminDispatchRoute: AuthenticatedAdminDispatchRoute,
   AuthenticatedAdminDriversRoute: AuthenticatedAdminDriversRouteWithChildren,
   AuthenticatedAdminFaqsRoute: AuthenticatedAdminFaqsRoute,
-  AuthenticatedAdminFleetRoute: AuthenticatedAdminFleetRoute,
+  AuthenticatedAdminFleetRoute: AuthenticatedAdminFleetRouteWithChildren,
   AuthenticatedAdminNotificationsRoute: AuthenticatedAdminNotificationsRoute,
   AuthenticatedAdminPagesRoute: AuthenticatedAdminPagesRoute,
   AuthenticatedAdminPaymentsRoute: AuthenticatedAdminPaymentsRoute,
