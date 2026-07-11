@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_events: {
+        Row: {
+          actor_id: string | null
+          created_at: string
+          entity_id: string
+          entity_type: string
+          event_type: string
+          from_value: string | null
+          id: string
+          message: string | null
+          metadata: Json
+          to_value: string | null
+        }
+        Insert: {
+          actor_id?: string | null
+          created_at?: string
+          entity_id: string
+          entity_type: string
+          event_type: string
+          from_value?: string | null
+          id?: string
+          message?: string | null
+          metadata?: Json
+          to_value?: string | null
+        }
+        Update: {
+          actor_id?: string | null
+          created_at?: string
+          entity_id?: string
+          entity_type?: string
+          event_type?: string
+          from_value?: string | null
+          id?: string
+          message?: string | null
+          metadata?: Json
+          to_value?: string | null
+        }
+        Relationships: []
+      }
       audit_logs: {
         Row: {
           action: string
@@ -107,10 +146,13 @@ export type Database = {
       bookings: {
         Row: {
           airport_fee: number
+          assigned_at: string | null
           base_fare: number
+          cancellation_reason: string | null
           category_id: string | null
           code: string
           completed_at: string | null
+          confirmed_at: string | null
           coupon_id: string | null
           created_at: string
           created_by: string | null
@@ -122,6 +164,7 @@ export type Database = {
           dropoff_location: string
           duration_min: number | null
           id: string
+          is_priority: boolean
           night_surcharge: number
           notes: string | null
           pickup_at: string
@@ -138,10 +181,13 @@ export type Database = {
         }
         Insert: {
           airport_fee?: number
+          assigned_at?: string | null
           base_fare?: number
+          cancellation_reason?: string | null
           category_id?: string | null
           code?: string
           completed_at?: string | null
+          confirmed_at?: string | null
           coupon_id?: string | null
           created_at?: string
           created_by?: string | null
@@ -153,6 +199,7 @@ export type Database = {
           dropoff_location: string
           duration_min?: number | null
           id?: string
+          is_priority?: boolean
           night_surcharge?: number
           notes?: string | null
           pickup_at?: string
@@ -169,10 +216,13 @@ export type Database = {
         }
         Update: {
           airport_fee?: number
+          assigned_at?: string | null
           base_fare?: number
+          cancellation_reason?: string | null
           category_id?: string | null
           code?: string
           completed_at?: string | null
+          confirmed_at?: string | null
           coupon_id?: string | null
           created_at?: string
           created_by?: string | null
@@ -184,6 +234,7 @@ export type Database = {
           dropoff_location?: string
           duration_min?: number | null
           id?: string
+          is_priority?: boolean
           night_surcharge?: number
           notes?: string | null
           pickup_at?: string
@@ -987,9 +1038,11 @@ export type Database = {
       app_role: "admin" | "manager" | "dispatcher" | "accountant" | "driver"
       booking_status:
         | "pending"
+        | "confirmed"
         | "assigned"
         | "en_route"
         | "on_trip"
+        | "picked_up"
         | "completed"
         | "cancelled"
         | "no_show"
@@ -1139,9 +1192,11 @@ export const Constants = {
       app_role: ["admin", "manager", "dispatcher", "accountant", "driver"],
       booking_status: [
         "pending",
+        "confirmed",
         "assigned",
         "en_route",
         "on_trip",
+        "picked_up",
         "completed",
         "cancelled",
         "no_show",
