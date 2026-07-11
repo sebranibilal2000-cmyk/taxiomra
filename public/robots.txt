@@ -5,3 +5,4 @@ Disallow: /auth
 Disallow: /_authenticated/
 
 Sitemap: /sitemap.xml
+Sitemap: /sitemap-images.xml
