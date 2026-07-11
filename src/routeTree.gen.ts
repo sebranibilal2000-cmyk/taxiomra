@@ -89,6 +89,7 @@ import { Route as AuthenticatedAdminInvoicesIdRouteImport } from './routes/_auth
 import { Route as AuthenticatedAdminFleetIdRouteImport } from './routes/_authenticated/admin.fleet.$id'
 import { Route as AuthenticatedAdminDriversIdRouteImport } from './routes/_authenticated/admin.drivers.$id'
 import { Route as AuthenticatedAdminCustomersIdRouteImport } from './routes/_authenticated/admin.customers.$id'
+import { Route as AuthenticatedAdminBookingsIdPrintRouteImport } from './routes/_authenticated/admin.bookings.$id.print'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -553,6 +554,12 @@ const AuthenticatedAdminCustomersIdRoute =
     path: '/$id',
     getParentRoute: () => AuthenticatedAdminCustomersRoute,
   } as any)
+const AuthenticatedAdminBookingsIdPrintRoute =
+  AuthenticatedAdminBookingsIdPrintRouteImport.update({
+    id: '/$id/print',
+    path: '/$id/print',
+    getParentRoute: () => AuthenticatedAdminBookingsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedRouteRouteWithChildren
@@ -565,7 +572,7 @@ export interface FileRoutesByFullPath {
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/backup': typeof AuthenticatedAdminBackupRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
-  '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
+  '/admin/bookings': typeof AuthenticatedAdminBookingsRouteWithChildren
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/cities': typeof AuthenticatedAdminCitiesRoute
   '/admin/contacts': typeof AuthenticatedAdminContactsRoute
@@ -635,6 +642,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
+  '/admin/bookings/$id/print': typeof AuthenticatedAdminBookingsIdPrintRoute
 }
 export interface FileRoutesByTo {
   '/': typeof AuthenticatedRouteRouteWithChildren
@@ -646,7 +654,7 @@ export interface FileRoutesByTo {
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/backup': typeof AuthenticatedAdminBackupRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
-  '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
+  '/admin/bookings': typeof AuthenticatedAdminBookingsRouteWithChildren
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/cities': typeof AuthenticatedAdminCitiesRoute
   '/admin/contacts': typeof AuthenticatedAdminContactsRoute
@@ -716,6 +724,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
+  '/admin/bookings/$id/print': typeof AuthenticatedAdminBookingsIdPrintRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -729,7 +738,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/backup': typeof AuthenticatedAdminBackupRoute
   '/_authenticated/admin/blog': typeof AuthenticatedAdminBlogRoute
-  '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRoute
+  '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRouteWithChildren
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/_authenticated/admin/cities': typeof AuthenticatedAdminCitiesRoute
   '/_authenticated/admin/contacts': typeof AuthenticatedAdminContactsRoute
@@ -799,6 +808,7 @@ export interface FileRoutesById {
   '/_public/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/_public/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/_public/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
+  '/_authenticated/admin/bookings/$id/print': typeof AuthenticatedAdminBookingsIdPrintRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -883,6 +893,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/p/$slug'
     | '/{-$locale}/routes/$slug'
     | '/{-$locale}/services/$slug'
+    | '/admin/bookings/$id/print'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -964,6 +975,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/p/$slug'
     | '/{-$locale}/routes/$slug'
     | '/{-$locale}/services/$slug'
+    | '/admin/bookings/$id/print'
   id:
     | '__root__'
     | '/_authenticated'
@@ -1046,6 +1058,7 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/p/$slug'
     | '/_public/{-$locale}/routes/$slug'
     | '/_public/{-$locale}/services/$slug'
+    | '/_authenticated/admin/bookings/$id/print'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1618,8 +1631,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCustomersIdRouteImport
       parentRoute: typeof AuthenticatedAdminCustomersRoute
     }
+    '/_authenticated/admin/bookings/$id/print': {
+      id: '/_authenticated/admin/bookings/$id/print'
+      path: '/$id/print'
+      fullPath: '/admin/bookings/$id/print'
+      preLoaderRoute: typeof AuthenticatedAdminBookingsIdPrintRouteImport
+      parentRoute: typeof AuthenticatedAdminBookingsRoute
+    }
   }
 }
+
+interface AuthenticatedAdminBookingsRouteChildren {
+  AuthenticatedAdminBookingsIdPrintRoute: typeof AuthenticatedAdminBookingsIdPrintRoute
+}
+
+const AuthenticatedAdminBookingsRouteChildren: AuthenticatedAdminBookingsRouteChildren =
+  {
+    AuthenticatedAdminBookingsIdPrintRoute:
+      AuthenticatedAdminBookingsIdPrintRoute,
+  }
+
+const AuthenticatedAdminBookingsRouteWithChildren =
+  AuthenticatedAdminBookingsRoute._addFileChildren(
+    AuthenticatedAdminBookingsRouteChildren,
+  )
 
 interface AuthenticatedAdminCustomersRouteChildren {
   AuthenticatedAdminCustomersIdRoute: typeof AuthenticatedAdminCustomersIdRoute
@@ -1683,7 +1718,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
   AuthenticatedAdminBackupRoute: typeof AuthenticatedAdminBackupRoute
   AuthenticatedAdminBlogRoute: typeof AuthenticatedAdminBlogRoute
-  AuthenticatedAdminBookingsRoute: typeof AuthenticatedAdminBookingsRoute
+  AuthenticatedAdminBookingsRoute: typeof AuthenticatedAdminBookingsRouteWithChildren
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
   AuthenticatedAdminCitiesRoute: typeof AuthenticatedAdminCitiesRoute
   AuthenticatedAdminContactsRoute: typeof AuthenticatedAdminContactsRoute
@@ -1736,7 +1771,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
   AuthenticatedAdminBackupRoute: AuthenticatedAdminBackupRoute,
   AuthenticatedAdminBlogRoute: AuthenticatedAdminBlogRoute,
-  AuthenticatedAdminBookingsRoute: AuthenticatedAdminBookingsRoute,
+  AuthenticatedAdminBookingsRoute: AuthenticatedAdminBookingsRouteWithChildren,
   AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
   AuthenticatedAdminCitiesRoute: AuthenticatedAdminCitiesRoute,
   AuthenticatedAdminContactsRoute: AuthenticatedAdminContactsRoute,

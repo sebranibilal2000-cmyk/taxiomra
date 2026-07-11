@@ -27,8 +27,8 @@ function PrintBooking() {
       <style>{`@media print { body { background: #fff; } .no-print { display: none; } }`}</style>
       <div className="flex justify-between items-start border-b-2 border-black pb-4 mb-6">
         <div>
-          <h1 className="text-3xl font-serif">{SITE.brand}</h1>
-          <div className="text-xs text-neutral-600 mt-1">{SITE.tagline}</div>
+          <h1 className="text-3xl font-serif">{SITE.brand.en}</h1>
+          <div className="text-xs text-neutral-600 mt-1">{SITE.tagline.en}</div>
         </div>
         <div className="text-end">
           <div className="text-xs uppercase tracking-widest text-neutral-600">Booking</div>
