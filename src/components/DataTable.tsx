@@ -8,8 +8,8 @@ import { useI18n } from "@/lib/i18n";
 export type Column<T> = { key: string; header: string; render?: (row: T) => ReactNode; className?: string };
 
 export function DataTable<T extends { id: string | number }>({
-  data, columns, loading, empty, actions,
-}: { data: T[]; columns: Column<T>[]; loading?: boolean; empty?: string; actions?: (row: T) => ReactNode }) {
+  data, columns, loading, empty, actions, onRowClick,
+}: { data: T[]; columns: Column<T>[]; loading?: boolean; empty?: string; actions?: (row: T) => ReactNode; onRowClick?: (row: T) => void }) {
   const { t } = useI18n();
   const totalCols = columns.length + (actions ? 1 : 0);
   return (
@@ -46,7 +46,7 @@ export function DataTable<T extends { id: string | number }>({
                 </TableRow>
               )}
               {!loading && data.map((row) => (
-                <TableRow key={String(row.id)} className="border-b border-border/40 hover:bg-muted/30 transition-colors">
+                <TableRow key={String(row.id)} onClick={onRowClick ? () => onRowClick(row) : undefined} className={`border-b border-border/40 hover:bg-muted/30 transition-colors ${onRowClick ? "cursor-pointer" : ""}`}>
                   {columns.map((c) => (
                     <TableCell key={c.key} className={`py-3.5 text-sm ${c.className ?? ""}`}>
                       {c.render ? c.render(row) : (row as any)[c.key]}

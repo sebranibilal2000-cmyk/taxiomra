@@ -2,7 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, CalendarCheck, Users, IdCard, Car, Layers, Route as RouteIcon,
   DollarSign, TicketPercent, CreditCard, Bell, BarChart3, UserCog, ShieldCheck, Settings, ScrollText,
-  FileText, HelpCircle, Newspaper, Globe, Radio,
+  FileText, HelpCircle, Newspaper, Globe, Radio, Wrench, GaugeCircle,
 } from "lucide-react";
 
 import {
@@ -28,7 +28,9 @@ export function AppSidebar() {
       { title: t("drivers"), url: "/admin/drivers", icon: IdCard },
     ]},
     { label: t("catalog"), items: [
+      { title: locale === "ar" ? "لوحة الأسطول" : "Fleet Dashboard", url: "/admin/fleet-dashboard", icon: GaugeCircle },
       { title: t("fleet"), url: "/admin/fleet", icon: Car },
+      { title: locale === "ar" ? "الصيانة" : "Maintenance", url: "/admin/maintenance", icon: Wrench },
       { title: t("categories"), url: "/admin/categories", icon: Layers },
       { title: t("routes"), url: "/admin/routes", icon: RouteIcon },
     ]},

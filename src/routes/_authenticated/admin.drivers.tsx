@@ -1,25 +1,32 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/PageHeader";
 import { DataTable, type Column } from "@/components/DataTable";
 import { StatusBadge } from "@/components/StatusBadge";
+import { ExpiryPill, daysUntil } from "@/components/ExpiryPill";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus } from "lucide-react";
+import { Plus, Search, AlertTriangle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/drivers")({ component: Drivers });
 
+const DRIVER_STATUSES = ["available","offline","assigned","en_route","waiting","on_trip","on_break","vacation","suspended"];
+
 function Drivers() {
   const { t } = useI18n();
   const qc = useQueryClient();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [expiryFilter, setExpiryFilter] = useState("all");
   const [form, setForm] = useState({ full_name: "", phone: "", email: "", license_number: "", license_expiry: "", vehicle_id: "" });
 
   const q = useQuery({
@@ -27,6 +34,25 @@ function Drivers() {
     queryFn: async () => (await supabase.from("drivers").select("*, vehicle:vehicles(plate_number, make, model)").order("created_at", { ascending: false })).data ?? [],
   });
   const vehicles = useQuery({ queryKey: ["vh-lookup"], queryFn: async () => (await supabase.from("vehicles").select("id, plate_number").eq("status", "active")).data ?? [] });
+
+  const filtered = useMemo(() => {
+    const list = q.data ?? [];
+    return list.filter((d: any) => {
+      if (statusFilter !== "all" && d.status !== statusFilter) return false;
+      if (search) {
+        const s = search.toLowerCase();
+        if (!(`${d.full_name} ${d.phone ?? ""} ${d.license_number ?? ""} ${d.national_id ?? ""}`.toLowerCase().includes(s))) return false;
+      }
+      if (expiryFilter !== "all") {
+        const dates = [d.license_expiry, d.medical_expiry, d.work_permit_expiry, d.insurance_expiry].filter(Boolean);
+        const mins = dates.map((x: string) => daysUntil(x)!);
+        const min = mins.length ? Math.min(...mins) : Infinity;
+        if (expiryFilter === "expired" && !(min < 0)) return false;
+        if (expiryFilter === "soon" && !(min >= 0 && min <= 30)) return false;
+      }
+      return true;
+    });
+  }, [q.data, search, statusFilter, expiryFilter]);
 
   const create = useMutation({
     mutationFn: async () => {
@@ -43,18 +69,29 @@ function Drivers() {
   });
 
   const columns: Column<any>[] = [
-    { key: "full_name", header: t("name") },
-    { key: "phone", header: t("phone") },
-    { key: "license_number", header: "License" },
-    { key: "vehicle", header: t("vehicle"), render: (r) => r.vehicle?.plate_number ?? "—" },
-    { key: "total_trips", header: "Trips" },
-    { key: "total_earnings", header: "Earnings", render: (r) => Number(r.total_earnings).toFixed(2) },
+    { key: "full_name", header: t("name"), render: (r) => (
+      <div><div className="font-medium">{r.full_name}</div><div className="text-xs text-muted-foreground">{r.phone ?? "—"}</div></div>
+    ) },
+    { key: "license_number", header: "License", render: (r) => (
+      <div className="space-y-1">
+        <div className="text-xs">{r.license_number ?? "—"}</div>
+        <ExpiryPill date={r.license_expiry} />
+      </div>
+    ) },
+    { key: "medical_expiry", header: "Medical", render: (r) => <ExpiryPill date={r.medical_expiry} /> },
+    { key: "vehicle", header: t("vehicle"), render: (r) => r.vehicle ? <span className="font-mono text-xs">{r.vehicle.plate_number}</span> : "—" },
+    { key: "total_trips", header: "Trips", render: (r) => <span className="tabular-nums">{r.total_trips ?? 0}</span> },
+    { key: "total_earnings", header: "Revenue", render: (r) => <span className="tabular-nums">{Number(r.total_earnings ?? 0).toFixed(2)}</span> },
+    { key: "avg_rating", header: "Rating", render: (r) => r.avg_rating ? Number(r.avg_rating).toFixed(2) : "—" },
     { key: "status", header: t("status"), render: (r) => <StatusBadge value={r.status} /> },
   ];
+
+  const alerts = (q.data ?? []).filter((d: any) => [d.license_expiry, d.medical_expiry, d.work_permit_expiry, d.insurance_expiry].some((x: string | null) => x && daysUntil(x)! <= 30)).length;
 
   return (
     <div>
       <PageHeader title={t("drivers")}
+        description={alerts > 0 ? `${alerts} drivers with expiring documents` : undefined}
         actions={
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild><Button><Plus className="h-4 w-4 me-1" />{t("new")}</Button></DialogTrigger>
@@ -81,14 +118,39 @@ function Drivers() {
           </Dialog>
         }
       />
-      <DataTable data={q.data ?? []} columns={columns} loading={q.isLoading}
+
+      <div className="flex flex-wrap gap-2 mb-4">
+        <div className="relative">
+          <Search className="absolute start-3 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input placeholder="Search name, phone, license…" value={search} onChange={(e) => setSearch(e.target.value)} className="ps-9 w-64" />
+        </div>
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
+          <SelectContent><SelectItem value="all">All statuses</SelectItem>{DRIVER_STATUSES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+        </Select>
+        <Select value={expiryFilter} onValueChange={setExpiryFilter}>
+          <SelectTrigger className="w-48"><SelectValue /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All documents</SelectItem>
+            <SelectItem value="soon">Expiring in 30 days</SelectItem>
+            <SelectItem value="expired">Expired</SelectItem>
+          </SelectContent>
+        </Select>
+        {alerts > 0 && <div className="ms-auto inline-flex items-center gap-2 rounded-md bg-warning/15 text-warning-foreground px-3 py-2 text-xs"><AlertTriangle className="h-3.5 w-3.5" />{alerts} with expiring docs</div>}
+      </div>
+
+      <DataTable
+        data={filtered}
+        columns={columns}
+        loading={q.isLoading}
+        onRowClick={(r) => navigate({ to: "/admin/drivers/$id" as any, params: { id: r.id } as any })}
         actions={(r) => (
           <Select value={r.status} onValueChange={async (v) => {
             const { error } = await supabase.from("drivers").update({ status: v as any }).eq("id", r.id);
             if (error) toast.error(error.message); else qc.invalidateQueries({ queryKey: ["drivers"] });
           }}>
-            <SelectTrigger className="w-32 h-8"><SelectValue /></SelectTrigger>
-            <SelectContent>{["offline", "available", "on_trip", "on_break", "suspended"].map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+            <SelectTrigger className="w-36 h-8" onClick={(e) => e.stopPropagation()}><SelectValue /></SelectTrigger>
+            <SelectContent>{DRIVER_STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
           </Select>
         )}
       />

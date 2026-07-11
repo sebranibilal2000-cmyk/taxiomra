@@ -117,7 +117,9 @@ function DispatchPage() {
 
   const availableDrivers = (drivers.data ?? []).filter((d: any) => {
     if (driverSearch && !d.full_name?.toLowerCase().includes(driverSearch.toLowerCase())) return false;
-    return d.status !== "suspended";
+    // Only show drivers actually free, or the one already on this booking
+    if (selected?.driver?.id === d.id) return true;
+    return d.status === "available" || d.status === "offline";
   });
 
   return (
