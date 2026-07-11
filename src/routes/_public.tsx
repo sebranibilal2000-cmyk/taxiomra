@@ -40,6 +40,7 @@ function PublicLayout() {
       </main>
       <PublicFooter />
       <WhatsAppFab />
+      <CookieConsent />
     </div>
   );
 }
