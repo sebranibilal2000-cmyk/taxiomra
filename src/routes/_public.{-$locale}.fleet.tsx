@@ -3,7 +3,7 @@ import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { listVehicleCategories } from "@/lib/public.functions";
 import { Button } from "@/components/ui/button";
 import { Users, Briefcase, ArrowRight, CheckCircle2, MessageCircle } from "lucide-react";
-import { useI18n } from "@/lib/i18n";
+import { useI18n, withLocale } from "@/lib/i18n";
 import { waLink } from "@/lib/site-info";
 import sedanImg from "@/assets/fleet-sedan.jpg";
 import suvImg from "@/assets/fleet-suv.jpg";
