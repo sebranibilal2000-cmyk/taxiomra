@@ -140,9 +140,9 @@ function Contact() {
               <Textarea id="message" name="message" required rows={5} placeholder={ar ? "تفاصيل رحلتك..." : "Tell us about your trip…"} />
             </div>
             <Button type="submit" size="lg" disabled={sending} className="rounded-full w-full sm:w-auto h-12 px-6">
-              <MessageCircle className="h-5 w-5 me-2" /> {ar ? "إرسال عبر واتساب" : "Send via WhatsApp"}
+              <MessageCircle className="h-5 w-5 me-2" /> {sending ? (ar ? "جاري الإرسال..." : "Sending…") : (ar ? "إرسال الرسالة" : "Send message")}
             </Button>
-            <p className="text-xs text-muted-foreground">{ar ? "نستخدم واتساب للرد السريع — رسالتك لن تُرسل إلى بريد إلكتروني." : "We use WhatsApp for the fastest response — no email queue delays."}</p>
+            <p className="text-xs text-muted-foreground">{ar ? "نستقبل رسالتك في مركز خدمة العملاء ونرد خلال دقائق." : "Your message reaches our dispatch desk — expect a reply within minutes."}</p>
           </form>
         </div>
       </section>
