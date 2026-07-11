@@ -65,7 +65,7 @@ export const listVehicleCategories = createServerFn({ method: "GET" }).handler(a
   const { data } = await sb
     .from("vehicle_categories")
     .select("*, vehicle_category_translations(*)")
-    .eq("active", true)
+    .eq("is_active", true)
     .order("sort_order");
   return data ?? [];
 });
