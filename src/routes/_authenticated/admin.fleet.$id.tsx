@@ -210,10 +210,10 @@ function MaintenancePanel({ vehicleId, rows, onChange }: { vehicleId: string; ro
     const { error } = await supabase.from("vehicle_maintenance").insert({
       vehicle_id: vehicleId,
       kind: f.kind as any,
-      title: f.title || null,
-      service_date: f.service_date || null,
+      description: f.title || null,
+      service_date: f.service_date || new Date().toISOString().slice(0,10),
       mileage: f.mileage ? Number(f.mileage) : null,
-      cost: f.cost ? Number(f.cost) : null,
+      cost: f.cost ? Number(f.cost) : 0,
       vendor: f.vendor || null,
       next_due_date: f.next_due_date || null,
       next_due_mileage: f.next_due_mileage ? Number(f.next_due_mileage) : null,
