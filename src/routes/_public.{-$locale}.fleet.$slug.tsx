@@ -173,7 +173,7 @@ function VehicleDetail() {
                   <div className="mt-3 text-xs text-muted-foreground flex items-center gap-1">
                     <Users className="h-3 w-3" /> {r.seats}
                   </div>
-                </Link>
+                </a>
               );
             })}
           </div>
