@@ -40,9 +40,10 @@ export const Route = createFileRoute("/_public/{-$locale}")({
       throw redirect({ to: target, replace: true });
     }
   },
-  head: ({ params, match }) => {
+  loader: ({ location }) => ({ pathname: location.pathname }),
+  head: ({ params, loaderData }) => {
     const locale = (params.locale ?? DEFAULT_LOCALE) as Locale;
-    const pathname = match?.pathname ?? `/${locale}`;
+    const pathname = loaderData?.pathname ?? `/${locale}`;
     const canonical = pathname;
     const alternates = LOCALES.map((l) => ({
       rel: "alternate",
