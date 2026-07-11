@@ -3,28 +3,29 @@ import { supabase } from "@/integrations/supabase/client";
 import { createFileRoute } from "@tanstack/react-router";
 import { StatCard } from "@/components/StatCard";
 import { PageHeader } from "@/components/PageHeader";
-import { CalendarCheck, DollarSign, Users, Car, Clock, ListChecks } from "lucide-react";
+import { CalendarCheck, DollarSign, Users, Car, Clock, ListChecks, ArrowRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { StatusBadge } from "@/components/StatusBadge";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Link } from "@tanstack/react-router";
 import {
-  ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, LineChart, Line, Legend,
+  ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, LineChart, Line, Area, AreaChart,
 } from "recharts";
 
-export const Route = createFileRoute("/_authenticated/admin/dashboard")({
-  component: Dashboard,
-});
+export const Route = createFileRoute("/_authenticated/admin/dashboard")({ component: Dashboard });
 
 function Dashboard() {
   const { t, locale } = useI18n();
+  const ar = locale === "ar";
 
   const stats = useQuery({
     queryKey: ["dashboard-stats"],
     queryFn: async () => {
       const today = new Date(); today.setHours(0, 0, 0, 0);
       const iso = today.toISOString();
-
       const [tripsToday, activeTrips, pending, availDrivers, customers, revenueRes, weekly] = await Promise.all([
         supabase.from("bookings").select("id", { count: "exact", head: true }).gte("created_at", iso),
         supabase.from("bookings").select("id", { count: "exact", head: true }).in("status", ["assigned", "en_route", "on_trip"]),
@@ -34,7 +35,6 @@ function Dashboard() {
         supabase.from("payments").select("amount").eq("status", "paid").gte("created_at", iso),
         supabase.from("bookings").select("created_at, total_fare").gte("created_at", new Date(Date.now() - 7 * 864e5).toISOString()),
       ]);
-
       const revenueToday = (revenueRes.data ?? []).reduce((a, b: any) => a + Number(b.amount || 0), 0);
       const byDay = new Map<string, { trips: number; revenue: number }>();
       for (let i = 6; i >= 0; i--) {
@@ -46,105 +46,125 @@ function Dashboard() {
         const cur = byDay.get(k); if (cur) { cur.trips += 1; cur.revenue += Number(row.total_fare || 0); }
       });
       const chart = Array.from(byDay.entries()).map(([day, v]) => ({ day: day.slice(5), ...v }));
-
       return {
-        tripsToday: tripsToday.count ?? 0,
-        activeTrips: activeTrips.count ?? 0,
-        pending: pending.count ?? 0,
-        availDrivers: availDrivers.count ?? 0,
-        customers: customers.count ?? 0,
-        revenueToday,
-        chart,
+        tripsToday: tripsToday.count ?? 0, activeTrips: activeTrips.count ?? 0,
+        pending: pending.count ?? 0, availDrivers: availDrivers.count ?? 0,
+        customers: customers.count ?? 0, revenueToday, chart,
       };
     },
   });
 
   const recent = useQuery({
     queryKey: ["dashboard-recent"],
-    queryFn: async () => {
-      const { data } = await supabase.from("bookings")
-        .select("id, code, status, total_fare, pickup_location, dropoff_location, created_at")
-        .order("created_at", { ascending: false }).limit(8);
-      return data ?? [];
-    },
+    queryFn: async () => (await supabase.from("bookings")
+      .select("id, code, status, total_fare, pickup_location, dropoff_location, created_at")
+      .order("created_at", { ascending: false }).limit(8)).data ?? [],
   });
 
   const s = stats.data;
-  const fmt = (n: number) => new Intl.NumberFormat(locale === "ar" ? "ar" : "en", { style: "currency", currency: "SAR", maximumFractionDigits: 0 }).format(n);
+  const fmt = (n: number) => new Intl.NumberFormat(ar ? "ar" : "en", { style: "currency", currency: "SAR", maximumFractionDigits: 0 }).format(n);
 
   return (
     <div>
       <PageHeader
+        eyebrow={ar ? "لوحة الإدارة" : "Overview"}
         title={t("dashboard")}
-        description={locale === "ar" ? "نظرة عامة على أداء اليوم" : "Today's operational overview"}
+        description={ar ? "نظرة عامة على أداء اليوم" : "Today's operational overview"}
+        actions={<Button asChild variant="outline" size="sm" className="rounded-full"><Link to="/admin/bookings">{ar ? "كل الحجوزات" : "All bookings"} <ArrowRight className="h-4 w-4 ms-2 rtl:rotate-180" /></Link></Button>}
       />
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
-        <StatCard label={t("trips_today")} value={s?.tripsToday ?? "—"} icon={CalendarCheck} tone="primary" />
-        <StatCard label={t("revenue")} value={s ? fmt(s.revenueToday) : "—"} icon={DollarSign} tone="success" />
-        <StatCard label={t("active_trips")} value={s?.activeTrips ?? "—"} icon={Clock} tone="chart2" />
-        <StatCard label={t("pending_bookings")} value={s?.pending ?? "—"} icon={ListChecks} tone="warning" />
-        <StatCard label={t("available_drivers")} value={s?.availDrivers ?? "—"} icon={Car} tone="primary" />
-        <StatCard label={t("total_customers")} value={s?.customers ?? "—"} icon={Users} tone="chart2" />
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 md:gap-4">
+        {stats.isLoading ? Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} className="h-32 rounded-2xl" />) : (
+          <>
+            <StatCard label={t("trips_today")} value={s?.tripsToday ?? 0} icon={CalendarCheck} tone="primary" />
+            <StatCard label={t("revenue")} value={s ? fmt(s.revenueToday) : "—"} icon={DollarSign} tone="success" />
+            <StatCard label={t("active_trips")} value={s?.activeTrips ?? 0} icon={Clock} tone="chart2" />
+            <StatCard label={t("pending_bookings")} value={s?.pending ?? 0} icon={ListChecks} tone="warning" />
+            <StatCard label={t("available_drivers")} value={s?.availDrivers ?? 0} icon={Car} tone="primary" />
+            <StatCard label={t("total_customers")} value={s?.customers ?? 0} icon={Users} tone="chart2" />
+          </>
+        )}
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3 mt-6">
-        <Card className="lg:col-span-2">
-          <CardHeader><CardTitle>{locale === "ar" ? "الرحلات آخر 7 أيام" : "Trips (last 7 days)"}</CardTitle></CardHeader>
+      <div className="grid gap-4 xl:grid-cols-3 mt-6">
+        <Card className="xl:col-span-2 rounded-2xl border-border/70">
+          <CardHeader className="flex flex-row items-start justify-between space-y-0">
+            <div>
+              <div className="text-[10px] uppercase tracking-[0.22em] text-gold mb-1">7 days</div>
+              <CardTitle className="font-display text-xl">{ar ? "الرحلات" : "Trips"}</CardTitle>
+            </div>
+          </CardHeader>
           <CardContent className="h-72">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={s?.chart ?? []}>
-                <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                <XAxis dataKey="day" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="trips" fill="var(--color-primary)" radius={[6, 6, 0, 0]} />
+              <BarChart data={s?.chart ?? []} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" opacity={0.5} vertical={false} />
+                <XAxis dataKey="day" stroke="var(--color-muted-foreground)" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="var(--color-muted-foreground)" fontSize={11} tickLine={false} axisLine={false} />
+                <Tooltip contentStyle={{ background: "var(--color-card)", border: "1px solid var(--color-border)", borderRadius: 12, fontSize: 12 }} cursor={{ fill: "var(--color-muted)", opacity: 0.5 }} />
+                <Bar dataKey="trips" fill="var(--color-gold)" radius={[6, 6, 0, 0]} maxBarSize={32} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader><CardTitle>{locale === "ar" ? "الإيرادات (أسبوعياً)" : "Revenue (weekly)"}</CardTitle></CardHeader>
+
+        <Card className="rounded-2xl border-border/70">
+          <CardHeader className="flex flex-row items-start justify-between space-y-0">
+            <div>
+              <div className="text-[10px] uppercase tracking-[0.22em] text-gold mb-1">Weekly</div>
+              <CardTitle className="font-display text-xl">{ar ? "الإيرادات" : "Revenue"}</CardTitle>
+            </div>
+          </CardHeader>
           <CardContent className="h-72">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={s?.chart ?? []}>
-                <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                <XAxis dataKey="day" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="revenue" stroke="var(--color-chart-3)" strokeWidth={2} />
-              </LineChart>
+              <AreaChart data={s?.chart ?? []} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="rev" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="var(--color-gold)" stopOpacity={0.35} />
+                    <stop offset="100%" stopColor="var(--color-gold)" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" opacity={0.5} vertical={false} />
+                <XAxis dataKey="day" stroke="var(--color-muted-foreground)" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="var(--color-muted-foreground)" fontSize={11} tickLine={false} axisLine={false} />
+                <Tooltip contentStyle={{ background: "var(--color-card)", border: "1px solid var(--color-border)", borderRadius: 12, fontSize: 12 }} />
+                <Area type="monotone" dataKey="revenue" stroke="var(--color-gold)" strokeWidth={2} fill="url(#rev)" />
+              </AreaChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
       </div>
 
-      <Card className="mt-6">
-        <CardHeader><CardTitle>{locale === "ar" ? "آخر الحجوزات" : "Recent Bookings"}</CardTitle></CardHeader>
-        <CardContent>
+      <Card className="mt-6 rounded-2xl border-border/70">
+        <CardHeader className="flex flex-row items-start justify-between space-y-0">
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.22em] text-gold mb-1">{ar ? "أحدث" : "Latest"}</div>
+            <CardTitle className="font-display text-xl">{ar ? "آخر الحجوزات" : "Recent bookings"}</CardTitle>
+          </div>
+          <Button asChild size="sm" variant="ghost" className="rounded-full text-muted-foreground"><Link to="/admin/bookings">{ar ? "الكل" : "View all"} <ArrowRight className="h-4 w-4 ms-1.5 rtl:rotate-180" /></Link></Button>
+        </CardHeader>
+        <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>{t("code")}</TableHead>
-                <TableHead>{t("pickup")}</TableHead>
-                <TableHead>{t("dropoff")}</TableHead>
-                <TableHead>{t("fare")}</TableHead>
-                <TableHead>{t("status")}</TableHead>
+              <TableRow className="bg-muted/30 hover:bg-muted/30 border-b border-border/60">
+                <TableHead className="text-[10px] uppercase tracking-wider">{t("code")}</TableHead>
+                <TableHead className="text-[10px] uppercase tracking-wider">{t("pickup")}</TableHead>
+                <TableHead className="text-[10px] uppercase tracking-wider">{t("dropoff")}</TableHead>
+                <TableHead className="text-[10px] uppercase tracking-wider">{t("fare")}</TableHead>
+                <TableHead className="text-[10px] uppercase tracking-wider">{t("status")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {(recent.data ?? []).map((b: any) => (
-                <TableRow key={b.id}>
+                <TableRow key={b.id} className="border-b border-border/40 hover:bg-muted/30 transition-colors">
                   <TableCell className="font-mono text-xs">{b.code}</TableCell>
-                  <TableCell className="max-w-40 truncate">{b.pickup_location}</TableCell>
-                  <TableCell className="max-w-40 truncate">{b.dropoff_location}</TableCell>
-                  <TableCell>{b.total_fare ? fmt(Number(b.total_fare)) : "—"}</TableCell>
+                  <TableCell className="max-w-40 truncate text-sm">{b.pickup_location}</TableCell>
+                  <TableCell className="max-w-40 truncate text-sm">{b.dropoff_location}</TableCell>
+                  <TableCell className="font-display text-base">{b.total_fare ? fmt(Number(b.total_fare)) : "—"}</TableCell>
                   <TableCell><StatusBadge value={b.status} /></TableCell>
                 </TableRow>
               ))}
               {(recent.data ?? []).length === 0 && (
-                <tr><td colSpan={5} className="text-center text-muted-foreground py-6">{t("no_data")}</td></tr>
+                <TableRow><TableCell colSpan={5} className="text-center text-muted-foreground py-10">{t("no_data")}</TableCell></TableRow>
               )}
             </TableBody>
           </Table>
