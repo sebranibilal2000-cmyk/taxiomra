@@ -10,11 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SitemapImagesDotxmlRouteImport } from './routes/sitemap-images[.]xml'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as PublicChar123LocaleChar125RouteImport } from './routes/_public.{-$locale}'
 import { Route as PublicChar123LocaleChar125IndexRouteImport } from './routes/_public.{-$locale}.index'
 import { Route as PublicChar123LocaleChar125TermsRouteImport } from './routes/_public.{-$locale}.terms'
+import { Route as PublicChar123LocaleChar125SitemapRouteImport } from './routes/_public.{-$locale}.sitemap'
 import { Route as PublicChar123LocaleChar125ServicesRouteImport } from './routes/_public.{-$locale}.services'
 import { Route as PublicChar123LocaleChar125RefundRouteImport } from './routes/_public.{-$locale}.refund'
 import { Route as PublicChar123LocaleChar125PrivacyRouteImport } from './routes/_public.{-$locale}.privacy'
@@ -32,11 +34,14 @@ import { Route as AuthenticatedAdminTestimonialsRouteImport } from './routes/_au
 import { Route as AuthenticatedAdminTeamRouteImport } from './routes/_authenticated/admin.team'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminServicesRouteImport } from './routes/_authenticated/admin.services'
+import { Route as AuthenticatedAdminSeoGeneratorRouteImport } from './routes/_authenticated/admin.seo-generator'
+import { Route as AuthenticatedAdminSeoRouteImport } from './routes/_authenticated/admin.seo'
 import { Route as AuthenticatedAdminRoutesRouteImport } from './routes/_authenticated/admin.routes'
 import { Route as AuthenticatedAdminRoutePagesRouteImport } from './routes/_authenticated/admin.route-pages'
 import { Route as AuthenticatedAdminRolesRouteImport } from './routes/_authenticated/admin.roles'
 import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin.reports'
 import { Route as AuthenticatedAdminRefundsRouteImport } from './routes/_authenticated/admin.refunds'
+import { Route as AuthenticatedAdminRedirectsRouteImport } from './routes/_authenticated/admin.redirects'
 import { Route as AuthenticatedAdminPromotionsRouteImport } from './routes/_authenticated/admin.promotions'
 import { Route as AuthenticatedAdminPricingRouteImport } from './routes/_authenticated/admin.pricing'
 import { Route as AuthenticatedAdminPayrollRouteImport } from './routes/_authenticated/admin.payroll'
@@ -90,6 +95,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapImagesDotxmlRoute = SitemapImagesDotxmlRouteImport.update({
+  id: '/sitemap-images.xml',
+  path: '/sitemap-images.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -115,6 +125,12 @@ const PublicChar123LocaleChar125TermsRoute =
   PublicChar123LocaleChar125TermsRouteImport.update({
     id: '/terms',
     path: '/terms',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125SitemapRoute =
+  PublicChar123LocaleChar125SitemapRouteImport.update({
+    id: '/sitemap',
+    path: '/sitemap',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
 const PublicChar123LocaleChar125ServicesRoute =
@@ -217,6 +233,17 @@ const AuthenticatedAdminServicesRoute =
     path: '/admin/services',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminSeoGeneratorRoute =
+  AuthenticatedAdminSeoGeneratorRouteImport.update({
+    id: '/admin/seo-generator',
+    path: '/admin/seo-generator',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminSeoRoute = AuthenticatedAdminSeoRouteImport.update({
+  id: '/admin/seo',
+  path: '/admin/seo',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminRoutesRoute =
   AuthenticatedAdminRoutesRouteImport.update({
     id: '/admin/routes',
@@ -244,6 +271,12 @@ const AuthenticatedAdminRefundsRoute =
   AuthenticatedAdminRefundsRouteImport.update({
     id: '/admin/refunds',
     path: '/admin/refunds',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminRedirectsRoute =
+  AuthenticatedAdminRedirectsRouteImport.update({
+    id: '/admin/redirects',
+    path: '/admin/redirects',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminPromotionsRoute =
@@ -524,6 +557,7 @@ const AuthenticatedAdminCustomersIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
   '/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
@@ -562,11 +596,14 @@ export interface FileRoutesByFullPath {
   '/admin/payroll': typeof AuthenticatedAdminPayrollRoute
   '/admin/pricing': typeof AuthenticatedAdminPricingRoute
   '/admin/promotions': typeof AuthenticatedAdminPromotionsRoute
+  '/admin/redirects': typeof AuthenticatedAdminRedirectsRoute
   '/admin/refunds': typeof AuthenticatedAdminRefundsRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/admin/roles': typeof AuthenticatedAdminRolesRoute
   '/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
   '/admin/routes': typeof AuthenticatedAdminRoutesRoute
+  '/admin/seo': typeof AuthenticatedAdminSeoRoute
+  '/admin/seo-generator': typeof AuthenticatedAdminSeoGeneratorRoute
   '/admin/services': typeof AuthenticatedAdminServicesRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/team': typeof AuthenticatedAdminTeamRoute
@@ -584,6 +621,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
   '/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
   '/{-$locale}/services': typeof PublicChar123LocaleChar125ServicesRouteWithChildren
+  '/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
   '/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
   '/{-$locale}/': typeof PublicChar123LocaleChar125IndexRoute
   '/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
@@ -601,6 +639,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
   '/admin/airports': typeof AuthenticatedAdminAirportsRoute
@@ -638,11 +677,14 @@ export interface FileRoutesByTo {
   '/admin/payroll': typeof AuthenticatedAdminPayrollRoute
   '/admin/pricing': typeof AuthenticatedAdminPricingRoute
   '/admin/promotions': typeof AuthenticatedAdminPromotionsRoute
+  '/admin/redirects': typeof AuthenticatedAdminRedirectsRoute
   '/admin/refunds': typeof AuthenticatedAdminRefundsRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/admin/roles': typeof AuthenticatedAdminRolesRoute
   '/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
   '/admin/routes': typeof AuthenticatedAdminRoutesRoute
+  '/admin/seo': typeof AuthenticatedAdminSeoRoute
+  '/admin/seo-generator': typeof AuthenticatedAdminSeoGeneratorRoute
   '/admin/services': typeof AuthenticatedAdminServicesRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/team': typeof AuthenticatedAdminTeamRoute
@@ -660,6 +702,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
   '/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
   '/{-$locale}/services': typeof PublicChar123LocaleChar125ServicesRouteWithChildren
+  '/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
   '/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
   '/{-$locale}': typeof PublicChar123LocaleChar125IndexRoute
   '/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
@@ -678,6 +721,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_public/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
   '/_authenticated/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
@@ -716,11 +760,14 @@ export interface FileRoutesById {
   '/_authenticated/admin/payroll': typeof AuthenticatedAdminPayrollRoute
   '/_authenticated/admin/pricing': typeof AuthenticatedAdminPricingRoute
   '/_authenticated/admin/promotions': typeof AuthenticatedAdminPromotionsRoute
+  '/_authenticated/admin/redirects': typeof AuthenticatedAdminRedirectsRoute
   '/_authenticated/admin/refunds': typeof AuthenticatedAdminRefundsRoute
   '/_authenticated/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/_authenticated/admin/roles': typeof AuthenticatedAdminRolesRoute
   '/_authenticated/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
   '/_authenticated/admin/routes': typeof AuthenticatedAdminRoutesRoute
+  '/_authenticated/admin/seo': typeof AuthenticatedAdminSeoRoute
+  '/_authenticated/admin/seo-generator': typeof AuthenticatedAdminSeoGeneratorRoute
   '/_authenticated/admin/services': typeof AuthenticatedAdminServicesRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/team': typeof AuthenticatedAdminTeamRoute
@@ -738,6 +785,7 @@ export interface FileRoutesById {
   '/_public/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
   '/_public/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
   '/_public/{-$locale}/services': typeof PublicChar123LocaleChar125ServicesRouteWithChildren
+  '/_public/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
   '/_public/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
   '/_public/{-$locale}/': typeof PublicChar123LocaleChar125IndexRoute
   '/_authenticated/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
@@ -757,6 +805,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/sitemap-images.xml'
     | '/sitemap.xml'
     | '/{-$locale}'
     | '/admin/ai-assistant'
@@ -795,11 +844,14 @@ export interface FileRouteTypes {
     | '/admin/payroll'
     | '/admin/pricing'
     | '/admin/promotions'
+    | '/admin/redirects'
     | '/admin/refunds'
     | '/admin/reports'
     | '/admin/roles'
     | '/admin/route-pages'
     | '/admin/routes'
+    | '/admin/seo'
+    | '/admin/seo-generator'
     | '/admin/services'
     | '/admin/settings'
     | '/admin/team'
@@ -817,6 +869,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/privacy'
     | '/{-$locale}/refund'
     | '/{-$locale}/services'
+    | '/{-$locale}/sitemap'
     | '/{-$locale}/terms'
     | '/{-$locale}/'
     | '/admin/customers/$id'
@@ -834,6 +887,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/sitemap-images.xml'
     | '/sitemap.xml'
     | '/admin/ai-assistant'
     | '/admin/airports'
@@ -871,11 +925,14 @@ export interface FileRouteTypes {
     | '/admin/payroll'
     | '/admin/pricing'
     | '/admin/promotions'
+    | '/admin/redirects'
     | '/admin/refunds'
     | '/admin/reports'
     | '/admin/roles'
     | '/admin/route-pages'
     | '/admin/routes'
+    | '/admin/seo'
+    | '/admin/seo-generator'
     | '/admin/services'
     | '/admin/settings'
     | '/admin/team'
@@ -893,6 +950,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/privacy'
     | '/{-$locale}/refund'
     | '/{-$locale}/services'
+    | '/{-$locale}/sitemap'
     | '/{-$locale}/terms'
     | '/{-$locale}'
     | '/admin/customers/$id'
@@ -910,6 +968,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_authenticated'
     | '/auth'
+    | '/sitemap-images.xml'
     | '/sitemap.xml'
     | '/_public/{-$locale}'
     | '/_authenticated/admin/ai-assistant'
@@ -948,11 +1007,14 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/payroll'
     | '/_authenticated/admin/pricing'
     | '/_authenticated/admin/promotions'
+    | '/_authenticated/admin/redirects'
     | '/_authenticated/admin/refunds'
     | '/_authenticated/admin/reports'
     | '/_authenticated/admin/roles'
     | '/_authenticated/admin/route-pages'
     | '/_authenticated/admin/routes'
+    | '/_authenticated/admin/seo'
+    | '/_authenticated/admin/seo-generator'
     | '/_authenticated/admin/services'
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/team'
@@ -970,6 +1032,7 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/privacy'
     | '/_public/{-$locale}/refund'
     | '/_public/{-$locale}/services'
+    | '/_public/{-$locale}/sitemap'
     | '/_public/{-$locale}/terms'
     | '/_public/{-$locale}/'
     | '/_authenticated/admin/customers/$id'
@@ -988,6 +1051,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  SitemapImagesDotxmlRoute: typeof SitemapImagesDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   PublicChar123LocaleChar125Route: typeof PublicChar123LocaleChar125RouteWithChildren
 }
@@ -999,6 +1063,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap-images.xml': {
+      id: '/sitemap-images.xml'
+      path: '/sitemap-images.xml'
+      fullPath: '/sitemap-images.xml'
+      preLoaderRoute: typeof SitemapImagesDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -1034,6 +1105,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/{-$locale}/terms'
       preLoaderRoute: typeof PublicChar123LocaleChar125TermsRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
+    }
+    '/_public/{-$locale}/sitemap': {
+      id: '/_public/{-$locale}/sitemap'
+      path: '/sitemap'
+      fullPath: '/{-$locale}/sitemap'
+      preLoaderRoute: typeof PublicChar123LocaleChar125SitemapRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
     '/_public/{-$locale}/services': {
@@ -1155,6 +1233,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminServicesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/seo-generator': {
+      id: '/_authenticated/admin/seo-generator'
+      path: '/admin/seo-generator'
+      fullPath: '/admin/seo-generator'
+      preLoaderRoute: typeof AuthenticatedAdminSeoGeneratorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/seo': {
+      id: '/_authenticated/admin/seo'
+      path: '/admin/seo'
+      fullPath: '/admin/seo'
+      preLoaderRoute: typeof AuthenticatedAdminSeoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/routes': {
       id: '/_authenticated/admin/routes'
       path: '/admin/routes'
@@ -1188,6 +1280,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/refunds'
       fullPath: '/admin/refunds'
       preLoaderRoute: typeof AuthenticatedAdminRefundsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/redirects': {
+      id: '/_authenticated/admin/redirects'
+      path: '/admin/redirects'
+      fullPath: '/admin/redirects'
+      preLoaderRoute: typeof AuthenticatedAdminRedirectsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/promotions': {
@@ -1615,11 +1714,14 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminPayrollRoute: typeof AuthenticatedAdminPayrollRoute
   AuthenticatedAdminPricingRoute: typeof AuthenticatedAdminPricingRoute
   AuthenticatedAdminPromotionsRoute: typeof AuthenticatedAdminPromotionsRoute
+  AuthenticatedAdminRedirectsRoute: typeof AuthenticatedAdminRedirectsRoute
   AuthenticatedAdminRefundsRoute: typeof AuthenticatedAdminRefundsRoute
   AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRoute
   AuthenticatedAdminRolesRoute: typeof AuthenticatedAdminRolesRoute
   AuthenticatedAdminRoutePagesRoute: typeof AuthenticatedAdminRoutePagesRoute
   AuthenticatedAdminRoutesRoute: typeof AuthenticatedAdminRoutesRoute
+  AuthenticatedAdminSeoRoute: typeof AuthenticatedAdminSeoRoute
+  AuthenticatedAdminSeoGeneratorRoute: typeof AuthenticatedAdminSeoGeneratorRoute
   AuthenticatedAdminServicesRoute: typeof AuthenticatedAdminServicesRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminTeamRoute: typeof AuthenticatedAdminTeamRoute
@@ -1667,11 +1769,14 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminPayrollRoute: AuthenticatedAdminPayrollRoute,
   AuthenticatedAdminPricingRoute: AuthenticatedAdminPricingRoute,
   AuthenticatedAdminPromotionsRoute: AuthenticatedAdminPromotionsRoute,
+  AuthenticatedAdminRedirectsRoute: AuthenticatedAdminRedirectsRoute,
   AuthenticatedAdminRefundsRoute: AuthenticatedAdminRefundsRoute,
   AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRoute,
   AuthenticatedAdminRolesRoute: AuthenticatedAdminRolesRoute,
   AuthenticatedAdminRoutePagesRoute: AuthenticatedAdminRoutePagesRoute,
   AuthenticatedAdminRoutesRoute: AuthenticatedAdminRoutesRoute,
+  AuthenticatedAdminSeoRoute: AuthenticatedAdminSeoRoute,
+  AuthenticatedAdminSeoGeneratorRoute: AuthenticatedAdminSeoGeneratorRoute,
   AuthenticatedAdminServicesRoute: AuthenticatedAdminServicesRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminTeamRoute: AuthenticatedAdminTeamRoute,
@@ -1741,6 +1846,7 @@ interface PublicChar123LocaleChar125RouteChildren {
   PublicChar123LocaleChar125PrivacyRoute: typeof PublicChar123LocaleChar125PrivacyRoute
   PublicChar123LocaleChar125RefundRoute: typeof PublicChar123LocaleChar125RefundRoute
   PublicChar123LocaleChar125ServicesRoute: typeof PublicChar123LocaleChar125ServicesRouteWithChildren
+  PublicChar123LocaleChar125SitemapRoute: typeof PublicChar123LocaleChar125SitemapRoute
   PublicChar123LocaleChar125TermsRoute: typeof PublicChar123LocaleChar125TermsRoute
   PublicChar123LocaleChar125IndexRoute: typeof PublicChar123LocaleChar125IndexRoute
   PublicChar123LocaleChar125AirportsSlugRoute: typeof PublicChar123LocaleChar125AirportsSlugRoute
@@ -1771,6 +1877,8 @@ const PublicChar123LocaleChar125RouteChildren: PublicChar123LocaleChar125RouteCh
       PublicChar123LocaleChar125RefundRoute,
     PublicChar123LocaleChar125ServicesRoute:
       PublicChar123LocaleChar125ServicesRouteWithChildren,
+    PublicChar123LocaleChar125SitemapRoute:
+      PublicChar123LocaleChar125SitemapRoute,
     PublicChar123LocaleChar125TermsRoute: PublicChar123LocaleChar125TermsRoute,
     PublicChar123LocaleChar125IndexRoute: PublicChar123LocaleChar125IndexRoute,
     PublicChar123LocaleChar125AirportsSlugRoute:
@@ -1790,6 +1898,7 @@ const PublicChar123LocaleChar125RouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  SitemapImagesDotxmlRoute: SitemapImagesDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   PublicChar123LocaleChar125Route: PublicChar123LocaleChar125RouteWithChildren,
 }

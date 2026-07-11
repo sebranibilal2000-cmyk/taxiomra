@@ -13,20 +13,32 @@ import {
   type Locale,
 } from "@/lib/i18n";
 import { resolveLocale } from "@/lib/locale-detect.functions";
+import { resolveRedirect } from "@/lib/seo-tools.functions";
 
 export const Route = createFileRoute("/_public/{-$locale}")({
   beforeLoad: async ({ params, location }) => {
-    // Bad locale slug → redirect to root; the layout without a param will
-    // re-run this beforeLoad and pick the preferred locale below.
+    // 1) Redirect manager: check DB-managed 301/302 redirects (locale-agnostic path).
+    try {
+      const localeLess = location.pathname.replace(/^\/(ar|en)(?=\/|$)/, "") || "/";
+      const rd = await resolveRedirect({ data: { path: localeLess } });
+      if (rd?.destination_path) {
+        throw redirect({ href: rd.destination_path, replace: true });
+      }
+    } catch (e) {
+      if (e && typeof e === "object" && "isRedirect" in e) throw e;
+      // ignore lookup errors; continue with locale resolution
+    }
+
+    // 2) Bad locale slug → redirect to root; the layout without a param will
+    //    re-run this beforeLoad and pick the preferred locale below.
     if (params.locale !== undefined && !isLocale(params.locale)) {
       throw redirect({ to: "/", replace: true });
     }
 
-    // Missing prefix → resolve preferred locale and redirect.
+    // 3) Missing prefix → resolve preferred locale and redirect.
     if (!params.locale) {
       let preferred: Locale = DEFAULT_LOCALE;
       if (typeof window === "undefined") {
-        // SSR: derive from Accept-Language via a server function.
         try {
           preferred = (await resolveLocale()) as Locale;
         } catch {

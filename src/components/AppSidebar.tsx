@@ -7,6 +7,7 @@ import {
   Sparkles, Image as ImageIcon2, Megaphone, Handshake, Inbox, LayoutTemplate,
   Bot, MessageCircle, Activity, AlertTriangle, DatabaseBackup,
   Building, Plane, MapPin, ConciergeBell, Quote, UsersRound, ListTree,
+  Search, ArrowRightLeft, Wand2,
 } from "lucide-react";
 
 import {
@@ -63,6 +64,11 @@ export function AppSidebar() {
       { title: "FAQ", url: "/admin/faqs", icon: HelpCircle },
       { title: "Media Library", url: "/admin/media", icon: ImageIcon2 },
       { title: "Preview site", url: "/", icon: Globe },
+    ]},
+    { label: "SEO", items: [
+      { title: locale === "ar" ? "مدير SEO" : "SEO Manager", url: "/admin/seo", icon: Search },
+      { title: locale === "ar" ? "التوجيهات" : "Redirects", url: "/admin/redirects", icon: ArrowRightLeft },
+      { title: locale === "ar" ? "مولد الصفحات" : "Programmatic Generator", url: "/admin/seo-generator", icon: Wand2 },
     ]},
     { label: locale === "ar" ? "التسويق" : "Marketing", items: [
       { title: "Homepage", url: "/admin/homepage", icon: LayoutTemplate },
