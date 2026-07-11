@@ -46,7 +46,7 @@ export function DataTable<T extends { id: string | number }>({
                 </TableRow>
               )}
               {!loading && data.map((row) => (
-                <TableRow key={String(row.id)} className="border-b border-border/40 hover:bg-muted/30 transition-colors">
+                <TableRow key={String(row.id)} onClick={onRowClick ? () => onRowClick(row) : undefined} className={`border-b border-border/40 hover:bg-muted/30 transition-colors ${onRowClick ? "cursor-pointer" : ""}`}>
                   {columns.map((c) => (
                     <TableCell key={c.key} className={`py-3.5 text-sm ${c.className ?? ""}`}>
                       {c.render ? c.render(row) : (row as any)[c.key]}
