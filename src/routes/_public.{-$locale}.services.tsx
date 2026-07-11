@@ -14,7 +14,7 @@ const opts = () => queryOptions({
 
 const ICON: Record<string, any> = { service: Sparkles, airport: Plane, city: MapPin, route: Car, hotel: Building2, corporate: Briefcase };
 
-export const Route = createFileRoute("/_public/{-$locale}/services")({
+export const Route = createFileRoute("/_public/{-$locale}/{-$locale}/services")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
   head: () => ({
     meta: [

@@ -5,7 +5,7 @@ import { useI18n } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { serviceJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 
-export const Route = createFileRoute("/_public/{-$locale}/airport-transfers")({
+export const Route = createFileRoute("/_public/{-$locale}/{-$locale}/airport-transfers")({
   head: () => ({
     meta: [
       { title: "Airport Transfers — On-Time Chauffeur Service" },
