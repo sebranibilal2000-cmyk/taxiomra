@@ -18,8 +18,8 @@ function HomepageAdmin() {
     queryFn: async () => (await supabase.from("homepage_sections").select("*").order("sort_order")).data ?? [],
   });
 
-  const saveSection = async (id: string, patch: Record<string, unknown>) => {
-    const { error } = await supabase.from("homepage_sections").update(patch).eq("id", id);
+  const saveSection = async (id: string, patch: Record<string, any>) => {
+    const { error } = await supabase.from("homepage_sections").update(patch as any).eq("id", id);
     if (error) return toast.error(error.message);
     toast.success("Saved");
     qc.invalidateQueries({ queryKey: ["homepage-sections"] });

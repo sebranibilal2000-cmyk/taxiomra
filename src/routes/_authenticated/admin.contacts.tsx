@@ -24,8 +24,8 @@ function ContactsAdmin() {
   });
   const [selected, setSelected] = useState<any>(null);
 
-  const updateOne = async (id: string, patch: Record<string, unknown>) => {
-    const { error } = await supabase.from("contact_submissions").update({ ...patch, handled_at: new Date().toISOString() }).eq("id", id);
+  const updateOne = async (id: string, patch: Record<string, any>) => {
+    const { error } = await supabase.from("contact_submissions").update({ ...patch, handled_at: new Date().toISOString() } as any).eq("id", id);
     if (error) return toast.error(error.message);
     qc.invalidateQueries({ queryKey: ["contacts-admin"] });
   };
