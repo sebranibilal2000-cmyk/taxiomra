@@ -13,6 +13,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as PublicIndexRouteImport } from './routes/_public.index'
+import { Route as PublicAboutRouteImport } from './routes/_public.about'
 import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedRoutesRouteImport } from './routes/_authenticated/routes'
@@ -46,6 +47,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicAboutRoute = PublicAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => PublicRoute,
 } as any)
 const AuthenticatedUsersRoute = AuthenticatedUsersRouteImport.update({
@@ -149,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/routes': typeof AuthenticatedRoutesRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/users': typeof AuthenticatedUsersRoute
+  '/about': typeof PublicAboutRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
@@ -169,6 +176,7 @@ export interface FileRoutesByTo {
   '/routes': typeof AuthenticatedRoutesRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/users': typeof AuthenticatedUsersRoute
+  '/about': typeof PublicAboutRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -191,6 +199,7 @@ export interface FileRoutesById {
   '/_authenticated/routes': typeof AuthenticatedRoutesRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/users': typeof AuthenticatedUsersRoute
+  '/_public/about': typeof PublicAboutRoute
   '/_public/': typeof PublicIndexRoute
 }
 export interface FileRouteTypes {
@@ -214,6 +223,7 @@ export interface FileRouteTypes {
     | '/routes'
     | '/settings'
     | '/users'
+    | '/about'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -234,6 +244,7 @@ export interface FileRouteTypes {
     | '/routes'
     | '/settings'
     | '/users'
+    | '/about'
   id:
     | '__root__'
     | '/_authenticated'
@@ -255,6 +266,7 @@ export interface FileRouteTypes {
     | '/_authenticated/routes'
     | '/_authenticated/settings'
     | '/_authenticated/users'
+    | '/_public/about'
     | '/_public/'
   fileRoutesById: FileRoutesById
 }
@@ -292,6 +304,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof PublicIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/about': {
+      id: '/_public/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof PublicAboutRouteImport
       parentRoute: typeof PublicRoute
     }
     '/_authenticated/users': {
@@ -451,10 +470,12 @@ const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface PublicRouteChildren {
+  PublicAboutRoute: typeof PublicAboutRoute
   PublicIndexRoute: typeof PublicIndexRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
+  PublicAboutRoute: PublicAboutRoute,
   PublicIndexRoute: PublicIndexRoute,
 }
 
