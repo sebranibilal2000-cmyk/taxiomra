@@ -25,6 +25,7 @@ function PagesAdmin() {
   const [type, setType] = useState("service");
 
   const save = async (fd: FormData) => {
+    const kw = String(fd.get("keywords") || "").split(",").map((s) => s.trim()).filter(Boolean);
     const payload: any = {
       slug: fd.get("slug"),
       page_type: type,
@@ -37,6 +38,12 @@ function PagesAdmin() {
       og_image_url: fd.get("og_image_url") || null,
       meta_title: fd.get("meta_title") || null,
       meta_description: fd.get("meta_description") || null,
+      og_title: fd.get("og_title") || null,
+      og_description: fd.get("og_description") || null,
+      canonical_url: fd.get("canonical_url") || null,
+      robots: fd.get("robots") || "index,follow",
+      schema_type: fd.get("schema_type") || null,
+      keywords: kw.length ? kw : null,
       sort_order: Number(fd.get("sort_order") || 0),
       published: fd.get("published") === "on",
     };
