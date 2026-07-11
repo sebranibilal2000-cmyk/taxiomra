@@ -29,6 +29,9 @@ export function AppSidebar() {
     { label: t("operations"), items: [
       { title: t("bookings"), url: "/admin/bookings", icon: CalendarCheck },
       { title: locale === "ar" ? "مركز الإرسال" : "Dispatch", url: "/admin/dispatch", icon: Radio },
+      { title: locale === "ar" ? "التقويم" : "Calendar", url: "/admin/calendar", icon: CalendarDays },
+      { title: locale === "ar" ? "المهام" : "Tasks", url: "/admin/tasks", icon: ListChecks },
+      { title: locale === "ar" ? "التنبيهات" : "Reminders", url: "/admin/reminders", icon: BellRing },
       { title: t("customers"), url: "/admin/customers", icon: Users },
       { title: t("drivers"), url: "/admin/drivers", icon: IdCard },
     ]},
