@@ -446,6 +446,9 @@ export type Database = {
           canonical_url: string | null
           created_at: string
           custom_schema: Json | null
+          deleted_at: string | null
+          featured_image_url: string | null
+          gallery: Json
           hero_image_url: string | null
           id: string
           keywords: string[] | null
@@ -457,15 +460,20 @@ export type Database = {
           og_title: string | null
           page_type: Database["public"]["Enums"]["cms_page_type"]
           published: boolean
+          related_ids: string[]
           robots: string | null
           schema_type: string | null
           slug: string
           sort_order: number
+          status: Database["public"]["Enums"]["content_status"]
           subtitle_ar: string | null
           subtitle_en: string | null
           title_ar: string
           title_en: string
           twitter_card: string | null
+          twitter_description: string | null
+          twitter_image_url: string | null
+          twitter_title: string | null
           updated_at: string
         }
         Insert: {
@@ -474,6 +482,9 @@ export type Database = {
           canonical_url?: string | null
           created_at?: string
           custom_schema?: Json | null
+          deleted_at?: string | null
+          featured_image_url?: string | null
+          gallery?: Json
           hero_image_url?: string | null
           id?: string
           keywords?: string[] | null
@@ -485,15 +496,20 @@ export type Database = {
           og_title?: string | null
           page_type?: Database["public"]["Enums"]["cms_page_type"]
           published?: boolean
+          related_ids?: string[]
           robots?: string | null
           schema_type?: string | null
           slug: string
           sort_order?: number
+          status?: Database["public"]["Enums"]["content_status"]
           subtitle_ar?: string | null
           subtitle_en?: string | null
           title_ar: string
           title_en: string
           twitter_card?: string | null
+          twitter_description?: string | null
+          twitter_image_url?: string | null
+          twitter_title?: string | null
           updated_at?: string
         }
         Update: {
@@ -502,6 +518,9 @@ export type Database = {
           canonical_url?: string | null
           created_at?: string
           custom_schema?: Json | null
+          deleted_at?: string | null
+          featured_image_url?: string | null
+          gallery?: Json
           hero_image_url?: string | null
           id?: string
           keywords?: string[] | null
@@ -513,15 +532,20 @@ export type Database = {
           og_title?: string | null
           page_type?: Database["public"]["Enums"]["cms_page_type"]
           published?: boolean
+          related_ids?: string[]
           robots?: string | null
           schema_type?: string | null
           slug?: string
           sort_order?: number
+          status?: Database["public"]["Enums"]["content_status"]
           subtitle_ar?: string | null
           subtitle_en?: string | null
           title_ar?: string
           title_en?: string
           twitter_card?: string | null
+          twitter_description?: string | null
+          twitter_image_url?: string | null
+          twitter_title?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -1751,6 +1775,93 @@ export type Database = {
         }
         Relationships: []
       }
+      menu_items: {
+        Row: {
+          created_at: string
+          icon: string | null
+          id: string
+          is_active: boolean
+          label_ar: string
+          label_en: string
+          menu_id: string
+          parent_id: string | null
+          sort_order: number
+          target: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          label_ar: string
+          label_en: string
+          menu_id: string
+          parent_id?: string | null
+          sort_order?: number
+          target?: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          label_ar?: string
+          label_en?: string
+          menu_id?: string
+          parent_id?: string | null
+          sort_order?: number
+          target?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "menu_items_menu_id_fkey"
+            columns: ["menu_id"]
+            isOneToOne: false
+            referencedRelation: "menus"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "menu_items_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "menu_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      menus: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          location: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          location: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          location?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           body: string | null
@@ -2316,37 +2427,106 @@ export type Database = {
       }
       routes: {
         Row: {
+          canonical_url: string | null
           created_at: string
+          deleted_at: string | null
+          description_ar: string | null
+          description_en: string | null
           destination: string
           distance_km: number | null
           duration_min: number | null
+          featured_image_url: string | null
           fixed_price: number | null
+          gallery: Json
           id: string
           is_active: boolean
+          keywords: string[] | null
+          meta_description: string | null
+          meta_title: string | null
           name: string
+          og_description: string | null
+          og_image_url: string | null
+          og_title: string | null
           origin: string
+          robots: string | null
+          schema_type: string | null
+          slug: string | null
+          sort_order: number
+          status: Database["public"]["Enums"]["content_status"]
+          title_ar: string | null
+          title_en: string | null
+          twitter_description: string | null
+          twitter_image_url: string | null
+          twitter_title: string | null
+          updated_at: string
         }
         Insert: {
+          canonical_url?: string | null
           created_at?: string
+          deleted_at?: string | null
+          description_ar?: string | null
+          description_en?: string | null
           destination: string
           distance_km?: number | null
           duration_min?: number | null
+          featured_image_url?: string | null
           fixed_price?: number | null
+          gallery?: Json
           id?: string
           is_active?: boolean
+          keywords?: string[] | null
+          meta_description?: string | null
+          meta_title?: string | null
           name: string
+          og_description?: string | null
+          og_image_url?: string | null
+          og_title?: string | null
           origin: string
+          robots?: string | null
+          schema_type?: string | null
+          slug?: string | null
+          sort_order?: number
+          status?: Database["public"]["Enums"]["content_status"]
+          title_ar?: string | null
+          title_en?: string | null
+          twitter_description?: string | null
+          twitter_image_url?: string | null
+          twitter_title?: string | null
+          updated_at?: string
         }
         Update: {
+          canonical_url?: string | null
           created_at?: string
+          deleted_at?: string | null
+          description_ar?: string | null
+          description_en?: string | null
           destination?: string
           distance_km?: number | null
           duration_min?: number | null
+          featured_image_url?: string | null
           fixed_price?: number | null
+          gallery?: Json
           id?: string
           is_active?: boolean
+          keywords?: string[] | null
+          meta_description?: string | null
+          meta_title?: string | null
           name?: string
+          og_description?: string | null
+          og_image_url?: string | null
+          og_title?: string | null
           origin?: string
+          robots?: string | null
+          schema_type?: string | null
+          slug?: string | null
+          sort_order?: number
+          status?: Database["public"]["Enums"]["content_status"]
+          title_ar?: string | null
+          title_en?: string | null
+          twitter_description?: string | null
+          twitter_image_url?: string | null
+          twitter_title?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
@@ -2467,11 +2647,80 @@ export type Database = {
         }
         Relationships: []
       }
+      team_members: {
+        Row: {
+          bio_ar: string | null
+          bio_en: string | null
+          created_at: string
+          deleted_at: string | null
+          email: string | null
+          id: string
+          linkedin_url: string | null
+          meta_description: string | null
+          meta_title: string | null
+          name_ar: string
+          name_en: string
+          phone: string | null
+          photo_url: string | null
+          role_ar: string | null
+          role_en: string | null
+          slug: string | null
+          sort_order: number
+          status: Database["public"]["Enums"]["content_status"]
+          updated_at: string
+        }
+        Insert: {
+          bio_ar?: string | null
+          bio_en?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          email?: string | null
+          id?: string
+          linkedin_url?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          name_ar: string
+          name_en: string
+          phone?: string | null
+          photo_url?: string | null
+          role_ar?: string | null
+          role_en?: string | null
+          slug?: string | null
+          sort_order?: number
+          status?: Database["public"]["Enums"]["content_status"]
+          updated_at?: string
+        }
+        Update: {
+          bio_ar?: string | null
+          bio_en?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          email?: string | null
+          id?: string
+          linkedin_url?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          name_ar?: string
+          name_en?: string
+          phone?: string | null
+          photo_url?: string | null
+          role_ar?: string | null
+          role_en?: string | null
+          slug?: string | null
+          sort_order?: number
+          status?: Database["public"]["Enums"]["content_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       testimonials: {
         Row: {
           avatar_url: string | null
           created_at: string
+          deleted_at: string | null
           id: string
+          location_ar: string | null
+          location_en: string | null
           name: string
           published: boolean
           quote_ar: string
@@ -2480,12 +2729,16 @@ export type Database = {
           role_ar: string | null
           role_en: string | null
           sort_order: number
+          status: Database["public"]["Enums"]["content_status"]
           updated_at: string
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string
+          deleted_at?: string | null
           id?: string
+          location_ar?: string | null
+          location_en?: string | null
           name: string
           published?: boolean
           quote_ar: string
@@ -2494,12 +2747,16 @@ export type Database = {
           role_ar?: string | null
           role_en?: string | null
           sort_order?: number
+          status?: Database["public"]["Enums"]["content_status"]
           updated_at?: string
         }
         Update: {
           avatar_url?: string | null
           created_at?: string
+          deleted_at?: string | null
           id?: string
+          location_ar?: string | null
+          location_en?: string | null
           name?: string
           published?: boolean
           quote_ar?: string
@@ -2508,6 +2765,7 @@ export type Database = {
           role_ar?: string | null
           role_en?: string | null
           sort_order?: number
+          status?: Database["public"]["Enums"]["content_status"]
           updated_at?: string
         }
         Relationships: []
@@ -2538,34 +2796,55 @@ export type Database = {
           base_fare: number
           code: string
           created_at: string
+          deleted_at: string | null
+          featured_image_url: string | null
+          gallery: Json
           id: string
           is_active: boolean
+          meta_description: string | null
+          meta_title: string | null
+          og_image_url: string | null
           price_per_km: number
           price_per_min: number
           seats: number
           sort_order: number
+          status: Database["public"]["Enums"]["content_status"]
         }
         Insert: {
           base_fare?: number
           code: string
           created_at?: string
+          deleted_at?: string | null
+          featured_image_url?: string | null
+          gallery?: Json
           id?: string
           is_active?: boolean
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
           price_per_km?: number
           price_per_min?: number
           seats?: number
           sort_order?: number
+          status?: Database["public"]["Enums"]["content_status"]
         }
         Update: {
           base_fare?: number
           code?: string
           created_at?: string
+          deleted_at?: string | null
+          featured_image_url?: string | null
+          gallery?: Json
           id?: string
           is_active?: boolean
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
           price_per_km?: number
           price_per_min?: number
           seats?: number
           sort_order?: number
+          status?: Database["public"]["Enums"]["content_status"]
         }
         Relationships: []
       }
@@ -3038,6 +3317,7 @@ export type Database = {
         | "route_page"
         | "category"
       contact_status: "new" | "in_progress" | "converted" | "closed" | "spam"
+      content_status: "draft" | "published" | "archived"
       customer_note_kind:
         | "note"
         | "call"
@@ -3278,6 +3558,7 @@ export const Constants = {
         "category",
       ],
       contact_status: ["new", "in_progress", "converted", "closed", "spam"],
+      content_status: ["draft", "published", "archived"],
       customer_note_kind: [
         "note",
         "call",
