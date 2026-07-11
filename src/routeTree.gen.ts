@@ -52,6 +52,7 @@ import { Route as AuthenticatedAdminPartnersRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminPagesRouteImport } from './routes/_authenticated/admin.pages'
 import { Route as AuthenticatedAdminOperationsRouteImport } from './routes/_authenticated/admin.operations'
 import { Route as AuthenticatedAdminNotificationsRouteImport } from './routes/_authenticated/admin.notifications'
+import { Route as AuthenticatedAdminNotificationQueueRouteImport } from './routes/_authenticated/admin.notification-queue'
 import { Route as AuthenticatedAdminMenusRouteImport } from './routes/_authenticated/admin.menus'
 import { Route as AuthenticatedAdminMediaRouteImport } from './routes/_authenticated/admin.media'
 import { Route as AuthenticatedAdminMaintenanceRouteImport } from './routes/_authenticated/admin.maintenance'
@@ -342,6 +343,12 @@ const AuthenticatedAdminNotificationsRoute =
   AuthenticatedAdminNotificationsRouteImport.update({
     id: '/admin/notifications',
     path: '/admin/notifications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminNotificationQueueRoute =
+  AuthenticatedAdminNotificationQueueRouteImport.update({
+    id: '/admin/notification-queue',
+    path: '/admin/notification-queue',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminMenusRoute = AuthenticatedAdminMenusRouteImport.update({
@@ -639,6 +646,7 @@ export interface FileRoutesByFullPath {
   '/admin/maintenance': typeof AuthenticatedAdminMaintenanceRoute
   '/admin/media': typeof AuthenticatedAdminMediaRoute
   '/admin/menus': typeof AuthenticatedAdminMenusRoute
+  '/admin/notification-queue': typeof AuthenticatedAdminNotificationQueueRoute
   '/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/admin/operations': typeof AuthenticatedAdminOperationsRoute
   '/admin/pages': typeof AuthenticatedAdminPagesRoute
@@ -727,6 +735,7 @@ export interface FileRoutesByTo {
   '/admin/maintenance': typeof AuthenticatedAdminMaintenanceRoute
   '/admin/media': typeof AuthenticatedAdminMediaRoute
   '/admin/menus': typeof AuthenticatedAdminMenusRoute
+  '/admin/notification-queue': typeof AuthenticatedAdminNotificationQueueRoute
   '/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/admin/operations': typeof AuthenticatedAdminOperationsRoute
   '/admin/pages': typeof AuthenticatedAdminPagesRoute
@@ -817,6 +826,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/maintenance': typeof AuthenticatedAdminMaintenanceRoute
   '/_authenticated/admin/media': typeof AuthenticatedAdminMediaRoute
   '/_authenticated/admin/menus': typeof AuthenticatedAdminMenusRoute
+  '/_authenticated/admin/notification-queue': typeof AuthenticatedAdminNotificationQueueRoute
   '/_authenticated/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/_authenticated/admin/operations': typeof AuthenticatedAdminOperationsRoute
   '/_authenticated/admin/pages': typeof AuthenticatedAdminPagesRoute
@@ -908,6 +918,7 @@ export interface FileRouteTypes {
     | '/admin/maintenance'
     | '/admin/media'
     | '/admin/menus'
+    | '/admin/notification-queue'
     | '/admin/notifications'
     | '/admin/operations'
     | '/admin/pages'
@@ -996,6 +1007,7 @@ export interface FileRouteTypes {
     | '/admin/maintenance'
     | '/admin/media'
     | '/admin/menus'
+    | '/admin/notification-queue'
     | '/admin/notifications'
     | '/admin/operations'
     | '/admin/pages'
@@ -1085,6 +1097,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/maintenance'
     | '/_authenticated/admin/media'
     | '/_authenticated/admin/menus'
+    | '/_authenticated/admin/notification-queue'
     | '/_authenticated/admin/notifications'
     | '/_authenticated/admin/operations'
     | '/_authenticated/admin/pages'
@@ -1448,6 +1461,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/notifications'
       fullPath: '/admin/notifications'
       preLoaderRoute: typeof AuthenticatedAdminNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/notification-queue': {
+      id: '/_authenticated/admin/notification-queue'
+      path: '/admin/notification-queue'
+      fullPath: '/admin/notification-queue'
+      preLoaderRoute: typeof AuthenticatedAdminNotificationQueueRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/menus': {
@@ -1864,6 +1884,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminMaintenanceRoute: typeof AuthenticatedAdminMaintenanceRoute
   AuthenticatedAdminMediaRoute: typeof AuthenticatedAdminMediaRoute
   AuthenticatedAdminMenusRoute: typeof AuthenticatedAdminMenusRoute
+  AuthenticatedAdminNotificationQueueRoute: typeof AuthenticatedAdminNotificationQueueRoute
   AuthenticatedAdminNotificationsRoute: typeof AuthenticatedAdminNotificationsRoute
   AuthenticatedAdminOperationsRoute: typeof AuthenticatedAdminOperationsRoute
   AuthenticatedAdminPagesRoute: typeof AuthenticatedAdminPagesRoute
@@ -1924,6 +1945,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminMaintenanceRoute: AuthenticatedAdminMaintenanceRoute,
   AuthenticatedAdminMediaRoute: AuthenticatedAdminMediaRoute,
   AuthenticatedAdminMenusRoute: AuthenticatedAdminMenusRoute,
+  AuthenticatedAdminNotificationQueueRoute:
+    AuthenticatedAdminNotificationQueueRoute,
   AuthenticatedAdminNotificationsRoute: AuthenticatedAdminNotificationsRoute,
   AuthenticatedAdminOperationsRoute: AuthenticatedAdminOperationsRoute,
   AuthenticatedAdminPagesRoute: AuthenticatedAdminPagesRoute,
