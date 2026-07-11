@@ -77,7 +77,11 @@ export function PublicFooter() {
       <div className="border-t border-primary-foreground/10">
         <div className="container-tight py-6 flex flex-wrap items-center justify-between gap-3 text-xs text-primary-foreground/50">
           <span>© {new Date().getFullYear()} {SITE.brand[locale]}. {ar ? "جميع الحقوق محفوظة." : "All rights reserved."}</span>
-          <Link to="/auth" className="hover:text-gold transition">{ar ? "دخول الموظفين" : "Staff sign in"}</Link>
+          <div className="flex items-center gap-4">
+            <Link to="/privacy" className="hover:text-gold transition">{ar ? "الخصوصية" : "Privacy"}</Link>
+            <Link to="/terms" className="hover:text-gold transition">{ar ? "الشروط" : "Terms"}</Link>
+            <Link to="/auth" className="hover:text-gold transition">{ar ? "دخول الموظفين" : "Staff sign in"}</Link>
+          </div>
         </div>
       </div>
     </footer>
