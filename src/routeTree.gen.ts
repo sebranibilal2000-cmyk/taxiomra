@@ -29,6 +29,7 @@ import { Route as PublicChar123LocaleChar125AboutRouteImport } from './routes/_p
 import { Route as AuthenticatedAdminWhatsappTemplatesRouteImport } from './routes/_authenticated/admin.whatsapp-templates'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as AuthenticatedAdminTestimonialsRouteImport } from './routes/_authenticated/admin.testimonials'
+import { Route as AuthenticatedAdminTeamRouteImport } from './routes/_authenticated/admin.team'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminServicesRouteImport } from './routes/_authenticated/admin.services'
 import { Route as AuthenticatedAdminRoutesRouteImport } from './routes/_authenticated/admin.routes'
@@ -198,6 +199,11 @@ const AuthenticatedAdminTestimonialsRoute =
     path: '/admin/testimonials',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminTeamRoute = AuthenticatedAdminTeamRouteImport.update({
+  id: '/admin/team',
+  path: '/admin/team',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminSettingsRoute =
   AuthenticatedAdminSettingsRouteImport.update({
     id: '/admin/settings',
@@ -556,6 +562,7 @@ export interface FileRoutesByFullPath {
   '/admin/routes': typeof AuthenticatedAdminRoutesRoute
   '/admin/services': typeof AuthenticatedAdminServicesRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/team': typeof AuthenticatedAdminTeamRoute
   '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/admin/whatsapp-templates': typeof AuthenticatedAdminWhatsappTemplatesRoute
@@ -630,6 +637,7 @@ export interface FileRoutesByTo {
   '/admin/routes': typeof AuthenticatedAdminRoutesRoute
   '/admin/services': typeof AuthenticatedAdminServicesRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/team': typeof AuthenticatedAdminTeamRoute
   '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/admin/whatsapp-templates': typeof AuthenticatedAdminWhatsappTemplatesRoute
@@ -706,6 +714,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/routes': typeof AuthenticatedAdminRoutesRoute
   '/_authenticated/admin/services': typeof AuthenticatedAdminServicesRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/team': typeof AuthenticatedAdminTeamRoute
   '/_authenticated/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/admin/whatsapp-templates': typeof AuthenticatedAdminWhatsappTemplatesRoute
@@ -783,6 +792,7 @@ export interface FileRouteTypes {
     | '/admin/routes'
     | '/admin/services'
     | '/admin/settings'
+    | '/admin/team'
     | '/admin/testimonials'
     | '/admin/users'
     | '/admin/whatsapp-templates'
@@ -857,6 +867,7 @@ export interface FileRouteTypes {
     | '/admin/routes'
     | '/admin/services'
     | '/admin/settings'
+    | '/admin/team'
     | '/admin/testimonials'
     | '/admin/users'
     | '/admin/whatsapp-templates'
@@ -932,6 +943,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/routes'
     | '/_authenticated/admin/services'
     | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/team'
     | '/_authenticated/admin/testimonials'
     | '/_authenticated/admin/users'
     | '/_authenticated/admin/whatsapp-templates'
@@ -1108,6 +1120,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/testimonials'
       fullPath: '/admin/testimonials'
       preLoaderRoute: typeof AuthenticatedAdminTestimonialsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/team': {
+      id: '/_authenticated/admin/team'
+      path: '/admin/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AuthenticatedAdminTeamRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/settings': {
@@ -1583,6 +1602,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoutesRoute: typeof AuthenticatedAdminRoutesRoute
   AuthenticatedAdminServicesRoute: typeof AuthenticatedAdminServicesRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminTeamRoute: typeof AuthenticatedAdminTeamRoute
   AuthenticatedAdminTestimonialsRoute: typeof AuthenticatedAdminTestimonialsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAdminWhatsappTemplatesRoute: typeof AuthenticatedAdminWhatsappTemplatesRoute
@@ -1633,6 +1653,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoutesRoute: AuthenticatedAdminRoutesRoute,
   AuthenticatedAdminServicesRoute: AuthenticatedAdminServicesRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminTeamRoute: AuthenticatedAdminTeamRoute,
   AuthenticatedAdminTestimonialsRoute: AuthenticatedAdminTestimonialsRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedAdminWhatsappTemplatesRoute:
