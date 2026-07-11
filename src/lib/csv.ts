@@ -1,7 +1,7 @@
 // CSV export helper for the admin.
 export function toCsv(rows: Record<string, any>[], columns?: { key: string; label?: string }[]): string {
   if (!rows.length) return "";
-  const cols = columns ?? Object.keys(rows[0]).map((k) => ({ key: k }));
+  const cols: { key: string; label?: string }[] = columns ?? Object.keys(rows[0]).map((k) => ({ key: k }));
   const esc = (v: any) => {
     if (v === null || v === undefined) return "";
     const s = typeof v === "object" ? JSON.stringify(v) : String(v);
