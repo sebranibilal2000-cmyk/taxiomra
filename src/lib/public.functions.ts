@@ -31,6 +31,49 @@ export const getCmsPage = createServerFn({ method: "GET" })
     return row;
   });
 
+export const getCmsPageByType = createServerFn({ method: "GET" })
+  .inputValidator((input: { slug: string; type: string }) => input)
+  .handler(async ({ data }) => {
+    const sb = serverPublic();
+    const { data: row } = await sb
+      .from("cms_pages")
+      .select("*")
+      .eq("slug", data.slug)
+      .eq("page_type", data.type as any)
+      .eq("published", true)
+      .maybeSingle();
+    return row;
+  });
+
+export const listRelatedCmsPages = createServerFn({ method: "GET" })
+  .inputValidator((input: { type: string; excludeSlug?: string; limit?: number }) => input)
+  .handler(async ({ data }) => {
+    const sb = serverPublic();
+    let q = sb
+      .from("cms_pages")
+      .select("slug,title_ar,title_en,subtitle_ar,subtitle_en,hero_image_url,page_type")
+      .eq("page_type", data.type as any)
+      .eq("published", true)
+      .order("sort_order")
+      .limit(data.limit ?? 6);
+    if (data.excludeSlug) q = q.neq("slug", data.excludeSlug);
+    const { data: rows } = await q;
+    return rows ?? [];
+  });
+
+export const getVehicleCategoryByCode = createServerFn({ method: "GET" })
+  .inputValidator((input: { code: string }) => input)
+  .handler(async ({ data }) => {
+    const sb = serverPublic();
+    const { data: row } = await sb
+      .from("vehicle_categories")
+      .select("*, vehicle_category_translations(*)")
+      .eq("code", data.code)
+      .eq("is_active", true)
+      .maybeSingle();
+    return row;
+  });
+
 export const listBlogPosts = createServerFn({ method: "GET" }).handler(async () => {
   const sb = serverPublic();
   const { data } = await sb
