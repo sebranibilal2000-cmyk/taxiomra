@@ -5,7 +5,7 @@ import {
   FileText, HelpCircle, Newspaper, Globe, Radio, Wrench, GaugeCircle,
   PieChart, Receipt, Building2, Undo2, Wallet, Briefcase,
   Sparkles, Image as ImageIcon2, Megaphone, Handshake, Inbox, LayoutTemplate,
-  Bot, MessageCircle,
+  Bot, MessageCircle, Activity, AlertTriangle, DatabaseBackup,
 } from "lucide-react";
 
 import {
