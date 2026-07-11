@@ -7,20 +7,29 @@ export function localBusinessJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "TaxiService",
+    "@id": `${SITE.url}/#taxi`,
     name: SITE.brand.en,
     alternateName: SITE.brand.ar,
     telephone: SITE.phone,
     email: SITE.email,
-    url: "/",
-    image: "/og-cover.jpg",
+    url: SITE.url,
+    image: `${SITE.url}/og-cover.jpg`,
     priceRange: "$$",
+    currenciesAccepted: SITE.currency,
     address: {
       "@type": "PostalAddress",
+      streetAddress: SITE.address.en,
       addressLocality: SITE.city,
+      addressRegion: SITE.region,
       addressCountry: SITE.country,
     },
     geo: { "@type": "GeoCoordinates", latitude: SITE.latitude, longitude: SITE.longitude },
-    areaServed: { "@type": "City", name: SITE.city },
+    areaServed: [
+      { "@type": "City", name: "Jeddah" },
+      { "@type": "City", name: "Makkah" },
+      { "@type": "City", name: "Madinah" },
+      { "@type": "City", name: "Taif" },
+    ],
     openingHoursSpecification: [{
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
@@ -34,16 +43,36 @@ export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${SITE.url}/#organization`,
     name: SITE.brand.en,
-    url: "/",
-    logo: "/logo.png",
-    contactPoint: [{
-      "@type": "ContactPoint",
-      telephone: SITE.phone,
-      contactType: "reservations",
-      areaServed: SITE.country,
-      availableLanguage: ["en", "ar"],
-    }],
+    alternateName: SITE.brand.ar,
+    url: SITE.url,
+    logo: `${SITE.url}/logo.png`,
+    email: SITE.email,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: SITE.city,
+      addressRegion: SITE.region,
+      addressCountry: SITE.country,
+    },
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        telephone: SITE.phone,
+        contactType: "reservations",
+        areaServed: SITE.country,
+        availableLanguage: ["en", "ar"],
+      },
+      {
+        "@type": "ContactPoint",
+        telephone: `+${SITE.whatsapp}`,
+        contactType: "customer service",
+        contactOption: "TollFree",
+        areaServed: SITE.country,
+        availableLanguage: ["en", "ar"],
+      },
+    ],
+    sameAs: Object.values(SITE.socials).filter(Boolean),
   };
 }
 
