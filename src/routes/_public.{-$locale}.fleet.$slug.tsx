@@ -2,7 +2,6 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { getVehicleCategoryByCode, listVehicleCategories } from "@/lib/public.functions";
 import { breadcrumbJsonLd, vehicleJsonLd } from "@/lib/seo";
-import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Phone, MessageCircle, ChevronRight, Users } from "lucide-react";
 import { useI18n, withLocale } from "@/lib/i18n";
