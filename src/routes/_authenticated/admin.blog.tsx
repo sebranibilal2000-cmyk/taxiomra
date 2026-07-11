@@ -75,7 +75,7 @@ function BlogAdmin() {
           <DialogTrigger asChild><Button><Plus className="h-4 w-4 me-2" /> New Post</Button></DialogTrigger>
           <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
             <DialogHeader><DialogTitle>{editing ? "Edit post" : "New post"}</DialogTitle></DialogHeader>
-            <form action={save} className="space-y-3">
+            <form onSubmit={(e) => { e.preventDefault(); void save(new FormData(e.currentTarget)); }} className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
                 <div><label className="text-sm">Title (EN)</label><Input name="title_en" defaultValue={editing?.title_en} required /></div>
                 <div><label className="text-sm">Title (AR)</label><Input name="title_ar" defaultValue={editing?.title_ar} dir="rtl" /></div>
