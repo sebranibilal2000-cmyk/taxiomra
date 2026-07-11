@@ -155,7 +155,7 @@ function ContactsAdmin() {
                   </div>
                   <div>
                     <label className="text-xs uppercase tracking-wider text-muted-foreground">Assigned to</label>
-                    <Select defaultValue={selected.assigned_to ?? ""} onValueChange={(v) => updateOne(selected.id, { assigned_to: v || null })}>
+                    <Select defaultValue={selected.assigned_to ?? "unassigned"} onValueChange={(v) => updateOne(selected.id, { assigned_to: v === "unassigned" ? null : v })}>
                       <SelectTrigger><SelectValue placeholder="—" /></SelectTrigger>
                       <SelectContent>
                         <SelectItem value="unassigned">Unassigned</SelectItem>
