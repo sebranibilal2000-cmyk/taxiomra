@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as PublicIndexRouteImport } from './routes/_public.index'
 import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedRoutesRouteImport } from './routes/_authenticated/routes'
@@ -41,6 +42,11 @@ const PublicRoute = PublicRouteImport.update({
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PublicIndexRoute = PublicIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PublicRoute,
 } as any)
 const AuthenticatedUsersRoute = AuthenticatedUsersRouteImport.update({
   id: '/users',
@@ -125,7 +131,7 @@ const AuthenticatedAuditRoute = AuthenticatedAuditRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof PublicRoute
+  '/': typeof PublicIndexRoute
   '/auth': typeof AuthRoute
   '/audit': typeof AuthenticatedAuditRoute
   '/bookings': typeof AuthenticatedBookingsRoute
@@ -145,7 +151,7 @@ export interface FileRoutesByFullPath {
   '/users': typeof AuthenticatedUsersRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof PublicRoute
+  '/': typeof PublicIndexRoute
   '/auth': typeof AuthRoute
   '/audit': typeof AuthenticatedAuditRoute
   '/bookings': typeof AuthenticatedBookingsRoute
@@ -167,7 +173,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/_public': typeof PublicRoute
+  '/_public': typeof PublicRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/audit': typeof AuthenticatedAuditRoute
   '/_authenticated/bookings': typeof AuthenticatedBookingsRoute
@@ -185,6 +191,7 @@ export interface FileRoutesById {
   '/_authenticated/routes': typeof AuthenticatedRoutesRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/users': typeof AuthenticatedUsersRoute
+  '/_public/': typeof PublicIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -248,11 +255,12 @@ export interface FileRouteTypes {
     | '/_authenticated/routes'
     | '/_authenticated/settings'
     | '/_authenticated/users'
+    | '/_public/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  PublicRoute: typeof PublicRoute
+  PublicRoute: typeof PublicRouteWithChildren
   AuthRoute: typeof AuthRoute
 }
 
@@ -278,6 +286,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_public/': {
+      id: '/_public/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof PublicIndexRouteImport
+      parentRoute: typeof PublicRoute
     }
     '/_authenticated/users': {
       id: '/_authenticated/users'
@@ -435,9 +450,20 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface PublicRouteChildren {
+  PublicIndexRoute: typeof PublicIndexRoute
+}
+
+const PublicRouteChildren: PublicRouteChildren = {
+  PublicIndexRoute: PublicIndexRoute,
+}
+
+const PublicRouteWithChildren =
+  PublicRoute._addFileChildren(PublicRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  PublicRoute: PublicRoute,
+  PublicRoute: PublicRouteWithChildren,
   AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
