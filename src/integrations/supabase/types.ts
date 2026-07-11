@@ -2213,19 +2213,25 @@ export type Database = {
       }
       permissions: {
         Row: {
+          action: string | null
           code: string
           description: string | null
           id: string
+          module: string | null
         }
         Insert: {
+          action?: string | null
           code: string
           description?: string | null
           id?: string
+          module?: string | null
         }
         Update: {
+          action?: string | null
           code?: string
           description?: string | null
           id?: string
+          module?: string | null
         }
         Relationships: []
       }
@@ -3641,6 +3647,10 @@ export type Database = {
       }
     }
     Functions: {
+      has_permission: {
+        Args: { _code: string; _user_id: string }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -3657,6 +3667,14 @@ export type Database = {
       recompute_driver_stats: {
         Args: { _driver_id: string }
         Returns: undefined
+      }
+      user_permissions: {
+        Args: { _user_id: string }
+        Returns: {
+          action: string
+          code: string
+          module: string
+        }[]
       }
     }
     Enums: {
