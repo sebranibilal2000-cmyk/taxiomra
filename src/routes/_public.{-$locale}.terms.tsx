@@ -2,16 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/site-info";
 
-export const Route = createFileRoute("/_public/terms")({
+export const Route = createFileRoute("/_public/{-$locale}/terms")({
   head: () => ({
     meta: [
       { title: "Terms of Service — Sur3a Taxi" },
       { name: "description", content: "The terms that govern the use of our chauffeur services." },
       { property: "og:title", content: "Terms of Service" },
-      { property: "og:url", content: "/terms" },
       { name: "robots", content: "index,follow" },
     ],
-    links: [{ rel: "canonical", href: "/terms" }],
+    links: [],
   }),
   component: Terms,
 });

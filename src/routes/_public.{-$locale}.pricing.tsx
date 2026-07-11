@@ -5,16 +5,15 @@ import { Check, MessageCircle, Phone } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 
-export const Route = createFileRoute("/_public/pricing")({
+export const Route = createFileRoute("/_public/{-$locale}/pricing")({
   head: () => ({
     meta: [
       { title: "Taxi Pricing — Fixed Fares & Transparent Rates" },
       { name: "description", content: "Transparent taxi pricing: fixed airport fares, per-km city rates, and corporate contracts. No hidden fees." },
       { property: "og:title", content: "Pricing — Sur3a Taxi" },
       { property: "og:description", content: "Fixed airport fares, city rates, corporate contracts. No hidden fees." },
-      { property: "og:url", content: "/pricing" },
-    ],
-    links: [{ rel: "canonical", href: "/pricing" }],
+      ],
+    links: [],
   }),
   component: Pricing,
 });

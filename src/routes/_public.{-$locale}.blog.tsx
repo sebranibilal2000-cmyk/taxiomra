@@ -6,16 +6,15 @@ import { ArrowRight, Clock } from "lucide-react";
 
 const opts = () => queryOptions({ queryKey: ["public", "blog"], queryFn: () => listBlogPosts() });
 
-export const Route = createFileRoute("/_public/blog")({
+export const Route = createFileRoute("/_public/{-$locale}/blog")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
   head: () => ({
     meta: [
       { title: "Journal — Travel Tips, Airport Guides & Chauffeur Stories" },
       { name: "description", content: "Travel notes, airport guides, and industry insights from our chauffeur team." },
       { property: "og:title", content: "The Journal — Sur3a Taxi" },
-      { property: "og:url", content: "/blog" },
-    ],
-    links: [{ rel: "canonical", href: "/blog" }],
+      ],
+    links: [],
   }),
   component: Blog,
 });

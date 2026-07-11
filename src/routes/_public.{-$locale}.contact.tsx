@@ -10,15 +10,14 @@ import { submitContact } from "@/lib/public.functions";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_public/contact")({
+export const Route = createFileRoute("/_public/{-$locale}/contact")({
   head: () => ({
     meta: [
       { title: "Contact — Book Your Chauffeur 24/7" },
       { name: "description", content: "Reach our dispatch desk via WhatsApp, phone or email. Available around the clock." },
       { property: "og:title", content: "Contact — Sur3a Taxi" },
-      { property: "og:url", content: "/contact" },
-    ],
-    links: [{ rel: "canonical", href: "/contact" }],
+      ],
+    links: [],
     scripts: [{
       type: "application/ld+json",
       children: JSON.stringify({

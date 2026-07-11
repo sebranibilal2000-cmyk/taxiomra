@@ -13,7 +13,7 @@ const opts = (slug: string) => queryOptions({
   },
 });
 
-export const Route = createFileRoute("/_public/blog/$slug")({
+export const Route = createFileRoute("/_public/{-$locale}/blog/$slug")({
   loader: ({ context, params }) => context.queryClient.ensureQueryData(opts(params.slug)),
   head: ({ loaderData, params }) => {
     if (!loaderData) return { meta: [{ title: "Not found" }, { name: "robots", content: "noindex" }] };
@@ -26,10 +26,9 @@ export const Route = createFileRoute("/_public/blog/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "article" },
-        { property: "og:url", content: `/blog/${params.slug}` },
         ...(loaderData.cover_url ? [{ property: "og:image", content: loaderData.cover_url }] : []),
       ],
-      links: [{ rel: "canonical", href: `/blog/${params.slug}` }],
+      links: [],
       scripts: [{
         type: "application/ld+json",
         children: JSON.stringify({

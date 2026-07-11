@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/site-info";
 
-export const Route = createFileRoute("/_public/refund")({
+export const Route = createFileRoute("/_public/{-$locale}/refund")({
   head: () => ({
     meta: [
       { title: "Refund Policy — Sur3a Taxi" },
@@ -10,10 +10,9 @@ export const Route = createFileRoute("/_public/refund")({
       { property: "og:title", content: "Refund Policy" },
       { property: "og:description", content: "Refund policy for taxi and chauffeur bookings." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/refund" },
       { name: "robots", content: "index,follow" },
     ],
-    links: [{ rel: "canonical", href: "/refund" }],
+    links: [],
   }),
   component: RefundPage,
 });

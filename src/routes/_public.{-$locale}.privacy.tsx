@@ -2,16 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/site-info";
 
-export const Route = createFileRoute("/_public/privacy")({
+export const Route = createFileRoute("/_public/{-$locale}/privacy")({
   head: () => ({
     meta: [
       { title: "Privacy Policy — Sur3a Taxi" },
       { name: "description", content: "How we collect, use, and protect your personal data." },
       { property: "og:title", content: "Privacy Policy" },
-      { property: "og:url", content: "/privacy" },
       { name: "robots", content: "index,follow" },
     ],
-    links: [{ rel: "canonical", href: "/privacy" }],
+    links: [],
   }),
   component: Privacy,
 });

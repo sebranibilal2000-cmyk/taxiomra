@@ -18,16 +18,15 @@ const FEATURES = [
   { ar: "أمتعة كبيرة", en: "Ample luggage space" },
 ];
 
-export const Route = createFileRoute("/_public/fleet")({
+export const Route = createFileRoute("/_public/{-$locale}/fleet")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
   head: () => ({
     meta: [
       { title: "Our Fleet — Executive Sedans, SUVs & Vans" },
       { name: "description", content: "A meticulously maintained fleet of executive sedans, SUVs and vans. Licensed chauffeurs, premium comfort." },
       { property: "og:title", content: "The Fleet — Sur3a Taxi" },
-      { property: "og:url", content: "/fleet" },
-    ],
-    links: [{ rel: "canonical", href: "/fleet" }],
+      ],
+    links: [],
   }),
   component: Fleet,
 });

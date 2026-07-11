@@ -5,7 +5,7 @@ import { useI18n } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { serviceJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 
-export const Route = createFileRoute("/_public/airport-transfers")({
+export const Route = createFileRoute("/_public/{-$locale}/airport-transfers")({
   head: () => ({
     meta: [
       { title: "Airport Transfers — On-Time Chauffeur Service" },
@@ -13,10 +13,9 @@ export const Route = createFileRoute("/_public/airport-transfers")({
       { property: "og:title", content: "Airport Transfers" },
       { property: "og:description", content: "Meet-and-greet chauffeur transfers with flight tracking and fixed fares." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/airport-transfers" },
       { name: "keywords", content: "airport transfer, airport taxi, chauffeur, meet and greet, Riyadh airport" },
     ],
-    links: [{ rel: "canonical", href: "/airport-transfers" }],
+    links: [],
     scripts: [
       { type: "application/ld+json", children: JSON.stringify(serviceJsonLd({
         name: "Airport Transfers",

@@ -14,16 +14,15 @@ const opts = () => queryOptions({
 
 const ICON: Record<string, any> = { service: Sparkles, airport: Plane, city: MapPin, route: Car, hotel: Building2, corporate: Briefcase };
 
-export const Route = createFileRoute("/_public/services")({
+export const Route = createFileRoute("/_public/{-$locale}/services")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
   head: () => ({
     meta: [
       { title: "Services — Airport, Corporate & Private Chauffeur" },
       { name: "description", content: "Full range of chauffeur services: airport transfers, corporate contracts, hotel pickups, events, and private hourly hire." },
       { property: "og:title", content: "Services — Sur3a Taxi" },
-      { property: "og:url", content: "/services" },
-    ],
-    links: [{ rel: "canonical", href: "/services" }],
+      ],
+    links: [],
   }),
   component: Services,
 });

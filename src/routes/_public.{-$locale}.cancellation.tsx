@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/site-info";
 
-export const Route = createFileRoute("/_public/cancellation")({
+export const Route = createFileRoute("/_public/{-$locale}/cancellation")({
   head: () => ({
     meta: [
       { title: "Cancellation Policy — Sur3a Taxi" },
@@ -10,10 +10,9 @@ export const Route = createFileRoute("/_public/cancellation")({
       { property: "og:title", content: "Cancellation Policy" },
       { property: "og:description", content: "Cancellation policy for taxi and chauffeur bookings." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/cancellation" },
       { name: "robots", content: "index,follow" },
     ],
-    links: [{ rel: "canonical", href: "/cancellation" }],
+    links: [],
   }),
   component: CancellationPage,
 });

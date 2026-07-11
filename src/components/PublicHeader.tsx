@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, Phone, MessageCircle, Languages, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ export function PublicHeader() {
   const { theme, toggle } = useTheme();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 12);
@@ -20,15 +21,25 @@ export function PublicHeader() {
     return () => window.removeEventListener("scroll", on);
   }, []);
 
-  const nav = [
-    { to: "/", label: locale === "ar" ? "الرئيسية" : "Home" },
-    { to: "/services", label: locale === "ar" ? "الخدمات" : "Services" },
-    { to: "/fleet", label: locale === "ar" ? "الأسطول" : "Fleet" },
-    { to: "/pricing", label: locale === "ar" ? "الأسعار" : "Pricing" },
-    { to: "/blog", label: locale === "ar" ? "المدونة" : "Journal" },
-    { to: "/about", label: locale === "ar" ? "من نحن" : "About" },
-    { to: "/contact", label: locale === "ar" ? "تواصل" : "Contact" },
-  ] as const;
+  const otherLocale = locale === "ar" ? "en" : "ar";
+  // Compute the "same page in the other language" URL for the language switch.
+  const langSwitchHref = (() => {
+    const seg = pathname.split("/").filter(Boolean)[0];
+    const rest = seg === "ar" || seg === "en" ? pathname.slice(3) || "/" : pathname || "/";
+    return `/${otherLocale}${rest === "/" ? "" : rest}`;
+  })();
+
+  const nav: Array<{ path: string; label: string }> = [
+    { path: "", label: locale === "ar" ? "الرئيسية" : "Home" },
+    { path: "/services", label: locale === "ar" ? "الخدمات" : "Services" },
+    { path: "/fleet", label: locale === "ar" ? "الأسطول" : "Fleet" },
+    { path: "/pricing", label: locale === "ar" ? "الأسعار" : "Pricing" },
+    { path: "/blog", label: locale === "ar" ? "المدونة" : "Journal" },
+    { path: "/about", label: locale === "ar" ? "من نحن" : "About" },
+    { path: "/contact", label: locale === "ar" ? "تواصل" : "Contact" },
+  ];
+
+  const localized = (p: string) => `/${locale}${p}`;
 
   return (
     <header
@@ -40,7 +51,7 @@ export function PublicHeader() {
       )}
     >
       <div className="container-tight flex h-20 items-center justify-between gap-4">
-        <Link to="/" className="flex items-center gap-3 group" aria-label={SITE.brand[locale]}>
+        <Link to={localized("")} className="flex items-center gap-3 group" aria-label={SITE.brand[locale]}>
           <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform group-hover:scale-105">
             <span className="font-display text-xl leading-none">S</span>
             <span className="absolute -bottom-0.5 -end-0.5 h-2.5 w-2.5 rounded-full bg-gold ring-2 ring-background" />
@@ -51,14 +62,14 @@ export function PublicHeader() {
           </div>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
           {nav.map((n) => (
             <Link
-              key={n.to}
-              to={n.to}
+              key={n.path || "home"}
+              to={localized(n.path)}
               className="relative px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               activeProps={{ className: "relative px-3 py-2 text-sm font-semibold text-foreground" }}
-              activeOptions={{ exact: n.to === "/" }}
+              activeOptions={{ exact: n.path === "" }}
             >
               {n.label}
             </Link>
@@ -67,13 +78,24 @@ export function PublicHeader() {
 
         <div className="flex items-center gap-1.5">
           <Button
+            asChild
             variant="ghost"
-            size="icon"
-            onClick={() => setLocale(locale === "ar" ? "en" : "ar")}
+            size="sm"
             aria-label={t("toggle_lang")}
-            className="rounded-full"
+            className="rounded-full gap-1.5"
+            onClick={(e) => {
+              // Persist the preference so future prefix-less URLs redirect correctly.
+              try { window.localStorage.setItem("locale", otherLocale); } catch {}
+              // Let the <Link> below handle the SPA navigation.
+              void e;
+            }}
           >
-            <Languages className="h-4 w-4" />
+            <Link to={langSwitchHref} hrefLang={otherLocale} rel="alternate">
+              <Languages className="h-4 w-4" />
+              <span className="hidden sm:inline text-xs font-semibold uppercase tracking-wider">
+                {otherLocale}
+              </span>
+            </Link>
           </Button>
           <Button variant="ghost" size="icon" onClick={toggle} aria-label="Toggle theme" className="rounded-full">
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -100,17 +122,26 @@ export function PublicHeader() {
 
       {open && (
         <div className="lg:hidden border-t border-border/60 bg-background/95 backdrop-blur-xl animate-fade-in">
-          <nav className="container-tight flex flex-col py-4 gap-1">
+          <nav className="container-tight flex flex-col py-4 gap-1" aria-label="Primary mobile">
             {nav.map((n) => (
               <Link
-                key={n.to}
-                to={n.to}
+                key={n.path || "home"}
+                to={localized(n.path)}
                 onClick={() => setOpen(false)}
                 className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-muted"
               >
                 {n.label}
               </Link>
             ))}
+            <Link
+              to={langSwitchHref}
+              onClick={() => { try { window.localStorage.setItem("locale", otherLocale); } catch {} setOpen(false); }}
+              className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-muted flex items-center gap-2"
+              hrefLang={otherLocale}
+              rel="alternate"
+            >
+              <Languages className="h-4 w-4" /> {locale === "ar" ? "English" : "العربية"}
+            </Link>
             <div className="flex gap-2 mt-3">
               <Button asChild variant="outline" className="flex-1 rounded-full">
                 <a href={telLink()}><Phone className="h-4 w-4 me-2" /> {locale === "ar" ? "اتصل" : "Call"}</a>

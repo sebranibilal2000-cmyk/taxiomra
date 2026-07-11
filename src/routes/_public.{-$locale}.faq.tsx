@@ -6,16 +6,15 @@ import { useI18n } from "@/lib/i18n";
 
 const opts = () => queryOptions({ queryKey: ["public", "faqs"], queryFn: () => listFaqs() });
 
-export const Route = createFileRoute("/_public/faq")({
+export const Route = createFileRoute("/_public/{-$locale}/faq")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
   head: ({ loaderData }) => ({
     meta: [
       { title: "FAQ — Booking, Pricing & Chauffeur Questions" },
       { name: "description", content: "Answers to common questions about booking, pricing, wait time, and payment." },
       { property: "og:title", content: "FAQ — Sur3a Taxi" },
-      { property: "og:url", content: "/faq" },
-    ],
-    links: [{ rel: "canonical", href: "/faq" }],
+      ],
+    links: [],
     scripts: loaderData ? [{
       type: "application/ld+json",
       children: JSON.stringify({
