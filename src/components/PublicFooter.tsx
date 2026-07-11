@@ -6,11 +6,12 @@ import { SITE, waLink, telLink } from "@/lib/site-info";
 export function PublicFooter() {
   const { locale } = useI18n();
   const ar = locale === "ar";
+  const l = (p: string) => `/${locale}${p}`;
   return (
     <footer className="mt-24 bg-primary text-primary-foreground">
       <div className="container-tight py-16 grid gap-12 md:grid-cols-12">
         <div className="md:col-span-4 space-y-4">
-          <Link to="/" className="flex items-center gap-3">
+          <Link to={l("")} className="flex items-center gap-3">
             <div className="relative flex h-11 w-11 items-center justify-center rounded-full bg-gold text-primary">
               <span className="font-display text-xl leading-none">S</span>
             </div>
@@ -45,20 +46,20 @@ export function PublicFooter() {
         <div className="md:col-span-2">
           <h3 className="text-xs uppercase tracking-[0.22em] text-gold mb-4">{ar ? "الخدمات" : "Services"}</h3>
           <ul className="space-y-2.5 text-sm text-primary-foreground/70">
-            <li><Link to="/p/$slug" params={{ slug: "airport-transfer" }} className="hover:text-gold transition">{ar ? "نقل المطار" : "Airport"}</Link></li>
-            <li><Link to="/p/$slug" params={{ slug: "hotel-transfer" }} className="hover:text-gold transition">{ar ? "الفنادق" : "Hotels"}</Link></li>
-            <li><Link to="/p/$slug" params={{ slug: "corporate" }} className="hover:text-gold transition">{ar ? "الشركات" : "Corporate"}</Link></li>
-            <li><Link to="/fleet" className="hover:text-gold transition">{ar ? "الأسطول" : "Fleet"}</Link></li>
+            <li><Link to={l("/p/airport-transfer")} className="hover:text-gold transition">{ar ? "نقل المطار" : "Airport"}</Link></li>
+            <li><Link to={l("/p/hotel-transfer")} className="hover:text-gold transition">{ar ? "الفنادق" : "Hotels"}</Link></li>
+            <li><Link to={l("/p/corporate")} className="hover:text-gold transition">{ar ? "الشركات" : "Corporate"}</Link></li>
+            <li><Link to={l("/fleet")} className="hover:text-gold transition">{ar ? "الأسطول" : "Fleet"}</Link></li>
           </ul>
         </div>
 
         <div className="md:col-span-2">
           <h3 className="text-xs uppercase tracking-[0.22em] text-gold mb-4">{ar ? "الشركة" : "Company"}</h3>
           <ul className="space-y-2.5 text-sm text-primary-foreground/70">
-            <li><Link to="/about" className="hover:text-gold transition">{ar ? "من نحن" : "About"}</Link></li>
-            <li><Link to="/blog" className="hover:text-gold transition">{ar ? "المدونة" : "Journal"}</Link></li>
-            <li><Link to="/faq" className="hover:text-gold transition">FAQ</Link></li>
-            <li><Link to="/pricing" className="hover:text-gold transition">{ar ? "الأسعار" : "Pricing"}</Link></li>
+            <li><Link to={l("/about")} className="hover:text-gold transition">{ar ? "من نحن" : "About"}</Link></li>
+            <li><Link to={l("/blog")} className="hover:text-gold transition">{ar ? "المدونة" : "Journal"}</Link></li>
+            <li><Link to={l("/faq")} className="hover:text-gold transition">FAQ</Link></li>
+            <li><Link to={l("/pricing")} className="hover:text-gold transition">{ar ? "الأسعار" : "Pricing"}</Link></li>
           </ul>
         </div>
 
@@ -78,10 +79,10 @@ export function PublicFooter() {
         <div className="container-tight py-6 flex flex-wrap items-center justify-between gap-3 text-xs text-primary-foreground/50">
           <span>© {new Date().getFullYear()} {SITE.brand[locale]}. {ar ? "جميع الحقوق محفوظة." : "All rights reserved."}</span>
           <div className="flex items-center gap-4 flex-wrap">
-            <Link to="/privacy" className="hover:text-gold transition">{ar ? "الخصوصية" : "Privacy"}</Link>
-            <Link to="/terms" className="hover:text-gold transition">{ar ? "الشروط" : "Terms"}</Link>
-            <Link to="/refund" className="hover:text-gold transition">{ar ? "الاسترداد" : "Refund"}</Link>
-            <Link to="/cancellation" className="hover:text-gold transition">{ar ? "الإلغاء" : "Cancellation"}</Link>
+            <Link to={l("/privacy")} className="hover:text-gold transition">{ar ? "الخصوصية" : "Privacy"}</Link>
+            <Link to={l("/terms")} className="hover:text-gold transition">{ar ? "الشروط" : "Terms"}</Link>
+            <Link to={l("/refund")} className="hover:text-gold transition">{ar ? "الاسترداد" : "Refund"}</Link>
+            <Link to={l("/cancellation")} className="hover:text-gold transition">{ar ? "الإلغاء" : "Cancellation"}</Link>
             <Link to="/auth" className="hover:text-gold transition">{ar ? "دخول الموظفين" : "Staff sign in"}</Link>
           </div>
         </div>
