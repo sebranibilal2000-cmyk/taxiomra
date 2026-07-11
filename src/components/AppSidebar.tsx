@@ -19,41 +19,41 @@ export function AppSidebar() {
   const groups: { label: string; items: { title: string; url: string; icon: any }[] }[] = [
     {
       label: t("overview"),
-      items: [{ title: t("dashboard"), url: "/dashboard", icon: LayoutDashboard }],
+      items: [{ title: t("dashboard"), url: "/admin/dashboard", icon: LayoutDashboard }],
     },
     {
       label: t("operations"),
       items: [
-        { title: t("bookings"), url: "/bookings", icon: CalendarCheck },
-        { title: t("customers"), url: "/customers", icon: Users },
-        { title: t("drivers"), url: "/drivers", icon: IdCard },
+        { title: t("bookings"), url: "/admin/bookings", icon: CalendarCheck },
+        { title: t("customers"), url: "/admin/customers", icon: Users },
+        { title: t("drivers"), url: "/admin/drivers", icon: IdCard },
       ],
     },
     {
       label: t("catalog"),
       items: [
-        { title: t("fleet"), url: "/fleet", icon: Car },
-        { title: t("categories"), url: "/categories", icon: Layers },
-        { title: t("routes"), url: "/routes", icon: RouteIcon },
+        { title: t("fleet"), url: "/admin/fleet", icon: Car },
+        { title: t("categories"), url: "/admin/categories", icon: Layers },
+        { title: t("routes"), url: "/admin/routes", icon: RouteIcon },
       ],
     },
     {
       label: t("finance"),
       items: [
-        { title: t("pricing"), url: "/pricing", icon: DollarSign },
-        { title: t("coupons"), url: "/coupons", icon: TicketPercent },
-        { title: t("payments"), url: "/payments", icon: CreditCard },
+        { title: t("pricing"), url: "/admin/pricing", icon: DollarSign },
+        { title: t("coupons"), url: "/admin/coupons", icon: TicketPercent },
+        { title: t("payments"), url: "/admin/payments", icon: CreditCard },
       ],
     },
     {
       label: t("system"),
       items: [
-        { title: t("notifications"), url: "/notifications", icon: Bell },
-        { title: t("reports"), url: "/reports", icon: BarChart3 },
-        { title: t("users"), url: "/users", icon: UserCog },
-        { title: t("roles"), url: "/roles", icon: ShieldCheck },
-        { title: t("settings"), url: "/settings", icon: Settings },
-        { title: t("audit"), url: "/audit", icon: ScrollText },
+        { title: t("notifications"), url: "/admin/notifications", icon: Bell },
+        { title: t("reports"), url: "/admin/reports", icon: BarChart3 },
+        { title: t("users"), url: "/admin/users", icon: UserCog },
+        { title: t("roles"), url: "/admin/roles", icon: ShieldCheck },
+        { title: t("settings"), url: "/admin/settings", icon: Settings },
+        { title: t("audit"), url: "/admin/audit", icon: ScrollText },
       ],
     },
   ];
