@@ -306,7 +306,7 @@ function Home() {
       </section>
 
       {/* ============ POPULAR ROUTES ============ */}
-      {(data.routes.length > 0 || data.cities.length > 0) && (
+      {data.cities.length > 0 && (
         <section className="container-tight py-20 md:py-28">
           <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
             <div className="space-y-4">
@@ -315,7 +315,7 @@ function Home() {
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[...data.routes, ...data.cities].slice(0, 6).map((c) => (
+            {data.cities.slice(0, 6).map((c) => (
               <Link key={c.id} to="/p/$slug" params={{ slug: c.slug }} className="group rounded-2xl border border-border bg-card p-6 hover:border-gold transition-colors">
                 <MapPin className="h-5 w-5 text-gold mb-3" />
                 <div className="font-display text-xl mb-1">{ar ? c.title_ar : c.title_en}</div>
