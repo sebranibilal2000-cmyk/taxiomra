@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Phone, MessageCircle, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
+import { submitContact } from "@/lib/public.functions";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -42,13 +43,28 @@ function Contact() {
     { icon: Mail, title: ar ? "البريد" : "Email", value: SITE.email, href: `mailto:${SITE.email}`, cta: ar ? "أرسل بريداً" : "Send email" },
   ];
 
-  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const msg = `${form.get("name")} · ${form.get("email")}\n${form.get("message")}`;
+    const formEl = e.currentTarget;
+    const form = new FormData(formEl);
     setSending(true);
-    window.open(waLink(msg), "_blank");
-    setTimeout(() => { setSending(false); toast.success(ar ? "تم فتح واتساب" : "Opened WhatsApp"); (e.target as HTMLFormElement).reset(); }, 400);
+    try {
+      await submitContact({
+        data: {
+          name: String(form.get("name") || ""),
+          email: String(form.get("email") || ""),
+          phone: String(form.get("phone") || ""),
+          message: String(form.get("message") || ""),
+          page_url: typeof window !== "undefined" ? window.location.href : "",
+        },
+      });
+      toast.success(ar ? "استلمنا رسالتك — سنعاود التواصل قريباً" : "Message received — we'll be in touch shortly");
+      formEl.reset();
+    } catch (err: any) {
+      toast.error(err?.message || (ar ? "تعذر الإرسال" : "Could not send"));
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -124,9 +140,9 @@ function Contact() {
               <Textarea id="message" name="message" required rows={5} placeholder={ar ? "تفاصيل رحلتك..." : "Tell us about your trip…"} />
             </div>
             <Button type="submit" size="lg" disabled={sending} className="rounded-full w-full sm:w-auto h-12 px-6">
-              <MessageCircle className="h-5 w-5 me-2" /> {ar ? "إرسال عبر واتساب" : "Send via WhatsApp"}
+              <MessageCircle className="h-5 w-5 me-2" /> {sending ? (ar ? "جاري الإرسال..." : "Sending…") : (ar ? "إرسال الرسالة" : "Send message")}
             </Button>
-            <p className="text-xs text-muted-foreground">{ar ? "نستخدم واتساب للرد السريع — رسالتك لن تُرسل إلى بريد إلكتروني." : "We use WhatsApp for the fastest response — no email queue delays."}</p>
+            <p className="text-xs text-muted-foreground">{ar ? "نستقبل رسالتك في مركز خدمة العملاء ونرد خلال دقائق." : "Your message reaches our dispatch desk — expect a reply within minutes."}</p>
           </form>
         </div>
       </section>

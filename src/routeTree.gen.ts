@@ -14,12 +14,15 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as PublicIndexRouteImport } from './routes/_public.index'
+import { Route as PublicTermsRouteImport } from './routes/_public.terms'
 import { Route as PublicServicesRouteImport } from './routes/_public.services'
+import { Route as PublicPrivacyRouteImport } from './routes/_public.privacy'
 import { Route as PublicPricingRouteImport } from './routes/_public.pricing'
 import { Route as PublicFleetRouteImport } from './routes/_public.fleet'
 import { Route as PublicFaqRouteImport } from './routes/_public.faq'
 import { Route as PublicContactRouteImport } from './routes/_public.contact'
 import { Route as PublicBlogRouteImport } from './routes/_public.blog'
+import { Route as PublicAirportTransfersRouteImport } from './routes/_public.airport-transfers'
 import { Route as PublicAboutRouteImport } from './routes/_public.about'
 import { Route as PublicPSlugRouteImport } from './routes/_public.p.$slug'
 import { Route as PublicBlogSlugRouteImport } from './routes/_public.blog.$slug'
@@ -29,13 +32,18 @@ import { Route as AuthenticatedAdminRoutesRouteImport } from './routes/_authenti
 import { Route as AuthenticatedAdminRolesRouteImport } from './routes/_authenticated/admin.roles'
 import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin.reports'
 import { Route as AuthenticatedAdminRefundsRouteImport } from './routes/_authenticated/admin.refunds'
+import { Route as AuthenticatedAdminPromotionsRouteImport } from './routes/_authenticated/admin.promotions'
 import { Route as AuthenticatedAdminPricingRouteImport } from './routes/_authenticated/admin.pricing'
 import { Route as AuthenticatedAdminPayrollRouteImport } from './routes/_authenticated/admin.payroll'
 import { Route as AuthenticatedAdminPaymentsRouteImport } from './routes/_authenticated/admin.payments'
+import { Route as AuthenticatedAdminPartnersRouteImport } from './routes/_authenticated/admin.partners'
 import { Route as AuthenticatedAdminPagesRouteImport } from './routes/_authenticated/admin.pages'
 import { Route as AuthenticatedAdminNotificationsRouteImport } from './routes/_authenticated/admin.notifications'
+import { Route as AuthenticatedAdminMediaRouteImport } from './routes/_authenticated/admin.media'
 import { Route as AuthenticatedAdminMaintenanceRouteImport } from './routes/_authenticated/admin.maintenance'
 import { Route as AuthenticatedAdminInvoicesRouteImport } from './routes/_authenticated/admin.invoices'
+import { Route as AuthenticatedAdminHomepageRouteImport } from './routes/_authenticated/admin.homepage'
+import { Route as AuthenticatedAdminHeroRouteImport } from './routes/_authenticated/admin.hero'
 import { Route as AuthenticatedAdminFleetDashboardRouteImport } from './routes/_authenticated/admin.fleet-dashboard'
 import { Route as AuthenticatedAdminFleetRouteImport } from './routes/_authenticated/admin.fleet'
 import { Route as AuthenticatedAdminFinanceSettingsRouteImport } from './routes/_authenticated/admin.finance-settings'
@@ -48,6 +56,7 @@ import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminCustomersRouteImport } from './routes/_authenticated/admin.customers'
 import { Route as AuthenticatedAdminCouponsRouteImport } from './routes/_authenticated/admin.coupons'
 import { Route as AuthenticatedAdminCorporateRouteImport } from './routes/_authenticated/admin.corporate'
+import { Route as AuthenticatedAdminContactsRouteImport } from './routes/_authenticated/admin.contacts'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin.categories'
 import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin.bookings'
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin.blog'
@@ -80,9 +89,19 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PublicRoute,
 } as any)
+const PublicTermsRoute = PublicTermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => PublicRoute,
+} as any)
 const PublicServicesRoute = PublicServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicPrivacyRoute = PublicPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => PublicRoute,
 } as any)
 const PublicPricingRoute = PublicPricingRouteImport.update({
@@ -108,6 +127,11 @@ const PublicContactRoute = PublicContactRouteImport.update({
 const PublicBlogRoute = PublicBlogRouteImport.update({
   id: '/blog',
   path: '/blog',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicAirportTransfersRoute = PublicAirportTransfersRouteImport.update({
+  id: '/airport-transfers',
+  path: '/airport-transfers',
   getParentRoute: () => PublicRoute,
 } as any)
 const PublicAboutRoute = PublicAboutRouteImport.update({
@@ -159,6 +183,12 @@ const AuthenticatedAdminRefundsRoute =
     path: '/admin/refunds',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminPromotionsRoute =
+  AuthenticatedAdminPromotionsRouteImport.update({
+    id: '/admin/promotions',
+    path: '/admin/promotions',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminPricingRoute =
   AuthenticatedAdminPricingRouteImport.update({
     id: '/admin/pricing',
@@ -177,6 +207,12 @@ const AuthenticatedAdminPaymentsRoute =
     path: '/admin/payments',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminPartnersRoute =
+  AuthenticatedAdminPartnersRouteImport.update({
+    id: '/admin/partners',
+    path: '/admin/partners',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminPagesRoute = AuthenticatedAdminPagesRouteImport.update({
   id: '/admin/pages',
   path: '/admin/pages',
@@ -188,6 +224,11 @@ const AuthenticatedAdminNotificationsRoute =
     path: '/admin/notifications',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminMediaRoute = AuthenticatedAdminMediaRouteImport.update({
+  id: '/admin/media',
+  path: '/admin/media',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminMaintenanceRoute =
   AuthenticatedAdminMaintenanceRouteImport.update({
     id: '/admin/maintenance',
@@ -200,6 +241,17 @@ const AuthenticatedAdminInvoicesRoute =
     path: '/admin/invoices',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminHomepageRoute =
+  AuthenticatedAdminHomepageRouteImport.update({
+    id: '/admin/homepage',
+    path: '/admin/homepage',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminHeroRoute = AuthenticatedAdminHeroRouteImport.update({
+  id: '/admin/hero',
+  path: '/admin/hero',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminFleetDashboardRoute =
   AuthenticatedAdminFleetDashboardRouteImport.update({
     id: '/admin/fleet-dashboard',
@@ -270,6 +322,12 @@ const AuthenticatedAdminCorporateRoute =
     path: '/admin/corporate',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminContactsRoute =
+  AuthenticatedAdminContactsRouteImport.update({
+    id: '/admin/contacts',
+    path: '/admin/contacts',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminCategoriesRoute =
   AuthenticatedAdminCategoriesRouteImport.update({
     id: '/admin/categories',
@@ -322,16 +380,20 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/about': typeof PublicAboutRoute
+  '/airport-transfers': typeof PublicAirportTransfersRoute
   '/blog': typeof PublicBlogRouteWithChildren
   '/contact': typeof PublicContactRoute
   '/faq': typeof PublicFaqRoute
   '/fleet': typeof PublicFleetRoute
   '/pricing': typeof PublicPricingRoute
+  '/privacy': typeof PublicPrivacyRoute
   '/services': typeof PublicServicesRoute
+  '/terms': typeof PublicTermsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/admin/contacts': typeof AuthenticatedAdminContactsRoute
   '/admin/corporate': typeof AuthenticatedAdminCorporateRoute
   '/admin/coupons': typeof AuthenticatedAdminCouponsRoute
   '/admin/customers': typeof AuthenticatedAdminCustomersRouteWithChildren
@@ -344,13 +406,18 @@ export interface FileRoutesByFullPath {
   '/admin/finance-settings': typeof AuthenticatedAdminFinanceSettingsRoute
   '/admin/fleet': typeof AuthenticatedAdminFleetRouteWithChildren
   '/admin/fleet-dashboard': typeof AuthenticatedAdminFleetDashboardRoute
+  '/admin/hero': typeof AuthenticatedAdminHeroRoute
+  '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/invoices': typeof AuthenticatedAdminInvoicesRouteWithChildren
   '/admin/maintenance': typeof AuthenticatedAdminMaintenanceRoute
+  '/admin/media': typeof AuthenticatedAdminMediaRoute
   '/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/admin/pages': typeof AuthenticatedAdminPagesRoute
+  '/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/admin/payments': typeof AuthenticatedAdminPaymentsRoute
   '/admin/payroll': typeof AuthenticatedAdminPayrollRoute
   '/admin/pricing': typeof AuthenticatedAdminPricingRoute
+  '/admin/promotions': typeof AuthenticatedAdminPromotionsRoute
   '/admin/refunds': typeof AuthenticatedAdminRefundsRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/admin/roles': typeof AuthenticatedAdminRolesRoute
@@ -369,16 +436,20 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/about': typeof PublicAboutRoute
+  '/airport-transfers': typeof PublicAirportTransfersRoute
   '/blog': typeof PublicBlogRouteWithChildren
   '/contact': typeof PublicContactRoute
   '/faq': typeof PublicFaqRoute
   '/fleet': typeof PublicFleetRoute
   '/pricing': typeof PublicPricingRoute
+  '/privacy': typeof PublicPrivacyRoute
   '/services': typeof PublicServicesRoute
+  '/terms': typeof PublicTermsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/admin/contacts': typeof AuthenticatedAdminContactsRoute
   '/admin/corporate': typeof AuthenticatedAdminCorporateRoute
   '/admin/coupons': typeof AuthenticatedAdminCouponsRoute
   '/admin/customers': typeof AuthenticatedAdminCustomersRouteWithChildren
@@ -391,13 +462,18 @@ export interface FileRoutesByTo {
   '/admin/finance-settings': typeof AuthenticatedAdminFinanceSettingsRoute
   '/admin/fleet': typeof AuthenticatedAdminFleetRouteWithChildren
   '/admin/fleet-dashboard': typeof AuthenticatedAdminFleetDashboardRoute
+  '/admin/hero': typeof AuthenticatedAdminHeroRoute
+  '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/invoices': typeof AuthenticatedAdminInvoicesRouteWithChildren
   '/admin/maintenance': typeof AuthenticatedAdminMaintenanceRoute
+  '/admin/media': typeof AuthenticatedAdminMediaRoute
   '/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/admin/pages': typeof AuthenticatedAdminPagesRoute
+  '/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/admin/payments': typeof AuthenticatedAdminPaymentsRoute
   '/admin/payroll': typeof AuthenticatedAdminPayrollRoute
   '/admin/pricing': typeof AuthenticatedAdminPricingRoute
+  '/admin/promotions': typeof AuthenticatedAdminPromotionsRoute
   '/admin/refunds': typeof AuthenticatedAdminRefundsRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/admin/roles': typeof AuthenticatedAdminRolesRoute
@@ -418,17 +494,21 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_public/about': typeof PublicAboutRoute
+  '/_public/airport-transfers': typeof PublicAirportTransfersRoute
   '/_public/blog': typeof PublicBlogRouteWithChildren
   '/_public/contact': typeof PublicContactRoute
   '/_public/faq': typeof PublicFaqRoute
   '/_public/fleet': typeof PublicFleetRoute
   '/_public/pricing': typeof PublicPricingRoute
+  '/_public/privacy': typeof PublicPrivacyRoute
   '/_public/services': typeof PublicServicesRoute
+  '/_public/terms': typeof PublicTermsRoute
   '/_public/': typeof PublicIndexRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/_authenticated/admin/contacts': typeof AuthenticatedAdminContactsRoute
   '/_authenticated/admin/corporate': typeof AuthenticatedAdminCorporateRoute
   '/_authenticated/admin/coupons': typeof AuthenticatedAdminCouponsRoute
   '/_authenticated/admin/customers': typeof AuthenticatedAdminCustomersRouteWithChildren
@@ -441,13 +521,18 @@ export interface FileRoutesById {
   '/_authenticated/admin/finance-settings': typeof AuthenticatedAdminFinanceSettingsRoute
   '/_authenticated/admin/fleet': typeof AuthenticatedAdminFleetRouteWithChildren
   '/_authenticated/admin/fleet-dashboard': typeof AuthenticatedAdminFleetDashboardRoute
+  '/_authenticated/admin/hero': typeof AuthenticatedAdminHeroRoute
+  '/_authenticated/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/_authenticated/admin/invoices': typeof AuthenticatedAdminInvoicesRouteWithChildren
   '/_authenticated/admin/maintenance': typeof AuthenticatedAdminMaintenanceRoute
+  '/_authenticated/admin/media': typeof AuthenticatedAdminMediaRoute
   '/_authenticated/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/_authenticated/admin/pages': typeof AuthenticatedAdminPagesRoute
+  '/_authenticated/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/_authenticated/admin/payments': typeof AuthenticatedAdminPaymentsRoute
   '/_authenticated/admin/payroll': typeof AuthenticatedAdminPayrollRoute
   '/_authenticated/admin/pricing': typeof AuthenticatedAdminPricingRoute
+  '/_authenticated/admin/promotions': typeof AuthenticatedAdminPromotionsRoute
   '/_authenticated/admin/refunds': typeof AuthenticatedAdminRefundsRoute
   '/_authenticated/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/_authenticated/admin/roles': typeof AuthenticatedAdminRolesRoute
@@ -468,16 +553,20 @@ export interface FileRouteTypes {
     | '/auth'
     | '/sitemap.xml'
     | '/about'
+    | '/airport-transfers'
     | '/blog'
     | '/contact'
     | '/faq'
     | '/fleet'
     | '/pricing'
+    | '/privacy'
     | '/services'
+    | '/terms'
     | '/admin/audit'
     | '/admin/blog'
     | '/admin/bookings'
     | '/admin/categories'
+    | '/admin/contacts'
     | '/admin/corporate'
     | '/admin/coupons'
     | '/admin/customers'
@@ -490,13 +579,18 @@ export interface FileRouteTypes {
     | '/admin/finance-settings'
     | '/admin/fleet'
     | '/admin/fleet-dashboard'
+    | '/admin/hero'
+    | '/admin/homepage'
     | '/admin/invoices'
     | '/admin/maintenance'
+    | '/admin/media'
     | '/admin/notifications'
     | '/admin/pages'
+    | '/admin/partners'
     | '/admin/payments'
     | '/admin/payroll'
     | '/admin/pricing'
+    | '/admin/promotions'
     | '/admin/refunds'
     | '/admin/reports'
     | '/admin/roles'
@@ -515,16 +609,20 @@ export interface FileRouteTypes {
     | '/auth'
     | '/sitemap.xml'
     | '/about'
+    | '/airport-transfers'
     | '/blog'
     | '/contact'
     | '/faq'
     | '/fleet'
     | '/pricing'
+    | '/privacy'
     | '/services'
+    | '/terms'
     | '/admin/audit'
     | '/admin/blog'
     | '/admin/bookings'
     | '/admin/categories'
+    | '/admin/contacts'
     | '/admin/corporate'
     | '/admin/coupons'
     | '/admin/customers'
@@ -537,13 +635,18 @@ export interface FileRouteTypes {
     | '/admin/finance-settings'
     | '/admin/fleet'
     | '/admin/fleet-dashboard'
+    | '/admin/hero'
+    | '/admin/homepage'
     | '/admin/invoices'
     | '/admin/maintenance'
+    | '/admin/media'
     | '/admin/notifications'
     | '/admin/pages'
+    | '/admin/partners'
     | '/admin/payments'
     | '/admin/payroll'
     | '/admin/pricing'
+    | '/admin/promotions'
     | '/admin/refunds'
     | '/admin/reports'
     | '/admin/roles'
@@ -563,17 +666,21 @@ export interface FileRouteTypes {
     | '/auth'
     | '/sitemap.xml'
     | '/_public/about'
+    | '/_public/airport-transfers'
     | '/_public/blog'
     | '/_public/contact'
     | '/_public/faq'
     | '/_public/fleet'
     | '/_public/pricing'
+    | '/_public/privacy'
     | '/_public/services'
+    | '/_public/terms'
     | '/_public/'
     | '/_authenticated/admin/audit'
     | '/_authenticated/admin/blog'
     | '/_authenticated/admin/bookings'
     | '/_authenticated/admin/categories'
+    | '/_authenticated/admin/contacts'
     | '/_authenticated/admin/corporate'
     | '/_authenticated/admin/coupons'
     | '/_authenticated/admin/customers'
@@ -586,13 +693,18 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/finance-settings'
     | '/_authenticated/admin/fleet'
     | '/_authenticated/admin/fleet-dashboard'
+    | '/_authenticated/admin/hero'
+    | '/_authenticated/admin/homepage'
     | '/_authenticated/admin/invoices'
     | '/_authenticated/admin/maintenance'
+    | '/_authenticated/admin/media'
     | '/_authenticated/admin/notifications'
     | '/_authenticated/admin/pages'
+    | '/_authenticated/admin/partners'
     | '/_authenticated/admin/payments'
     | '/_authenticated/admin/payroll'
     | '/_authenticated/admin/pricing'
+    | '/_authenticated/admin/promotions'
     | '/_authenticated/admin/refunds'
     | '/_authenticated/admin/reports'
     | '/_authenticated/admin/roles'
@@ -651,11 +763,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/_public/terms': {
+      id: '/_public/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof PublicTermsRouteImport
+      parentRoute: typeof PublicRoute
+    }
     '/_public/services': {
       id: '/_public/services'
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof PublicServicesRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/privacy': {
+      id: '/_public/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PublicPrivacyRouteImport
       parentRoute: typeof PublicRoute
     }
     '/_public/pricing': {
@@ -691,6 +817,13 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/blog'
       preLoaderRoute: typeof PublicBlogRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/airport-transfers': {
+      id: '/_public/airport-transfers'
+      path: '/airport-transfers'
+      fullPath: '/airport-transfers'
+      preLoaderRoute: typeof PublicAirportTransfersRouteImport
       parentRoute: typeof PublicRoute
     }
     '/_public/about': {
@@ -756,6 +889,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRefundsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/promotions': {
+      id: '/_authenticated/admin/promotions'
+      path: '/admin/promotions'
+      fullPath: '/admin/promotions'
+      preLoaderRoute: typeof AuthenticatedAdminPromotionsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/pricing': {
       id: '/_authenticated/admin/pricing'
       path: '/admin/pricing'
@@ -777,6 +917,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminPaymentsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/partners': {
+      id: '/_authenticated/admin/partners'
+      path: '/admin/partners'
+      fullPath: '/admin/partners'
+      preLoaderRoute: typeof AuthenticatedAdminPartnersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/pages': {
       id: '/_authenticated/admin/pages'
       path: '/admin/pages'
@@ -791,6 +938,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminNotificationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/media': {
+      id: '/_authenticated/admin/media'
+      path: '/admin/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AuthenticatedAdminMediaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/maintenance': {
       id: '/_authenticated/admin/maintenance'
       path: '/admin/maintenance'
@@ -803,6 +957,20 @@ declare module '@tanstack/react-router' {
       path: '/admin/invoices'
       fullPath: '/admin/invoices'
       preLoaderRoute: typeof AuthenticatedAdminInvoicesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/homepage': {
+      id: '/_authenticated/admin/homepage'
+      path: '/admin/homepage'
+      fullPath: '/admin/homepage'
+      preLoaderRoute: typeof AuthenticatedAdminHomepageRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/hero': {
+      id: '/_authenticated/admin/hero'
+      path: '/admin/hero'
+      fullPath: '/admin/hero'
+      preLoaderRoute: typeof AuthenticatedAdminHeroRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/fleet-dashboard': {
@@ -887,6 +1055,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/corporate'
       fullPath: '/admin/corporate'
       preLoaderRoute: typeof AuthenticatedAdminCorporateRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/contacts': {
+      id: '/_authenticated/admin/contacts'
+      path: '/admin/contacts'
+      fullPath: '/admin/contacts'
+      preLoaderRoute: typeof AuthenticatedAdminContactsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/categories': {
@@ -1009,6 +1184,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminBlogRoute: typeof AuthenticatedAdminBlogRoute
   AuthenticatedAdminBookingsRoute: typeof AuthenticatedAdminBookingsRoute
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
+  AuthenticatedAdminContactsRoute: typeof AuthenticatedAdminContactsRoute
   AuthenticatedAdminCorporateRoute: typeof AuthenticatedAdminCorporateRoute
   AuthenticatedAdminCouponsRoute: typeof AuthenticatedAdminCouponsRoute
   AuthenticatedAdminCustomersRoute: typeof AuthenticatedAdminCustomersRouteWithChildren
@@ -1021,13 +1197,18 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminFinanceSettingsRoute: typeof AuthenticatedAdminFinanceSettingsRoute
   AuthenticatedAdminFleetRoute: typeof AuthenticatedAdminFleetRouteWithChildren
   AuthenticatedAdminFleetDashboardRoute: typeof AuthenticatedAdminFleetDashboardRoute
+  AuthenticatedAdminHeroRoute: typeof AuthenticatedAdminHeroRoute
+  AuthenticatedAdminHomepageRoute: typeof AuthenticatedAdminHomepageRoute
   AuthenticatedAdminInvoicesRoute: typeof AuthenticatedAdminInvoicesRouteWithChildren
   AuthenticatedAdminMaintenanceRoute: typeof AuthenticatedAdminMaintenanceRoute
+  AuthenticatedAdminMediaRoute: typeof AuthenticatedAdminMediaRoute
   AuthenticatedAdminNotificationsRoute: typeof AuthenticatedAdminNotificationsRoute
   AuthenticatedAdminPagesRoute: typeof AuthenticatedAdminPagesRoute
+  AuthenticatedAdminPartnersRoute: typeof AuthenticatedAdminPartnersRoute
   AuthenticatedAdminPaymentsRoute: typeof AuthenticatedAdminPaymentsRoute
   AuthenticatedAdminPayrollRoute: typeof AuthenticatedAdminPayrollRoute
   AuthenticatedAdminPricingRoute: typeof AuthenticatedAdminPricingRoute
+  AuthenticatedAdminPromotionsRoute: typeof AuthenticatedAdminPromotionsRoute
   AuthenticatedAdminRefundsRoute: typeof AuthenticatedAdminRefundsRoute
   AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRoute
   AuthenticatedAdminRolesRoute: typeof AuthenticatedAdminRolesRoute
@@ -1041,6 +1222,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminBlogRoute: AuthenticatedAdminBlogRoute,
   AuthenticatedAdminBookingsRoute: AuthenticatedAdminBookingsRoute,
   AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
+  AuthenticatedAdminContactsRoute: AuthenticatedAdminContactsRoute,
   AuthenticatedAdminCorporateRoute: AuthenticatedAdminCorporateRoute,
   AuthenticatedAdminCouponsRoute: AuthenticatedAdminCouponsRoute,
   AuthenticatedAdminCustomersRoute:
@@ -1055,13 +1237,18 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
     AuthenticatedAdminFinanceSettingsRoute,
   AuthenticatedAdminFleetRoute: AuthenticatedAdminFleetRouteWithChildren,
   AuthenticatedAdminFleetDashboardRoute: AuthenticatedAdminFleetDashboardRoute,
+  AuthenticatedAdminHeroRoute: AuthenticatedAdminHeroRoute,
+  AuthenticatedAdminHomepageRoute: AuthenticatedAdminHomepageRoute,
   AuthenticatedAdminInvoicesRoute: AuthenticatedAdminInvoicesRouteWithChildren,
   AuthenticatedAdminMaintenanceRoute: AuthenticatedAdminMaintenanceRoute,
+  AuthenticatedAdminMediaRoute: AuthenticatedAdminMediaRoute,
   AuthenticatedAdminNotificationsRoute: AuthenticatedAdminNotificationsRoute,
   AuthenticatedAdminPagesRoute: AuthenticatedAdminPagesRoute,
+  AuthenticatedAdminPartnersRoute: AuthenticatedAdminPartnersRoute,
   AuthenticatedAdminPaymentsRoute: AuthenticatedAdminPaymentsRoute,
   AuthenticatedAdminPayrollRoute: AuthenticatedAdminPayrollRoute,
   AuthenticatedAdminPricingRoute: AuthenticatedAdminPricingRoute,
+  AuthenticatedAdminPromotionsRoute: AuthenticatedAdminPromotionsRoute,
   AuthenticatedAdminRefundsRoute: AuthenticatedAdminRefundsRoute,
   AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRoute,
   AuthenticatedAdminRolesRoute: AuthenticatedAdminRolesRoute,
@@ -1087,24 +1274,30 @@ const PublicBlogRouteWithChildren = PublicBlogRoute._addFileChildren(
 
 interface PublicRouteChildren {
   PublicAboutRoute: typeof PublicAboutRoute
+  PublicAirportTransfersRoute: typeof PublicAirportTransfersRoute
   PublicBlogRoute: typeof PublicBlogRouteWithChildren
   PublicContactRoute: typeof PublicContactRoute
   PublicFaqRoute: typeof PublicFaqRoute
   PublicFleetRoute: typeof PublicFleetRoute
   PublicPricingRoute: typeof PublicPricingRoute
+  PublicPrivacyRoute: typeof PublicPrivacyRoute
   PublicServicesRoute: typeof PublicServicesRoute
+  PublicTermsRoute: typeof PublicTermsRoute
   PublicIndexRoute: typeof PublicIndexRoute
   PublicPSlugRoute: typeof PublicPSlugRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicAboutRoute: PublicAboutRoute,
+  PublicAirportTransfersRoute: PublicAirportTransfersRoute,
   PublicBlogRoute: PublicBlogRouteWithChildren,
   PublicContactRoute: PublicContactRoute,
   PublicFaqRoute: PublicFaqRoute,
   PublicFleetRoute: PublicFleetRoute,
   PublicPricingRoute: PublicPricingRoute,
+  PublicPrivacyRoute: PublicPrivacyRoute,
   PublicServicesRoute: PublicServicesRoute,
+  PublicTermsRoute: PublicTermsRoute,
   PublicIndexRoute: PublicIndexRoute,
   PublicPSlugRoute: PublicPSlugRoute,
 }

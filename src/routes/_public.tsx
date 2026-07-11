@@ -2,6 +2,7 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { PublicHeader } from "@/components/PublicHeader";
 import { PublicFooter } from "@/components/PublicFooter";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
+import { CookieConsent } from "@/components/CookieConsent";
 import { SITE } from "@/lib/site-info";
 
 export const Route = createFileRoute("/_public")({
@@ -39,6 +40,7 @@ function PublicLayout() {
       </main>
       <PublicFooter />
       <WhatsAppFab />
+      <CookieConsent />
     </div>
   );
 }

@@ -83,21 +83,65 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_categories: {
+        Row: {
+          created_at: string
+          description_ar: string | null
+          description_en: string | null
+          id: string
+          name_ar: string
+          name_en: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description_ar?: string | null
+          description_en?: string | null
+          id?: string
+          name_ar: string
+          name_en: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description_ar?: string | null
+          description_en?: string | null
+          id?: string
+          name_ar?: string
+          name_en?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           author_id: string | null
+          canonical_url: string | null
+          category_id: string | null
           content_ar: string | null
           content_en: string | null
           cover_url: string | null
           created_at: string
           excerpt_ar: string | null
           excerpt_en: string | null
+          featured: boolean
           id: string
+          keywords: string[] | null
           meta_description: string | null
           meta_title: string | null
+          og_image_url: string | null
           published: boolean
           published_at: string | null
+          reading_time_min: number | null
+          scheduled_at: string | null
           slug: string
+          status: Database["public"]["Enums"]["blog_status"]
           tags: string[] | null
           title_ar: string
           title_en: string
@@ -105,18 +149,26 @@ export type Database = {
         }
         Insert: {
           author_id?: string | null
+          canonical_url?: string | null
+          category_id?: string | null
           content_ar?: string | null
           content_en?: string | null
           cover_url?: string | null
           created_at?: string
           excerpt_ar?: string | null
           excerpt_en?: string | null
+          featured?: boolean
           id?: string
+          keywords?: string[] | null
           meta_description?: string | null
           meta_title?: string | null
+          og_image_url?: string | null
           published?: boolean
           published_at?: string | null
+          reading_time_min?: number | null
+          scheduled_at?: string | null
           slug: string
+          status?: Database["public"]["Enums"]["blog_status"]
           tags?: string[] | null
           title_ar: string
           title_en: string
@@ -124,24 +176,40 @@ export type Database = {
         }
         Update: {
           author_id?: string | null
+          canonical_url?: string | null
+          category_id?: string | null
           content_ar?: string | null
           content_en?: string | null
           cover_url?: string | null
           created_at?: string
           excerpt_ar?: string | null
           excerpt_en?: string | null
+          featured?: boolean
           id?: string
+          keywords?: string[] | null
           meta_description?: string | null
           meta_title?: string | null
+          og_image_url?: string | null
           published?: boolean
           published_at?: string | null
+          reading_time_min?: number | null
+          scheduled_at?: string | null
           slug?: string
+          status?: Database["public"]["Enums"]["blog_status"]
           tags?: string[] | null
           title_ar?: string
           title_en?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "blog_posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "blog_categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       bookings: {
         Row: {
@@ -298,61 +366,156 @@ export type Database = {
         Row: {
           body_ar: string | null
           body_en: string | null
+          canonical_url: string | null
           created_at: string
+          custom_schema: Json | null
           hero_image_url: string | null
           id: string
+          keywords: string[] | null
+          locale: string | null
           meta_description: string | null
           meta_title: string | null
+          og_description: string | null
           og_image_url: string | null
+          og_title: string | null
           page_type: Database["public"]["Enums"]["cms_page_type"]
           published: boolean
+          robots: string | null
+          schema_type: string | null
           slug: string
           sort_order: number
           subtitle_ar: string | null
           subtitle_en: string | null
           title_ar: string
           title_en: string
+          twitter_card: string | null
           updated_at: string
         }
         Insert: {
           body_ar?: string | null
           body_en?: string | null
+          canonical_url?: string | null
           created_at?: string
+          custom_schema?: Json | null
           hero_image_url?: string | null
           id?: string
+          keywords?: string[] | null
+          locale?: string | null
           meta_description?: string | null
           meta_title?: string | null
+          og_description?: string | null
           og_image_url?: string | null
+          og_title?: string | null
           page_type?: Database["public"]["Enums"]["cms_page_type"]
           published?: boolean
+          robots?: string | null
+          schema_type?: string | null
           slug: string
           sort_order?: number
           subtitle_ar?: string | null
           subtitle_en?: string | null
           title_ar: string
           title_en: string
+          twitter_card?: string | null
           updated_at?: string
         }
         Update: {
           body_ar?: string | null
           body_en?: string | null
+          canonical_url?: string | null
           created_at?: string
+          custom_schema?: Json | null
           hero_image_url?: string | null
           id?: string
+          keywords?: string[] | null
+          locale?: string | null
           meta_description?: string | null
           meta_title?: string | null
+          og_description?: string | null
           og_image_url?: string | null
+          og_title?: string | null
           page_type?: Database["public"]["Enums"]["cms_page_type"]
           published?: boolean
+          robots?: string | null
+          schema_type?: string | null
           slug?: string
           sort_order?: number
           subtitle_ar?: string | null
           subtitle_en?: string | null
           title_ar?: string
           title_en?: string
+          twitter_card?: string | null
           updated_at?: string
         }
         Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          customer_id: string | null
+          email: string | null
+          handled_at: string | null
+          handled_by: string | null
+          id: string
+          ip_hash: string | null
+          message: string
+          name: string
+          notes: string | null
+          page_url: string | null
+          phone: string | null
+          source: string | null
+          status: Database["public"]["Enums"]["contact_status"]
+          subject: string | null
+          updated_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          customer_id?: string | null
+          email?: string | null
+          handled_at?: string | null
+          handled_by?: string | null
+          id?: string
+          ip_hash?: string | null
+          message: string
+          name: string
+          notes?: string | null
+          page_url?: string | null
+          phone?: string | null
+          source?: string | null
+          status?: Database["public"]["Enums"]["contact_status"]
+          subject?: string | null
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          customer_id?: string | null
+          email?: string | null
+          handled_at?: string | null
+          handled_by?: string | null
+          id?: string
+          ip_hash?: string | null
+          message?: string
+          name?: string
+          notes?: string | null
+          page_url?: string | null
+          phone?: string | null
+          source?: string | null
+          status?: Database["public"]["Enums"]["contact_status"]
+          subject?: string | null
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contact_submissions_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       corporate_accounts: {
         Row: {
@@ -1103,6 +1266,96 @@ export type Database = {
         }
         Relationships: []
       }
+      hero_slides: {
+        Row: {
+          active: boolean
+          created_at: string
+          cta_href: string | null
+          cta_label_ar: string | null
+          cta_label_en: string | null
+          id: string
+          image_url: string | null
+          sort_order: number
+          subtitle_ar: string | null
+          subtitle_en: string | null
+          title_ar: string
+          title_en: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          cta_href?: string | null
+          cta_label_ar?: string | null
+          cta_label_en?: string | null
+          id?: string
+          image_url?: string | null
+          sort_order?: number
+          subtitle_ar?: string | null
+          subtitle_en?: string | null
+          title_ar: string
+          title_en: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          cta_href?: string | null
+          cta_label_ar?: string | null
+          cta_label_en?: string | null
+          id?: string
+          image_url?: string | null
+          sort_order?: number
+          subtitle_ar?: string | null
+          subtitle_en?: string | null
+          title_ar?: string
+          title_en?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homepage_sections: {
+        Row: {
+          config: Json
+          created_at: string
+          enabled: boolean
+          id: string
+          section_key: string
+          sort_order: number
+          subtitle_ar: string | null
+          subtitle_en: string | null
+          title_ar: string | null
+          title_en: string | null
+          updated_at: string
+        }
+        Insert: {
+          config?: Json
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          section_key: string
+          sort_order?: number
+          subtitle_ar?: string | null
+          subtitle_en?: string | null
+          title_ar?: string | null
+          title_en?: string | null
+          updated_at?: string
+        }
+        Update: {
+          config?: Json
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          section_key?: string
+          sort_order?: number
+          subtitle_ar?: string | null
+          subtitle_en?: string | null
+          title_ar?: string | null
+          title_en?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       invoices: {
         Row: {
           booking_id: string | null
@@ -1191,6 +1444,54 @@ export type Database = {
           },
         ]
       }
+      media_library: {
+        Row: {
+          alt_text: string | null
+          caption: string | null
+          content_type: string | null
+          created_at: string
+          filename: string
+          height: number | null
+          id: string
+          path: string
+          size_bytes: number | null
+          tags: string[] | null
+          updated_at: string
+          uploaded_by: string | null
+          width: number | null
+        }
+        Insert: {
+          alt_text?: string | null
+          caption?: string | null
+          content_type?: string | null
+          created_at?: string
+          filename: string
+          height?: number | null
+          id?: string
+          path: string
+          size_bytes?: number | null
+          tags?: string[] | null
+          updated_at?: string
+          uploaded_by?: string | null
+          width?: number | null
+        }
+        Update: {
+          alt_text?: string | null
+          caption?: string | null
+          content_type?: string | null
+          created_at?: string
+          filename?: string
+          height?: number | null
+          id?: string
+          path?: string
+          size_bytes?: number | null
+          tags?: string[] | null
+          updated_at?: string
+          uploaded_by?: string | null
+          width?: number | null
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           body: string | null
@@ -1221,6 +1522,39 @@ export type Database = {
           title?: string
           type?: string | null
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      partners: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          logo_url: string | null
+          name: string
+          sort_order: number
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          name: string
+          sort_order?: number
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          name?: string
+          sort_order?: number
+          updated_at?: string
+          website?: string | null
         }
         Relationships: []
       }
@@ -1423,6 +1757,63 @@ export type Database = {
         }
         Relationships: []
       }
+      promotions: {
+        Row: {
+          active: boolean
+          badge: string | null
+          body_ar: string | null
+          body_en: string | null
+          created_at: string
+          cta_href: string | null
+          cta_label_ar: string | null
+          cta_label_en: string | null
+          ends_at: string | null
+          id: string
+          image_url: string | null
+          sort_order: number
+          starts_at: string | null
+          title_ar: string
+          title_en: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          badge?: string | null
+          body_ar?: string | null
+          body_en?: string | null
+          created_at?: string
+          cta_href?: string | null
+          cta_label_ar?: string | null
+          cta_label_en?: string | null
+          ends_at?: string | null
+          id?: string
+          image_url?: string | null
+          sort_order?: number
+          starts_at?: string | null
+          title_ar: string
+          title_en: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          badge?: string | null
+          body_ar?: string | null
+          body_en?: string | null
+          created_at?: string
+          cta_href?: string | null
+          cta_label_ar?: string | null
+          cta_label_en?: string | null
+          ends_at?: string | null
+          id?: string
+          image_url?: string | null
+          sort_order?: number
+          starts_at?: string | null
+          title_ar?: string
+          title_en?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       refunds: {
         Row: {
           amount: number
@@ -1567,6 +1958,36 @@ export type Database = {
           og_image_url?: string | null
           path?: string
           robots?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      seo_redirects: {
+        Row: {
+          active: boolean
+          created_at: string
+          destination_path: string
+          id: string
+          source_path: string
+          status_code: number
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          destination_path: string
+          id?: string
+          source_path: string
+          status_code?: number
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          destination_path?: string
+          id?: string
+          source_path?: string
+          status_code?: number
           updated_at?: string
         }
         Relationships: []
@@ -1958,6 +2379,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "manager" | "dispatcher" | "accountant" | "driver"
+      blog_status: "draft" | "scheduled" | "published" | "archived"
       booking_status:
         | "pending"
         | "confirmed"
@@ -1975,6 +2397,7 @@ export type Database = {
         | "city"
         | "route_page"
         | "category"
+      contact_status: "new" | "in_progress" | "converted" | "closed" | "spam"
       customer_note_kind:
         | "note"
         | "call"
@@ -2194,6 +2617,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "manager", "dispatcher", "accountant", "driver"],
+      blog_status: ["draft", "scheduled", "published", "archived"],
       booking_status: [
         "pending",
         "confirmed",
@@ -2213,6 +2637,7 @@ export const Constants = {
         "route_page",
         "category",
       ],
+      contact_status: ["new", "in_progress", "converted", "closed", "spam"],
       customer_note_kind: [
         "note",
         "call",

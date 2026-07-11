@@ -4,6 +4,7 @@ import {
   DollarSign, TicketPercent, CreditCard, Bell, BarChart3, UserCog, ShieldCheck, Settings, ScrollText,
   FileText, HelpCircle, Newspaper, Globe, Radio, Wrench, GaugeCircle,
   PieChart, Receipt, Building2, Undo2, Wallet, Briefcase,
+  Sparkles, Image as ImageIcon2, Megaphone, Handshake, Inbox, LayoutTemplate,
 } from "lucide-react";
 
 import {
@@ -51,7 +52,15 @@ export function AppSidebar() {
       { title: "Pages", url: "/admin/pages", icon: FileText },
       { title: "Blog", url: "/admin/blog", icon: Newspaper },
       { title: "FAQ", url: "/admin/faqs", icon: HelpCircle },
+      { title: "Media Library", url: "/admin/media", icon: ImageIcon2 },
       { title: "Preview site", url: "/", icon: Globe },
+    ]},
+    { label: locale === "ar" ? "التسويق" : "Marketing", items: [
+      { title: "Homepage", url: "/admin/homepage", icon: LayoutTemplate },
+      { title: "Hero Slides", url: "/admin/hero", icon: Sparkles },
+      { title: "Promotions", url: "/admin/promotions", icon: Megaphone },
+      { title: "Partners", url: "/admin/partners", icon: Handshake },
+      { title: "Contact Inbox", url: "/admin/contacts", icon: Inbox },
     ]},
     { label: t("system"), items: [
       { title: t("notifications"), url: "/admin/notifications", icon: Bell },

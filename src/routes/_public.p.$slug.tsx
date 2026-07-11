@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, MessageCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
+import { buildCmsHead, breadcrumbJsonLd } from "@/lib/seo";
 
 const opts = (slug: string) => queryOptions({
   queryKey: ["public", "page", slug],
@@ -19,31 +20,15 @@ export const Route = createFileRoute("/_public/p/$slug")({
   loader: ({ context, params }) => context.queryClient.ensureQueryData(opts(params.slug)),
   head: ({ loaderData, params }) => {
     if (!loaderData) return { meta: [{ title: "Not found" }, { name: "robots", content: "noindex" }] };
-    const title = loaderData.meta_title || loaderData.title_en;
-    const desc = loaderData.meta_description || loaderData.subtitle_en || "";
-    return {
-      meta: [
-        { title },
-        { name: "description", content: desc },
-        { property: "og:title", content: title },
-        { property: "og:description", content: desc },
-        { property: "og:type", content: "website" },
-        { property: "og:url", content: `/p/${params.slug}` },
-        ...(loaderData.og_image_url ? [{ property: "og:image", content: loaderData.og_image_url }] : []),
-      ],
-      links: [{ rel: "canonical", href: `/p/${params.slug}` }],
-      scripts: [{
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Service",
-          name: title,
-          description: desc,
-          provider: { "@type": "TaxiService", name: SITE.brand.en, telephone: SITE.phone },
-          areaServed: SITE.city,
-        }),
-      }],
-    };
+    const head = buildCmsHead(loaderData as any);
+    head.scripts = [
+      ...(head.scripts ?? []),
+      { type: "application/ld+json", children: JSON.stringify(breadcrumbJsonLd([
+        { name: "Home", url: "/" },
+        { name: loaderData.title_en, url: `/p/${params.slug}` },
+      ])) },
+    ];
+    return head;
   },
   component: PageDetail,
   notFoundComponent: () => (
