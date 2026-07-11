@@ -16,6 +16,7 @@ import { Route as PublicIndexRouteImport } from './routes/_public.index'
 import { Route as PublicServicesRouteImport } from './routes/_public.services'
 import { Route as PublicPricingRouteImport } from './routes/_public.pricing'
 import { Route as PublicFleetRouteImport } from './routes/_public.fleet'
+import { Route as PublicFaqRouteImport } from './routes/_public.faq'
 import { Route as PublicAboutRouteImport } from './routes/_public.about'
 import { Route as PublicPSlugRouteImport } from './routes/_public.p.$slug'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
@@ -66,6 +67,11 @@ const PublicPricingRoute = PublicPricingRouteImport.update({
 const PublicFleetRoute = PublicFleetRouteImport.update({
   id: '/fleet',
   path: '/fleet',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicFaqRoute = PublicFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => PublicRoute,
 } as any)
 const PublicAboutRoute = PublicAboutRouteImport.update({
@@ -175,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
   '/auth': typeof AuthRoute
   '/about': typeof PublicAboutRoute
+  '/faq': typeof PublicFaqRoute
   '/fleet': typeof PublicFleetRoute
   '/pricing': typeof PublicPricingRoute
   '/services': typeof PublicServicesRoute
@@ -200,6 +207,7 @@ export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
   '/auth': typeof AuthRoute
   '/about': typeof PublicAboutRoute
+  '/faq': typeof PublicFaqRoute
   '/fleet': typeof PublicFleetRoute
   '/pricing': typeof PublicPricingRoute
   '/services': typeof PublicServicesRoute
@@ -227,6 +235,7 @@ export interface FileRoutesById {
   '/_public': typeof PublicRouteWithChildren
   '/auth': typeof AuthRoute
   '/_public/about': typeof PublicAboutRoute
+  '/_public/faq': typeof PublicFaqRoute
   '/_public/fleet': typeof PublicFleetRoute
   '/_public/pricing': typeof PublicPricingRoute
   '/_public/services': typeof PublicServicesRoute
@@ -255,6 +264,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/about'
+    | '/faq'
     | '/fleet'
     | '/pricing'
     | '/services'
@@ -280,6 +290,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/about'
+    | '/faq'
     | '/fleet'
     | '/pricing'
     | '/services'
@@ -306,6 +317,7 @@ export interface FileRouteTypes {
     | '/_public'
     | '/auth'
     | '/_public/about'
+    | '/_public/faq'
     | '/_public/fleet'
     | '/_public/pricing'
     | '/_public/services'
@@ -384,6 +396,13 @@ declare module '@tanstack/react-router' {
       path: '/fleet'
       fullPath: '/fleet'
       preLoaderRoute: typeof PublicFleetRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/faq': {
+      id: '/_public/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof PublicFaqRouteImport
       parentRoute: typeof PublicRoute
     }
     '/_public/about': {
@@ -558,6 +577,7 @@ const AuthenticatedRouteRouteWithChildren =
 
 interface PublicRouteChildren {
   PublicAboutRoute: typeof PublicAboutRoute
+  PublicFaqRoute: typeof PublicFaqRoute
   PublicFleetRoute: typeof PublicFleetRoute
   PublicPricingRoute: typeof PublicPricingRoute
   PublicServicesRoute: typeof PublicServicesRoute
@@ -567,6 +587,7 @@ interface PublicRouteChildren {
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicAboutRoute: PublicAboutRoute,
+  PublicFaqRoute: PublicFaqRoute,
   PublicFleetRoute: PublicFleetRoute,
   PublicPricingRoute: PublicPricingRoute,
   PublicServicesRoute: PublicServicesRoute,
