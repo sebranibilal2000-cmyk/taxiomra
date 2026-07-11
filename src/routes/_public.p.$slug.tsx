@@ -70,7 +70,7 @@ function PageDetail() {
       </section>
       <section className="container mx-auto px-4 py-12 max-w-4xl">
         <div className="prose prose-neutral dark:prose-invert max-w-none whitespace-pre-line leading-relaxed text-foreground">
-          {ar ? p.content_ar : p.content_en}
+          {ar ? p.body_ar : p.body_en}
         </div>
         <div className="mt-10 rounded-2xl border bg-muted/30 p-6 text-center">
           <h2 className="text-xl font-bold mb-3">{ar ? "احجز هذه الخدمة الآن" : "Book this service now"}</h2>
