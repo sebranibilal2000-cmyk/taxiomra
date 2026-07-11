@@ -27,7 +27,7 @@ function Dashboard() {
 
       const [tripsToday, activeTrips, pending, availDrivers, customers, revenueRes, weekly] = await Promise.all([
         supabase.from("bookings").select("id", { count: "exact", head: true }).gte("created_at", iso),
-        supabase.from("bookings").select("id", { count: "exact", head: true }).in("status", ["assigned", "en_route", "in_progress"]),
+        supabase.from("bookings").select("id", { count: "exact", head: true }).in("status", ["assigned", "en_route", "on_trip"]),
         supabase.from("bookings").select("id", { count: "exact", head: true }).eq("status", "pending"),
         supabase.from("drivers").select("id", { count: "exact", head: true }).eq("status", "available"),
         supabase.from("customers").select("id", { count: "exact", head: true }),
