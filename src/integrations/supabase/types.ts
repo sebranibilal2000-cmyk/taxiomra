@@ -393,44 +393,210 @@ export type Database = {
         }
         Relationships: []
       }
-      customers: {
+      customer_documents: {
         Row: {
           created_at: string
-          email: string | null
-          full_name: string
+          customer_id: string
+          doc_type: string
+          expires_at: string | null
+          file_path: string
+          file_size: number | null
           id: string
-          is_blocked: boolean
-          notes: string | null
-          phone: string | null
-          total_spent: number
-          total_trips: number
-          updated_at: string
+          label: string | null
+          mime_type: string | null
+          uploaded_by: string | null
         }
         Insert: {
           created_at?: string
-          email?: string | null
-          full_name: string
+          customer_id: string
+          doc_type: string
+          expires_at?: string | null
+          file_path: string
+          file_size?: number | null
           id?: string
-          is_blocked?: boolean
-          notes?: string | null
-          phone?: string | null
-          total_spent?: number
-          total_trips?: number
-          updated_at?: string
+          label?: string | null
+          mime_type?: string | null
+          uploaded_by?: string | null
         }
         Update: {
           created_at?: string
+          customer_id?: string
+          doc_type?: string
+          expires_at?: string | null
+          file_path?: string
+          file_size?: number | null
+          id?: string
+          label?: string | null
+          mime_type?: string | null
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customer_documents_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      customer_notes: {
+        Row: {
+          author_id: string | null
+          body: string
+          created_at: string
+          customer_id: string
+          id: string
+          kind: Database["public"]["Enums"]["customer_note_kind"]
+          pinned: boolean
+        }
+        Insert: {
+          author_id?: string | null
+          body: string
+          created_at?: string
+          customer_id: string
+          id?: string
+          kind?: Database["public"]["Enums"]["customer_note_kind"]
+          pinned?: boolean
+        }
+        Update: {
+          author_id?: string | null
+          body?: string
+          created_at?: string
+          customer_id?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["customer_note_kind"]
+          pinned?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customer_notes_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      customers: {
+        Row: {
+          address: string | null
+          alt_phone: string | null
+          avg_booking_value: number
+          cancelled_trips: number
+          city: string | null
+          company: string | null
+          completed_trips: number
+          country: string | null
+          created_at: string
+          email: string | null
+          favorite_category_id: string | null
+          favorite_driver_id: string | null
+          favorite_dropoff: string | null
+          favorite_pickup: string | null
+          first_booking_at: string | null
+          full_name: string
+          id: string
+          is_blocked: boolean
+          last_booking_at: string | null
+          no_show_trips: number
+          notes: string | null
+          phone: string | null
+          preferred_language: string | null
+          preferred_payment_method: string | null
+          preferred_pickup_hour: number | null
+          tags: string[]
+          tier: Database["public"]["Enums"]["customer_tier"]
+          total_spent: number
+          total_trips: number
+          updated_at: string
+          vat_number: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          address?: string | null
+          alt_phone?: string | null
+          avg_booking_value?: number
+          cancelled_trips?: number
+          city?: string | null
+          company?: string | null
+          completed_trips?: number
+          country?: string | null
+          created_at?: string
           email?: string | null
-          full_name?: string
+          favorite_category_id?: string | null
+          favorite_driver_id?: string | null
+          favorite_dropoff?: string | null
+          favorite_pickup?: string | null
+          first_booking_at?: string | null
+          full_name: string
           id?: string
           is_blocked?: boolean
+          last_booking_at?: string | null
+          no_show_trips?: number
           notes?: string | null
           phone?: string | null
+          preferred_language?: string | null
+          preferred_payment_method?: string | null
+          preferred_pickup_hour?: number | null
+          tags?: string[]
+          tier?: Database["public"]["Enums"]["customer_tier"]
           total_spent?: number
           total_trips?: number
           updated_at?: string
+          vat_number?: string | null
+          whatsapp?: string | null
         }
-        Relationships: []
+        Update: {
+          address?: string | null
+          alt_phone?: string | null
+          avg_booking_value?: number
+          cancelled_trips?: number
+          city?: string | null
+          company?: string | null
+          completed_trips?: number
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          favorite_category_id?: string | null
+          favorite_driver_id?: string | null
+          favorite_dropoff?: string | null
+          favorite_pickup?: string | null
+          first_booking_at?: string | null
+          full_name?: string
+          id?: string
+          is_blocked?: boolean
+          last_booking_at?: string | null
+          no_show_trips?: number
+          notes?: string | null
+          phone?: string | null
+          preferred_language?: string | null
+          preferred_payment_method?: string | null
+          preferred_pickup_hour?: number | null
+          tags?: string[]
+          tier?: Database["public"]["Enums"]["customer_tier"]
+          total_spent?: number
+          total_trips?: number
+          updated_at?: string
+          vat_number?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customers_favorite_category_id_fkey"
+            columns: ["favorite_category_id"]
+            isOneToOne: false
+            referencedRelation: "vehicle_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "customers_favorite_driver_id_fkey"
+            columns: ["favorite_driver_id"]
+            isOneToOne: false
+            referencedRelation: "drivers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       drivers: {
         Row: {
@@ -1033,6 +1199,10 @@ export type Database = {
         Returns: boolean
       }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      recompute_customer_stats: {
+        Args: { _customer_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "manager" | "dispatcher" | "accountant" | "driver"
@@ -1053,6 +1223,14 @@ export type Database = {
         | "city"
         | "route_page"
         | "category"
+      customer_note_kind:
+        | "note"
+        | "call"
+        | "whatsapp"
+        | "complaint"
+        | "compliment"
+        | "follow_up"
+      customer_tier: "regular" | "vip" | "corporate" | "blacklisted"
       driver_status:
         | "offline"
         | "available"
@@ -1209,6 +1387,15 @@ export const Constants = {
         "route_page",
         "category",
       ],
+      customer_note_kind: [
+        "note",
+        "call",
+        "whatsapp",
+        "complaint",
+        "compliment",
+        "follow_up",
+      ],
+      customer_tier: ["regular", "vip", "corporate", "blacklisted"],
       driver_status: [
         "offline",
         "available",
