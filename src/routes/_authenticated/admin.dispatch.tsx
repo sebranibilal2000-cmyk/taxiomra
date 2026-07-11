@@ -88,7 +88,7 @@ function DispatchPage() {
       const patch: any = { driver_id: driverId, vehicle_id: vehicleId, status: "assigned" };
       const { error } = await supabase.from("bookings").update(patch).eq("id", bookingId);
       if (error) throw error;
-      await supabase.from("drivers").update({ status: "busy" }).eq("id", driverId);
+      await supabase.from("drivers").update({ status: "on_trip" }).eq("id", driverId);
     },
     onSuccess: () => {
       toast.success(locale === "ar" ? "تم تعيين السائق" : "Driver assigned");
