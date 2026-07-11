@@ -105,6 +105,12 @@ function MediaAdmin() {
 
 function MediaImage({ path, alt }: { path: string; alt: string }) {
   const [url, setUrl] = useState<string | null>(null);
-  useState(() => { supabase.storage.from("media-library").createSignedUrl(path, 3600).then(({ data }) => setUrl(data?.signedUrl ?? null)); return 0; });
+  useEffect(() => {
+    let cancelled = false;
+    supabase.storage.from("media-library").createSignedUrl(path, 3600).then(({ data }) => {
+      if (!cancelled) setUrl(data?.signedUrl ?? null);
+    });
+    return () => { cancelled = true; };
+  }, [path]);
   return url ? <img src={url} alt={alt} className="object-cover w-full h-full" loading="lazy" /> : <ImageIcon className="h-8 w-8 text-muted-foreground" />;
 }
