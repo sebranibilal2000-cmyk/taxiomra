@@ -66,8 +66,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  // Resolve locale from the pathname so SSR emits the correct <html lang/dir>
+  // for /ar/* vs /en/*. Falls back to the default when the prefix is absent.
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const locale = localeFromPath(pathname) ?? DEFAULT_LOCALE;
+  const dir = locale === "ar" ? "rtl" : "ltr";
   return (
-    <html lang="ar" dir="rtl" suppressHydrationWarning>
+    <html lang={locale} dir={dir} suppressHydrationWarning>
       <head><HeadContent /></head>
       <body>{children}<Scripts /></body>
     </html>
