@@ -107,18 +107,20 @@ export const exportAllData = createServerFn({ method: "POST" })
   .handler(async ({ context }) => {
     await assertAdmin(context);
     const sb = context.supabase;
-    const bundle: Record<string, unknown[]> = {};
+    const bundle: Record<string, any[]> = {};
     for (const table of EXPORT_TABLES) {
-      const { data, error } = await sb.from(table).select("*").limit(50_000);
+      const { data, error } = await sb.from(table as any).select("*").limit(50_000);
       if (error) {
         bundle[table] = [{ __error: error.message }];
         continue;
       }
-      bundle[table] = data ?? [];
+      bundle[table] = (data ?? []) as any[];
     }
-    return {
+    const payload = {
       exported_at: new Date().toISOString(),
       generated_by: context.userId,
       tables: bundle,
     };
+    // Return as a JSON string to keep the RPC serializer happy with heterogeneous rows.
+    return { json: JSON.stringify(payload) };
   });
