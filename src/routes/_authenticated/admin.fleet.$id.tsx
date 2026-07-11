@@ -35,7 +35,7 @@ function VehicleProfile() {
   });
   const maint = useQuery({
     queryKey: ["vehicle-maint", id],
-    queryFn: async () => (await supabase.from("vehicle_maintenance").select("*").eq("vehicle_id", id).order("performed_at", { ascending: false })).data ?? [],
+    queryFn: async () => (await supabase.from("vehicle_maintenance").select("*").eq("vehicle_id", id).order("service_date", { ascending: false })).data ?? [],
   });
   const docs = useQuery({
     queryKey: ["vehicle-docs", id],
@@ -61,7 +61,7 @@ function VehicleProfile() {
     ...(docs.data ?? []).map((x: any) => ({ key: x.title || x.kind, date: x.expires_on })),
   ].filter((x) => x.date && daysUntil(x.date)! <= 30);
 
-  const maintDue = v.next_maintenance_at && daysUntil(v.next_maintenance_at)! <= 14;
+  const maintDue = v.next_maintenance_date && daysUntil(v.next_maintenance_date)! <= 14;
   const totalMaintCost = (maint.data ?? []).reduce((s: number, m: any) => s + Number(m.cost ?? 0), 0);
 
   return (
@@ -87,7 +87,7 @@ function VehicleProfile() {
           <CardContent className="p-4 flex items-start gap-3">
             <ShieldAlert className="h-5 w-5 text-warning-foreground mt-0.5" />
             <div className="min-w-0 flex-1 space-y-2">
-              {maintDue && <div className="text-sm">Next maintenance due <ExpiryPill date={v.next_maintenance_at} /></div>}
+              {maintDue && <div className="text-sm">Next maintenance due <ExpiryPill date={v.next_maintenance_date} /></div>}
               {expiring.length > 0 && (
                 <div>
                   <div className="text-sm font-medium">Expiring documents</div>
@@ -137,8 +137,8 @@ function VehicleProfile() {
             <div className="flex justify-between items-center py-1 border-b border-border/40"><span className="text-muted-foreground">Insurance</span><ExpiryPill date={v.insurance_expiry} /></div>
             <div className="flex justify-between items-center py-1 border-b border-border/40"><span className="text-muted-foreground">Inspection</span><ExpiryPill date={v.inspection_expiry} /></div>
             <Row k="Current mileage" v={v.current_mileage ? Number(v.current_mileage).toLocaleString() + " km" : null} />
-            <Row k="Next maint. km" v={v.next_maintenance_km ? Number(v.next_maintenance_km).toLocaleString() + " km" : null} />
-            <div className="flex justify-between items-center py-1"><span className="text-muted-foreground">Next maintenance</span><ExpiryPill date={v.next_maintenance_at} /></div>
+            <Row k="Next maint. km" v={v.next_maintenance_mileage ? Number(v.next_maintenance_mileage).toLocaleString() + " km" : null} />
+            <div className="flex justify-between items-center py-1"><span className="text-muted-foreground">Next maintenance</span><ExpiryPill date={v.next_maintenance_date} /></div>
           </CardContent></Card>
         </TabsContent>
 
@@ -204,31 +204,31 @@ function Row({ k, v }: { k: string; v: any }) {
 
 function MaintenancePanel({ vehicleId, rows, onChange }: { vehicleId: string; rows: any[]; onChange: () => void }) {
   const [open, setOpen] = useState(false);
-  const [f, setF] = useState({ kind: "service", title: "", performed_at: new Date().toISOString().slice(0,10), mileage: "", cost: "", vendor: "", next_service_at: "", next_service_km: "", notes: "" });
+  const [f, setF] = useState({ kind: "service", title: "", service_date: new Date().toISOString().slice(0,10), mileage: "", cost: "", vendor: "", next_due_date: "", next_due_mileage: "", notes: "" });
 
   const save = async () => {
     const { error } = await supabase.from("vehicle_maintenance").insert({
       vehicle_id: vehicleId,
       kind: f.kind as any,
       title: f.title || null,
-      performed_at: f.performed_at || null,
+      service_date: f.service_date || null,
       mileage: f.mileage ? Number(f.mileage) : null,
       cost: f.cost ? Number(f.cost) : null,
       vendor: f.vendor || null,
-      next_service_at: f.next_service_at || null,
-      next_service_km: f.next_service_km ? Number(f.next_service_km) : null,
+      next_due_date: f.next_due_date || null,
+      next_due_mileage: f.next_due_mileage ? Number(f.next_due_mileage) : null,
       notes: f.notes || null,
     });
     if (error) return toast.error(error.message);
     // Update vehicle mileage + next maintenance
     const patch: any = {};
     if (f.mileage) patch.current_mileage = Number(f.mileage);
-    if (f.next_service_at) patch.next_maintenance_at = f.next_service_at;
-    if (f.next_service_km) patch.next_maintenance_km = Number(f.next_service_km);
+    if (f.next_due_date) patch.next_maintenance_date = f.next_due_date;
+    if (f.next_due_mileage) patch.next_maintenance_mileage = Number(f.next_due_mileage);
     if (Object.keys(patch).length) await supabase.from("vehicles").update(patch).eq("id", vehicleId);
     toast.success("Recorded");
     setOpen(false);
-    setF({ kind: "service", title: "", performed_at: new Date().toISOString().slice(0,10), mileage: "", cost: "", vendor: "", next_service_at: "", next_service_km: "", notes: "" });
+    setF({ kind: "service", title: "", service_date: new Date().toISOString().slice(0,10), mileage: "", cost: "", vendor: "", next_due_date: "", next_due_mileage: "", notes: "" });
     onChange();
   };
 
@@ -254,13 +254,13 @@ function MaintenancePanel({ vehicleId, rows, onChange }: { vehicleId: string; ro
                   <SelectContent>{MAINT_KINDS.map(k => <SelectItem key={k} value={k}>{k}</SelectItem>)}</SelectContent>
                 </Select>
               </div>
-              <div><Label>Performed on</Label><Input type="date" value={f.performed_at} onChange={(e) => setF({ ...f, performed_at: e.target.value })} /></div>
+              <div><Label>Performed on</Label><Input type="date" value={f.service_date} onChange={(e) => setF({ ...f, service_date: e.target.value })} /></div>
               <div className="col-span-2"><Label>Title</Label><Input value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} /></div>
               <div><Label>Mileage (km)</Label><Input type="number" value={f.mileage} onChange={(e) => setF({ ...f, mileage: e.target.value })} /></div>
               <div><Label>Cost</Label><Input type="number" step="0.01" value={f.cost} onChange={(e) => setF({ ...f, cost: e.target.value })} /></div>
               <div className="col-span-2"><Label>Vendor</Label><Input value={f.vendor} onChange={(e) => setF({ ...f, vendor: e.target.value })} /></div>
-              <div><Label>Next service date</Label><Input type="date" value={f.next_service_at} onChange={(e) => setF({ ...f, next_service_at: e.target.value })} /></div>
-              <div><Label>Next service km</Label><Input type="number" value={f.next_service_km} onChange={(e) => setF({ ...f, next_service_km: e.target.value })} /></div>
+              <div><Label>Next service date</Label><Input type="date" value={f.next_due_date} onChange={(e) => setF({ ...f, next_due_date: e.target.value })} /></div>
+              <div><Label>Next service km</Label><Input type="number" value={f.next_due_mileage} onChange={(e) => setF({ ...f, next_due_mileage: e.target.value })} /></div>
               <div className="col-span-2"><Label>Notes</Label><Textarea rows={2} value={f.notes} onChange={(e) => setF({ ...f, notes: e.target.value })} /></div>
             </div>
             <DialogFooter>
@@ -276,7 +276,7 @@ function MaintenancePanel({ vehicleId, rows, onChange }: { vehicleId: string; ro
             <div key={m.id} className="py-3 flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <div className="text-sm font-medium">{m.title || m.kind} <span className="text-muted-foreground text-xs">· {m.kind}</span></div>
-                <div className="text-xs text-muted-foreground">{new Date(m.performed_at).toLocaleDateString()} {m.vendor ? `· ${m.vendor}` : ""} {m.mileage ? `· ${Number(m.mileage).toLocaleString()} km` : ""}</div>
+                <div className="text-xs text-muted-foreground">{new Date(m.service_date).toLocaleDateString()} {m.vendor ? `· ${m.vendor}` : ""} {m.mileage ? `· ${Number(m.mileage).toLocaleString()} km` : ""}</div>
                 {m.notes && <div className="text-xs mt-1">{m.notes}</div>}
               </div>
               <div className="text-end shrink-0">
@@ -406,8 +406,8 @@ function EditVehicleDialog({ vehicle, onSaved }: { vehicle: any; onSaved: () => 
         insurance_expiry: f.insurance_expiry || null,
         inspection_expiry: f.inspection_expiry || null,
         current_mileage: f.current_mileage ? Number(f.current_mileage) : null,
-        next_maintenance_at: f.next_maintenance_at || null,
-        next_maintenance_km: f.next_maintenance_km ? Number(f.next_maintenance_km) : null,
+        next_maintenance_date: f.next_maintenance_date || null,
+        next_maintenance_mileage: f.next_maintenance_mileage ? Number(f.next_maintenance_mileage) : null,
         notes: f.notes || null,
       };
       const { error } = await supabase.from("vehicles").update(payload).eq("id", vehicle.id);
@@ -459,8 +459,8 @@ function EditVehicleDialog({ vehicle, onSaved }: { vehicle: any; onSaved: () => 
           <div><Label>Registration expiry</Label><Input type="date" value={f.registration_expiry ?? ""} onChange={(e) => setF({ ...f, registration_expiry: e.target.value })} /></div>
           <div><Label>Insurance expiry</Label><Input type="date" value={f.insurance_expiry ?? ""} onChange={(e) => setF({ ...f, insurance_expiry: e.target.value })} /></div>
           <div><Label>Inspection expiry</Label><Input type="date" value={f.inspection_expiry ?? ""} onChange={(e) => setF({ ...f, inspection_expiry: e.target.value })} /></div>
-          <div><Label>Next maintenance</Label><Input type="date" value={f.next_maintenance_at ?? ""} onChange={(e) => setF({ ...f, next_maintenance_at: e.target.value })} /></div>
-          <div><Label>Next maintenance km</Label><Input type="number" value={f.next_maintenance_km ?? ""} onChange={(e) => setF({ ...f, next_maintenance_km: e.target.value })} /></div>
+          <div><Label>Next maintenance</Label><Input type="date" value={f.next_maintenance_date ?? ""} onChange={(e) => setF({ ...f, next_maintenance_date: e.target.value })} /></div>
+          <div><Label>Next maintenance km</Label><Input type="number" value={f.next_maintenance_mileage ?? ""} onChange={(e) => setF({ ...f, next_maintenance_mileage: e.target.value })} /></div>
           <div className="col-span-2"><Label>Notes</Label><Textarea rows={3} value={f.notes ?? ""} onChange={(e) => setF({ ...f, notes: e.target.value })} /></div>
         </div>
         <DialogFooter>
