@@ -87,6 +87,8 @@ export function AppSidebar() {
     { label: t("system"), items: [
       { title: t("notifications"), url: "/admin/notifications", icon: Bell },
       { title: t("reports"), url: "/admin/reports", icon: BarChart3 },
+      { title: t("reports"), url: "/admin/reports", icon: BarChart3 },
+      { title: locale === "ar" ? "التحليلات" : "Analytics", url: "/admin/analytics", icon: PieChart },
       { title: locale === "ar" ? "العمليات" : "Operations", url: "/admin/operations", icon: Activity },
       { title: locale === "ar" ? "سجلات الأخطاء" : "Error Logs", url: "/admin/errors", icon: AlertTriangle },
       { title: locale === "ar" ? "النسخ الاحتياطي" : "Backup", url: "/admin/backup", icon: DatabaseBackup },
