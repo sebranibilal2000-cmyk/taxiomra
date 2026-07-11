@@ -70,7 +70,7 @@ function InvoiceDetail() {
         <CardContent className="p-8 md:p-12 print:p-8">
           <div className="flex justify-between items-start mb-8">
             <div>
-              <div className="font-display text-3xl mb-1">{s.company_name || "Taxi Co."}</div>
+              <div className="font-display text-3xl mb-1">{s.company_name || "Jeddah Travels"}</div>
               <div className="text-sm text-muted-foreground whitespace-pre-line">{s.company_address}</div>
               <div className="text-sm text-muted-foreground">{s.company_phone} · {s.company_email}</div>
               {s.vat_number && <div className="text-xs text-muted-foreground mt-1">VAT: {s.vat_number}</div>}
