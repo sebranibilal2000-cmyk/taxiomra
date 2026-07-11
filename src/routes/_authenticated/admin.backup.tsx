@@ -13,7 +13,7 @@ export const Route = createFileRoute("/_authenticated/admin/backup")({ component
 function BackupPage() {
   const fn = useServerFn(exportAllData);
   const exp = useMutation({
-    mutationFn: () => fn({ data: undefined as unknown as void }),
+    mutationFn: () => fn(),
     onSuccess: (res: any) => {
       const blob = new Blob([res.json], { type: "application/json" });
       const url = URL.createObjectURL(blob);
