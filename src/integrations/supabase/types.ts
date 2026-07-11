@@ -1253,6 +1253,45 @@ export type Database = {
           },
         ]
       }
+      error_logs: {
+        Row: {
+          created_at: string
+          id: string
+          level: string
+          message: string
+          metadata: Json
+          resolved: boolean
+          source: string
+          stack: string | null
+          url: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          level?: string
+          message: string
+          metadata?: Json
+          resolved?: boolean
+          source?: string
+          stack?: string | null
+          url?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          level?: string
+          message?: string
+          metadata?: Json
+          resolved?: boolean
+          source?: string
+          stack?: string | null
+          url?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       expenses: {
         Row: {
           amount: number
@@ -1745,6 +1784,24 @@ export type Database = {
         }
         Relationships: []
       }
+      ops_snapshots: {
+        Row: {
+          captured_at: string
+          id: string
+          metrics: Json
+        }
+        Insert: {
+          captured_at?: string
+          id?: string
+          metrics?: Json
+        }
+        Update: {
+          captured_at?: string
+          id?: string
+          metrics?: Json
+        }
+        Relationships: []
+      }
       partners: {
         Row: {
           active: boolean
@@ -2084,6 +2141,30 @@ export type Database = {
           title_ar?: string
           title_en?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      rate_limit_events: {
+        Row: {
+          bucket: string
+          count: number
+          created_at: string
+          id: string
+          key: string
+        }
+        Insert: {
+          bucket: string
+          count?: number
+          created_at?: string
+          id?: string
+          key: string
+        }
+        Update: {
+          bucket?: string
+          count?: number
+          created_at?: string
+          id?: string
+          key?: string
         }
         Relationships: []
       }

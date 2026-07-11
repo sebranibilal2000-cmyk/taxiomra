@@ -5,7 +5,7 @@ import {
   FileText, HelpCircle, Newspaper, Globe, Radio, Wrench, GaugeCircle,
   PieChart, Receipt, Building2, Undo2, Wallet, Briefcase,
   Sparkles, Image as ImageIcon2, Megaphone, Handshake, Inbox, LayoutTemplate,
-  Bot, MessageCircle,
+  Bot, MessageCircle, Activity, AlertTriangle, DatabaseBackup,
 } from "lucide-react";
 
 import {
@@ -70,6 +70,9 @@ export function AppSidebar() {
     { label: t("system"), items: [
       { title: t("notifications"), url: "/admin/notifications", icon: Bell },
       { title: t("reports"), url: "/admin/reports", icon: BarChart3 },
+      { title: locale === "ar" ? "العمليات" : "Operations", url: "/admin/operations", icon: Activity },
+      { title: locale === "ar" ? "سجلات الأخطاء" : "Error Logs", url: "/admin/errors", icon: AlertTriangle },
+      { title: locale === "ar" ? "النسخ الاحتياطي" : "Backup", url: "/admin/backup", icon: DatabaseBackup },
       { title: t("users"), url: "/admin/users", icon: UserCog },
       { title: t("roles"), url: "/admin/roles", icon: ShieldCheck },
       { title: t("settings"), url: "/admin/settings", icon: Settings },
