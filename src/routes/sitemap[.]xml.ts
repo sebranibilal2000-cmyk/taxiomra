@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 
-const BASE_URL = ""; // empty = paths are host-relative; hosting resolves to absolute
+const BASE_URL = "https://mazarat-sa.online"; // canonical production domain
 const LOCALES = ["ar", "en"] as const;
 type Locale = (typeof LOCALES)[number];
 
