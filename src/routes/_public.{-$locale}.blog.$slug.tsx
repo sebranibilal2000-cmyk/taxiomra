@@ -26,10 +26,9 @@ export const Route = createFileRoute("/_public/{-$locale}/blog/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "article" },
-        ` },
         ...(loaderData.cover_url ? [{ property: "og:image", content: loaderData.cover_url }] : []),
       ],
-      links: [` }],
+      links: [],
       scripts: [{
         type: "application/ld+json",
         children: JSON.stringify({
