@@ -69,6 +69,7 @@ import { Route as AuthenticatedAdminAiAssistantRouteImport } from './routes/_aut
 import { Route as PublicChar123LocaleChar125ServicesSlugRouteImport } from './routes/_public.{-$locale}.services.$slug'
 import { Route as PublicChar123LocaleChar125RoutesSlugRouteImport } from './routes/_public.{-$locale}.routes.$slug'
 import { Route as PublicChar123LocaleChar125PSlugRouteImport } from './routes/_public.{-$locale}.p.$slug'
+import { Route as PublicChar123LocaleChar125FleetSlugRouteImport } from './routes/_public.{-$locale}.fleet.$slug'
 import { Route as PublicChar123LocaleChar125CitiesSlugRouteImport } from './routes/_public.{-$locale}.cities.$slug'
 import { Route as PublicChar123LocaleChar125BlogSlugRouteImport } from './routes/_public.{-$locale}.blog.$slug'
 import { Route as PublicChar123LocaleChar125AirportsSlugRouteImport } from './routes/_public.{-$locale}.airports.$slug'
@@ -424,6 +425,12 @@ const PublicChar123LocaleChar125PSlugRoute =
     path: '/p/$slug',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
+const PublicChar123LocaleChar125FleetSlugRoute =
+  PublicChar123LocaleChar125FleetSlugRouteImport.update({
+    id: '/$slug',
+    path: '/$slug',
+    getParentRoute: () => PublicChar123LocaleChar125FleetRoute,
+  } as any)
 const PublicChar123LocaleChar125CitiesSlugRoute =
   PublicChar123LocaleChar125CitiesSlugRouteImport.update({
     id: '/cities/$slug',
@@ -518,7 +525,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
   '/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
   '/{-$locale}/faq': typeof PublicChar123LocaleChar125FaqRoute
-  '/{-$locale}/fleet': typeof PublicChar123LocaleChar125FleetRoute
+  '/{-$locale}/fleet': typeof PublicChar123LocaleChar125FleetRouteWithChildren
   '/{-$locale}/pricing': typeof PublicChar123LocaleChar125PricingRoute
   '/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
   '/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
@@ -532,6 +539,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/airports/$slug': typeof PublicChar123LocaleChar125AirportsSlugRoute
   '/{-$locale}/blog/$slug': typeof PublicChar123LocaleChar125BlogSlugRoute
   '/{-$locale}/cities/$slug': typeof PublicChar123LocaleChar125CitiesSlugRoute
+  '/{-$locale}/fleet/$slug': typeof PublicChar123LocaleChar125FleetSlugRoute
   '/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
@@ -586,7 +594,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
   '/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
   '/{-$locale}/faq': typeof PublicChar123LocaleChar125FaqRoute
-  '/{-$locale}/fleet': typeof PublicChar123LocaleChar125FleetRoute
+  '/{-$locale}/fleet': typeof PublicChar123LocaleChar125FleetRouteWithChildren
   '/{-$locale}/pricing': typeof PublicChar123LocaleChar125PricingRoute
   '/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
   '/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
@@ -600,6 +608,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/airports/$slug': typeof PublicChar123LocaleChar125AirportsSlugRoute
   '/{-$locale}/blog/$slug': typeof PublicChar123LocaleChar125BlogSlugRoute
   '/{-$locale}/cities/$slug': typeof PublicChar123LocaleChar125CitiesSlugRoute
+  '/{-$locale}/fleet/$slug': typeof PublicChar123LocaleChar125FleetSlugRoute
   '/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
@@ -656,7 +665,7 @@ export interface FileRoutesById {
   '/_public/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
   '/_public/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
   '/_public/{-$locale}/faq': typeof PublicChar123LocaleChar125FaqRoute
-  '/_public/{-$locale}/fleet': typeof PublicChar123LocaleChar125FleetRoute
+  '/_public/{-$locale}/fleet': typeof PublicChar123LocaleChar125FleetRouteWithChildren
   '/_public/{-$locale}/pricing': typeof PublicChar123LocaleChar125PricingRoute
   '/_public/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
   '/_public/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
@@ -670,6 +679,7 @@ export interface FileRoutesById {
   '/_public/{-$locale}/airports/$slug': typeof PublicChar123LocaleChar125AirportsSlugRoute
   '/_public/{-$locale}/blog/$slug': typeof PublicChar123LocaleChar125BlogSlugRoute
   '/_public/{-$locale}/cities/$slug': typeof PublicChar123LocaleChar125CitiesSlugRoute
+  '/_public/{-$locale}/fleet/$slug': typeof PublicChar123LocaleChar125FleetSlugRoute
   '/_public/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/_public/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/_public/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
@@ -741,6 +751,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/airports/$slug'
     | '/{-$locale}/blog/$slug'
     | '/{-$locale}/cities/$slug'
+    | '/{-$locale}/fleet/$slug'
     | '/{-$locale}/p/$slug'
     | '/{-$locale}/routes/$slug'
     | '/{-$locale}/services/$slug'
@@ -809,6 +820,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/airports/$slug'
     | '/{-$locale}/blog/$slug'
     | '/{-$locale}/cities/$slug'
+    | '/{-$locale}/fleet/$slug'
     | '/{-$locale}/p/$slug'
     | '/{-$locale}/routes/$slug'
     | '/{-$locale}/services/$slug'
@@ -878,6 +890,7 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/airports/$slug'
     | '/_public/{-$locale}/blog/$slug'
     | '/_public/{-$locale}/cities/$slug'
+    | '/_public/{-$locale}/fleet/$slug'
     | '/_public/{-$locale}/p/$slug'
     | '/_public/{-$locale}/routes/$slug'
     | '/_public/{-$locale}/services/$slug'
@@ -1312,6 +1325,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicChar123LocaleChar125PSlugRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
+    '/_public/{-$locale}/fleet/$slug': {
+      id: '/_public/{-$locale}/fleet/$slug'
+      path: '/$slug'
+      fullPath: '/{-$locale}/fleet/$slug'
+      preLoaderRoute: typeof PublicChar123LocaleChar125FleetSlugRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125FleetRoute
+    }
     '/_public/{-$locale}/cities/$slug': {
       id: '/_public/{-$locale}/cities/$slug'
       path: '/cities/$slug'
@@ -1527,6 +1547,21 @@ const PublicChar123LocaleChar125BlogRouteWithChildren =
     PublicChar123LocaleChar125BlogRouteChildren,
   )
 
+interface PublicChar123LocaleChar125FleetRouteChildren {
+  PublicChar123LocaleChar125FleetSlugRoute: typeof PublicChar123LocaleChar125FleetSlugRoute
+}
+
+const PublicChar123LocaleChar125FleetRouteChildren: PublicChar123LocaleChar125FleetRouteChildren =
+  {
+    PublicChar123LocaleChar125FleetSlugRoute:
+      PublicChar123LocaleChar125FleetSlugRoute,
+  }
+
+const PublicChar123LocaleChar125FleetRouteWithChildren =
+  PublicChar123LocaleChar125FleetRoute._addFileChildren(
+    PublicChar123LocaleChar125FleetRouteChildren,
+  )
+
 interface PublicChar123LocaleChar125ServicesRouteChildren {
   PublicChar123LocaleChar125ServicesSlugRoute: typeof PublicChar123LocaleChar125ServicesSlugRoute
 }
@@ -1549,7 +1584,7 @@ interface PublicChar123LocaleChar125RouteChildren {
   PublicChar123LocaleChar125CancellationRoute: typeof PublicChar123LocaleChar125CancellationRoute
   PublicChar123LocaleChar125ContactRoute: typeof PublicChar123LocaleChar125ContactRoute
   PublicChar123LocaleChar125FaqRoute: typeof PublicChar123LocaleChar125FaqRoute
-  PublicChar123LocaleChar125FleetRoute: typeof PublicChar123LocaleChar125FleetRoute
+  PublicChar123LocaleChar125FleetRoute: typeof PublicChar123LocaleChar125FleetRouteWithChildren
   PublicChar123LocaleChar125PricingRoute: typeof PublicChar123LocaleChar125PricingRoute
   PublicChar123LocaleChar125PrivacyRoute: typeof PublicChar123LocaleChar125PrivacyRoute
   PublicChar123LocaleChar125RefundRoute: typeof PublicChar123LocaleChar125RefundRoute
@@ -1574,7 +1609,8 @@ const PublicChar123LocaleChar125RouteChildren: PublicChar123LocaleChar125RouteCh
     PublicChar123LocaleChar125ContactRoute:
       PublicChar123LocaleChar125ContactRoute,
     PublicChar123LocaleChar125FaqRoute: PublicChar123LocaleChar125FaqRoute,
-    PublicChar123LocaleChar125FleetRoute: PublicChar123LocaleChar125FleetRoute,
+    PublicChar123LocaleChar125FleetRoute:
+      PublicChar123LocaleChar125FleetRouteWithChildren,
     PublicChar123LocaleChar125PricingRoute:
       PublicChar123LocaleChar125PricingRoute,
     PublicChar123LocaleChar125PrivacyRoute:

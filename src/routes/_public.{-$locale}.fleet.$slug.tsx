@@ -163,10 +163,9 @@ function VehicleDetail() {
             {data.related.map((r: any) => {
               const t = pickTr(r, locale);
               return (
-                <Link
+                <a
                   key={r.id}
-                  to="/_public/{-$locale}/fleet/$slug" as unknown as any
-                  params={{ locale, slug: r.code } as any}
+                  href={withLocale(locale, `/fleet/${r.code}`)}
                   className="group block rounded-xl border bg-card overflow-hidden p-5 hover:shadow-md hover:-translate-y-0.5 transition"
                 >
                   <h3 className="font-semibold mb-1 group-hover:text-primary">{t.name}</h3>
