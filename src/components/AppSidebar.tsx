@@ -2,7 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, CalendarCheck, Users, IdCard, Car, Layers, Route as RouteIcon,
   DollarSign, TicketPercent, CreditCard, Bell, BarChart3, UserCog, ShieldCheck, Settings, ScrollText,
-  FileText, HelpCircle, Newspaper, Globe,
+  FileText, HelpCircle, Newspaper, Globe, Radio,
 } from "lucide-react";
 
 import {
@@ -23,6 +23,7 @@ export function AppSidebar() {
     { label: t("overview"), items: [{ title: t("dashboard"), url: "/admin/dashboard", icon: LayoutDashboard }] },
     { label: t("operations"), items: [
       { title: t("bookings"), url: "/admin/bookings", icon: CalendarCheck },
+      { title: locale === "ar" ? "مركز الإرسال" : "Dispatch", url: "/admin/dispatch", icon: Radio },
       { title: t("customers"), url: "/admin/customers", icon: Users },
       { title: t("drivers"), url: "/admin/drivers", icon: IdCard },
     ]},
