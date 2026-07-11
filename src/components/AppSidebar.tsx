@@ -6,6 +6,7 @@ import {
   PieChart, Receipt, Building2, Undo2, Wallet, Briefcase,
   Sparkles, Image as ImageIcon2, Megaphone, Handshake, Inbox, LayoutTemplate,
   Bot, MessageCircle, Activity, AlertTriangle, DatabaseBackup,
+  Building, Plane, MapPin, ConciergeBell, Quote, UsersRound, ListTree,
 } from "lucide-react";
 
 import {
@@ -50,7 +51,14 @@ export function AppSidebar() {
       { title: locale === "ar" ? "إعدادات المالية" : "Finance Settings", url: "/admin/finance-settings", icon: Settings },
     ]},
     { label: "CMS", items: [
-      { title: "Pages", url: "/admin/pages", icon: FileText },
+      { title: locale === "ar" ? "الخدمات" : "Services", url: "/admin/services", icon: ConciergeBell },
+      { title: locale === "ar" ? "المدن" : "Cities", url: "/admin/cities", icon: Building },
+      { title: locale === "ar" ? "المطارات" : "Airports", url: "/admin/airports", icon: Plane },
+      { title: locale === "ar" ? "صفحات المسارات" : "Route Pages", url: "/admin/route-pages", icon: MapPin },
+      { title: locale === "ar" ? "الصفحات الثابتة" : "Static Pages", url: "/admin/pages", icon: FileText },
+      { title: locale === "ar" ? "القوائم" : "Menus", url: "/admin/menus", icon: ListTree },
+      { title: locale === "ar" ? "الشهادات" : "Testimonials", url: "/admin/testimonials", icon: Quote },
+      { title: locale === "ar" ? "الفريق" : "Team", url: "/admin/team", icon: UsersRound },
       { title: "Blog", url: "/admin/blog", icon: Newspaper },
       { title: "FAQ", url: "/admin/faqs", icon: HelpCircle },
       { title: "Media Library", url: "/admin/media", icon: ImageIcon2 },

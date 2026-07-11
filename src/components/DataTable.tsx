@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Inbox } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
-export type Column<T> = { key: string; header: string; render?: (row: T) => ReactNode; className?: string };
+export type Column<T> = { key: string; header: ReactNode; render?: (row: T) => ReactNode; className?: string };
 
 export function DataTable<T extends { id: string | number }>({
   data, columns, loading, empty, actions, onRowClick,

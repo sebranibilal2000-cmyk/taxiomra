@@ -28,8 +28,12 @@ import { Route as PublicChar123LocaleChar125AirportTransfersRouteImport } from '
 import { Route as PublicChar123LocaleChar125AboutRouteImport } from './routes/_public.{-$locale}.about'
 import { Route as AuthenticatedAdminWhatsappTemplatesRouteImport } from './routes/_authenticated/admin.whatsapp-templates'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as AuthenticatedAdminTestimonialsRouteImport } from './routes/_authenticated/admin.testimonials'
+import { Route as AuthenticatedAdminTeamRouteImport } from './routes/_authenticated/admin.team'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
+import { Route as AuthenticatedAdminServicesRouteImport } from './routes/_authenticated/admin.services'
 import { Route as AuthenticatedAdminRoutesRouteImport } from './routes/_authenticated/admin.routes'
+import { Route as AuthenticatedAdminRoutePagesRouteImport } from './routes/_authenticated/admin.route-pages'
 import { Route as AuthenticatedAdminRolesRouteImport } from './routes/_authenticated/admin.roles'
 import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin.reports'
 import { Route as AuthenticatedAdminRefundsRouteImport } from './routes/_authenticated/admin.refunds'
@@ -41,6 +45,7 @@ import { Route as AuthenticatedAdminPartnersRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminPagesRouteImport } from './routes/_authenticated/admin.pages'
 import { Route as AuthenticatedAdminOperationsRouteImport } from './routes/_authenticated/admin.operations'
 import { Route as AuthenticatedAdminNotificationsRouteImport } from './routes/_authenticated/admin.notifications'
+import { Route as AuthenticatedAdminMenusRouteImport } from './routes/_authenticated/admin.menus'
 import { Route as AuthenticatedAdminMediaRouteImport } from './routes/_authenticated/admin.media'
 import { Route as AuthenticatedAdminMaintenanceRouteImport } from './routes/_authenticated/admin.maintenance'
 import { Route as AuthenticatedAdminInvoicesRouteImport } from './routes/_authenticated/admin.invoices'
@@ -60,11 +65,13 @@ import { Route as AuthenticatedAdminCustomersRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminCouponsRouteImport } from './routes/_authenticated/admin.coupons'
 import { Route as AuthenticatedAdminCorporateRouteImport } from './routes/_authenticated/admin.corporate'
 import { Route as AuthenticatedAdminContactsRouteImport } from './routes/_authenticated/admin.contacts'
+import { Route as AuthenticatedAdminCitiesRouteImport } from './routes/_authenticated/admin.cities'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin.categories'
 import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin.bookings'
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin.blog'
 import { Route as AuthenticatedAdminBackupRouteImport } from './routes/_authenticated/admin.backup'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
+import { Route as AuthenticatedAdminAirportsRouteImport } from './routes/_authenticated/admin.airports'
 import { Route as AuthenticatedAdminAiAssistantRouteImport } from './routes/_authenticated/admin.ai-assistant'
 import { Route as PublicChar123LocaleChar125ServicesSlugRouteImport } from './routes/_public.{-$locale}.services.$slug'
 import { Route as PublicChar123LocaleChar125RoutesSlugRouteImport } from './routes/_public.{-$locale}.routes.$slug'
@@ -187,16 +194,39 @@ const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   path: '/admin/users',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminTestimonialsRoute =
+  AuthenticatedAdminTestimonialsRouteImport.update({
+    id: '/admin/testimonials',
+    path: '/admin/testimonials',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminTeamRoute = AuthenticatedAdminTeamRouteImport.update({
+  id: '/admin/team',
+  path: '/admin/team',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminSettingsRoute =
   AuthenticatedAdminSettingsRouteImport.update({
     id: '/admin/settings',
     path: '/admin/settings',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminServicesRoute =
+  AuthenticatedAdminServicesRouteImport.update({
+    id: '/admin/services',
+    path: '/admin/services',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminRoutesRoute =
   AuthenticatedAdminRoutesRouteImport.update({
     id: '/admin/routes',
     path: '/admin/routes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminRoutePagesRoute =
+  AuthenticatedAdminRoutePagesRouteImport.update({
+    id: '/admin/route-pages',
+    path: '/admin/route-pages',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminRolesRoute = AuthenticatedAdminRolesRouteImport.update({
@@ -263,6 +293,11 @@ const AuthenticatedAdminNotificationsRoute =
     path: '/admin/notifications',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminMenusRoute = AuthenticatedAdminMenusRouteImport.update({
+  id: '/admin/menus',
+  path: '/admin/menus',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminMediaRoute = AuthenticatedAdminMediaRouteImport.update({
   id: '/admin/media',
   path: '/admin/media',
@@ -373,6 +408,12 @@ const AuthenticatedAdminContactsRoute =
     path: '/admin/contacts',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminCitiesRoute =
+  AuthenticatedAdminCitiesRouteImport.update({
+    id: '/admin/cities',
+    path: '/admin/cities',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminCategoriesRoute =
   AuthenticatedAdminCategoriesRouteImport.update({
     id: '/admin/categories',
@@ -401,6 +442,12 @@ const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
   path: '/admin/audit',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminAirportsRoute =
+  AuthenticatedAdminAirportsRouteImport.update({
+    id: '/admin/airports',
+    path: '/admin/airports',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminAiAssistantRoute =
   AuthenticatedAdminAiAssistantRouteImport.update({
     id: '/admin/ai-assistant',
@@ -480,11 +527,13 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
   '/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
+  '/admin/airports': typeof AuthenticatedAdminAirportsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/backup': typeof AuthenticatedAdminBackupRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/admin/cities': typeof AuthenticatedAdminCitiesRoute
   '/admin/contacts': typeof AuthenticatedAdminContactsRoute
   '/admin/corporate': typeof AuthenticatedAdminCorporateRoute
   '/admin/coupons': typeof AuthenticatedAdminCouponsRoute
@@ -504,6 +553,7 @@ export interface FileRoutesByFullPath {
   '/admin/invoices': typeof AuthenticatedAdminInvoicesRouteWithChildren
   '/admin/maintenance': typeof AuthenticatedAdminMaintenanceRoute
   '/admin/media': typeof AuthenticatedAdminMediaRoute
+  '/admin/menus': typeof AuthenticatedAdminMenusRoute
   '/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/admin/operations': typeof AuthenticatedAdminOperationsRoute
   '/admin/pages': typeof AuthenticatedAdminPagesRoute
@@ -515,8 +565,12 @@ export interface FileRoutesByFullPath {
   '/admin/refunds': typeof AuthenticatedAdminRefundsRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/admin/roles': typeof AuthenticatedAdminRolesRoute
+  '/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
   '/admin/routes': typeof AuthenticatedAdminRoutesRoute
+  '/admin/services': typeof AuthenticatedAdminServicesRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/team': typeof AuthenticatedAdminTeamRoute
+  '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/admin/whatsapp-templates': typeof AuthenticatedAdminWhatsappTemplatesRoute
   '/{-$locale}/about': typeof PublicChar123LocaleChar125AboutRoute
@@ -549,11 +603,13 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
+  '/admin/airports': typeof AuthenticatedAdminAirportsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/backup': typeof AuthenticatedAdminBackupRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/admin/cities': typeof AuthenticatedAdminCitiesRoute
   '/admin/contacts': typeof AuthenticatedAdminContactsRoute
   '/admin/corporate': typeof AuthenticatedAdminCorporateRoute
   '/admin/coupons': typeof AuthenticatedAdminCouponsRoute
@@ -573,6 +629,7 @@ export interface FileRoutesByTo {
   '/admin/invoices': typeof AuthenticatedAdminInvoicesRouteWithChildren
   '/admin/maintenance': typeof AuthenticatedAdminMaintenanceRoute
   '/admin/media': typeof AuthenticatedAdminMediaRoute
+  '/admin/menus': typeof AuthenticatedAdminMenusRoute
   '/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/admin/operations': typeof AuthenticatedAdminOperationsRoute
   '/admin/pages': typeof AuthenticatedAdminPagesRoute
@@ -584,8 +641,12 @@ export interface FileRoutesByTo {
   '/admin/refunds': typeof AuthenticatedAdminRefundsRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/admin/roles': typeof AuthenticatedAdminRolesRoute
+  '/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
   '/admin/routes': typeof AuthenticatedAdminRoutesRoute
+  '/admin/services': typeof AuthenticatedAdminServicesRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/team': typeof AuthenticatedAdminTeamRoute
+  '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/admin/whatsapp-templates': typeof AuthenticatedAdminWhatsappTemplatesRoute
   '/{-$locale}/about': typeof PublicChar123LocaleChar125AboutRoute
@@ -620,11 +681,13 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_public/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
   '/_authenticated/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
+  '/_authenticated/admin/airports': typeof AuthenticatedAdminAirportsRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/backup': typeof AuthenticatedAdminBackupRoute
   '/_authenticated/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/_authenticated/admin/cities': typeof AuthenticatedAdminCitiesRoute
   '/_authenticated/admin/contacts': typeof AuthenticatedAdminContactsRoute
   '/_authenticated/admin/corporate': typeof AuthenticatedAdminCorporateRoute
   '/_authenticated/admin/coupons': typeof AuthenticatedAdminCouponsRoute
@@ -644,6 +707,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/invoices': typeof AuthenticatedAdminInvoicesRouteWithChildren
   '/_authenticated/admin/maintenance': typeof AuthenticatedAdminMaintenanceRoute
   '/_authenticated/admin/media': typeof AuthenticatedAdminMediaRoute
+  '/_authenticated/admin/menus': typeof AuthenticatedAdminMenusRoute
   '/_authenticated/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/_authenticated/admin/operations': typeof AuthenticatedAdminOperationsRoute
   '/_authenticated/admin/pages': typeof AuthenticatedAdminPagesRoute
@@ -655,8 +719,12 @@ export interface FileRoutesById {
   '/_authenticated/admin/refunds': typeof AuthenticatedAdminRefundsRoute
   '/_authenticated/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/_authenticated/admin/roles': typeof AuthenticatedAdminRolesRoute
+  '/_authenticated/admin/route-pages': typeof AuthenticatedAdminRoutePagesRoute
   '/_authenticated/admin/routes': typeof AuthenticatedAdminRoutesRoute
+  '/_authenticated/admin/services': typeof AuthenticatedAdminServicesRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/team': typeof AuthenticatedAdminTeamRoute
+  '/_authenticated/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/admin/whatsapp-templates': typeof AuthenticatedAdminWhatsappTemplatesRoute
   '/_public/{-$locale}/about': typeof PublicChar123LocaleChar125AboutRoute
@@ -692,11 +760,13 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/{-$locale}'
     | '/admin/ai-assistant'
+    | '/admin/airports'
     | '/admin/audit'
     | '/admin/backup'
     | '/admin/blog'
     | '/admin/bookings'
     | '/admin/categories'
+    | '/admin/cities'
     | '/admin/contacts'
     | '/admin/corporate'
     | '/admin/coupons'
@@ -716,6 +786,7 @@ export interface FileRouteTypes {
     | '/admin/invoices'
     | '/admin/maintenance'
     | '/admin/media'
+    | '/admin/menus'
     | '/admin/notifications'
     | '/admin/operations'
     | '/admin/pages'
@@ -727,8 +798,12 @@ export interface FileRouteTypes {
     | '/admin/refunds'
     | '/admin/reports'
     | '/admin/roles'
+    | '/admin/route-pages'
     | '/admin/routes'
+    | '/admin/services'
     | '/admin/settings'
+    | '/admin/team'
+    | '/admin/testimonials'
     | '/admin/users'
     | '/admin/whatsapp-templates'
     | '/{-$locale}/about'
@@ -761,11 +836,13 @@ export interface FileRouteTypes {
     | '/auth'
     | '/sitemap.xml'
     | '/admin/ai-assistant'
+    | '/admin/airports'
     | '/admin/audit'
     | '/admin/backup'
     | '/admin/blog'
     | '/admin/bookings'
     | '/admin/categories'
+    | '/admin/cities'
     | '/admin/contacts'
     | '/admin/corporate'
     | '/admin/coupons'
@@ -785,6 +862,7 @@ export interface FileRouteTypes {
     | '/admin/invoices'
     | '/admin/maintenance'
     | '/admin/media'
+    | '/admin/menus'
     | '/admin/notifications'
     | '/admin/operations'
     | '/admin/pages'
@@ -796,8 +874,12 @@ export interface FileRouteTypes {
     | '/admin/refunds'
     | '/admin/reports'
     | '/admin/roles'
+    | '/admin/route-pages'
     | '/admin/routes'
+    | '/admin/services'
     | '/admin/settings'
+    | '/admin/team'
+    | '/admin/testimonials'
     | '/admin/users'
     | '/admin/whatsapp-templates'
     | '/{-$locale}/about'
@@ -831,11 +913,13 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/_public/{-$locale}'
     | '/_authenticated/admin/ai-assistant'
+    | '/_authenticated/admin/airports'
     | '/_authenticated/admin/audit'
     | '/_authenticated/admin/backup'
     | '/_authenticated/admin/blog'
     | '/_authenticated/admin/bookings'
     | '/_authenticated/admin/categories'
+    | '/_authenticated/admin/cities'
     | '/_authenticated/admin/contacts'
     | '/_authenticated/admin/corporate'
     | '/_authenticated/admin/coupons'
@@ -855,6 +939,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/invoices'
     | '/_authenticated/admin/maintenance'
     | '/_authenticated/admin/media'
+    | '/_authenticated/admin/menus'
     | '/_authenticated/admin/notifications'
     | '/_authenticated/admin/operations'
     | '/_authenticated/admin/pages'
@@ -866,8 +951,12 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/refunds'
     | '/_authenticated/admin/reports'
     | '/_authenticated/admin/roles'
+    | '/_authenticated/admin/route-pages'
     | '/_authenticated/admin/routes'
+    | '/_authenticated/admin/services'
     | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/team'
+    | '/_authenticated/admin/testimonials'
     | '/_authenticated/admin/users'
     | '/_authenticated/admin/whatsapp-templates'
     | '/_public/{-$locale}/about'
@@ -1038,6 +1127,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/testimonials': {
+      id: '/_authenticated/admin/testimonials'
+      path: '/admin/testimonials'
+      fullPath: '/admin/testimonials'
+      preLoaderRoute: typeof AuthenticatedAdminTestimonialsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/team': {
+      id: '/_authenticated/admin/team'
+      path: '/admin/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AuthenticatedAdminTeamRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/settings': {
       id: '/_authenticated/admin/settings'
       path: '/admin/settings'
@@ -1045,11 +1148,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/services': {
+      id: '/_authenticated/admin/services'
+      path: '/admin/services'
+      fullPath: '/admin/services'
+      preLoaderRoute: typeof AuthenticatedAdminServicesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/routes': {
       id: '/_authenticated/admin/routes'
       path: '/admin/routes'
       fullPath: '/admin/routes'
       preLoaderRoute: typeof AuthenticatedAdminRoutesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/route-pages': {
+      id: '/_authenticated/admin/route-pages'
+      path: '/admin/route-pages'
+      fullPath: '/admin/route-pages'
+      preLoaderRoute: typeof AuthenticatedAdminRoutePagesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/roles': {
@@ -1127,6 +1244,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/notifications'
       fullPath: '/admin/notifications'
       preLoaderRoute: typeof AuthenticatedAdminNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/menus': {
+      id: '/_authenticated/admin/menus'
+      path: '/admin/menus'
+      fullPath: '/admin/menus'
+      preLoaderRoute: typeof AuthenticatedAdminMenusRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/media': {
@@ -1262,6 +1386,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminContactsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/cities': {
+      id: '/_authenticated/admin/cities'
+      path: '/admin/cities'
+      fullPath: '/admin/cities'
+      preLoaderRoute: typeof AuthenticatedAdminCitiesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/categories': {
       id: '/_authenticated/admin/categories'
       path: '/admin/categories'
@@ -1295,6 +1426,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/audit'
       fullPath: '/admin/audit'
       preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/airports': {
+      id: '/_authenticated/admin/airports'
+      path: '/admin/airports'
+      fullPath: '/admin/airports'
+      preLoaderRoute: typeof AuthenticatedAdminAirportsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/ai-assistant': {
@@ -1442,11 +1580,13 @@ const AuthenticatedAdminInvoicesRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminAiAssistantRoute: typeof AuthenticatedAdminAiAssistantRoute
+  AuthenticatedAdminAirportsRoute: typeof AuthenticatedAdminAirportsRoute
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
   AuthenticatedAdminBackupRoute: typeof AuthenticatedAdminBackupRoute
   AuthenticatedAdminBlogRoute: typeof AuthenticatedAdminBlogRoute
   AuthenticatedAdminBookingsRoute: typeof AuthenticatedAdminBookingsRoute
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
+  AuthenticatedAdminCitiesRoute: typeof AuthenticatedAdminCitiesRoute
   AuthenticatedAdminContactsRoute: typeof AuthenticatedAdminContactsRoute
   AuthenticatedAdminCorporateRoute: typeof AuthenticatedAdminCorporateRoute
   AuthenticatedAdminCouponsRoute: typeof AuthenticatedAdminCouponsRoute
@@ -1466,6 +1606,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminInvoicesRoute: typeof AuthenticatedAdminInvoicesRouteWithChildren
   AuthenticatedAdminMaintenanceRoute: typeof AuthenticatedAdminMaintenanceRoute
   AuthenticatedAdminMediaRoute: typeof AuthenticatedAdminMediaRoute
+  AuthenticatedAdminMenusRoute: typeof AuthenticatedAdminMenusRoute
   AuthenticatedAdminNotificationsRoute: typeof AuthenticatedAdminNotificationsRoute
   AuthenticatedAdminOperationsRoute: typeof AuthenticatedAdminOperationsRoute
   AuthenticatedAdminPagesRoute: typeof AuthenticatedAdminPagesRoute
@@ -1477,19 +1618,25 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRefundsRoute: typeof AuthenticatedAdminRefundsRoute
   AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRoute
   AuthenticatedAdminRolesRoute: typeof AuthenticatedAdminRolesRoute
+  AuthenticatedAdminRoutePagesRoute: typeof AuthenticatedAdminRoutePagesRoute
   AuthenticatedAdminRoutesRoute: typeof AuthenticatedAdminRoutesRoute
+  AuthenticatedAdminServicesRoute: typeof AuthenticatedAdminServicesRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminTeamRoute: typeof AuthenticatedAdminTeamRoute
+  AuthenticatedAdminTestimonialsRoute: typeof AuthenticatedAdminTestimonialsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAdminWhatsappTemplatesRoute: typeof AuthenticatedAdminWhatsappTemplatesRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminAiAssistantRoute: AuthenticatedAdminAiAssistantRoute,
+  AuthenticatedAdminAirportsRoute: AuthenticatedAdminAirportsRoute,
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
   AuthenticatedAdminBackupRoute: AuthenticatedAdminBackupRoute,
   AuthenticatedAdminBlogRoute: AuthenticatedAdminBlogRoute,
   AuthenticatedAdminBookingsRoute: AuthenticatedAdminBookingsRoute,
   AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
+  AuthenticatedAdminCitiesRoute: AuthenticatedAdminCitiesRoute,
   AuthenticatedAdminContactsRoute: AuthenticatedAdminContactsRoute,
   AuthenticatedAdminCorporateRoute: AuthenticatedAdminCorporateRoute,
   AuthenticatedAdminCouponsRoute: AuthenticatedAdminCouponsRoute,
@@ -1511,6 +1658,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminInvoicesRoute: AuthenticatedAdminInvoicesRouteWithChildren,
   AuthenticatedAdminMaintenanceRoute: AuthenticatedAdminMaintenanceRoute,
   AuthenticatedAdminMediaRoute: AuthenticatedAdminMediaRoute,
+  AuthenticatedAdminMenusRoute: AuthenticatedAdminMenusRoute,
   AuthenticatedAdminNotificationsRoute: AuthenticatedAdminNotificationsRoute,
   AuthenticatedAdminOperationsRoute: AuthenticatedAdminOperationsRoute,
   AuthenticatedAdminPagesRoute: AuthenticatedAdminPagesRoute,
@@ -1522,8 +1670,12 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRefundsRoute: AuthenticatedAdminRefundsRoute,
   AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRoute,
   AuthenticatedAdminRolesRoute: AuthenticatedAdminRolesRoute,
+  AuthenticatedAdminRoutePagesRoute: AuthenticatedAdminRoutePagesRoute,
   AuthenticatedAdminRoutesRoute: AuthenticatedAdminRoutesRoute,
+  AuthenticatedAdminServicesRoute: AuthenticatedAdminServicesRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminTeamRoute: AuthenticatedAdminTeamRoute,
+  AuthenticatedAdminTestimonialsRoute: AuthenticatedAdminTestimonialsRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedAdminWhatsappTemplatesRoute:
     AuthenticatedAdminWhatsappTemplatesRoute,
@@ -1644,13 +1796,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
