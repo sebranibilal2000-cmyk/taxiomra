@@ -102,7 +102,7 @@ function DriverProfile() {
         <Card><CardContent className="p-4 flex items-center gap-3">
           <Car className="h-4 w-4 text-gold" />
           <div className="min-w-0"><div className="text-[10px] uppercase tracking-widest text-muted-foreground">Current vehicle</div>
-            {d.vehicle ? <Link to={"/admin/fleet/$id" as any} params={{ id: d.vehicle.id }} className="text-sm truncate block hover:text-gold">{d.vehicle.plate_number} · {d.vehicle.make ?? ""} {d.vehicle.model ?? ""}</Link> : <span className="text-sm text-muted-foreground">—</span>}
+            {d.vehicle ? <Link to={"/admin/fleet/$id" as any} params={{ id: d.vehicle.id } as any} className="text-sm truncate block hover:text-gold">{d.vehicle.plate_number} · {d.vehicle.make ?? ""} {d.vehicle.model ?? ""}</Link> : <span className="text-sm text-muted-foreground">—</span>}
           </div>
         </CardContent></Card>
       </div>
