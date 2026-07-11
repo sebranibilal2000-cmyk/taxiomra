@@ -28,7 +28,7 @@ const homeOpts = () => queryOptions({
   }),
 });
 
-export const Route = createFileRoute("/_public/{-$locale}/{-$locale}/")({
+export const Route = createFileRoute("/_public/{-$locale}/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(homeOpts()),
   head: () => ({
     meta: [

@@ -6,7 +6,7 @@ import { useI18n } from "@/lib/i18n";
 
 const opts = () => queryOptions({ queryKey: ["public", "faqs"], queryFn: () => listFaqs() });
 
-export const Route = createFileRoute("/_public/{-$locale}/{-$locale}/faq")({
+export const Route = createFileRoute("/_public/{-$locale}/faq")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
   head: ({ loaderData }) => ({
     meta: [

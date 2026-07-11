@@ -4,7 +4,7 @@ import { useI18n } from "@/lib/i18n";
 import { Shield, Award, Users, Clock } from "lucide-react";
 import { SITE } from "@/lib/site-info";
 
-export const Route = createFileRoute("/_public/{-$locale}/{-$locale}/about")({
+export const Route = createFileRoute("/_public/{-$locale}/about")({
   head: () => ({
     meta: [
       { title: "About Us — Sur3a Taxi Company" },

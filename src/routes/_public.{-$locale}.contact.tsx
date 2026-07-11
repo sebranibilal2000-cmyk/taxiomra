@@ -10,7 +10,7 @@ import { submitContact } from "@/lib/public.functions";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_public/{-$locale}/{-$locale}/contact")({
+export const Route = createFileRoute("/_public/{-$locale}/contact")({
   head: () => ({
     meta: [
       { title: "Contact — Book Your Chauffeur 24/7" },
