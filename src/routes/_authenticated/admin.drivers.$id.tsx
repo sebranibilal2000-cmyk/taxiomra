@@ -124,12 +124,12 @@ function DriverProfile() {
 
       {/* Stats */}
       <div className="grid gap-3 md:grid-cols-4 lg:grid-cols-6 mb-6">
-        <StatCard title="Total trips" value={d.total_trips ?? 0} icon={RouteIcon} />
-        <StatCard title="Completed" value={d.completed_trips ?? 0} icon={TrendingUp} />
-        <StatCard title="Cancelled" value={d.cancelled_trips ?? 0} icon={XCircle} />
-        <StatCard title="No-show" value={d.no_show_trips ?? 0} icon={XCircle} />
-        <StatCard title="Revenue" value={Number(d.total_earnings ?? 0).toFixed(2)} icon={Wallet} />
-        <StatCard title="Rating" value={d.avg_rating ? Number(d.avg_rating).toFixed(2) : "—"} icon={TrendingUp} />
+        <StatCard label="Total trips" value={d.total_trips ?? 0} icon={RouteIcon} />
+        <StatCard label="Completed" value={d.completed_trips ?? 0} icon={TrendingUp} />
+        <StatCard label="Cancelled" value={d.cancelled_trips ?? 0} icon={XCircle} />
+        <StatCard label="No-show" value={d.no_show_trips ?? 0} icon={XCircle} />
+        <StatCard label="Revenue" value={Number(d.total_earnings ?? 0).toFixed(2)} icon={Wallet} />
+        <StatCard label="Rating" value={d.avg_rating ? Number(d.avg_rating).toFixed(2) : "—"} icon={TrendingUp} />
       </div>
 
       <Tabs defaultValue="overview">
