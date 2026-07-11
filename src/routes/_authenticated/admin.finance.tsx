@@ -106,9 +106,9 @@ function Finance() {
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
         <StatCard label={locale === "ar" ? "الإيراد" : "Revenue"} value={fmt(kpi.revenue)} icon={TrendingUp} tone="primary" />
         <StatCard label={locale === "ar" ? "متوسط الحجز" : "Avg. Booking"} value={fmt(kpi.avg)} icon={DollarSign} />
-        <StatCard label={locale === "ar" ? "المصروفات" : "Expenses"} value={fmt(totalExpenses)} icon={Wallet} tone="warn" />
+        <StatCard label={locale === "ar" ? "المصروفات" : "Expenses"} value={fmt(totalExpenses)} icon={Wallet} tone="warning" />
         <StatCard label={locale === "ar" ? "فواتير مستحقة" : "Outstanding"} value={fmt(outstandingInvoices)} icon={Receipt} />
-        <StatCard label={locale === "ar" ? "المرتجعات" : "Refunds"} value={fmt(totalRefunds)} icon={Undo2} tone="danger" />
+        <StatCard label={locale === "ar" ? "المرتجعات" : "Refunds"} value={fmt(totalRefunds)} icon={Undo2} tone="warning" />
       </div>
 
       <Card className="mb-6">
