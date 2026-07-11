@@ -116,7 +116,8 @@ const TOOLS = [
 ] as const;
 
 // ---------- Tool implementations (RLS-scoped) ----------
-type Supa = Awaited<ReturnType<typeof requireSupabaseAuth.server>>["context"]["supabase"];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Supa = any;
 
 async function toolSearchBookings(sb: Supa, args: any) {
   let q = sb.from("bookings")
