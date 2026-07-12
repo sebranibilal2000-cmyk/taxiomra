@@ -24,11 +24,11 @@ const pickNum = (key: string, fallback: number): number => {
 // --- Fallback defaults (used only when VITE_SITE_* is not provided). ---
 const DEFAULTS = {
   brandEn: "Omra Taxi",
-  brandAr: "عمرة تاكسي",
+  brandAr: "تاكسي العمرة",
   legalEn: "Omra Taxi",
-  legalAr: "عمرة تاكسي",
-  taglineEn: "Premium chauffeur service — Jeddah Airport, Makkah & Madinah 24/7",
-  taglineAr: "تاكسي فاخر — مطار جدة، مكة، المدينة ٢٤/٧",
+  legalAr: "تاكسي العمرة",
+  taglineEn: "Comfortable Airport Transfers from Jeddah Airport to Makkah.",
+  taglineAr: "رحلتك تبدأ براحة... من مطار جدة إلى مكة بأمان واحترافية.",
   url: "https://omrataxi-sa.online",
   phone: "+966551796487",
   whatsapp: "966551796487",
