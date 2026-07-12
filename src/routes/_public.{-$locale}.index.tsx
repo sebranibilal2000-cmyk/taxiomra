@@ -295,7 +295,7 @@ function Home() {
               <Link key={c.id} to="/fleet" className="group">
                 <article className="hover-lift overflow-hidden rounded-2xl border border-border bg-card">
                   <div className="aspect-[4/3] overflow-hidden bg-primary">
-                    <img src={img} alt={tr?.name ?? c.code} width={1200} height={800} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <img src={img} alt={alt} width={1200} height={800} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   </div>
                   <div className="p-6 space-y-3">
                     <div className="flex items-center justify-between">
