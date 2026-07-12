@@ -124,10 +124,6 @@ function VehicleDetail() {
         <div className="inline-block rounded-full bg-primary/10 text-primary text-xs font-semibold px-3 py-1 mb-4 uppercase tracking-wide">
           {ar ? "من أسطولنا" : "From our fleet"}
         </div>
-      <section className="container mx-auto px-4 py-14 md:py-20 max-w-4xl">
-        <div className="inline-block rounded-full bg-primary/10 text-primary text-xs font-semibold px-3 py-1 mb-4 uppercase tracking-wide">
-          {ar ? "من أسطولنا" : "From our fleet"}
-        </div>
         <h1 className="text-4xl md:text-5xl font-bold mb-6">{cur.name}</h1>
 
         {(() => {
