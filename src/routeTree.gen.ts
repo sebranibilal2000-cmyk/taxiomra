@@ -32,6 +32,7 @@ import { Route as PublicChar123LocaleChar125FaqRouteImport } from './routes/_pub
 import { Route as PublicChar123LocaleChar125ContactRouteImport } from './routes/_public.{-$locale}.contact'
 import { Route as PublicChar123LocaleChar125CitiesRouteImport } from './routes/_public.{-$locale}.cities'
 import { Route as PublicChar123LocaleChar125CancellationRouteImport } from './routes/_public.{-$locale}.cancellation'
+import { Route as PublicChar123LocaleChar125BookingCancellationRouteImport } from './routes/_public.{-$locale}.booking-cancellation'
 import { Route as PublicChar123LocaleChar125BookingRouteImport } from './routes/_public.{-$locale}.booking'
 import { Route as PublicChar123LocaleChar125BookRouteImport } from './routes/_public.{-$locale}.book'
 import { Route as PublicChar123LocaleChar125BlogRouteImport } from './routes/_public.{-$locale}.blog'
@@ -239,6 +240,12 @@ const PublicChar123LocaleChar125CancellationRoute =
   PublicChar123LocaleChar125CancellationRouteImport.update({
     id: '/cancellation',
     path: '/cancellation',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125BookingCancellationRoute =
+  PublicChar123LocaleChar125BookingCancellationRouteImport.update({
+    id: '/booking-cancellation',
+    path: '/booking-cancellation',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
 const PublicChar123LocaleChar125BookingRoute =
@@ -754,6 +761,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/blog': typeof PublicChar123LocaleChar125BlogRouteWithChildren
   '/{-$locale}/book': typeof PublicChar123LocaleChar125BookRoute
   '/{-$locale}/booking': typeof PublicChar123LocaleChar125BookingRoute
+  '/{-$locale}/booking-cancellation': typeof PublicChar123LocaleChar125BookingCancellationRoute
   '/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
   '/{-$locale}/cities': typeof PublicChar123LocaleChar125CitiesRouteWithChildren
   '/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
@@ -854,6 +862,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/blog': typeof PublicChar123LocaleChar125BlogRouteWithChildren
   '/{-$locale}/book': typeof PublicChar123LocaleChar125BookRoute
   '/{-$locale}/booking': typeof PublicChar123LocaleChar125BookingRoute
+  '/{-$locale}/booking-cancellation': typeof PublicChar123LocaleChar125BookingCancellationRoute
   '/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
   '/{-$locale}/cities': typeof PublicChar123LocaleChar125CitiesRouteWithChildren
   '/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
@@ -956,6 +965,7 @@ export interface FileRoutesById {
   '/_public/{-$locale}/blog': typeof PublicChar123LocaleChar125BlogRouteWithChildren
   '/_public/{-$locale}/book': typeof PublicChar123LocaleChar125BookRoute
   '/_public/{-$locale}/booking': typeof PublicChar123LocaleChar125BookingRoute
+  '/_public/{-$locale}/booking-cancellation': typeof PublicChar123LocaleChar125BookingCancellationRoute
   '/_public/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
   '/_public/{-$locale}/cities': typeof PublicChar123LocaleChar125CitiesRouteWithChildren
   '/_public/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
@@ -1059,6 +1069,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/blog'
     | '/{-$locale}/book'
     | '/{-$locale}/booking'
+    | '/{-$locale}/booking-cancellation'
     | '/{-$locale}/cancellation'
     | '/{-$locale}/cities'
     | '/{-$locale}/contact'
@@ -1159,6 +1170,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/blog'
     | '/{-$locale}/book'
     | '/{-$locale}/booking'
+    | '/{-$locale}/booking-cancellation'
     | '/{-$locale}/cancellation'
     | '/{-$locale}/cities'
     | '/{-$locale}/contact'
@@ -1260,6 +1272,7 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/blog'
     | '/_public/{-$locale}/book'
     | '/_public/{-$locale}/booking'
+    | '/_public/{-$locale}/booking-cancellation'
     | '/_public/{-$locale}/cancellation'
     | '/_public/{-$locale}/cities'
     | '/_public/{-$locale}/contact'
@@ -1464,6 +1477,13 @@ declare module '@tanstack/react-router' {
       path: '/cancellation'
       fullPath: '/{-$locale}/cancellation'
       preLoaderRoute: typeof PublicChar123LocaleChar125CancellationRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
+    }
+    '/_public/{-$locale}/booking-cancellation': {
+      id: '/_public/{-$locale}/booking-cancellation'
+      path: '/booking-cancellation'
+      fullPath: '/{-$locale}/booking-cancellation'
+      preLoaderRoute: typeof PublicChar123LocaleChar125BookingCancellationRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
     '/_public/{-$locale}/booking': {
@@ -2309,6 +2329,7 @@ interface PublicChar123LocaleChar125RouteChildren {
   PublicChar123LocaleChar125BlogRoute: typeof PublicChar123LocaleChar125BlogRouteWithChildren
   PublicChar123LocaleChar125BookRoute: typeof PublicChar123LocaleChar125BookRoute
   PublicChar123LocaleChar125BookingRoute: typeof PublicChar123LocaleChar125BookingRoute
+  PublicChar123LocaleChar125BookingCancellationRoute: typeof PublicChar123LocaleChar125BookingCancellationRoute
   PublicChar123LocaleChar125CancellationRoute: typeof PublicChar123LocaleChar125CancellationRoute
   PublicChar123LocaleChar125CitiesRoute: typeof PublicChar123LocaleChar125CitiesRouteWithChildren
   PublicChar123LocaleChar125ContactRoute: typeof PublicChar123LocaleChar125ContactRoute
@@ -2341,6 +2362,8 @@ const PublicChar123LocaleChar125RouteChildren: PublicChar123LocaleChar125RouteCh
     PublicChar123LocaleChar125BookRoute: PublicChar123LocaleChar125BookRoute,
     PublicChar123LocaleChar125BookingRoute:
       PublicChar123LocaleChar125BookingRoute,
+    PublicChar123LocaleChar125BookingCancellationRoute:
+      PublicChar123LocaleChar125BookingCancellationRoute,
     PublicChar123LocaleChar125CancellationRoute:
       PublicChar123LocaleChar125CancellationRoute,
     PublicChar123LocaleChar125CitiesRoute:
