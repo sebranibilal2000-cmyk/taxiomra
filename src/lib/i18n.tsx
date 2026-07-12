@@ -97,7 +97,7 @@ const dict: Dict = {
   vehicle: { ar: "المركبة", en: "Vehicle" },
   plate: { ar: "رقم اللوحة", en: "Plate #" },
   seats: { ar: "المقاعد", en: "Seats" },
-  brand: { ar: `${SITE.brand.ar}`, en: `${SITE.brand.en}` },
+  brand: { ar: SITE.brand.ar, en: SITE.brand.en },
   admin_panel: { ar: "لوحة الإدارة", en: "Admin Panel" },
   welcome: { ar: "مرحباً بك", en: "Welcome back" },
   auth_subtitle: { ar: "سجّل الدخول للوصول إلى لوحة الإدارة", en: "Sign in to access the admin panel" },
