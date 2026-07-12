@@ -22,6 +22,7 @@ import { Route as PublicChar123LocaleChar125TermsRouteImport } from './routes/_p
 import { Route as PublicChar123LocaleChar125SitemapRouteImport } from './routes/_public.{-$locale}.sitemap'
 import { Route as PublicChar123LocaleChar125ServicesRouteImport } from './routes/_public.{-$locale}.services'
 import { Route as PublicChar123LocaleChar125RoutesRouteImport } from './routes/_public.{-$locale}.routes'
+import { Route as PublicChar123LocaleChar125RefundPolicyRouteImport } from './routes/_public.{-$locale}.refund-policy'
 import { Route as PublicChar123LocaleChar125RefundRouteImport } from './routes/_public.{-$locale}.refund'
 import { Route as PublicChar123LocaleChar125PrivacyPolicyRouteImport } from './routes/_public.{-$locale}.privacy-policy'
 import { Route as PublicChar123LocaleChar125PrivacyRouteImport } from './routes/_public.{-$locale}.privacy'
@@ -178,6 +179,12 @@ const PublicChar123LocaleChar125RoutesRoute =
   PublicChar123LocaleChar125RoutesRouteImport.update({
     id: '/routes',
     path: '/routes',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125RefundPolicyRoute =
+  PublicChar123LocaleChar125RefundPolicyRouteImport.update({
+    id: '/refund-policy',
+    path: '/refund-policy',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
 const PublicChar123LocaleChar125RefundRoute =
@@ -756,6 +763,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
   '/{-$locale}/privacy-policy': typeof PublicChar123LocaleChar125PrivacyPolicyRoute
   '/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
+  '/{-$locale}/refund-policy': typeof PublicChar123LocaleChar125RefundPolicyRoute
   '/{-$locale}/routes': typeof PublicChar123LocaleChar125RoutesRouteWithChildren
   '/{-$locale}/services': typeof PublicChar123LocaleChar125ServicesRouteWithChildren
   '/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
@@ -855,6 +863,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
   '/{-$locale}/privacy-policy': typeof PublicChar123LocaleChar125PrivacyPolicyRoute
   '/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
+  '/{-$locale}/refund-policy': typeof PublicChar123LocaleChar125RefundPolicyRoute
   '/{-$locale}/routes': typeof PublicChar123LocaleChar125RoutesRouteWithChildren
   '/{-$locale}/services': typeof PublicChar123LocaleChar125ServicesRouteWithChildren
   '/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
@@ -956,6 +965,7 @@ export interface FileRoutesById {
   '/_public/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
   '/_public/{-$locale}/privacy-policy': typeof PublicChar123LocaleChar125PrivacyPolicyRoute
   '/_public/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
+  '/_public/{-$locale}/refund-policy': typeof PublicChar123LocaleChar125RefundPolicyRoute
   '/_public/{-$locale}/routes': typeof PublicChar123LocaleChar125RoutesRouteWithChildren
   '/_public/{-$locale}/services': typeof PublicChar123LocaleChar125ServicesRouteWithChildren
   '/_public/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
@@ -1058,6 +1068,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/privacy'
     | '/{-$locale}/privacy-policy'
     | '/{-$locale}/refund'
+    | '/{-$locale}/refund-policy'
     | '/{-$locale}/routes'
     | '/{-$locale}/services'
     | '/{-$locale}/sitemap'
@@ -1157,6 +1168,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/privacy'
     | '/{-$locale}/privacy-policy'
     | '/{-$locale}/refund'
+    | '/{-$locale}/refund-policy'
     | '/{-$locale}/routes'
     | '/{-$locale}/services'
     | '/{-$locale}/sitemap'
@@ -1257,6 +1269,7 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/privacy'
     | '/_public/{-$locale}/privacy-policy'
     | '/_public/{-$locale}/refund'
+    | '/_public/{-$locale}/refund-policy'
     | '/_public/{-$locale}/routes'
     | '/_public/{-$locale}/services'
     | '/_public/{-$locale}/sitemap'
@@ -1381,6 +1394,13 @@ declare module '@tanstack/react-router' {
       path: '/routes'
       fullPath: '/{-$locale}/routes'
       preLoaderRoute: typeof PublicChar123LocaleChar125RoutesRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
+    }
+    '/_public/{-$locale}/refund-policy': {
+      id: '/_public/{-$locale}/refund-policy'
+      path: '/refund-policy'
+      fullPath: '/{-$locale}/refund-policy'
+      preLoaderRoute: typeof PublicChar123LocaleChar125RefundPolicyRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
     '/_public/{-$locale}/refund': {
@@ -2298,6 +2318,7 @@ interface PublicChar123LocaleChar125RouteChildren {
   PublicChar123LocaleChar125PrivacyRoute: typeof PublicChar123LocaleChar125PrivacyRoute
   PublicChar123LocaleChar125PrivacyPolicyRoute: typeof PublicChar123LocaleChar125PrivacyPolicyRoute
   PublicChar123LocaleChar125RefundRoute: typeof PublicChar123LocaleChar125RefundRoute
+  PublicChar123LocaleChar125RefundPolicyRoute: typeof PublicChar123LocaleChar125RefundPolicyRoute
   PublicChar123LocaleChar125RoutesRoute: typeof PublicChar123LocaleChar125RoutesRouteWithChildren
   PublicChar123LocaleChar125ServicesRoute: typeof PublicChar123LocaleChar125ServicesRouteWithChildren
   PublicChar123LocaleChar125SitemapRoute: typeof PublicChar123LocaleChar125SitemapRoute
@@ -2337,6 +2358,8 @@ const PublicChar123LocaleChar125RouteChildren: PublicChar123LocaleChar125RouteCh
       PublicChar123LocaleChar125PrivacyPolicyRoute,
     PublicChar123LocaleChar125RefundRoute:
       PublicChar123LocaleChar125RefundRoute,
+    PublicChar123LocaleChar125RefundPolicyRoute:
+      PublicChar123LocaleChar125RefundPolicyRoute,
     PublicChar123LocaleChar125RoutesRoute:
       PublicChar123LocaleChar125RoutesRouteWithChildren,
     PublicChar123LocaleChar125ServicesRoute:
