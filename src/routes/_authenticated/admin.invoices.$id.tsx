@@ -70,11 +70,14 @@ function InvoiceDetail() {
       <Card className="max-w-4xl mx-auto rounded-2xl border-border/70 print:border-0 print:shadow-none">
         <CardContent className="p-8 md:p-12 print:p-8">
           <div className="flex justify-between items-start mb-8">
-            <div>
-              <div className="font-display text-3xl mb-1">{s.company_name || `${SITE.brand.en}`}</div>
-              <div className="text-sm text-muted-foreground whitespace-pre-line">{s.company_address}</div>
-              <div className="text-sm text-muted-foreground">{s.company_phone} · {s.company_email}</div>
-              {s.vat_number && <div className="text-xs text-muted-foreground mt-1">VAT: {s.vat_number}</div>}
+            <div className="flex items-start gap-4">
+              <img src={SITE.logo} alt={SITE.brand.en} className="h-14 w-auto object-contain" />
+              <div>
+                <div className="font-display text-3xl mb-1">{s.company_name || `${SITE.brand.en}`}</div>
+                <div className="text-sm text-muted-foreground whitespace-pre-line">{s.company_address}</div>
+                <div className="text-sm text-muted-foreground">{s.company_phone} · {s.company_email}</div>
+                {s.vat_number && <div className="text-xs text-muted-foreground mt-1">VAT: {s.vat_number}</div>}
+              </div>
             </div>
             <div className="text-end">
               <div className="text-[10px] uppercase tracking-[0.22em] text-gold mb-1">{ar ? "فاتورة ضريبية" : "Tax Invoice"}</div>

@@ -104,9 +104,13 @@ export function AppSidebar() {
     <Sidebar collapsible="icon" className="border-e border-sidebar-border">
       <SidebarHeader className="border-b border-sidebar-border/60">
         <div className="flex items-center gap-3 px-1 py-3">
-          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sidebar-primary text-sidebar-primary-foreground">
-            <span className="font-display text-xl leading-none">S</span>
-          </div>
+          <img
+            src={SITE.logo}
+            alt={SITE.brand[locale]}
+            className={collapsed ? "h-8 w-8 object-contain shrink-0" : "h-10 w-auto object-contain shrink-0"}
+            width={collapsed ? 32 : 96}
+            height={collapsed ? 32 : 54}
+          />
           {!collapsed && (
             <div className="flex flex-col leading-tight min-w-0">
               <span className="font-display text-base truncate">{SITE.brand[locale]}</span>

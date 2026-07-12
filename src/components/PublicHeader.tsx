@@ -52,10 +52,13 @@ export function PublicHeader() {
     >
       <div className="container-tight flex h-20 items-center justify-between gap-4">
         <Link to={localized("")} className="flex items-center gap-3 group" aria-label={SITE.brand[locale]}>
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform group-hover:scale-105">
-            <span className="font-display text-xl leading-none">S</span>
-            <span className="absolute -bottom-0.5 -end-0.5 h-2.5 w-2.5 rounded-full bg-gold ring-2 ring-background" />
-          </div>
+          <img
+            src={SITE.logo}
+            alt={SITE.brand[locale]}
+            className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
+            width={110}
+            height={60}
+          />
           <div className="hidden sm:flex flex-col leading-tight">
             <span className="font-display text-lg tracking-tight">{SITE.brand[locale]}</span>
             <span className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Chauffeur · 24/7</span>

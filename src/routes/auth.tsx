@@ -6,10 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { CarTaxiFront, Languages } from "lucide-react";
+import { Languages } from "lucide-react";
 import { toast } from "sonner";
 import { useI18n } from "@/lib/i18n";
 import { useAuth } from "@/lib/auth";
+import { SITE } from "@/lib/site-info";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
@@ -59,8 +60,8 @@ function AuthPage() {
       </div>
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow">
-            <CarTaxiFront className="h-7 w-7" />
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary p-2 shadow">
+            <img src={SITE.logo} alt={SITE.brand.en} className="max-h-full max-w-full object-contain" />
           </div>
           <CardTitle className="text-2xl mt-2">{t("brand")}</CardTitle>
           <CardDescription>{t("auth_subtitle")}</CardDescription>
