@@ -186,18 +186,25 @@ function VehicleDetail() {
             {ar ? "مركبات أخرى" : "Other vehicles"}
           </h2>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {data.related.map((r: any) => {
+            {data.related.map((r: any, i: number) => {
               const t = pickTr(r, locale);
+              const img = categoryImage(r, i);
+              const alt = categoryAlt(r, locale);
               return (
                 <a
                   key={r.id}
                   href={withLocale(locale, `/fleet/${r.code}`)}
-                  className="group block rounded-xl border bg-card overflow-hidden p-5 hover:shadow-md hover:-translate-y-0.5 transition"
+                  className="group block rounded-xl border bg-card overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition"
                 >
-                  <h3 className="font-semibold mb-1 group-hover:text-primary">{t.name}</h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2">{t.description}</p>
-                  <div className="mt-3 text-xs text-muted-foreground flex items-center gap-1">
-                    <Users className="h-3 w-3" /> {r.seats}
+                  <div className="aspect-[4/3] overflow-hidden bg-muted">
+                    <img src={img} alt={alt} width={800} height={600} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-semibold mb-1 group-hover:text-primary">{t.name}</h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">{t.description}</p>
+                    <div className="mt-3 text-xs text-muted-foreground flex items-center gap-1">
+                      <Users className="h-3 w-3" /> {r.seats}
+                    </div>
                   </div>
                 </a>
               );
