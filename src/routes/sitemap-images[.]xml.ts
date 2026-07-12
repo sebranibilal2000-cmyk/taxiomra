@@ -2,6 +2,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
+import { SITE } from "@/lib/site-info";
 
 export const Route = createFileRoute("/sitemap-images.xml")({
   server: {
