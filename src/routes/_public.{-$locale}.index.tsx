@@ -313,7 +313,7 @@ function Home() {
             );
           })}
           {data.fleet.length === 0 && (
-            [{ img: sedanImg, name: ar ? "سيدان أعمال" : "Business Sedan" }, { img: suvImg, name: "Executive SUV" }, { img: vanImg, name: ar ? "فان جماعي" : "Group Van" }].map((v, i) => (
+            [{ img: FALLBACK_FLEET_IMAGES[0], name: ar ? "سيدان أعمال" : "Business Sedan" }, { img: FALLBACK_FLEET_IMAGES[1], name: "Executive SUV" }, { img: FALLBACK_FLEET_IMAGES[2], name: ar ? "فان جماعي" : "Group Van" }].map((v, i) => (
               <article key={i} className="hover-lift overflow-hidden rounded-2xl border border-border bg-card">
                 <div className="aspect-[4/3] overflow-hidden bg-primary"><img src={v.img} alt={v.name} width={1200} height={800} loading="lazy" className="h-full w-full object-cover" /></div>
                 <div className="p-6"><h3 className="font-display text-2xl">{v.name}</h3></div>
