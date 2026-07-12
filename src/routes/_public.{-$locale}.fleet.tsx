@@ -5,12 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Users, Briefcase, ArrowRight, CheckCircle2, MessageCircle } from "lucide-react";
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink } from "@/lib/site-info";
-import sedanImg from "@/assets/fleet-sedan.jpg";
-import suvImg from "@/assets/fleet-suv.jpg";
-import vanImg from "@/assets/fleet-van.jpg";
+import { categoryImage, categoryAlt } from "@/lib/fleet-images";
 
 const opts = () => queryOptions({ queryKey: ["public", "fleet"], queryFn: () => listVehicleCategories() });
-const IMG_BY_CODE: Record<string, string> = { sedan: sedanImg, business: sedanImg, premium: sedanImg, suv: suvImg, van: vanImg };
 const FEATURES = [
   { ar: "مقاعد جلدية", en: "Leather interior" },
   { ar: "واي‑فاي مجاني", en: "Complimentary Wi-Fi" },
