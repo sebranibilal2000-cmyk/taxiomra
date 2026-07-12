@@ -5,6 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import type { Database } from "@/integrations/supabase/types";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { SITE } from "@/lib/site-info";
 
 function sbPublic() {
   return createClient<Database>(
@@ -173,8 +174,8 @@ export const generateSeoPage = createServerFn({ method: "POST" })
       data.type === "route_page" ? "Service" :
       "Vehicle";
 
-    const meta_title = `${data.title_en} | Jeddah Travels`.slice(0, 70);
-    const meta_description = (data.subtitle_en || `Book premium ${data.title_en.toLowerCase()} in Jeddah with Jeddah Travels. 24/7 chauffeur service, professional drivers, luxury fleet.`).slice(0, 160);
+    const meta_title = `${data.title_en} | ${SITE.brand.en}`.slice(0, 70);
+    const meta_description = (data.subtitle_en || `Book premium ${data.title_en.toLowerCase()} in Jeddah with ${SITE.brand.en}. 24/7 chauffeur service, professional drivers, luxury fleet.`).slice(0, 160);
 
     const payload = {
       slug: data.slug,
@@ -240,8 +241,8 @@ export const bulkGenerateSeoPages = createServerFn({ method: "POST" })
         c.type === "city" ? "Place" :
         c.type === "airport" ? "Airport" :
         c.type === "route_page" ? "Service" : "Vehicle";
-      const meta_title = `${c.title_en} | Jeddah Travels`.slice(0, 70);
-      const meta_description = (c.subtitle_en || `Premium ${c.title_en.toLowerCase()} with Jeddah Travels — luxury chauffeur service in Jeddah.`).slice(0, 160);
+      const meta_title = `${c.title_en} | ${SITE.brand.en}`.slice(0, 70);
+      const meta_description = (c.subtitle_en || `Premium ${c.title_en.toLowerCase()} with ${SITE.brand.en} — luxury chauffeur service in Jeddah.`).slice(0, 160);
       const { error } = await supabase.from("cms_pages").upsert({
         slug: c.slug,
         page_type: cmsType as any,

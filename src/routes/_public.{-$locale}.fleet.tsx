@@ -4,7 +4,7 @@ import { listVehicleCategories } from "@/lib/public.functions";
 import { Button } from "@/components/ui/button";
 import { Users, Briefcase, ArrowRight, CheckCircle2, MessageCircle } from "lucide-react";
 import { useI18n, withLocale } from "@/lib/i18n";
-import { waLink } from "@/lib/site-info";
+import { SITE, waLink } from "@/lib/site-info";
 import sedanImg from "@/assets/fleet-sedan.jpg";
 import suvImg from "@/assets/fleet-suv.jpg";
 import vanImg from "@/assets/fleet-van.jpg";
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/_public/{-$locale}/fleet")({
     meta: [
       { title: "Our Fleet — Executive Sedans, SUVs & Vans" },
       { name: "description", content: "A meticulously maintained fleet of executive sedans, SUVs and vans. Licensed chauffeurs, premium comfort." },
-      { property: "og:title", content: "The Fleet — Jeddah Travels" },
+      { property: "og:title", content: `The Fleet — ${SITE.brand.en}` },
       ],
     links: [],
   }),

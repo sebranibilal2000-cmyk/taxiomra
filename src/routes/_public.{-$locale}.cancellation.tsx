@@ -5,7 +5,7 @@ import { SITE } from "@/lib/site-info";
 export const Route = createFileRoute("/_public/{-$locale}/cancellation")({
   head: () => ({
     meta: [
-      { title: "Cancellation Policy — Jeddah Travels" },
+      { title: `Cancellation Policy — ${SITE.brand.en}` },
       { name: "description", content: "How to cancel a taxi booking, notice windows, and applicable fees." },
       { property: "og:title", content: "Cancellation Policy" },
       { property: "og:description", content: "Cancellation policy for taxi and chauffeur bookings." },

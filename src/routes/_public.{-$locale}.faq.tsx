@@ -3,6 +3,7 @@ import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { listFaqs } from "@/lib/public.functions";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useI18n } from "@/lib/i18n";
+import { SITE } from "@/lib/site-info";
 
 const opts = () => queryOptions({ queryKey: ["public", "faqs"], queryFn: () => listFaqs() });
 
@@ -12,7 +13,7 @@ export const Route = createFileRoute("/_public/{-$locale}/faq")({
     meta: [
       { title: "FAQ — Booking, Pricing & Chauffeur Questions" },
       { name: "description", content: "Answers to common questions about booking, pricing, wait time, and payment." },
-      { property: "og:title", content: "FAQ — Jeddah Travels" },
+      { property: "og:title", content: `FAQ — ${SITE.brand.en}` },
       ],
     links: [],
     scripts: loaderData ? [{

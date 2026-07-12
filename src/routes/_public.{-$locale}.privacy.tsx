@@ -5,7 +5,7 @@ import { SITE } from "@/lib/site-info";
 export const Route = createFileRoute("/_public/{-$locale}/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy Policy — Jeddah Travels" },
+      { title: `Privacy Policy — ${SITE.brand.en}` },
       { name: "description", content: "How we collect, use, and protect your personal data." },
       { property: "og:title", content: "Privacy Policy" },
       { name: "robots", content: "index,follow" },

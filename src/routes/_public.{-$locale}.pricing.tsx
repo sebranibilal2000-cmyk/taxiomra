@@ -10,7 +10,7 @@ export const Route = createFileRoute("/_public/{-$locale}/pricing")({
     meta: [
       { title: "Taxi Pricing — Fixed Fares & Transparent Rates" },
       { name: "description", content: "Transparent taxi pricing: fixed airport fares, per-km city rates, and corporate contracts. No hidden fees." },
-      { property: "og:title", content: "Pricing — Jeddah Travels" },
+      { property: "og:title", content: `Pricing — ${SITE.brand.en}` },
       { property: "og:description", content: "Fixed airport fares, city rates, corporate contracts. No hidden fees." },
       ],
     links: [],
