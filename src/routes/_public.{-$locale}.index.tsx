@@ -95,7 +95,7 @@ export const Route = createFileRoute("/_public/{-$locale}/")({
   component: Home,
 });
 
-const FLEET_IMAGES: Record<string, string> = { sedan: sedanImg, business: sedanImg, suv: suvImg, van: vanImg, premium: sedanImg };
+// Fleet images now flow from the DB via categoryImage() with a legacy fallback.
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return <span className="eyebrow"><span className="h-px w-8 bg-gold" />{children}</span>;
