@@ -289,7 +289,8 @@ function Home() {
         <div className="grid gap-6 md:grid-cols-3">
           {data.fleet.slice(0, 3).map((c: any, i: number) => {
             const tr = c.vehicle_category_translations?.find((t: any) => t.locale === locale) || c.vehicle_category_translations?.[0];
-            const img = FLEET_IMAGES[c.code?.toLowerCase?.()] || [sedanImg, suvImg, vanImg][i % 3];
+            const img = categoryImage(c, i);
+            const alt = categoryAlt(c, locale);
             return (
               <Link key={c.id} to="/fleet" className="group">
                 <article className="hover-lift overflow-hidden rounded-2xl border border-border bg-card">
