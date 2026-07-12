@@ -164,3 +164,49 @@ export const submitContact = createServerFn({ method: "POST" })
     if (error) throw error;
     return { ok: true };
   });
+
+// -------- Public booking request --------
+// Persisted to `contact_submissions` with source="booking_form" so it flows
+// into the same admin inbox — no new tables/RLS needed. The full structured
+// booking payload is preserved in a JSON block appended to the message body.
+const bookingSchema = z.object({
+  name: z.string().trim().min(2).max(120),
+  phone: z.string().trim().min(4).max(40),
+  email: z.string().trim().email().max(200).optional().or(z.literal("")),
+  pickup: z.string().trim().min(2).max(300),
+  dropoff: z.string().trim().min(2).max(300),
+  pickup_at: z.string().trim().max(64).optional().or(z.literal("")),
+  passengers: z.coerce.number().int().min(1).max(60).optional(),
+  luggage: z.coerce.number().int().min(0).max(60).optional(),
+  vehicle: z.string().trim().max(80).optional().or(z.literal("")),
+  notes: z.string().trim().max(2000).optional().or(z.literal("")),
+  page_url: z.string().trim().max(400).optional().or(z.literal("")),
+  locale: z.enum(["en", "ar"]).optional(),
+});
+
+export const submitBookingRequest = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => bookingSchema.parse(input))
+  .handler(async ({ data }) => {
+    const sb = serverPublic();
+    const summary = [
+      `Pickup: ${data.pickup}`,
+      `Dropoff: ${data.dropoff}`,
+      data.pickup_at ? `When: ${data.pickup_at}` : null,
+      data.passengers ? `Passengers: ${data.passengers}` : null,
+      data.luggage != null ? `Luggage: ${data.luggage}` : null,
+      data.vehicle ? `Vehicle: ${data.vehicle}` : null,
+      data.notes ? `Notes: ${data.notes}` : null,
+    ].filter(Boolean).join("\n");
+    const message = `${summary}\n\n[booking_payload]${JSON.stringify(data)}[/booking_payload]`;
+    const { error } = await sb.from("contact_submissions").insert({
+      name: data.name,
+      email: data.email || null,
+      phone: data.phone,
+      subject: `Booking request: ${data.pickup} → ${data.dropoff}`,
+      message,
+      page_url: data.page_url || null,
+      source: "booking_form",
+    });
+    if (error) throw error;
+    return { ok: true };
+  });
