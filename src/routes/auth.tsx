@@ -60,8 +60,8 @@ function AuthPage() {
       </div>
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow">
-            <CarTaxiFront className="h-7 w-7" />
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary p-2 shadow">
+            <img src={SITE.logo} alt={SITE.brand.en} className="max-h-full max-w-full object-contain" />
           </div>
           <CardTitle className="text-2xl mt-2">{t("brand")}</CardTitle>
           <CardDescription>{t("auth_subtitle")}</CardDescription>
