@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
+import { SITE } from "@/lib/site-info";
 
-const BASE_URL = "https://mazarat-sa.online"; // canonical production domain
+const BASE_URL = SITE.url; // canonical origin from configuration (VITE_SITE_URL)
 const LOCALES = ["ar", "en"] as const;
 type Locale = (typeof LOCALES)[number];
 

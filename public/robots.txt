@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /admin/
-Disallow: /auth
-Disallow: /_authenticated/
-
-Sitemap: https://mazarat-sa.online/sitemap.xml
-Sitemap: https://mazarat-sa.online/sitemap-images.xml

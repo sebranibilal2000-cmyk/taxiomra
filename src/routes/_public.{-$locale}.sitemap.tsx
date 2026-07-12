@@ -3,14 +3,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { DEFAULT_LOCALE, type Locale, withLocale } from "@/lib/i18n";
+import { SITE } from "@/lib/site-info";
 
 export const Route = createFileRoute("/_public/{-$locale}/sitemap")({
   head: ({ params }) => {
     const locale = (params.locale ?? DEFAULT_LOCALE) as Locale;
-    const title = locale === "ar" ? "خريطة الموقع | أسفار جدة" : "Site Map | Jeddah Travels";
+    const title = locale === "ar" ? `خريطة الموقع | ${SITE.brand.ar}` : `Site Map | ${SITE.brand.en}`;
     const description = locale === "ar"
-      ? "خريطة كاملة لجميع صفحات موقع أسفار جدة."
-      : "Complete site map — every page on Jeddah Travels.";
+      ? `خريطة كاملة لجميع صفحات موقع ${SITE.brand.ar}.`
+      : `Complete site map — every page on ${SITE.brand.en}.`;
     return {
       meta: [
         { title },

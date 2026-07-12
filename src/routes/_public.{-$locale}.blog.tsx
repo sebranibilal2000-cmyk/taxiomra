@@ -3,6 +3,7 @@ import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { listBlogPosts } from "@/lib/public.functions";
 import { useI18n } from "@/lib/i18n";
 import { ArrowRight, Clock } from "lucide-react";
+import { SITE } from "@/lib/site-info";
 
 const opts = () => queryOptions({ queryKey: ["public", "blog"], queryFn: () => listBlogPosts() });
 
@@ -12,7 +13,7 @@ export const Route = createFileRoute("/_public/{-$locale}/blog")({
     meta: [
       { title: "Journal — Travel Tips, Airport Guides & Chauffeur Stories" },
       { name: "description", content: "Travel notes, airport guides, and industry insights from our chauffeur team." },
-      { property: "og:title", content: "The Journal — Jeddah Travels" },
+      { property: "og:title", content: `The Journal — ${SITE.brand.en}` },
       ],
     links: [],
   }),

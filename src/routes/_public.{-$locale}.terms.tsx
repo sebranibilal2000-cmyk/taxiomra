@@ -5,7 +5,7 @@ import { SITE } from "@/lib/site-info";
 export const Route = createFileRoute("/_public/{-$locale}/terms")({
   head: () => ({
     meta: [
-      { title: "Terms of Service — Jeddah Travels" },
+      { title: `Terms of Service — ${SITE.brand.en}` },
       { name: "description", content: "The terms that govern the use of our chauffeur services." },
       { property: "og:title", content: "Terms of Service" },
       { name: "robots", content: "index,follow" },

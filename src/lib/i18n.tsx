@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, type ReactNode } from "react";
 import { useParams, useRouter, useRouterState } from "@tanstack/react-router";
+import { SITE } from "@/lib/site-info";
 
 export type Locale = "ar" | "en";
 export const LOCALES: Locale[] = ["ar", "en"];
@@ -96,7 +97,7 @@ const dict: Dict = {
   vehicle: { ar: "المركبة", en: "Vehicle" },
   plate: { ar: "رقم اللوحة", en: "Plate #" },
   seats: { ar: "المقاعد", en: "Seats" },
-  brand: { ar: "أسفار جدة", en: "Jeddah Travels" },
+  brand: { ar: SITE.brand.ar, en: SITE.brand.en },
   admin_panel: { ar: "لوحة الإدارة", en: "Admin Panel" },
   welcome: { ar: "مرحباً بك", en: "Welcome back" },
   auth_subtitle: { ar: "سجّل الدخول للوصول إلى لوحة الإدارة", en: "Sign in to access the admin panel" },

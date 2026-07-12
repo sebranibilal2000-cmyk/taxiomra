@@ -3,6 +3,7 @@ import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { listCmsPages } from "@/lib/public.functions";
 import { ArrowRight, Plane, Building2, Briefcase, MapPin, Car, Sparkles } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { SITE } from "@/lib/site-info";
 
 const opts = () => queryOptions({
   queryKey: ["public", "services"],
@@ -20,7 +21,7 @@ export const Route = createFileRoute("/_public/{-$locale}/services")({
     meta: [
       { title: "Services — Airport, Corporate & Private Chauffeur" },
       { name: "description", content: "Full range of chauffeur services: airport transfers, corporate contracts, hotel pickups, events, and private hourly hire." },
-      { property: "og:title", content: "Services — Jeddah Travels" },
+      { property: "og:title", content: `Services — ${SITE.brand.en}` },
       ],
     links: [],
   }),
