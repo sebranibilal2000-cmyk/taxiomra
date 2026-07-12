@@ -12,9 +12,7 @@ import { SITE, waLink, telLink } from "@/lib/site-info";
 import heroImg from "@/assets/hero-luxury-car.jpg";
 import airportImg from "@/assets/airport-transfer.jpg";
 import businessImg from "@/assets/business-travel.jpg";
-import sedanImg from "@/assets/fleet-sedan.jpg";
-import suvImg from "@/assets/fleet-suv.jpg";
-import vanImg from "@/assets/fleet-van.jpg";
+import { categoryImage, categoryAlt, FALLBACK_FLEET_IMAGES } from "@/lib/fleet-images";
 
 const homeOpts = () => queryOptions({
   queryKey: ["public", "home"],
