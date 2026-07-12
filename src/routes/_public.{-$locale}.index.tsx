@@ -106,18 +106,18 @@ function Home() {
       <section className="relative overflow-hidden -mt-20 pt-20 bg-background">
         <div className="container-tight grid gap-10 lg:grid-cols-12 lg:gap-14 py-14 md:py-24 items-center">
           <div className="lg:col-span-6 space-y-8 animate-fade-in">
-            <Eyebrow>{ar ? "خدمة شوفير فاخرة" : "Luxury Chauffeur Service"}</Eyebrow>
-            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.02] tracking-tight text-balance">
+            <Eyebrow>{ar ? "تاكسي العمرة" : "Omra Taxi"}</Eyebrow>
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-balance">
               {ar ? (
-                <>الوصول <em className="text-gold not-italic">بأناقة</em>،<br />على مدار الساعة.</>
+                <>تاكسي من <em className="text-gold not-italic">مطار جدة</em> إلى مكة المكرمة</>
               ) : (
-                <>Arrive with <em className="text-gold italic">quiet</em> confidence.</>
+                <>Jeddah Airport Taxi <em className="text-gold italic">to Makkah</em></>
               )}
             </h1>
             <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
               {ar
-                ? "نقل مطار، رحلات أعمال، وسفر خاص — سيارات فاخرة، سائقون معتمدون، وأسعار ثابتة. احجز في دقيقة عبر الواتساب أو الاتصال."
-                : "Airport transfers, business travel and private rides — premium vehicles, licensed chauffeurs, fixed fares. Book in under a minute by WhatsApp or phone."}
+                ? "خدمة التوصيل من مطار جدة إلى مكة على مدار الساعة — سيارات حديثة، سائقون محترفون، وأسعار ثابتة. احجز في دقيقة عبر واتساب أو الاتصال."
+                : "Reliable Jeddah Airport to Makkah transfers, 24/7 — modern vehicles, professional drivers and fixed fares. Book in under a minute via WhatsApp or phone."}
             </p>
             <div className="flex flex-wrap gap-3">
               <Button asChild size="lg" className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-elegant h-12 px-6">
