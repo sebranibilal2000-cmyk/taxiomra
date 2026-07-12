@@ -55,12 +55,13 @@ function Fleet() {
       <section className="container-tight pb-24 space-y-8">
         {items.map((c: any, i: number) => {
           const tr = c.vehicle_category_translations?.find((t: any) => t.locale === locale) || c.vehicle_category_translations?.[0];
-          const img = IMG_BY_CODE[c.code?.toLowerCase?.()] || [sedanImg, suvImg, vanImg][i % 3];
+          const img = categoryImage(c, i);
+          const alt = categoryAlt(c, locale);
           const flip = i % 2 === 1;
           return (
             <article key={c.id} className="hover-lift grid gap-8 md:gap-12 lg:grid-cols-12 items-center rounded-3xl border border-border bg-card p-6 md:p-10">
               <div className={`lg:col-span-7 relative aspect-[16/10] overflow-hidden rounded-2xl bg-primary ${flip ? "lg:order-2" : ""}`}>
-                <img src={img} alt={tr?.name} width={1200} height={800} loading="lazy" className="h-full w-full object-cover" />
+                <img src={img} alt={alt} width={1200} height={800} loading="lazy" decoding="async" className="h-full w-full object-cover" />
                 <div className="absolute top-4 start-4 rounded-full bg-primary/70 backdrop-blur px-3 py-1 text-xs uppercase tracking-wider text-primary-foreground">{c.code}</div>
               </div>
               <div className={`lg:col-span-5 space-y-6 ${flip ? "lg:order-1" : ""}`}>
