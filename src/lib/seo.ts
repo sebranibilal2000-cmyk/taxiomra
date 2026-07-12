@@ -13,7 +13,7 @@ export function localBusinessJsonLd() {
     telephone: SITE.phone,
     email: SITE.email,
     url: SITE.url,
-    image: `${SITE.url}/og-cover.jpg`,
+    image: `${SITE.url}${SITE.ogImage}`,
     priceRange: "$$",
     currenciesAccepted: SITE.currency,
     address: {
@@ -47,7 +47,7 @@ export function organizationJsonLd() {
     name: SITE.brand.en,
     alternateName: SITE.brand.ar,
     url: SITE.url,
-    logo: `${SITE.url}/logo.png`,
+    logo: `${SITE.url}${SITE.logo}`,
     email: SITE.email,
     address: {
       "@type": "PostalAddress",
@@ -105,7 +105,7 @@ export function articleJsonLd(p: {
     publisher: {
       "@type": "Organization",
       name: SITE.brand.en,
-      logo: { "@type": "ImageObject", url: "/logo.png" },
+      logo: { "@type": "ImageObject", url: `${SITE.url}${SITE.logo}` },
     },
     mainEntityOfPage: p.url,
   };
