@@ -31,6 +31,7 @@ import { Route as PublicChar123LocaleChar125ContactRouteImport } from './routes/
 import { Route as PublicChar123LocaleChar125CitiesRouteImport } from './routes/_public.{-$locale}.cities'
 import { Route as PublicChar123LocaleChar125CancellationRouteImport } from './routes/_public.{-$locale}.cancellation'
 import { Route as PublicChar123LocaleChar125BookingRouteImport } from './routes/_public.{-$locale}.booking'
+import { Route as PublicChar123LocaleChar125BookRouteImport } from './routes/_public.{-$locale}.book'
 import { Route as PublicChar123LocaleChar125BlogRouteImport } from './routes/_public.{-$locale}.blog'
 import { Route as PublicChar123LocaleChar125AirportsRouteImport } from './routes/_public.{-$locale}.airports'
 import { Route as PublicChar123LocaleChar125AirportTransfersRouteImport } from './routes/_public.{-$locale}.airport-transfers'
@@ -230,6 +231,12 @@ const PublicChar123LocaleChar125BookingRoute =
   PublicChar123LocaleChar125BookingRouteImport.update({
     id: '/booking',
     path: '/booking',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125BookRoute =
+  PublicChar123LocaleChar125BookRouteImport.update({
+    id: '/book',
+    path: '/book',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
 const PublicChar123LocaleChar125BlogRoute =
@@ -731,6 +738,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/airport-transfers': typeof PublicChar123LocaleChar125AirportTransfersRoute
   '/{-$locale}/airports': typeof PublicChar123LocaleChar125AirportsRouteWithChildren
   '/{-$locale}/blog': typeof PublicChar123LocaleChar125BlogRouteWithChildren
+  '/{-$locale}/book': typeof PublicChar123LocaleChar125BookRoute
   '/{-$locale}/booking': typeof PublicChar123LocaleChar125BookingRoute
   '/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
   '/{-$locale}/cities': typeof PublicChar123LocaleChar125CitiesRouteWithChildren
@@ -828,6 +836,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/airport-transfers': typeof PublicChar123LocaleChar125AirportTransfersRoute
   '/{-$locale}/airports': typeof PublicChar123LocaleChar125AirportsRouteWithChildren
   '/{-$locale}/blog': typeof PublicChar123LocaleChar125BlogRouteWithChildren
+  '/{-$locale}/book': typeof PublicChar123LocaleChar125BookRoute
   '/{-$locale}/booking': typeof PublicChar123LocaleChar125BookingRoute
   '/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
   '/{-$locale}/cities': typeof PublicChar123LocaleChar125CitiesRouteWithChildren
@@ -927,6 +936,7 @@ export interface FileRoutesById {
   '/_public/{-$locale}/airport-transfers': typeof PublicChar123LocaleChar125AirportTransfersRoute
   '/_public/{-$locale}/airports': typeof PublicChar123LocaleChar125AirportsRouteWithChildren
   '/_public/{-$locale}/blog': typeof PublicChar123LocaleChar125BlogRouteWithChildren
+  '/_public/{-$locale}/book': typeof PublicChar123LocaleChar125BookRoute
   '/_public/{-$locale}/booking': typeof PublicChar123LocaleChar125BookingRoute
   '/_public/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
   '/_public/{-$locale}/cities': typeof PublicChar123LocaleChar125CitiesRouteWithChildren
@@ -1027,6 +1037,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/airport-transfers'
     | '/{-$locale}/airports'
     | '/{-$locale}/blog'
+    | '/{-$locale}/book'
     | '/{-$locale}/booking'
     | '/{-$locale}/cancellation'
     | '/{-$locale}/cities'
@@ -1124,6 +1135,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/airport-transfers'
     | '/{-$locale}/airports'
     | '/{-$locale}/blog'
+    | '/{-$locale}/book'
     | '/{-$locale}/booking'
     | '/{-$locale}/cancellation'
     | '/{-$locale}/cities'
@@ -1222,6 +1234,7 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/airport-transfers'
     | '/_public/{-$locale}/airports'
     | '/_public/{-$locale}/blog'
+    | '/_public/{-$locale}/book'
     | '/_public/{-$locale}/booking'
     | '/_public/{-$locale}/cancellation'
     | '/_public/{-$locale}/cities'
@@ -1418,6 +1431,13 @@ declare module '@tanstack/react-router' {
       path: '/booking'
       fullPath: '/{-$locale}/booking'
       preLoaderRoute: typeof PublicChar123LocaleChar125BookingRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
+    }
+    '/_public/{-$locale}/book': {
+      id: '/_public/{-$locale}/book'
+      path: '/book'
+      fullPath: '/{-$locale}/book'
+      preLoaderRoute: typeof PublicChar123LocaleChar125BookRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
     '/_public/{-$locale}/blog': {
@@ -2247,6 +2267,7 @@ interface PublicChar123LocaleChar125RouteChildren {
   PublicChar123LocaleChar125AirportTransfersRoute: typeof PublicChar123LocaleChar125AirportTransfersRoute
   PublicChar123LocaleChar125AirportsRoute: typeof PublicChar123LocaleChar125AirportsRouteWithChildren
   PublicChar123LocaleChar125BlogRoute: typeof PublicChar123LocaleChar125BlogRouteWithChildren
+  PublicChar123LocaleChar125BookRoute: typeof PublicChar123LocaleChar125BookRoute
   PublicChar123LocaleChar125BookingRoute: typeof PublicChar123LocaleChar125BookingRoute
   PublicChar123LocaleChar125CancellationRoute: typeof PublicChar123LocaleChar125CancellationRoute
   PublicChar123LocaleChar125CitiesRoute: typeof PublicChar123LocaleChar125CitiesRouteWithChildren
@@ -2275,6 +2296,7 @@ const PublicChar123LocaleChar125RouteChildren: PublicChar123LocaleChar125RouteCh
       PublicChar123LocaleChar125AirportsRouteWithChildren,
     PublicChar123LocaleChar125BlogRoute:
       PublicChar123LocaleChar125BlogRouteWithChildren,
+    PublicChar123LocaleChar125BookRoute: PublicChar123LocaleChar125BookRoute,
     PublicChar123LocaleChar125BookingRoute:
       PublicChar123LocaleChar125BookingRoute,
     PublicChar123LocaleChar125CancellationRoute:
