@@ -30,40 +30,62 @@ const homeOpts = () => queryOptions({
 
 export const Route = createFileRoute("/_public/{-$locale}/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(homeOpts()),
-  head: () => ({
-    meta: [
-      { title: `${SITE.brand.en} — Luxury Chauffeur Service, Airport Transfers 24/7` },
-      { name: "description", content: "Premium chauffeur & taxi service. Airport transfers, business travel and private rides. Book instantly via WhatsApp or phone — licensed drivers, fixed fares, 24/7." },
-      { property: "og:title", content: `${SITE.brand.en} — Luxury Chauffeur Service` },
-      { property: "og:description", content: "Airport transfers, business travel and private rides. Book via WhatsApp or phone." },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: `${SITE.url}/og-home.jpg` },
-    ],
-    links: [],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          "@id": `${SITE.url}/#website`,
-          url: SITE.url,
-          name: SITE.brand.en,
-          alternateName: SITE.brand.ar,
-          inLanguage: ["en", "ar"],
-          publisher: { "@id": `${SITE.url}/#organization` },
-          potentialAction: {
-            "@type": "SearchAction",
-            target: {
-              "@type": "EntryPoint",
-              urlTemplate: `${SITE.url}/en/search?q={search_term_string}`,
+  head: () => {
+    const titleAr = `${SITE.brand.ar} | تاكسي من مطار جدة إلى مكة المكرمة`;
+    const titleEn = `${SITE.brand.en} | Jeddah Airport Taxi to Makkah`;
+    const descAr = "احجز خدمة التوصيل من مطار جدة إلى مكة بسهولة مع تاكسي العمرة. سيارات حديثة، سائقون محترفون، أسعار ثابتة، خدمة متوفرة 24 ساعة، وحجز سريع عبر واتساب.";
+    const descEn = "Book your Jeddah Airport to Makkah taxi with Omra Taxi. Fixed prices, professional drivers, modern vehicles and 24/7 airport transfer service.";
+    const ogImage = `${SITE.url}/og-home.jpg`;
+    return {
+      meta: [
+        { title: titleAr },
+        { name: "description", content: descAr },
+        { property: "og:site_name", content: SITE.brand.en },
+        { property: "og:title", content: titleAr },
+        { property: "og:description", content: descAr },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: SITE.url + "/" },
+        { property: "og:locale", content: "ar_SA" },
+        { property: "og:locale:alternate", content: "en_US" },
+        { property: "og:image", content: ogImage },
+        { property: "og:image:alt", content: titleAr },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: titleEn },
+        { name: "twitter:description", content: descEn },
+        { name: "twitter:image", content: ogImage },
+      ],
+      links: [
+        { rel: "canonical", href: SITE.url + "/" },
+        { rel: "alternate", hrefLang: "ar", href: SITE.url + "/ar" },
+        { rel: "alternate", hrefLang: "en", href: SITE.url + "/en" },
+        { rel: "alternate", hrefLang: "x-default", href: SITE.url + "/" },
+      ],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "@id": `${SITE.url}/#website`,
+            url: SITE.url,
+            name: SITE.brand.en,
+            alternateName: SITE.brand.ar,
+            description: descEn,
+            inLanguage: ["ar", "en"],
+            publisher: { "@id": `${SITE.url}/#organization` },
+            potentialAction: {
+              "@type": "SearchAction",
+              target: {
+                "@type": "EntryPoint",
+                urlTemplate: `${SITE.url}/en/search?q={search_term_string}`,
+              },
+              "query-input": "required name=search_term_string",
             },
-            "query-input": "required name=search_term_string",
-          },
-        }),
-      },
-    ],
-  }),
+          }),
+        },
+      ],
+    };
+  },
   component: Home,
 });
 
@@ -84,18 +106,18 @@ function Home() {
       <section className="relative overflow-hidden -mt-20 pt-20 bg-background">
         <div className="container-tight grid gap-10 lg:grid-cols-12 lg:gap-14 py-14 md:py-24 items-center">
           <div className="lg:col-span-6 space-y-8 animate-fade-in">
-            <Eyebrow>{ar ? "خدمة شوفير فاخرة" : "Luxury Chauffeur Service"}</Eyebrow>
-            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.02] tracking-tight text-balance">
+            <Eyebrow>{ar ? "تاكسي العمرة" : "Omra Taxi"}</Eyebrow>
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-balance">
               {ar ? (
-                <>الوصول <em className="text-gold not-italic">بأناقة</em>،<br />على مدار الساعة.</>
+                <>تاكسي من <em className="text-gold not-italic">مطار جدة</em> إلى مكة المكرمة</>
               ) : (
-                <>Arrive with <em className="text-gold italic">quiet</em> confidence.</>
+                <>Jeddah Airport Taxi <em className="text-gold italic">to Makkah</em></>
               )}
             </h1>
             <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
               {ar
-                ? "نقل مطار، رحلات أعمال، وسفر خاص — سيارات فاخرة، سائقون معتمدون، وأسعار ثابتة. احجز في دقيقة عبر الواتساب أو الاتصال."
-                : "Airport transfers, business travel and private rides — premium vehicles, licensed chauffeurs, fixed fares. Book in under a minute by WhatsApp or phone."}
+                ? "خدمة التوصيل من مطار جدة إلى مكة على مدار الساعة — سيارات حديثة، سائقون محترفون، وأسعار ثابتة. احجز في دقيقة عبر واتساب أو الاتصال."
+                : "Reliable Jeddah Airport to Makkah transfers, 24/7 — modern vehicles, professional drivers and fixed fares. Book in under a minute via WhatsApp or phone."}
             </p>
             <div className="flex flex-wrap gap-3">
               <Button asChild size="lg" className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-elegant h-12 px-6">
