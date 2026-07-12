@@ -12,9 +12,13 @@ export function PublicFooter() {
       <div className="container-tight py-16 grid gap-12 md:grid-cols-12">
         <div className="md:col-span-4 space-y-4">
           <Link to={l("")} className="flex items-center gap-3">
-            <div className="relative flex h-11 w-11 items-center justify-center rounded-full bg-gold text-primary">
-              <span className="font-display text-xl leading-none">S</span>
-            </div>
+            <img
+              src={SITE.logo}
+              alt={SITE.brand[locale]}
+              className="h-11 w-auto object-contain bg-primary-foreground/95 rounded-md p-1.5"
+              width={120}
+              height={66}
+            />
             <div className="flex flex-col leading-tight">
               <span className="font-display text-xl">{SITE.brand[locale]}</span>
               <span className="text-[10px] uppercase tracking-[0.22em] text-primary-foreground/60">Chauffeur · 24/7</span>
