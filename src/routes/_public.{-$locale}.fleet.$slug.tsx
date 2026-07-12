@@ -40,6 +40,8 @@ export const Route = createFileRoute("/_public/{-$locale}/fleet/$slug")({
     const url = `/${locale}/fleet/${row.code}`;
     const title = `${cur.name} — ${SITE.brand[locale]}`;
     const desc = cur.description || `${en.name} with ${row.seats} seats.`;
+    const hero = categoryImage(row);
+    const ogImage = hero?.startsWith("http") ? hero : `${SITE.url}${hero}`;
     return {
       meta: [
         { title },
@@ -47,7 +49,9 @@ export const Route = createFileRoute("/_public/{-$locale}/fleet/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "product" },
+        { property: "og:image", content: ogImage },
         { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:image", content: ogImage },
       ],
       links: [],
       scripts: [
