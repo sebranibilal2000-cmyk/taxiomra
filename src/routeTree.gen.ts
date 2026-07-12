@@ -16,6 +16,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as PublicChar123LocaleChar125RouteImport } from './routes/_public.{-$locale}'
 import { Route as PublicChar123LocaleChar125IndexRouteImport } from './routes/_public.{-$locale}.index'
+import { Route as PublicChar123LocaleChar125ThankYouRouteImport } from './routes/_public.{-$locale}.thank-you'
 import { Route as PublicChar123LocaleChar125TermsRouteImport } from './routes/_public.{-$locale}.terms'
 import { Route as PublicChar123LocaleChar125SitemapRouteImport } from './routes/_public.{-$locale}.sitemap'
 import { Route as PublicChar123LocaleChar125ServicesRouteImport } from './routes/_public.{-$locale}.services'
@@ -134,6 +135,12 @@ const PublicChar123LocaleChar125IndexRoute =
   PublicChar123LocaleChar125IndexRouteImport.update({
     id: '/',
     path: '/',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125ThankYouRoute =
+  PublicChar123LocaleChar125ThankYouRouteImport.update({
+    id: '/thank-you',
+    path: '/thank-you',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
 const PublicChar123LocaleChar125TermsRoute =
@@ -699,6 +706,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/services': typeof PublicChar123LocaleChar125ServicesRouteWithChildren
   '/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
   '/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
+  '/{-$locale}/thank-you': typeof PublicChar123LocaleChar125ThankYouRoute
   '/{-$locale}/': typeof PublicChar123LocaleChar125IndexRoute
   '/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
   '/admin/drivers/$id': typeof AuthenticatedAdminDriversIdRoute
@@ -790,6 +798,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/services': typeof PublicChar123LocaleChar125ServicesRouteWithChildren
   '/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
   '/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
+  '/{-$locale}/thank-you': typeof PublicChar123LocaleChar125ThankYouRoute
   '/{-$locale}': typeof PublicChar123LocaleChar125IndexRoute
   '/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
   '/admin/drivers/$id': typeof AuthenticatedAdminDriversIdRoute
@@ -883,6 +892,7 @@ export interface FileRoutesById {
   '/_public/{-$locale}/services': typeof PublicChar123LocaleChar125ServicesRouteWithChildren
   '/_public/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
   '/_public/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
+  '/_public/{-$locale}/thank-you': typeof PublicChar123LocaleChar125ThankYouRoute
   '/_public/{-$locale}/': typeof PublicChar123LocaleChar125IndexRoute
   '/_authenticated/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
   '/_authenticated/admin/drivers/$id': typeof AuthenticatedAdminDriversIdRoute
@@ -977,6 +987,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/services'
     | '/{-$locale}/sitemap'
     | '/{-$locale}/terms'
+    | '/{-$locale}/thank-you'
     | '/{-$locale}/'
     | '/admin/customers/$id'
     | '/admin/drivers/$id'
@@ -1068,6 +1079,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/services'
     | '/{-$locale}/sitemap'
     | '/{-$locale}/terms'
+    | '/{-$locale}/thank-you'
     | '/{-$locale}'
     | '/admin/customers/$id'
     | '/admin/drivers/$id'
@@ -1160,6 +1172,7 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/services'
     | '/_public/{-$locale}/sitemap'
     | '/_public/{-$locale}/terms'
+    | '/_public/{-$locale}/thank-you'
     | '/_public/{-$locale}/'
     | '/_authenticated/admin/customers/$id'
     | '/_authenticated/admin/drivers/$id'
@@ -1235,6 +1248,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/{-$locale}/'
       preLoaderRoute: typeof PublicChar123LocaleChar125IndexRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
+    }
+    '/_public/{-$locale}/thank-you': {
+      id: '/_public/{-$locale}/thank-you'
+      path: '/thank-you'
+      fullPath: '/{-$locale}/thank-you'
+      preLoaderRoute: typeof PublicChar123LocaleChar125ThankYouRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
     '/_public/{-$locale}/terms': {
@@ -2077,6 +2097,7 @@ interface PublicChar123LocaleChar125RouteChildren {
   PublicChar123LocaleChar125ServicesRoute: typeof PublicChar123LocaleChar125ServicesRouteWithChildren
   PublicChar123LocaleChar125SitemapRoute: typeof PublicChar123LocaleChar125SitemapRoute
   PublicChar123LocaleChar125TermsRoute: typeof PublicChar123LocaleChar125TermsRoute
+  PublicChar123LocaleChar125ThankYouRoute: typeof PublicChar123LocaleChar125ThankYouRoute
   PublicChar123LocaleChar125IndexRoute: typeof PublicChar123LocaleChar125IndexRoute
   PublicChar123LocaleChar125AirportsSlugRoute: typeof PublicChar123LocaleChar125AirportsSlugRoute
   PublicChar123LocaleChar125CitiesSlugRoute: typeof PublicChar123LocaleChar125CitiesSlugRoute
@@ -2111,6 +2132,8 @@ const PublicChar123LocaleChar125RouteChildren: PublicChar123LocaleChar125RouteCh
     PublicChar123LocaleChar125SitemapRoute:
       PublicChar123LocaleChar125SitemapRoute,
     PublicChar123LocaleChar125TermsRoute: PublicChar123LocaleChar125TermsRoute,
+    PublicChar123LocaleChar125ThankYouRoute:
+      PublicChar123LocaleChar125ThankYouRoute,
     PublicChar123LocaleChar125IndexRoute: PublicChar123LocaleChar125IndexRoute,
     PublicChar123LocaleChar125AirportsSlugRoute:
       PublicChar123LocaleChar125AirportsSlugRoute,
