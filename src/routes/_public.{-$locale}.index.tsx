@@ -30,32 +30,40 @@ const homeOpts = () => queryOptions({
 
 export const Route = createFileRoute("/_public/{-$locale}/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(homeOpts()),
-  head: () => {
+  head: ({ params }: any) => {
+    const locale = (params?.locale === "en" ? "en" : "ar") as "ar" | "en";
+    const isEn = locale === "en";
     const titleAr = `${SITE.brand.ar} | تاكسي من مطار جدة إلى مكة المكرمة`;
     const titleEn = `${SITE.brand.en} | Jeddah Airport Taxi to Makkah`;
     const descAr = "احجز خدمة التوصيل من مطار جدة إلى مكة بسهولة مع تاكسي العمرة. سيارات حديثة، سائقون محترفون، أسعار ثابتة، خدمة متوفرة 24 ساعة، وحجز سريع عبر واتساب.";
     const descEn = "Book your Jeddah Airport to Makkah taxi with Omra Taxi. Fixed prices, professional drivers, modern vehicles and 24/7 airport transfer service.";
-    const ogImage = `${SITE.url}/og-home.jpg`;
+    const ogImage = `${SITE.url}${isEn ? "/og-home-en.jpg" : "/og-home-ar.jpg"}`;
+    const canonical = SITE.url + (params?.locale ? `/${params.locale}` : "/");
+    const title = isEn ? titleEn : titleAr;
+    const desc = isEn ? descEn : descAr;
     return {
       meta: [
-        { title: titleAr },
-        { name: "description", content: descAr },
+        { title },
+        { name: "description", content: desc },
         { property: "og:site_name", content: SITE.brand.en },
-        { property: "og:title", content: titleAr },
-        { property: "og:description", content: descAr },
+        { property: "og:title", content: title },
+        { property: "og:description", content: desc },
         { property: "og:type", content: "website" },
-        { property: "og:url", content: SITE.url + "/" },
-        { property: "og:locale", content: "ar_SA" },
-        { property: "og:locale:alternate", content: "en_US" },
+        { property: "og:url", content: canonical },
+        { property: "og:locale", content: isEn ? "en_US" : "ar_SA" },
+        { property: "og:locale:alternate", content: isEn ? "ar_SA" : "en_US" },
         { property: "og:image", content: ogImage },
-        { property: "og:image:alt", content: titleAr },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        { property: "og:image:alt", content: title },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: titleEn },
-        { name: "twitter:description", content: descEn },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: desc },
         { name: "twitter:image", content: ogImage },
+        { name: "twitter:image:alt", content: title },
       ],
       links: [
-        { rel: "canonical", href: SITE.url + "/" },
+        { rel: "canonical", href: canonical },
         { rel: "alternate", hrefLang: "ar", href: SITE.url + "/ar" },
         { rel: "alternate", hrefLang: "en", href: SITE.url + "/en" },
         { rel: "alternate", hrefLang: "x-default", href: SITE.url + "/" },
