@@ -124,7 +124,33 @@ function VehicleDetail() {
         <div className="inline-block rounded-full bg-primary/10 text-primary text-xs font-semibold px-3 py-1 mb-4 uppercase tracking-wide">
           {ar ? "من أسطولنا" : "From our fleet"}
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">{cur.name}</h1>
+      <section className="container mx-auto px-4 py-14 md:py-20 max-w-4xl">
+        <div className="inline-block rounded-full bg-primary/10 text-primary text-xs font-semibold px-3 py-1 mb-4 uppercase tracking-wide">
+          {ar ? "من أسطولنا" : "From our fleet"}
+        </div>
+        <h1 className="text-4xl md:text-5xl font-bold mb-6">{cur.name}</h1>
+
+        {(() => {
+          const gallery = categoryGallery(row);
+          const alt = categoryAlt(row, locale);
+          return (
+            <div className="mb-8 space-y-3">
+              <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border bg-muted">
+                <img src={gallery[0]} alt={alt} width={1600} height={1000} decoding="async" loading="eager" fetchPriority="high" className="h-full w-full object-cover" />
+              </div>
+              {gallery.length > 1 && (
+                <div className="grid grid-cols-3 gap-3">
+                  {gallery.slice(0, 6).map((src, i) => (
+                    <div key={i} className="relative aspect-[4/3] overflow-hidden rounded-xl border bg-muted">
+                      <img src={src} alt={`${alt} — ${i + 1}`} width={800} height={600} loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })()}
+
         <p className="text-lg text-muted-foreground mb-6">{cur.description}</p>
         <dl className="grid gap-4 sm:grid-cols-3 my-8">
           <div className="rounded-xl border p-4">
