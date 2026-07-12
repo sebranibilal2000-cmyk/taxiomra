@@ -26,9 +26,11 @@ import { Route as PublicChar123LocaleChar125PricingRouteImport } from './routes/
 import { Route as PublicChar123LocaleChar125FleetRouteImport } from './routes/_public.{-$locale}.fleet'
 import { Route as PublicChar123LocaleChar125FaqRouteImport } from './routes/_public.{-$locale}.faq'
 import { Route as PublicChar123LocaleChar125ContactRouteImport } from './routes/_public.{-$locale}.contact'
+import { Route as PublicChar123LocaleChar125CitiesRouteImport } from './routes/_public.{-$locale}.cities'
 import { Route as PublicChar123LocaleChar125CancellationRouteImport } from './routes/_public.{-$locale}.cancellation'
 import { Route as PublicChar123LocaleChar125BookingRouteImport } from './routes/_public.{-$locale}.booking'
 import { Route as PublicChar123LocaleChar125BlogRouteImport } from './routes/_public.{-$locale}.blog'
+import { Route as PublicChar123LocaleChar125AirportsRouteImport } from './routes/_public.{-$locale}.airports'
 import { Route as PublicChar123LocaleChar125AirportTransfersRouteImport } from './routes/_public.{-$locale}.airport-transfers'
 import { Route as PublicChar123LocaleChar125AboutRouteImport } from './routes/_public.{-$locale}.about'
 import { Route as AuthenticatedAdminWhatsappTemplatesRouteImport } from './routes/_authenticated/admin.whatsapp-templates'
@@ -197,6 +199,12 @@ const PublicChar123LocaleChar125ContactRoute =
     path: '/contact',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
+const PublicChar123LocaleChar125CitiesRoute =
+  PublicChar123LocaleChar125CitiesRouteImport.update({
+    id: '/cities',
+    path: '/cities',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
 const PublicChar123LocaleChar125CancellationRoute =
   PublicChar123LocaleChar125CancellationRouteImport.update({
     id: '/cancellation',
@@ -213,6 +221,12 @@ const PublicChar123LocaleChar125BlogRoute =
   PublicChar123LocaleChar125BlogRouteImport.update({
     id: '/blog',
     path: '/blog',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125AirportsRoute =
+  PublicChar123LocaleChar125AirportsRouteImport.update({
+    id: '/airports',
+    path: '/airports',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
 const PublicChar123LocaleChar125AirportTransfersRoute =
@@ -582,9 +596,9 @@ const PublicChar123LocaleChar125FleetSlugRoute =
   } as any)
 const PublicChar123LocaleChar125CitiesSlugRoute =
   PublicChar123LocaleChar125CitiesSlugRouteImport.update({
-    id: '/cities/$slug',
-    path: '/cities/$slug',
-    getParentRoute: () => PublicChar123LocaleChar125Route,
+    id: '/$slug',
+    path: '/$slug',
+    getParentRoute: () => PublicChar123LocaleChar125CitiesRoute,
   } as any)
 const PublicChar123LocaleChar125BlogSlugRoute =
   PublicChar123LocaleChar125BlogSlugRouteImport.update({
@@ -594,9 +608,9 @@ const PublicChar123LocaleChar125BlogSlugRoute =
   } as any)
 const PublicChar123LocaleChar125AirportsSlugRoute =
   PublicChar123LocaleChar125AirportsSlugRouteImport.update({
-    id: '/airports/$slug',
-    path: '/airports/$slug',
-    getParentRoute: () => PublicChar123LocaleChar125Route,
+    id: '/$slug',
+    path: '/$slug',
+    getParentRoute: () => PublicChar123LocaleChar125AirportsRoute,
   } as any)
 const AuthenticatedAdminInvoicesIdRoute =
   AuthenticatedAdminInvoicesIdRouteImport.update({
@@ -694,9 +708,11 @@ export interface FileRoutesByFullPath {
   '/admin/whatsapp-templates': typeof AuthenticatedAdminWhatsappTemplatesRoute
   '/{-$locale}/about': typeof PublicChar123LocaleChar125AboutRoute
   '/{-$locale}/airport-transfers': typeof PublicChar123LocaleChar125AirportTransfersRoute
+  '/{-$locale}/airports': typeof PublicChar123LocaleChar125AirportsRouteWithChildren
   '/{-$locale}/blog': typeof PublicChar123LocaleChar125BlogRouteWithChildren
   '/{-$locale}/booking': typeof PublicChar123LocaleChar125BookingRoute
   '/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
+  '/{-$locale}/cities': typeof PublicChar123LocaleChar125CitiesRouteWithChildren
   '/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
   '/{-$locale}/faq': typeof PublicChar123LocaleChar125FaqRoute
   '/{-$locale}/fleet': typeof PublicChar123LocaleChar125FleetRouteWithChildren
@@ -786,9 +802,11 @@ export interface FileRoutesByTo {
   '/admin/whatsapp-templates': typeof AuthenticatedAdminWhatsappTemplatesRoute
   '/{-$locale}/about': typeof PublicChar123LocaleChar125AboutRoute
   '/{-$locale}/airport-transfers': typeof PublicChar123LocaleChar125AirportTransfersRoute
+  '/{-$locale}/airports': typeof PublicChar123LocaleChar125AirportsRouteWithChildren
   '/{-$locale}/blog': typeof PublicChar123LocaleChar125BlogRouteWithChildren
   '/{-$locale}/booking': typeof PublicChar123LocaleChar125BookingRoute
   '/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
+  '/{-$locale}/cities': typeof PublicChar123LocaleChar125CitiesRouteWithChildren
   '/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
   '/{-$locale}/faq': typeof PublicChar123LocaleChar125FaqRoute
   '/{-$locale}/fleet': typeof PublicChar123LocaleChar125FleetRouteWithChildren
@@ -880,9 +898,11 @@ export interface FileRoutesById {
   '/_authenticated/admin/whatsapp-templates': typeof AuthenticatedAdminWhatsappTemplatesRoute
   '/_public/{-$locale}/about': typeof PublicChar123LocaleChar125AboutRoute
   '/_public/{-$locale}/airport-transfers': typeof PublicChar123LocaleChar125AirportTransfersRoute
+  '/_public/{-$locale}/airports': typeof PublicChar123LocaleChar125AirportsRouteWithChildren
   '/_public/{-$locale}/blog': typeof PublicChar123LocaleChar125BlogRouteWithChildren
   '/_public/{-$locale}/booking': typeof PublicChar123LocaleChar125BookingRoute
   '/_public/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
+  '/_public/{-$locale}/cities': typeof PublicChar123LocaleChar125CitiesRouteWithChildren
   '/_public/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
   '/_public/{-$locale}/faq': typeof PublicChar123LocaleChar125FaqRoute
   '/_public/{-$locale}/fleet': typeof PublicChar123LocaleChar125FleetRouteWithChildren
@@ -975,9 +995,11 @@ export interface FileRouteTypes {
     | '/admin/whatsapp-templates'
     | '/{-$locale}/about'
     | '/{-$locale}/airport-transfers'
+    | '/{-$locale}/airports'
     | '/{-$locale}/blog'
     | '/{-$locale}/booking'
     | '/{-$locale}/cancellation'
+    | '/{-$locale}/cities'
     | '/{-$locale}/contact'
     | '/{-$locale}/faq'
     | '/{-$locale}/fleet'
@@ -1067,9 +1089,11 @@ export interface FileRouteTypes {
     | '/admin/whatsapp-templates'
     | '/{-$locale}/about'
     | '/{-$locale}/airport-transfers'
+    | '/{-$locale}/airports'
     | '/{-$locale}/blog'
     | '/{-$locale}/booking'
     | '/{-$locale}/cancellation'
+    | '/{-$locale}/cities'
     | '/{-$locale}/contact'
     | '/{-$locale}/faq'
     | '/{-$locale}/fleet'
@@ -1160,9 +1184,11 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/whatsapp-templates'
     | '/_public/{-$locale}/about'
     | '/_public/{-$locale}/airport-transfers'
+    | '/_public/{-$locale}/airports'
     | '/_public/{-$locale}/blog'
     | '/_public/{-$locale}/booking'
     | '/_public/{-$locale}/cancellation'
+    | '/_public/{-$locale}/cities'
     | '/_public/{-$locale}/contact'
     | '/_public/{-$locale}/faq'
     | '/_public/{-$locale}/fleet'
@@ -1320,6 +1346,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicChar123LocaleChar125ContactRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
+    '/_public/{-$locale}/cities': {
+      id: '/_public/{-$locale}/cities'
+      path: '/cities'
+      fullPath: '/{-$locale}/cities'
+      preLoaderRoute: typeof PublicChar123LocaleChar125CitiesRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
+    }
     '/_public/{-$locale}/cancellation': {
       id: '/_public/{-$locale}/cancellation'
       path: '/cancellation'
@@ -1339,6 +1372,13 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/{-$locale}/blog'
       preLoaderRoute: typeof PublicChar123LocaleChar125BlogRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
+    }
+    '/_public/{-$locale}/airports': {
+      id: '/_public/{-$locale}/airports'
+      path: '/airports'
+      fullPath: '/{-$locale}/airports'
+      preLoaderRoute: typeof PublicChar123LocaleChar125AirportsRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
     '/_public/{-$locale}/airport-transfers': {
@@ -1784,10 +1824,10 @@ declare module '@tanstack/react-router' {
     }
     '/_public/{-$locale}/cities/$slug': {
       id: '/_public/{-$locale}/cities/$slug'
-      path: '/cities/$slug'
+      path: '/$slug'
       fullPath: '/{-$locale}/cities/$slug'
       preLoaderRoute: typeof PublicChar123LocaleChar125CitiesSlugRouteImport
-      parentRoute: typeof PublicChar123LocaleChar125Route
+      parentRoute: typeof PublicChar123LocaleChar125CitiesRoute
     }
     '/_public/{-$locale}/blog/$slug': {
       id: '/_public/{-$locale}/blog/$slug'
@@ -1798,10 +1838,10 @@ declare module '@tanstack/react-router' {
     }
     '/_public/{-$locale}/airports/$slug': {
       id: '/_public/{-$locale}/airports/$slug'
-      path: '/airports/$slug'
+      path: '/$slug'
       fullPath: '/{-$locale}/airports/$slug'
       preLoaderRoute: typeof PublicChar123LocaleChar125AirportsSlugRouteImport
-      parentRoute: typeof PublicChar123LocaleChar125Route
+      parentRoute: typeof PublicChar123LocaleChar125AirportsRoute
     }
     '/_authenticated/admin/invoices/$id': {
       id: '/_authenticated/admin/invoices/$id'
@@ -2037,6 +2077,21 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface PublicChar123LocaleChar125AirportsRouteChildren {
+  PublicChar123LocaleChar125AirportsSlugRoute: typeof PublicChar123LocaleChar125AirportsSlugRoute
+}
+
+const PublicChar123LocaleChar125AirportsRouteChildren: PublicChar123LocaleChar125AirportsRouteChildren =
+  {
+    PublicChar123LocaleChar125AirportsSlugRoute:
+      PublicChar123LocaleChar125AirportsSlugRoute,
+  }
+
+const PublicChar123LocaleChar125AirportsRouteWithChildren =
+  PublicChar123LocaleChar125AirportsRoute._addFileChildren(
+    PublicChar123LocaleChar125AirportsRouteChildren,
+  )
+
 interface PublicChar123LocaleChar125BlogRouteChildren {
   PublicChar123LocaleChar125BlogSlugRoute: typeof PublicChar123LocaleChar125BlogSlugRoute
 }
@@ -2050,6 +2105,21 @@ const PublicChar123LocaleChar125BlogRouteChildren: PublicChar123LocaleChar125Blo
 const PublicChar123LocaleChar125BlogRouteWithChildren =
   PublicChar123LocaleChar125BlogRoute._addFileChildren(
     PublicChar123LocaleChar125BlogRouteChildren,
+  )
+
+interface PublicChar123LocaleChar125CitiesRouteChildren {
+  PublicChar123LocaleChar125CitiesSlugRoute: typeof PublicChar123LocaleChar125CitiesSlugRoute
+}
+
+const PublicChar123LocaleChar125CitiesRouteChildren: PublicChar123LocaleChar125CitiesRouteChildren =
+  {
+    PublicChar123LocaleChar125CitiesSlugRoute:
+      PublicChar123LocaleChar125CitiesSlugRoute,
+  }
+
+const PublicChar123LocaleChar125CitiesRouteWithChildren =
+  PublicChar123LocaleChar125CitiesRoute._addFileChildren(
+    PublicChar123LocaleChar125CitiesRouteChildren,
   )
 
 interface PublicChar123LocaleChar125FleetRouteChildren {
@@ -2085,9 +2155,11 @@ const PublicChar123LocaleChar125ServicesRouteWithChildren =
 interface PublicChar123LocaleChar125RouteChildren {
   PublicChar123LocaleChar125AboutRoute: typeof PublicChar123LocaleChar125AboutRoute
   PublicChar123LocaleChar125AirportTransfersRoute: typeof PublicChar123LocaleChar125AirportTransfersRoute
+  PublicChar123LocaleChar125AirportsRoute: typeof PublicChar123LocaleChar125AirportsRouteWithChildren
   PublicChar123LocaleChar125BlogRoute: typeof PublicChar123LocaleChar125BlogRouteWithChildren
   PublicChar123LocaleChar125BookingRoute: typeof PublicChar123LocaleChar125BookingRoute
   PublicChar123LocaleChar125CancellationRoute: typeof PublicChar123LocaleChar125CancellationRoute
+  PublicChar123LocaleChar125CitiesRoute: typeof PublicChar123LocaleChar125CitiesRouteWithChildren
   PublicChar123LocaleChar125ContactRoute: typeof PublicChar123LocaleChar125ContactRoute
   PublicChar123LocaleChar125FaqRoute: typeof PublicChar123LocaleChar125FaqRoute
   PublicChar123LocaleChar125FleetRoute: typeof PublicChar123LocaleChar125FleetRouteWithChildren
@@ -2099,8 +2171,6 @@ interface PublicChar123LocaleChar125RouteChildren {
   PublicChar123LocaleChar125TermsRoute: typeof PublicChar123LocaleChar125TermsRoute
   PublicChar123LocaleChar125ThankYouRoute: typeof PublicChar123LocaleChar125ThankYouRoute
   PublicChar123LocaleChar125IndexRoute: typeof PublicChar123LocaleChar125IndexRoute
-  PublicChar123LocaleChar125AirportsSlugRoute: typeof PublicChar123LocaleChar125AirportsSlugRoute
-  PublicChar123LocaleChar125CitiesSlugRoute: typeof PublicChar123LocaleChar125CitiesSlugRoute
   PublicChar123LocaleChar125PSlugRoute: typeof PublicChar123LocaleChar125PSlugRoute
   PublicChar123LocaleChar125RoutesSlugRoute: typeof PublicChar123LocaleChar125RoutesSlugRoute
 }
@@ -2110,12 +2180,16 @@ const PublicChar123LocaleChar125RouteChildren: PublicChar123LocaleChar125RouteCh
     PublicChar123LocaleChar125AboutRoute: PublicChar123LocaleChar125AboutRoute,
     PublicChar123LocaleChar125AirportTransfersRoute:
       PublicChar123LocaleChar125AirportTransfersRoute,
+    PublicChar123LocaleChar125AirportsRoute:
+      PublicChar123LocaleChar125AirportsRouteWithChildren,
     PublicChar123LocaleChar125BlogRoute:
       PublicChar123LocaleChar125BlogRouteWithChildren,
     PublicChar123LocaleChar125BookingRoute:
       PublicChar123LocaleChar125BookingRoute,
     PublicChar123LocaleChar125CancellationRoute:
       PublicChar123LocaleChar125CancellationRoute,
+    PublicChar123LocaleChar125CitiesRoute:
+      PublicChar123LocaleChar125CitiesRouteWithChildren,
     PublicChar123LocaleChar125ContactRoute:
       PublicChar123LocaleChar125ContactRoute,
     PublicChar123LocaleChar125FaqRoute: PublicChar123LocaleChar125FaqRoute,
@@ -2135,10 +2209,6 @@ const PublicChar123LocaleChar125RouteChildren: PublicChar123LocaleChar125RouteCh
     PublicChar123LocaleChar125ThankYouRoute:
       PublicChar123LocaleChar125ThankYouRoute,
     PublicChar123LocaleChar125IndexRoute: PublicChar123LocaleChar125IndexRoute,
-    PublicChar123LocaleChar125AirportsSlugRoute:
-      PublicChar123LocaleChar125AirportsSlugRoute,
-    PublicChar123LocaleChar125CitiesSlugRoute:
-      PublicChar123LocaleChar125CitiesSlugRoute,
     PublicChar123LocaleChar125PSlugRoute: PublicChar123LocaleChar125PSlugRoute,
     PublicChar123LocaleChar125RoutesSlugRoute:
       PublicChar123LocaleChar125RoutesSlugRoute,
