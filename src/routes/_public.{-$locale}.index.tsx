@@ -40,6 +40,29 @@ export const Route = createFileRoute("/_public/{-$locale}/")({
       { property: "og:image", content: `${SITE.url}/og-home.jpg` },
     ],
     links: [],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": `${SITE.url}/#website`,
+          url: SITE.url,
+          name: SITE.brand.en,
+          alternateName: SITE.brand.ar,
+          inLanguage: ["en", "ar"],
+          publisher: { "@id": `${SITE.url}/#organization` },
+          potentialAction: {
+            "@type": "SearchAction",
+            target: {
+              "@type": "EntryPoint",
+              urlTemplate: `${SITE.url}/en/search?q={search_term_string}`,
+            },
+            "query-input": "required name=search_term_string",
+          },
+        }),
+      },
+    ],
   }),
   component: Home,
 });
