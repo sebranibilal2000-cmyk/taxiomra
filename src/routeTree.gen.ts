@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SitemapImagesDotxmlRouteImport } from './routes/sitemap-images[.]xml'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as PublicChar123LocaleChar125RouteImport } from './routes/_public.{-$locale}'
@@ -106,6 +107,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const SitemapImagesDotxmlRoute = SitemapImagesDotxmlRouteImport.update({
   id: '/sitemap-images.xml',
   path: '/sitemap-images.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -612,6 +618,7 @@ const AuthenticatedAdminBookingsIdPrintRoute =
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
@@ -702,6 +709,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
@@ -792,6 +800,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_public/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
@@ -884,6 +893,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/robots.txt'
     | '/sitemap-images.xml'
     | '/sitemap.xml'
     | '/{-$locale}'
@@ -974,6 +984,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/robots.txt'
     | '/sitemap-images.xml'
     | '/sitemap.xml'
     | '/admin/ai-assistant'
@@ -1063,6 +1074,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_authenticated'
     | '/auth'
+    | '/robots.txt'
     | '/sitemap-images.xml'
     | '/sitemap.xml'
     | '/_public/{-$locale}'
@@ -1154,6 +1166,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapImagesDotxmlRoute: typeof SitemapImagesDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   PublicChar123LocaleChar125Route: typeof PublicChar123LocaleChar125RouteWithChildren
@@ -1174,6 +1187,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap-images.xml'
       fullPath: '/sitemap-images.xml'
       preLoaderRoute: typeof SitemapImagesDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -2086,6 +2106,7 @@ const PublicChar123LocaleChar125RouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapImagesDotxmlRoute: SitemapImagesDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   PublicChar123LocaleChar125Route: PublicChar123LocaleChar125RouteWithChildren,
