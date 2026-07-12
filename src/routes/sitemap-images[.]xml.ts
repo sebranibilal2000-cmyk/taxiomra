@@ -52,7 +52,7 @@ export const Route = createFileRoute("/sitemap-images.xml")({
           const imgs = e.images.map((i) =>
             `    <image:image><image:loc>${esc(i.url)}</image:loc>${i.caption ? `<image:caption>${esc(i.caption)}</image:caption>` : ""}</image:image>`
           ).join("\n");
-          return `  <url>\n    <loc>${esc(e.loc)}</loc>\n${imgs}\n  </url>`;
+          return `  <url>\n    <loc>${esc(SITE.url + e.loc)}</loc>\n${imgs}\n  </url>`;
         });
         const xml = [
           `<?xml version="1.0" encoding="UTF-8"?>`,
