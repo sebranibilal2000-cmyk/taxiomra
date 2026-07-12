@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, MessageCircle, ChevronRight, Users } from "lucide-react";
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
+import { categoryImage, categoryGallery, categoryAlt } from "@/lib/fleet-images";
 
 const opts = (code: string) =>
   queryOptions({
