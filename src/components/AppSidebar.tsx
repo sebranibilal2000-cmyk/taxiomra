@@ -66,7 +66,7 @@ export function AppSidebar() {
       { title: locale === "ar" ? "المدونة" : "Blog", url: "/admin/blog", icon: Newspaper },
       { title: locale === "ar" ? "الأسئلة الشائعة" : "FAQ", url: "/admin/faqs", icon: HelpCircle },
       { title: locale === "ar" ? "مكتبة الوسائط" : "Media Library", url: "/admin/media", icon: ImageIcon2 },
-      { title: locale === "ar" ? "معاينة الموقع" : "Preview site", url: "/", icon: Globe },
+      { title: locale === "ar" ? "معاينة الموقع" : "Preview site", url: "/", icon: Globe, external: true },
     ]},
     { label: locale === "ar" ? "تحسين محركات البحث" : "SEO", items: [
       { title: locale === "ar" ? "مدير السيو" : "SEO Manager", url: "/admin/seo", icon: Search },
