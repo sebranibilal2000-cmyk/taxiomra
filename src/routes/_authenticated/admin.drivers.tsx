@@ -108,18 +108,18 @@ function Drivers() {
   return (
     <div>
       <PageHeader title={t("drivers")}
-        description={alerts > 0 ? `${alerts} drivers with expiring documents` : undefined}
+        description={alerts > 0 ? (ar ? `${alerts} سائق لديه وثائق قاربت على الانتهاء` : `${alerts} drivers with expiring documents`) : undefined}
         actions={
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild><Button><Plus className="h-4 w-4 me-1" />{t("new")}</Button></DialogTrigger>
             <DialogContent>
-              <DialogHeader><DialogTitle>{t("new")} {t("driver")}</DialogTitle></DialogHeader>
+              <DialogHeader><DialogTitle>{ar ? "سائق جديد" : `${t("new")} ${t("driver")}`}</DialogTitle></DialogHeader>
               <div className="grid grid-cols-2 gap-3">
                 <div className="col-span-2"><Label>{t("name")}</Label><Input value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} /></div>
                 <div><Label>{t("phone")}</Label><Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
                 <div><Label>{t("email")}</Label><Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
-                <div><Label>License #</Label><Input value={form.license_number} onChange={(e) => setForm({ ...form, license_number: e.target.value })} /></div>
-                <div><Label>License Expiry</Label><Input type="date" value={form.license_expiry} onChange={(e) => setForm({ ...form, license_expiry: e.target.value })} /></div>
+                <div><Label>{ar ? "رقم الرخصة" : "License #"}</Label><Input value={form.license_number} onChange={(e) => setForm({ ...form, license_number: e.target.value })} /></div>
+                <div><Label>{ar ? "انتهاء الرخصة" : "License Expiry"}</Label><Input type="date" value={form.license_expiry} onChange={(e) => setForm({ ...form, license_expiry: e.target.value })} /></div>
                 <div className="col-span-2"><Label>{t("vehicle")}</Label>
                   <Select value={form.vehicle_id} onValueChange={(v) => setForm({ ...form, vehicle_id: v })}>
                     <SelectTrigger><SelectValue placeholder="—" /></SelectTrigger>
@@ -139,21 +139,21 @@ function Drivers() {
       <div className="flex flex-wrap gap-2 mb-4">
         <div className="relative">
           <Search className="absolute start-3 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input placeholder="Search name, phone, license…" value={search} onChange={(e) => setSearch(e.target.value)} className="ps-9 w-64" />
+          <Input placeholder={ar ? "ابحث بالاسم، الهاتف، الرخصة…" : "Search name, phone, license…"} value={search} onChange={(e) => setSearch(e.target.value)} className="ps-9 w-64" />
         </div>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
           <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
-          <SelectContent><SelectItem value="all">All statuses</SelectItem>{DRIVER_STATUSES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+          <SelectContent><SelectItem value="all">{ar ? "كل الحالات" : "All statuses"}</SelectItem>{DRIVER_STATUSES.map(s => <SelectItem key={s} value={s}>{statusLabel(s)}</SelectItem>)}</SelectContent>
         </Select>
         <Select value={expiryFilter} onValueChange={setExpiryFilter}>
           <SelectTrigger className="w-48"><SelectValue /></SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All documents</SelectItem>
-            <SelectItem value="soon">Expiring in 30 days</SelectItem>
-            <SelectItem value="expired">Expired</SelectItem>
+            <SelectItem value="all">{ar ? "كل الوثائق" : "All documents"}</SelectItem>
+            <SelectItem value="soon">{ar ? "تنتهي خلال 30 يوم" : "Expiring in 30 days"}</SelectItem>
+            <SelectItem value="expired">{ar ? "منتهية" : "Expired"}</SelectItem>
           </SelectContent>
         </Select>
-        {alerts > 0 && <div className="ms-auto inline-flex items-center gap-2 rounded-md bg-warning/15 text-warning-foreground px-3 py-2 text-xs"><AlertTriangle className="h-3.5 w-3.5" />{alerts} with expiring docs</div>}
+        {alerts > 0 && <div className="ms-auto inline-flex items-center gap-2 rounded-md bg-warning/15 text-warning-foreground px-3 py-2 text-xs"><AlertTriangle className="h-3.5 w-3.5" />{ar ? `${alerts} وثائق قرب انتهائها` : `${alerts} with expiring docs`}</div>}
       </div>
 
       <DataTable
@@ -162,15 +162,20 @@ function Drivers() {
         loading={q.isLoading}
         onRowClick={(r) => navigate({ to: "/admin/drivers/$id" as any, params: { id: r.id } as any })}
         actions={(r) => (
-          <Select value={r.status} onValueChange={async (v) => {
-            const { error } = await supabase.from("drivers").update({ status: v as any }).eq("id", r.id);
-            if (error) toast.error(error.message); else qc.invalidateQueries({ queryKey: ["drivers"] });
-          }}>
-            <SelectTrigger className="w-36 h-8" onClick={(e) => e.stopPropagation()}><SelectValue /></SelectTrigger>
-            <SelectContent>{DRIVER_STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-          </Select>
+          <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
+            <Select value={r.status} onValueChange={async (v) => {
+              const { error } = await supabase.from("drivers").update({ status: v as any }).eq("id", r.id);
+              if (error) toast.error(error.message); else qc.invalidateQueries({ queryKey: ["drivers"] });
+            }}>
+              <SelectTrigger className="w-36 h-8"><SelectValue /></SelectTrigger>
+              <SelectContent>{DRIVER_STATUSES.map((s) => <SelectItem key={s} value={s}>{statusLabel(s)}</SelectItem>)}</SelectContent>
+            </Select>
+            <Button size="icon" variant="ghost" title={ar ? "تعديل" : "Edit"} onClick={() => navigate({ to: "/admin/drivers/$id" as any, params: { id: r.id } as any })}><Edit className="h-4 w-4" /></Button>
+            <Button size="icon" variant="ghost" title={ar ? "حذف" : "Delete"} onClick={() => del(r.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+          </div>
         )}
       />
     </div>
   );
 }
+
