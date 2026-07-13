@@ -36,6 +36,7 @@ const dayBounds = (offset = 0) => {
 
 function DispatchPage() {
   const { locale } = useI18n();
+  const ar = locale === "ar";
   const qc = useQueryClient();
   const [tab, setTab] = useState<"queue" | "today" | "upcoming" | "live">("queue");
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -91,7 +92,7 @@ function DispatchPage() {
       await supabase.from("drivers").update({ status: "on_trip" }).eq("id", driverId);
     },
     onSuccess: () => {
-      toast.success(locale === "ar" ? "تم تعيين السائق" : "Driver assigned");
+      toast.success(ar ? "تم تعيين السائق" : "Driver assigned");
       qc.invalidateQueries({ queryKey: ["dispatch-bookings"] });
       qc.invalidateQueries({ queryKey: ["dispatch-drivers"] });
       qc.invalidateQueries({ queryKey: ["bookings"] });
@@ -117,40 +118,40 @@ function DispatchPage() {
 
   const availableDrivers = (drivers.data ?? []).filter((d: any) => {
     if (driverSearch && !d.full_name?.toLowerCase().includes(driverSearch.toLowerCase())) return false;
-    // Only show drivers actually free, or the one already on this booking
     if (selected?.driver?.id === d.id) return true;
     return d.status === "available" || d.status === "offline";
   });
 
+  const queueCount = (bookings.data ?? []).filter(b => !b.driver && ["pending","confirmed"].includes(b.status)).length;
+
   return (
     <div>
       <PageHeader
-        eyebrow={locale === "ar" ? "غرفة العمليات" : "Operations"}
-        title={locale === "ar" ? "مركز الإرسال" : "Dispatch Center"}
-        description={locale === "ar" ? "متابعة الحجوزات المباشرة وتعيين السائقين" : "Live queue and one-click driver assignment"}
+        eyebrow={ar ? "غرفة العمليات" : "Operations"}
+        title={ar ? "مركز الإرسال" : "Dispatch Center"}
+        description={ar ? "متابعة الحجوزات المباشرة وتعيين السائقين" : "Live queue and one-click driver assignment"}
         actions={
           <Button variant="outline" size="sm" onClick={() => { bookings.refetch(); drivers.refetch(); }}>
-            <RefreshCw className="h-4 w-4 me-2" />{locale === "ar" ? "تحديث" : "Refresh"}
+            <RefreshCw className="h-4 w-4 me-2" />{ar ? "تحديث" : "Refresh"}
           </Button>
         }
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-4">
-        {/* Left: booking list */}
         <div className="min-w-0">
           <Tabs value={tab} onValueChange={(v) => { setTab(v as any); setSelectedId(null); }}>
             <TabsList className="mb-3">
-              <TabsTrigger value="queue">Queue <Badge variant="secondary" className="ms-2">{(bookings.data ?? []).filter(b => !b.driver && ["pending","confirmed"].includes(b.status)).length}</Badge></TabsTrigger>
-              <TabsTrigger value="today">Today</TabsTrigger>
-              <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
-              <TabsTrigger value="live">Live</TabsTrigger>
+              <TabsTrigger value="queue">{ar ? "الطابور" : "Queue"} <Badge variant="secondary" className="ms-2">{queueCount}</Badge></TabsTrigger>
+              <TabsTrigger value="today">{ar ? "اليوم" : "Today"}</TabsTrigger>
+              <TabsTrigger value="upcoming">{ar ? "قادم" : "Upcoming"}</TabsTrigger>
+              <TabsTrigger value="live">{ar ? "مباشر" : "Live"}</TabsTrigger>
             </TabsList>
 
             <TabsContent value={tab} className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {filtered.length === 0 && (
                   <div className="col-span-full text-center py-16 text-muted-foreground text-sm border rounded-lg">
-                    {locale === "ar" ? "لا توجد حجوزات" : "No bookings in this view"}
+                    {ar ? "لا توجد حجوزات" : "No bookings in this view"}
                   </div>
                 )}
                 {filtered.map(b => (
@@ -170,7 +171,7 @@ function DispatchPage() {
                     <div className="mt-2 space-y-1 text-xs text-muted-foreground">
                       <div className="flex items-start gap-1.5"><MapPin className="h-3 w-3 mt-0.5 shrink-0" /><span className="truncate">{b.pickup_location ?? "—"}</span></div>
                       <div className="flex items-start gap-1.5 ps-4"><ArrowRight className="h-3 w-3 mt-0.5 shrink-0" /><span className="truncate">{b.dropoff_location ?? "—"}</span></div>
-                      {b.pickup_at && <div className="flex items-center gap-1.5"><Clock className="h-3 w-3" />{new Date(b.pickup_at).toLocaleString()}</div>}
+                      {b.pickup_at && <div className="flex items-center gap-1.5"><Clock className="h-3 w-3" />{new Date(b.pickup_at).toLocaleString(ar ? "ar" : "en")}</div>}
                       {b.driver && <div className="flex items-center gap-1.5 text-foreground/80"><User2 className="h-3 w-3" />{b.driver.full_name}</div>}
                     </div>
                   </button>
@@ -180,56 +181,54 @@ function DispatchPage() {
           </Tabs>
         </div>
 
-        {/* Right: assignment panel */}
         <Card className="p-4 h-fit sticky top-4">
           {!selected ? (
             <div className="text-center py-10 text-sm text-muted-foreground">
-              {locale === "ar" ? "اختر حجزاً لعرض خيارات التعيين" : "Select a booking to assign a driver"}
+              {ar ? "اختر حجزاً لعرض خيارات التعيين" : "Select a booking to assign a driver"}
             </div>
           ) : (
             <div className="space-y-4">
               <div>
-                <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Booking</div>
+                <div className="text-[10px] uppercase tracking-widest text-muted-foreground">{ar ? "الحجز" : "Booking"}</div>
                 <div className="font-mono text-sm">{selected.code}</div>
                 <div className="mt-2"><StatusBadge value={selected.status} /></div>
                 <div className="mt-3 text-xs space-y-1">
-                  <div><span className="text-muted-foreground">Customer:</span> {selected.customer?.full_name ?? "—"}</div>
-                  <div><span className="text-muted-foreground">Phone:</span> {selected.customer?.phone ?? "—"}</div>
-                  <div><span className="text-muted-foreground">Category:</span> {selected.category?.code ?? "—"}</div>
-                  <div><span className="text-muted-foreground">Fare:</span> {Number(selected.total_fare ?? 0).toFixed(2)}</div>
+                  <div><span className="text-muted-foreground">{ar ? "العميل:" : "Customer:"}</span> {selected.customer?.full_name ?? "—"}</div>
+                  <div><span className="text-muted-foreground">{ar ? "الهاتف:" : "Phone:"}</span> {selected.customer?.phone ?? "—"}</div>
+                  <div><span className="text-muted-foreground">{ar ? "الفئة:" : "Category:"}</span> {selected.category?.code ?? "—"}</div>
+                  <div><span className="text-muted-foreground">{ar ? "الأجرة:" : "Fare:"}</span> {Number(selected.total_fare ?? 0).toFixed(2)}</div>
                 </div>
               </div>
 
-              {/* Status quick actions */}
               <div className="grid grid-cols-2 gap-2">
                 {selected.status === "assigned" && (
-                  <Button size="sm" variant="outline" onClick={() => setStatus.mutate({ id: selected.id, status: "en_route" })}>En route</Button>
+                  <Button size="sm" variant="outline" onClick={() => setStatus.mutate({ id: selected.id, status: "en_route" })}>{ar ? "في الطريق" : "En route"}</Button>
                 )}
                 {(selected.status === "en_route" || selected.status === "assigned") && (
-                  <Button size="sm" variant="outline" onClick={() => setStatus.mutate({ id: selected.id, status: "picked_up" })}>Picked up</Button>
+                  <Button size="sm" variant="outline" onClick={() => setStatus.mutate({ id: selected.id, status: "picked_up" })}>{ar ? "تم الاستلام" : "Picked up"}</Button>
                 )}
                 {(selected.status === "picked_up" || selected.status === "on_trip") && (
                   <Button size="sm" onClick={() => setStatus.mutate({ id: selected.id, status: "completed", freeDriverId: selected.driver?.id })}>
-                    <CheckCircle2 className="h-3.5 w-3.5 me-1" />Complete
+                    <CheckCircle2 className="h-3.5 w-3.5 me-1" />{ar ? "إنهاء" : "Complete"}
                   </Button>
                 )}
                 <Button size="sm" variant="ghost" className="text-destructive" onClick={() => setStatus.mutate({ id: selected.id, status: "no_show", freeDriverId: selected.driver?.id })}>
-                  <XCircle className="h-3.5 w-3.5 me-1" />No show
+                  <XCircle className="h-3.5 w-3.5 me-1" />{ar ? "لم يحضر" : "No show"}
                 </Button>
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                    {selected.driver ? "Reassign driver" : "Assign driver"}
+                    {selected.driver ? (ar ? "إعادة تعيين السائق" : "Reassign driver") : (ar ? "تعيين سائق" : "Assign driver")}
                   </div>
                 </div>
                 <div className="relative mb-2">
                   <Search className="absolute inset-y-0 my-auto start-2 h-3.5 w-3.5 text-muted-foreground" />
-                  <Input value={driverSearch} onChange={(e) => setDriverSearch(e.target.value)} placeholder="Search drivers..." className="ps-7 h-8" />
+                  <Input value={driverSearch} onChange={(e) => setDriverSearch(e.target.value)} placeholder={ar ? "ابحث عن سائق…" : "Search drivers..."} className="ps-7 h-8" />
                 </div>
                 <div className="max-h-80 overflow-auto space-y-1">
-                  {availableDrivers.length === 0 && <div className="text-xs text-muted-foreground py-3 text-center">No drivers</div>}
+                  {availableDrivers.length === 0 && <div className="text-xs text-muted-foreground py-3 text-center">{ar ? "لا يوجد سائقون" : "No drivers"}</div>}
                   {availableDrivers.map((d: any) => {
                     const isCurrent = selected.driver?.id === d.id;
                     return (
@@ -247,7 +246,7 @@ function DispatchPage() {
                           disabled={isCurrent || assign.isPending}
                           onClick={() => assign.mutate({ bookingId: selected.id, driverId: d.id, vehicleId: d.vehicle?.id ?? null })}
                         >
-                          {isCurrent ? "Current" : "Assign"}
+                          {isCurrent ? (ar ? "الحالي" : "Current") : (ar ? "تعيين" : "Assign")}
                         </Button>
                       </div>
                     );
