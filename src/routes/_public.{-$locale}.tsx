@@ -44,11 +44,12 @@ export const Route = createFileRoute("/_public/{-$locale}")({
   head: ({ params, loaderData }) => {
     const locale = (params.locale ?? DEFAULT_LOCALE) as Locale;
     const pathname = loaderData?.pathname ?? `/${locale}`;
-    const canonical = pathname;
+    const abs = (p: string) => `${SITE.url}${p.startsWith("/") ? p : `/${p}`}`;
+    const canonical = abs(pathname);
     const alternates = LOCALES.map((l) => ({
       rel: "alternate",
       hrefLang: l,
-      href: withLocale(l, pathname),
+      href: abs(withLocale(l, pathname)),
     }));
     return {
       meta: [
@@ -58,7 +59,7 @@ export const Route = createFileRoute("/_public/{-$locale}")({
       links: [
         { rel: "canonical", href: canonical },
         ...alternates,
-        { rel: "alternate", hrefLang: "x-default", href: `/${DEFAULT_LOCALE}` },
+        { rel: "alternate", hrefLang: "x-default", href: abs(`/${DEFAULT_LOCALE}`) },
       ],
       scripts: [
         {

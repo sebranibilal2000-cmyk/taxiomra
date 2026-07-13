@@ -1,0 +1,24 @@
+# Omra Taxi — تاكسي العمرة
+
+> خدمة تاكسي احترافية للتوصيل من مطار جدة (KAIA) إلى مكة المكرمة والمدينة المنورة على مدار الساعة، بأسعار ثابتة وسيارات حديثة.
+> Professional taxi service for transfers from Jeddah Airport (KAIA) to Makkah and Madinah, 24/7, with fixed prices and modern vehicles.
+
+## Core Pages
+- [الرئيسية / Home](https://omrataxi-sa.online/ar): نظرة عامة على الخدمات والحجز الفوري عبر واتساب.
+- [English Home](https://omrataxi-sa.online/en): Service overview and instant WhatsApp booking.
+- [الخدمات / Services](https://omrataxi-sa.online/ar/services): قائمة كاملة بخدمات التوصيل والعمرة.
+- [المطارات / Airports](https://omrataxi-sa.online/ar/airports): جدة، الطائف، المدينة المنورة.
+- [المدن / Cities](https://omrataxi-sa.online/ar/cities): مكة، المدينة، جدة، الطائف.
+- [الأسطول / Fleet](https://omrataxi-sa.online/ar/vehicles): سيدان، GMC، هايس، فان عائلي.
+- [الأسعار / Routes](https://omrataxi-sa.online/ar/routes): تعرفة الطرق الثابتة.
+- [المدونة / Blog](https://omrataxi-sa.online/ar/blog): مقالات ونصائح للمعتمرين.
+- [الأسئلة الشائعة / FAQ](https://omrataxi-sa.online/ar/faq)
+- [تواصل معنا / Contact](https://omrataxi-sa.online/ar/contact)
+
+## Booking
+- WhatsApp: https://wa.me/966551796487
+- Phone: tel:+966551796487
+
+## Optional
+- [Sitemap](https://omrataxi-sa.online/sitemap.xml)
+- [Robots](https://omrataxi-sa.online/robots.txt)
