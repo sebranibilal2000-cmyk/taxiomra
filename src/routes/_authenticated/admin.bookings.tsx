@@ -480,7 +480,7 @@ function NewBookingDialog({ customers, cats, drivers, onDone }: { customers: any
           <Label>{t("category")}</Label>
           <Select value={form.category_id} onValueChange={(v) => setForm({ ...form, category_id: v })}>
             <SelectTrigger><SelectValue placeholder="—" /></SelectTrigger>
-            <SelectContent>{cats.map((c) => <SelectItem key={c.id} value={c.id}>{c.code}</SelectItem>)}</SelectContent>
+            <SelectContent>{cats.map((c) => <SelectItem key={c.id} value={c.id}>{catLabel(c.code, locale)}</SelectItem>)}</SelectContent>
           </Select>
         </div>
         <div className="space-y-1 md:col-span-2"><Label>{t("pickup")}</Label><Input value={form.pickup_location} onChange={(e) => setForm({ ...form, pickup_location: e.target.value })} /></div>
