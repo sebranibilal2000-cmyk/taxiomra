@@ -23,14 +23,15 @@ function Pricing() {
     if (error) toast.error(error.message); else qc.invalidateQueries({ queryKey: ["pricing"] });
   };
 
+  const ar = locale === "ar";
   const cols: Column<any>[] = [
     { key: "category", header: t("category"), render: (r) => r.category?.code ?? "—" },
-    { key: "min_fare", header: "Min fare", render: (r) => <Input type="number" step="0.01" defaultValue={r.min_fare} className="w-24 h-8" onBlur={(e) => upd(r.id, { min_fare: Number(e.target.value) })} /> },
-    { key: "waiting_per_min", header: "Waiting/min", render: (r) => <Input type="number" step="0.01" defaultValue={r.waiting_per_min} className="w-24 h-8" onBlur={(e) => upd(r.id, { waiting_per_min: Number(e.target.value) })} /> },
-    { key: "airport_fee", header: "Airport fee", render: (r) => <Input type="number" step="0.01" defaultValue={r.airport_fee} className="w-24 h-8" onBlur={(e) => upd(r.id, { airport_fee: Number(e.target.value) })} /> },
-    { key: "night_start_hour", header: "Night start", render: (r) => <Input type="number" defaultValue={r.night_start_hour} className="w-20 h-8" onBlur={(e) => upd(r.id, { night_start_hour: Number(e.target.value) })} /> },
-    { key: "night_end_hour", header: "Night end", render: (r) => <Input type="number" defaultValue={r.night_end_hour} className="w-20 h-8" onBlur={(e) => upd(r.id, { night_end_hour: Number(e.target.value) })} /> },
-    { key: "night_surcharge_pct", header: "Night %", render: (r) => <Input type="number" step="0.01" defaultValue={r.night_surcharge_pct} className="w-24 h-8" onBlur={(e) => upd(r.id, { night_surcharge_pct: Number(e.target.value) })} /> },
+    { key: "min_fare", header: ar ? "الحد الأدنى" : "Min fare", render: (r) => <Input type="number" step="0.01" defaultValue={r.min_fare} className="w-24 h-8" onBlur={(e) => upd(r.id, { min_fare: Number(e.target.value) })} /> },
+    { key: "waiting_per_min", header: ar ? "انتظار/دقيقة" : "Waiting/min", render: (r) => <Input type="number" step="0.01" defaultValue={r.waiting_per_min} className="w-24 h-8" onBlur={(e) => upd(r.id, { waiting_per_min: Number(e.target.value) })} /> },
+    { key: "airport_fee", header: ar ? "رسوم المطار" : "Airport fee", render: (r) => <Input type="number" step="0.01" defaultValue={r.airport_fee} className="w-24 h-8" onBlur={(e) => upd(r.id, { airport_fee: Number(e.target.value) })} /> },
+    { key: "night_start_hour", header: ar ? "بداية الليل" : "Night start", render: (r) => <Input type="number" defaultValue={r.night_start_hour} className="w-20 h-8" onBlur={(e) => upd(r.id, { night_start_hour: Number(e.target.value) })} /> },
+    { key: "night_end_hour", header: ar ? "نهاية الليل" : "Night end", render: (r) => <Input type="number" defaultValue={r.night_end_hour} className="w-20 h-8" onBlur={(e) => upd(r.id, { night_end_hour: Number(e.target.value) })} /> },
+    { key: "night_surcharge_pct", header: ar ? "% الليل" : "Night %", render: (r) => <Input type="number" step="0.01" defaultValue={r.night_surcharge_pct} className="w-24 h-8" onBlur={(e) => upd(r.id, { night_surcharge_pct: Number(e.target.value) })} /> },
     { key: "is_active", header: t("status"), render: (r) => <Switch checked={r.is_active} onCheckedChange={(v) => upd(r.id, { is_active: v })} /> },
   ];
 
