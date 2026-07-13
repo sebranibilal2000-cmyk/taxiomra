@@ -21,11 +21,23 @@ function AuthPage() {
   const { t, locale, setLocale } = useI18n();
   const { refresh } = useAuth();
   const navigate = useNavigate();
-  const [tab, setTab] = useState<"signin" | "signup">("signin");
+  const [tab, setTab] = useState<"signin" | "signup" | "forgot">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleForgot = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setLoading(false);
+    if (error) { toast.error(error.message); return; }
+    toast.success(locale === "ar" ? "تم إرسال رابط إعادة التعيين إلى بريدك" : "Reset link sent to your email");
+    setTab("signin");
+  };
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,6 +95,36 @@ function AuthPage() {
                   <Input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <Button className="w-full" disabled={loading}>{t("signin")}</Button>
+                <button
+                  type="button"
+                  className="w-full text-center text-xs text-muted-foreground hover:text-primary underline-offset-4 hover:underline"
+                  onClick={() => setTab("forgot")}
+                >
+                  {locale === "ar" ? "نسيت كلمة المرور؟" : "Forgot password?"}
+                </button>
+              </form>
+            </TabsContent>
+            <TabsContent value="forgot">
+              <form onSubmit={handleForgot} className="space-y-4 mt-4">
+                <p className="text-sm text-muted-foreground">
+                  {locale === "ar"
+                    ? "أدخل بريدك الإلكتروني وسنرسل لك رابطاً لإعادة تعيين كلمة المرور."
+                    : "Enter your email and we'll send you a link to reset your password."}
+                </p>
+                <div className="space-y-2">
+                  <Label>{t("email")}</Label>
+                  <Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <Button className="w-full" disabled={loading}>
+                  {locale === "ar" ? "إرسال الرابط" : "Send reset link"}
+                </Button>
+                <button
+                  type="button"
+                  className="w-full text-center text-xs text-muted-foreground hover:text-primary underline-offset-4 hover:underline"
+                  onClick={() => setTab("signin")}
+                >
+                  {locale === "ar" ? "العودة لتسجيل الدخول" : "Back to sign in"}
+                </button>
               </form>
             </TabsContent>
             <TabsContent value="signup">
