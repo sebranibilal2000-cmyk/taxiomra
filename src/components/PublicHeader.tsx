@@ -107,8 +107,8 @@ export function PublicHeader() {
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
           <Button asChild size="sm" variant="ghost" className="hidden md:inline-flex rounded-full">
-            <a href={telLink()} aria-label={locale === "ar" ? "اتصل بنا" : "Call us"}>
-              <Phone className="h-4 w-4 me-2" /> {SITE.phone}
+            <a href={telHref} aria-label={locale === "ar" ? "اتصل بنا" : "Call us"}>
+              <Phone className="h-4 w-4 me-2" /> {phone}
             </a>
           </Button>
           <Button
@@ -116,7 +116,7 @@ export function PublicHeader() {
             size="sm"
             className="hidden md:inline-flex rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-elegant"
           >
-            <a href={waLink()} target="_blank" rel="noopener">
+            <a href={waHref()} target="_blank" rel="noopener">
               <MessageCircle className="h-4 w-4 me-2" /> {locale === "ar" ? "احجز الآن" : "Book now"}
             </a>
           </Button>
@@ -150,10 +150,10 @@ export function PublicHeader() {
             </Link>
             <div className="flex gap-2 mt-3">
               <Button asChild variant="outline" className="flex-1 rounded-full">
-                <a href={telLink()}><Phone className="h-4 w-4 me-2" /> {locale === "ar" ? "اتصل" : "Call"}</a>
+                <a href={telHref}><Phone className="h-4 w-4 me-2" /> {locale === "ar" ? "اتصل" : "Call"}</a>
               </Button>
               <Button asChild className="flex-1 rounded-full bg-primary text-primary-foreground">
-                <a href={waLink()} target="_blank" rel="noopener"><MessageCircle className="h-4 w-4 me-2" /> WhatsApp</a>
+                <a href={waHref()} target="_blank" rel="noopener"><MessageCircle className="h-4 w-4 me-2" /> WhatsApp</a>
               </Button>
             </div>
           </nav>
