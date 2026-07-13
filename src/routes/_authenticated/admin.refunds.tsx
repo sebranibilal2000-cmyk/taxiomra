@@ -52,16 +52,22 @@ function Refunds() {
     onError: (e: any) => toast.error(e.message),
   });
 
+  const TYPE_LABEL: Record<string, string> = ar ? { full: "كامل", partial: "جزئي" } : { full: "Full", partial: "Partial" };
+  const METHOD_LABEL: Record<string, string> = ar
+    ? { cash: "نقدًا", card: "بطاقة", bank_transfer: "تحويل بنكي", stc_pay: "STC Pay", apple_pay: "Apple Pay", mada: "مدى", visa: "فيزا", mastercard: "ماستركارد", online: "أونلاين", wallet: "محفظة" }
+    : {};
+
   const cols: Column<any>[] = [
     { key: "reference", header: "#", render: (r) => <span className="font-mono text-xs">{r.reference}</span> },
-    { key: "refund_date", header: ar ? "التاريخ" : "Date", render: (r) => new Date(r.refund_date).toLocaleDateString() },
+    { key: "refund_date", header: ar ? "التاريخ" : "Date", render: (r) => new Date(r.refund_date).toLocaleDateString(ar ? "ar" : "en") },
     { key: "payment", header: ar ? "الدفعة" : "Payment", render: (r) => <span className="font-mono text-xs">{r.payment?.payment_number ?? "—"}</span> },
     { key: "customer", header: ar ? "العميل" : "Customer", render: (r) => r.payment?.customer?.full_name ?? "—" },
-    { key: "refund_type", header: ar ? "النوع" : "Type", render: (r) => <span className="capitalize">{r.refund_type}</span> },
+    { key: "refund_type", header: ar ? "النوع" : "Type", render: (r) => <span className="capitalize">{TYPE_LABEL[r.refund_type] ?? r.refund_type}</span> },
     { key: "amount", header: ar ? "المبلغ" : "Amount", render: (r) => <span className="font-display text-warning">{fmtMoney(r.amount, "SAR", locale)}</span> },
-    { key: "method", header: ar ? "الطريقة" : "Method" },
+    { key: "method", header: ar ? "الطريقة" : "Method", render: (r) => METHOD_LABEL[r.method] ?? r.method },
     { key: "reason", header: ar ? "السبب" : "Reason", render: (r) => <span className="text-xs text-muted-foreground line-clamp-1">{r.reason ?? "—"}</span> },
   ];
+
 
   return (
     <div>
