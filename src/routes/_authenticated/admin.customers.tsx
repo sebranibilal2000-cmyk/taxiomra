@@ -200,31 +200,37 @@ function NewCustomerDialog({ onDone }: { onDone: () => void }) {
         <div><Label>{t("phone")}</Label><Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
         <div><Label>Alt phone</Label><Input value={form.alt_phone} onChange={(e) => setForm({ ...form, alt_phone: e.target.value })} /></div>
         <div><Label>WhatsApp</Label><Input value={form.whatsapp} onChange={(e) => setForm({ ...form, whatsapp: e.target.value })} /></div>
+      <DialogHeader><DialogTitle>{locale === "ar" ? "عميل جديد" : `${t("new")} ${t("customer")}`}</DialogTitle></DialogHeader>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="md:col-span-2"><Label>{t("name")} *</Label><Input value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} /></div>
+        <div><Label>{t("phone")}</Label><Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
+        <div><Label>{locale === "ar" ? "هاتف بديل" : "Alt phone"}</Label><Input value={form.alt_phone} onChange={(e) => setForm({ ...form, alt_phone: e.target.value })} /></div>
+        <div><Label>{locale === "ar" ? "واتساب" : "WhatsApp"}</Label><Input value={form.whatsapp} onChange={(e) => setForm({ ...form, whatsapp: e.target.value })} /></div>
         <div><Label>{t("email")}</Label><Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
-        <div><Label>Company</Label><Input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} /></div>
-        <div><Label>VAT number</Label><Input value={form.vat_number} onChange={(e) => setForm({ ...form, vat_number: e.target.value })} /></div>
-        <div><Label>City</Label><Input value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></div>
-        <div><Label>Country</Label><Input value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} /></div>
+        <div><Label>{locale === "ar" ? "الشركة" : "Company"}</Label><Input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} /></div>
+        <div><Label>{locale === "ar" ? "الرقم الضريبي" : "VAT number"}</Label><Input value={form.vat_number} onChange={(e) => setForm({ ...form, vat_number: e.target.value })} /></div>
+        <div><Label>{locale === "ar" ? "المدينة" : "City"}</Label><Input value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></div>
+        <div><Label>{locale === "ar" ? "الدولة" : "Country"}</Label><Input value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} /></div>
         <div>
-          <Label>Tier</Label>
+          <Label>{locale === "ar" ? "الفئة" : "Tier"}</Label>
           <Select value={form.tier} onValueChange={(v) => setForm({ ...form, tier: v })}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="regular">Regular</SelectItem>
+              <SelectItem value="regular">{locale === "ar" ? "عادي" : "Regular"}</SelectItem>
               <SelectItem value="vip">VIP</SelectItem>
-              <SelectItem value="corporate">Corporate</SelectItem>
-              <SelectItem value="blacklisted">Blacklisted</SelectItem>
+              <SelectItem value="corporate">{locale === "ar" ? "شركات" : "Corporate"}</SelectItem>
+              <SelectItem value="blacklisted">{locale === "ar" ? "محظور" : "Blacklisted"}</SelectItem>
             </SelectContent>
           </Select>
         </div>
         <div>
-          <Label>Preferred language</Label>
+          <Label>{locale === "ar" ? "اللغة المفضلة" : "Preferred language"}</Label>
           <Select value={form.preferred_language} onValueChange={(v) => setForm({ ...form, preferred_language: v })}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent><SelectItem value="en">English</SelectItem><SelectItem value="ar">العربية</SelectItem></SelectContent>
           </Select>
         </div>
-        <div className="md:col-span-2"><Label>Notes</Label><Textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
+        <div className="md:col-span-2"><Label>{locale === "ar" ? "ملاحظات" : "Notes"}</Label><Textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
       </div>
       <DialogFooter>
         <Button variant="outline" onClick={() => onDone()}>{t("cancel")}</Button>
@@ -233,3 +239,4 @@ function NewCustomerDialog({ onDone }: { onDone: () => void }) {
     </DialogContent>
   );
 }
+
