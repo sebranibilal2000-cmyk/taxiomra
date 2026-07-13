@@ -15,6 +15,8 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { errorToMessage } from "@/lib/errors";
 import { SITE } from "@/lib/site-info";
 import { HeadInjector } from "@/components/HeadInjector";
+import { ContactInfoProvider } from "@/lib/contact-info";
+
 
 function NotFoundComponent() {
   return (
