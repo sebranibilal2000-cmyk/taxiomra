@@ -156,11 +156,18 @@ function CustomersPage() {
         actions={(r) => (
           <div className="flex items-center gap-1">
             <Link to="/admin/customers/$id" params={{ id: r.id }}>
-              <Button variant="ghost" size="sm">{locale === "ar" ? "عرض" : "Open"}</Button>
+              <Button variant="ghost" size="sm" title={locale === "ar" ? "تعديل" : "Edit"}><Edit className="h-4 w-4" /></Button>
             </Link>
+            <Button variant="ghost" size="sm" title={locale === "ar" ? "حذف" : "Delete"} onClick={async () => {
+              if (!confirm(locale === "ar" ? "حذف العميل؟" : "Delete customer?")) return;
+              const { error } = await supabase.from("customers").delete().eq("id", r.id);
+              if (error) toast.error(error.message);
+              else { toast.success(locale === "ar" ? "تم الحذف" : "Deleted"); qc.invalidateQueries({ queryKey: ["customers"] }); }
+            }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
           </div>
         )}
       />
+
     </div>
   );
 }
