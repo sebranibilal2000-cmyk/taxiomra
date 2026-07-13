@@ -328,7 +328,7 @@ function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | 
                 <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "نقطة الانطلاق" : "Pickup"}</div><div>{b.pickup_location}</div></div>
                 <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "الوجهة" : "Dropoff"}</div><div>{b.dropoff_location}</div></div>
                 <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "المركبة" : "Vehicle"}</div><div>{b.vehicle ? `${b.vehicle.make} ${b.vehicle.model} · ${b.vehicle.plate_number}` : "—"}</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "الفئة" : "Category"}</div><div>{b.category?.code ?? "—"}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "الفئة" : "Category"}</div><div>{b.category?.code ? catLabel(b.category.code, locale) : "—"}</div></div>
                 <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "المسافة" : "Distance"}</div><div>{Number(b.distance_km || 0).toFixed(1)} {ar ? "كم" : "km"}</div></div>
                 <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "الإجمالي" : "Total"}</div><div className="font-display text-lg">{Number(b.total_fare || 0).toFixed(2)}</div></div>
               </div>
