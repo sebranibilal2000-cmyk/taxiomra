@@ -61,7 +61,7 @@ export function PublicHeader() {
           />
           <div className="hidden sm:flex flex-col leading-tight">
             <span className="font-display text-lg tracking-tight">{SITE.brand[locale]}</span>
-            <span className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Chauffeur · 24/7</span>
+            <span className="text-[11px] tracking-[0.02em] text-muted-foreground" dir="rtl">تاكسي من مطار جدة إلى مكة المكرمة</span>
           </div>
         </Link>
 
