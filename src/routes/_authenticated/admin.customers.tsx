@@ -194,12 +194,6 @@ function NewCustomerDialog({ onDone }: { onDone: () => void }) {
   });
   return (
     <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-      <DialogHeader><DialogTitle>{t("new")} {t("customer")}</DialogTitle></DialogHeader>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div className="md:col-span-2"><Label>{t("name")} *</Label><Input value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} /></div>
-        <div><Label>{t("phone")}</Label><Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
-        <div><Label>Alt phone</Label><Input value={form.alt_phone} onChange={(e) => setForm({ ...form, alt_phone: e.target.value })} /></div>
-        <div><Label>WhatsApp</Label><Input value={form.whatsapp} onChange={(e) => setForm({ ...form, whatsapp: e.target.value })} /></div>
       <DialogHeader><DialogTitle>{locale === "ar" ? "عميل جديد" : `${t("new")} ${t("customer")}`}</DialogTitle></DialogHeader>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div className="md:col-span-2"><Label>{t("name")} *</Label><Input value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} /></div>
