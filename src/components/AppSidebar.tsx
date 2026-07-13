@@ -101,7 +101,7 @@ export function AppSidebar() {
   ];
 
   return (
-    <Sidebar collapsible="icon" className="border-e border-sidebar-border">
+    <Sidebar collapsible="icon" side={locale === "ar" ? "right" : "left"} className="border-e border-sidebar-border">
       <SidebarHeader className="border-b border-sidebar-border/60">
         <div className="flex items-center gap-3 px-1 py-3">
           <img
