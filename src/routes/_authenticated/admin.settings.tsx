@@ -47,19 +47,24 @@ const KEY_META: Record<string, { title: { ar: string; en: string }; help?: { ar:
       en: "Full <script>…</script> tags. Executed on every page.",
     },
   },
+  contact_phone: {
+    title: { ar: "رقم الاتصال (يشمل +)", en: "Phone number (include +)" },
+    help: { ar: "الرقم الظاهر في الرأس والتذييل وزر «اتصل الآن». مثال: +966551796487", en: "Shown in header, footer and the Call button. E.g. +966551796487" },
+  },
   whatsapp_number: {
     title: { ar: "رقم واتساب (بدون +)", en: "WhatsApp number (no +)" },
-    help: { ar: "مثال: 966551796487", en: "E.g. 966551796487" },
+    help: { ar: "أرقام فقط. يُستخدم في الزر العائم وروابط واتساب في كل الموقع. مثال: 966551796487", en: "Digits only. Used by the floating button and all WhatsApp links site-wide. E.g. 966551796487" },
   },
   whatsapp_default_message: {
     title: { ar: "رسالة واتساب الافتراضية", en: "Default WhatsApp message" },
+    help: { ar: "الرسالة التي تظهر جاهزة للإرسال عند الضغط على زر واتساب.", en: "Pre-filled message when a visitor taps the WhatsApp button." },
   },
 };
 
 // Grouping for the settings screen so it's not a flat wall of keys.
 const GROUPS: { titleAr: string; titleEn: string; matches: (key: string) => boolean }[] = [
   { titleAr: "أدوات المشرف على الرأس (SEO / Analytics)", titleEn: "Head tools (SEO / Analytics)", matches: (k) => ["google_site_verification", "bing_site_verification", "head_meta_custom", "head_scripts_custom"].includes(k) },
-  { titleAr: "واتساب", titleEn: "WhatsApp", matches: (k) => k.startsWith("whatsapp_") },
+  { titleAr: "الاتصال وواتساب", titleEn: "Contact & WhatsApp", matches: (k) => k === "contact_phone" || k.startsWith("whatsapp_") },
   { titleAr: "إعدادات أخرى", titleEn: "Other settings", matches: () => true }, // catch-all
 ];
 
