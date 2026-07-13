@@ -124,3 +124,38 @@ export const exportAllData = createServerFn({ method: "POST" })
     // Return as a JSON string to keep the RPC serializer happy with heterogeneous rows.
     return { json: JSON.stringify(payload) };
   });
+
+// ---- Import / restore ----------------------------------------------------
+// Admin-only. Upserts rows from an exported bundle back into each table.
+// Uses the service-role client so RLS won't block admin restore, but still
+// authorizes the caller via assertAdmin(). Errors per-table are collected
+// so a partial failure doesn't abort the whole restore.
+export const importAllData = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { json: string; mode?: "upsert" | "insert" }) => d)
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    let parsed: any;
+    try { parsed = JSON.parse(data.json); } catch { throw new Error("Invalid JSON file"); }
+    const tables = parsed?.tables && typeof parsed.tables === "object" ? parsed.tables : parsed;
+    if (!tables || typeof tables !== "object") throw new Error("Unrecognized backup format");
+
+    const report: { table: string; inserted: number; error?: string }[] = [];
+    for (const table of EXPORT_TABLES) {
+      const rows = Array.isArray(tables[table]) ? tables[table].filter((r: any) => r && !r.__error) : [];
+      if (!rows.length) { report.push({ table, inserted: 0 }); continue; }
+      // Chunk to avoid oversized payloads
+      let inserted = 0;
+      let lastErr: string | undefined;
+      for (let i = 0; i < rows.length; i += 500) {
+        const chunk = rows.slice(i, i + 500);
+        const q = supabaseAdmin.from(table as any).upsert(chunk, { onConflict: "id", ignoreDuplicates: data.mode === "insert" });
+        const { error, count } = await q.select("id", { count: "exact", head: false });
+        if (error) { lastErr = error.message; break; }
+        inserted += count ?? chunk.length;
+      }
+      report.push({ table, inserted, error: lastErr });
+    }
+    return { report, imported_at: new Date().toISOString() };
+  });
