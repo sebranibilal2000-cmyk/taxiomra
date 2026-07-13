@@ -12,11 +12,17 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export const Route = createFileRoute("/_authenticated/admin/reminders")({ component: RemindersPage });
 
 // Reminder windows (days). Spec: warn 90/60/30/14/7/1 days before expiry.
-const WINDOWS = [
+const WINDOWS_EN = [
   { key: "expired", label: "Expired", cls: "bg-destructive/15 text-destructive border-destructive/30" },
   { key: "7", label: "≤ 7 days", cls: "bg-destructive/10 text-destructive border-destructive/20" },
   { key: "30", label: "≤ 30 days", cls: "bg-orange-500/10 text-orange-600 border-orange-500/20" },
   { key: "90", label: "≤ 90 days", cls: "bg-yellow-500/10 text-yellow-700 border-yellow-500/20" },
+];
+const WINDOWS_AR = [
+  { key: "expired", label: "منتهية", cls: "bg-destructive/15 text-destructive border-destructive/30" },
+  { key: "7", label: "خلال 7 أيام", cls: "bg-destructive/10 text-destructive border-destructive/20" },
+  { key: "30", label: "خلال 30 يوم", cls: "bg-orange-500/10 text-orange-600 border-orange-500/20" },
+  { key: "90", label: "خلال 90 يوم", cls: "bg-yellow-500/10 text-yellow-700 border-yellow-500/20" },
 ];
 
 function bucket(dateStr: string | null | undefined): string | null {
