@@ -90,7 +90,7 @@ function Dashboard() {
         <Card className="xl:col-span-2 rounded-2xl border-border/70">
           <CardHeader className="flex flex-row items-start justify-between space-y-0">
             <div>
-              <div className="text-[10px] uppercase tracking-[0.22em] text-gold mb-1">7 days</div>
+              <div className="text-[10px] uppercase tracking-[0.22em] text-gold mb-1">{ar ? "٧ أيام" : "7 days"}</div>
               <CardTitle className="font-display text-xl">{ar ? "الرحلات" : "Trips"}</CardTitle>
             </div>
           </CardHeader>
@@ -110,7 +110,7 @@ function Dashboard() {
         <Card className="rounded-2xl border-border/70">
           <CardHeader className="flex flex-row items-start justify-between space-y-0">
             <div>
-              <div className="text-[10px] uppercase tracking-[0.22em] text-gold mb-1">Weekly</div>
+              <div className="text-[10px] uppercase tracking-[0.22em] text-gold mb-1">{ar ? "أسبوعي" : "Weekly"}</div>
               <CardTitle className="font-display text-xl">{ar ? "الإيرادات" : "Revenue"}</CardTitle>
             </div>
           </CardHeader>
