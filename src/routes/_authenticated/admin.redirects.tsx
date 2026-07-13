@@ -11,6 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Trash2, Plus } from "lucide-react";
 import { toast } from "sonner";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/admin/redirects")({
   component: RedirectsPage,
@@ -26,6 +27,8 @@ type Row = {
 };
 
 function RedirectsPage() {
+  const { locale } = useI18n();
+  const ar = locale === "ar";
   const qc = useQueryClient();
   const { data, isLoading } = useQuery({
     queryKey: ["seo_redirects"],
@@ -40,16 +43,16 @@ function RedirectsPage() {
 
   const add = async () => {
     if (!form.source_path.startsWith("/") || !form.destination_path.startsWith("/")) {
-      toast.error("Both paths must start with /");
+      toast.error(ar ? "يجب أن يبدأ كلا المسارين بـ /" : "Both paths must start with /");
       return;
     }
     if (form.source_path === form.destination_path) {
-      toast.error("Source and destination must differ");
+      toast.error(ar ? "يجب أن يختلف المصدر عن الوجهة" : "Source and destination must differ");
       return;
     }
     const { error } = await supabase.from("seo_redirects").insert(form as any);
     if (error) { toast.error(error.message); return; }
-    toast.success("Redirect added");
+    toast.success(ar ? "تمت الإضافة" : "Redirect added");
     setForm({ source_path: "", destination_path: "", status_code: 301, active: true });
     qc.invalidateQueries({ queryKey: ["seo_redirects"] });
   };
@@ -67,30 +70,32 @@ function RedirectsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-serif text-3xl">Redirect Manager</h1>
-        <p className="text-sm text-muted-foreground">Manage 301/302 URL redirects. Paths are locale-agnostic (leading /en or /ar is stripped before matching).</p>
+        <h1 className="font-serif text-3xl">{ar ? "إدارة التوجيهات" : "Redirect Manager"}</h1>
+        <p className="text-sm text-muted-foreground">
+          {ar ? "إدارة توجيهات الروابط 301/302. المسارات مستقلة عن اللغة (يُزال /en أو /ar من البداية قبل المطابقة)." : "Manage 301/302 URL redirects. Paths are locale-agnostic (leading /en or /ar is stripped before matching)."}
+        </p>
       </div>
 
       <Card className="p-4">
-        <h2 className="mb-3 font-semibold">Add redirect</h2>
+        <h2 className="mb-3 font-semibold">{ar ? "إضافة توجيه" : "Add redirect"}</h2>
         <div className="grid gap-3 md:grid-cols-5">
           <div className="md:col-span-2">
-            <Label>From</Label>
+            <Label>{ar ? "من" : "From"}</Label>
             <Input placeholder="/old-path" value={form.source_path} onChange={(e) => setForm((f) => ({ ...f, source_path: e.target.value.trim() }))} />
           </div>
           <div className="md:col-span-2">
-            <Label>To</Label>
+            <Label>{ar ? "إلى" : "To"}</Label>
             <Input placeholder="/new-path" value={form.destination_path} onChange={(e) => setForm((f) => ({ ...f, destination_path: e.target.value.trim() }))} />
           </div>
           <div>
-            <Label>Code</Label>
+            <Label>{ar ? "الكود" : "Code"}</Label>
             <Select value={String(form.status_code)} onValueChange={(v) => setForm((f) => ({ ...f, status_code: Number(v) }))}>
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="301">301 Permanent</SelectItem>
-                <SelectItem value="302">302 Temporary</SelectItem>
-                <SelectItem value="307">307 Preserve method</SelectItem>
-                <SelectItem value="308">308 Permanent preserve</SelectItem>
+                <SelectItem value="301">301 {ar ? "دائم" : "Permanent"}</SelectItem>
+                <SelectItem value="302">302 {ar ? "مؤقت" : "Temporary"}</SelectItem>
+                <SelectItem value="307">307 {ar ? "مع الحفاظ على الطريقة" : "Preserve method"}</SelectItem>
+                <SelectItem value="308">308 {ar ? "دائم مع الحفاظ" : "Permanent preserve"}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -98,25 +103,25 @@ function RedirectsPage() {
         <div className="mt-4 flex items-center justify-between">
           <label className="flex items-center gap-2 text-sm">
             <Switch checked={form.active} onCheckedChange={(v) => setForm((f) => ({ ...f, active: v }))} />
-            Active
+            {ar ? "مفعّل" : "Active"}
           </label>
-          <Button onClick={add}><Plus className="mr-2 h-4 w-4" /> Add</Button>
+          <Button onClick={add}><Plus className="me-2 h-4 w-4" /> {ar ? "إضافة" : "Add"}</Button>
         </div>
       </Card>
 
       <Card className="overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-muted/40 text-left">
+          <thead className="bg-muted/40 text-start">
             <tr>
-              <th className="p-3">From</th>
-              <th className="p-3">To</th>
-              <th className="p-3 w-24">Code</th>
-              <th className="p-3 w-24">Active</th>
+              <th className="p-3 text-start">{ar ? "من" : "From"}</th>
+              <th className="p-3 text-start">{ar ? "إلى" : "To"}</th>
+              <th className="p-3 w-24 text-start">{ar ? "الكود" : "Code"}</th>
+              <th className="p-3 w-24 text-start">{ar ? "مفعّل" : "Active"}</th>
               <th className="p-3 w-16"></th>
             </tr>
           </thead>
           <tbody>
-            {isLoading && <tr><td colSpan={5} className="p-6 text-center text-muted-foreground">Loading…</td></tr>}
+            {isLoading && <tr><td colSpan={5} className="p-6 text-center text-muted-foreground">{ar ? "جاري التحميل…" : "Loading…"}</td></tr>}
             {(data ?? []).map((r) => (
               <tr key={r.id} className="border-t">
                 <td className="p-3 font-mono text-xs">{r.source_path}</td>
@@ -129,7 +134,7 @@ function RedirectsPage() {
               </tr>
             ))}
             {(data ?? []).length === 0 && !isLoading && (
-              <tr><td colSpan={5} className="p-6 text-center text-muted-foreground">No redirects yet.</td></tr>
+              <tr><td colSpan={5} className="p-6 text-center text-muted-foreground">{ar ? "لا توجد توجيهات بعد." : "No redirects yet."}</td></tr>
             )}
           </tbody>
         </table>
