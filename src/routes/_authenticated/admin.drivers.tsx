@@ -95,11 +95,12 @@ function Drivers() {
 
   const del = async (id: string) => {
     if (!confirm(ar ? "حذف السائق؟" : "Delete driver?")) return;
-    const { error } = await supabase.from("drivers").update({ deleted_at: new Date().toISOString() as any }).eq("id", id);
+    const { error } = await supabase.from("drivers").update({ status: "suspended" as any }).eq("id", id);
     if (error) return toast.error(error.message);
-    toast.success(ar ? "تم الحذف" : "Deleted");
+    toast.success(ar ? "تم التعليق" : "Suspended");
     qc.invalidateQueries({ queryKey: ["drivers"] });
   };
+
 
   const alerts = (q.data ?? []).filter((d: any) => [d.license_expiry, d.medical_expiry, d.work_permit_expiry, d.insurance_expiry].some((x: string | null) => x && daysUntil(x)! <= 30)).length;
 
