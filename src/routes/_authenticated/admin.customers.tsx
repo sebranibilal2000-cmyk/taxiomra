@@ -132,7 +132,10 @@ function CustomersPage() {
           <SelectContent>
             {TIERS.map((v) => {
               const Icon = TIER_ICONS[v];
-              return <SelectItem key={v} value={v}><span className="inline-flex items-center gap-2"><Icon className="h-3.5 w-3.5" />{v === "all" ? (locale === "ar" ? "كل الفئات" : "All tiers") : v}</span></SelectItem>;
+              const TIER_LABEL_AR: Record<string, string> = { regular: "عادي", vip: "VIP", corporate: "شركات", blacklisted: "محظور", all: "الكل" };
+              const label = v === "all" ? (locale === "ar" ? "كل الفئات" : "All tiers") : (locale === "ar" ? TIER_LABEL_AR[v] : v);
+              return <SelectItem key={v} value={v}><span className="inline-flex items-center gap-2"><Icon className="h-3.5 w-3.5" />{label}</span></SelectItem>;
+
             })}
           </SelectContent>
         </Select>
