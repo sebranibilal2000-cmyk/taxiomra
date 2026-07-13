@@ -4,7 +4,9 @@ import { Menu, X, Phone, MessageCircle, Languages, Moon, Sun } from "lucide-reac
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
-import { SITE, waLink, telLink } from "@/lib/site-info";
+import { SITE } from "@/lib/site-info";
+import { useContactInfo } from "@/lib/contact-info";
+
 import { cn } from "@/lib/utils";
 
 export function PublicHeader() {
