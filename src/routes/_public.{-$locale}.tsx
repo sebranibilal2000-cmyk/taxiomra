@@ -9,6 +9,7 @@ import {
   LOCALES,
   DEFAULT_LOCALE,
   withLocale,
+  type Locale,
 } from "@/lib/i18n";
 import { resolveRedirect } from "@/lib/seo-tools.functions";
 
