@@ -172,11 +172,13 @@ function Reports() {
   const ar = locale === "ar";
 
   const gate = useHasPermission("reports.view");
+  const [category, setCategory] = useState<string>(CATEGORIES[0]);
   const [selected, setSelected] = useState<string>("bookings");
   const [rangeKey, setRangeKey] = useState<"7d"|"30d"|"90d"|"365d"|"mtd"|"ytd">("30d");
   const [q, setQ] = useState("");
   const range = useMemo(() => rangeFromKey(rangeKey), [rangeKey]);
   const def = REPORTS.find((r) => r.key === selected)!;
+
 
   const query = useQuery({
     queryKey: ["report", selected, rangeKey],
