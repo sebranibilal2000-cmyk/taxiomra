@@ -48,7 +48,7 @@ function Refunds() {
       });
       if (error) throw error;
     },
-    onSuccess: () => { toast.success("Refund processed"); setOpen(false); qc.invalidateQueries({ queryKey: ["refunds"] }); qc.invalidateQueries({ queryKey: ["payments"] }); },
+    onSuccess: () => { toast.success(ar ? "تمت معالجة الاسترداد" : "Refund processed"); setOpen(false); qc.invalidateQueries({ queryKey: ["refunds"] }); qc.invalidateQueries({ queryKey: ["payments"] }); },
     onError: (e: any) => toast.error(e.message),
   });
 
