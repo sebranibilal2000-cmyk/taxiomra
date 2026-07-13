@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, MessageCircle, ChevronRight, Users } from "lucide-react";
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
+import { categoryImage, categoryGallery, categoryAlt } from "@/lib/fleet-images";
 
 const opts = (code: string) =>
   queryOptions({
@@ -39,6 +40,8 @@ export const Route = createFileRoute("/_public/{-$locale}/fleet/$slug")({
     const url = `/${locale}/fleet/${row.code}`;
     const title = `${cur.name} — ${SITE.brand[locale]}`;
     const desc = cur.description || `${en.name} with ${row.seats} seats.`;
+    const hero = categoryImage(row);
+    const ogImage = hero?.startsWith("http") ? hero : `${SITE.url}${hero}`;
     return {
       meta: [
         { title },
@@ -46,7 +49,9 @@ export const Route = createFileRoute("/_public/{-$locale}/fleet/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "product" },
+        { property: "og:image", content: ogImage },
         { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:image", content: ogImage },
       ],
       links: [],
       scripts: [
@@ -119,7 +124,29 @@ function VehicleDetail() {
         <div className="inline-block rounded-full bg-primary/10 text-primary text-xs font-semibold px-3 py-1 mb-4 uppercase tracking-wide">
           {ar ? "من أسطولنا" : "From our fleet"}
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">{cur.name}</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-6">{cur.name}</h1>
+
+        {(() => {
+          const gallery = categoryGallery(row);
+          const alt = categoryAlt(row, locale);
+          return (
+            <div className="mb-8 space-y-3">
+              <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border bg-muted">
+                <img src={gallery[0]} alt={alt} width={1600} height={1000} decoding="async" loading="eager" fetchPriority="high" className="h-full w-full object-cover" />
+              </div>
+              {gallery.length > 1 && (
+                <div className="grid grid-cols-3 gap-3">
+                  {gallery.slice(0, 6).map((src, i) => (
+                    <div key={i} className="relative aspect-[4/3] overflow-hidden rounded-xl border bg-muted">
+                      <img src={src} alt={`${alt} — ${i + 1}`} width={800} height={600} loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })()}
+
         <p className="text-lg text-muted-foreground mb-6">{cur.description}</p>
         <dl className="grid gap-4 sm:grid-cols-3 my-8">
           <div className="rounded-xl border p-4">
@@ -159,18 +186,25 @@ function VehicleDetail() {
             {ar ? "مركبات أخرى" : "Other vehicles"}
           </h2>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {data.related.map((r: any) => {
+            {data.related.map((r: any, i: number) => {
               const t = pickTr(r, locale);
+              const img = categoryImage(r, i);
+              const alt = categoryAlt(r, locale);
               return (
                 <a
                   key={r.id}
                   href={withLocale(locale, `/fleet/${r.code}`)}
-                  className="group block rounded-xl border bg-card overflow-hidden p-5 hover:shadow-md hover:-translate-y-0.5 transition"
+                  className="group block rounded-xl border bg-card overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition"
                 >
-                  <h3 className="font-semibold mb-1 group-hover:text-primary">{t.name}</h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2">{t.description}</p>
-                  <div className="mt-3 text-xs text-muted-foreground flex items-center gap-1">
-                    <Users className="h-3 w-3" /> {r.seats}
+                  <div className="aspect-[4/3] overflow-hidden bg-muted">
+                    <img src={img} alt={alt} width={800} height={600} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-semibold mb-1 group-hover:text-primary">{t.name}</h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">{t.description}</p>
+                    <div className="mt-3 text-xs text-muted-foreground flex items-center gap-1">
+                      <Users className="h-3 w-3" /> {r.seats}
+                    </div>
                   </div>
                 </a>
               );

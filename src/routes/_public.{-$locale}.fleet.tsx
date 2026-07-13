@@ -5,12 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Users, Briefcase, ArrowRight, CheckCircle2, MessageCircle } from "lucide-react";
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink } from "@/lib/site-info";
-import sedanImg from "@/assets/fleet-sedan.jpg";
-import suvImg from "@/assets/fleet-suv.jpg";
-import vanImg from "@/assets/fleet-van.jpg";
+import { categoryImage, categoryAlt } from "@/lib/fleet-images";
 
 const opts = () => queryOptions({ queryKey: ["public", "fleet"], queryFn: () => listVehicleCategories() });
-const IMG_BY_CODE: Record<string, string> = { sedan: sedanImg, business: sedanImg, premium: sedanImg, suv: suvImg, van: vanImg };
 const FEATURES = [
   { ar: "مقاعد جلدية", en: "Leather interior" },
   { ar: "واي‑فاي مجاني", en: "Complimentary Wi-Fi" },
@@ -58,12 +55,13 @@ function Fleet() {
       <section className="container-tight pb-24 space-y-8">
         {items.map((c: any, i: number) => {
           const tr = c.vehicle_category_translations?.find((t: any) => t.locale === locale) || c.vehicle_category_translations?.[0];
-          const img = IMG_BY_CODE[c.code?.toLowerCase?.()] || [sedanImg, suvImg, vanImg][i % 3];
+          const img = categoryImage(c, i);
+          const alt = categoryAlt(c, locale);
           const flip = i % 2 === 1;
           return (
             <article key={c.id} className="hover-lift grid gap-8 md:gap-12 lg:grid-cols-12 items-center rounded-3xl border border-border bg-card p-6 md:p-10">
               <div className={`lg:col-span-7 relative aspect-[16/10] overflow-hidden rounded-2xl bg-primary ${flip ? "lg:order-2" : ""}`}>
-                <img src={img} alt={tr?.name} width={1200} height={800} loading="lazy" className="h-full w-full object-cover" />
+                <img src={img} alt={alt} width={1200} height={800} loading="lazy" decoding="async" className="h-full w-full object-cover" />
                 <div className="absolute top-4 start-4 rounded-full bg-primary/70 backdrop-blur px-3 py-1 text-xs uppercase tracking-wider text-primary-foreground">{c.code}</div>
               </div>
               <div className={`lg:col-span-5 space-y-6 ${flip ? "lg:order-1" : ""}`}>

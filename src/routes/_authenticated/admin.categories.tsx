@@ -21,6 +21,16 @@ function Categories() {
   };
 
   const cols: Column<any>[] = [
+    {
+      key: "featured_image_url",
+      header: "",
+      render: (r) =>
+        r.featured_image_url ? (
+          <img src={r.featured_image_url} alt={r.code} width={64} height={40} loading="lazy" decoding="async" className="h-10 w-16 object-cover rounded-md border" />
+        ) : (
+          <div className="h-10 w-16 rounded-md border bg-muted" />
+        ),
+    },
     { key: "code", header: t("code"), render: (r) => <span className="font-medium uppercase">{r.code}</span> },
     { key: "seats", header: t("seats"), render: (r) => <Input type="number" defaultValue={r.seats} className="w-20 h-8" onBlur={(e) => update(r.id, { seats: Number(e.target.value) })} /> },
     { key: "base_fare", header: "Base", render: (r) => <Input type="number" step="0.01" defaultValue={r.base_fare} className="w-24 h-8" onBlur={(e) => update(r.id, { base_fare: Number(e.target.value) })} /> },

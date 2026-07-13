@@ -12,9 +12,7 @@ import { SITE, waLink, telLink } from "@/lib/site-info";
 import heroImg from "@/assets/hero-luxury-car.jpg";
 import airportImg from "@/assets/airport-transfer.jpg";
 import businessImg from "@/assets/business-travel.jpg";
-import sedanImg from "@/assets/fleet-sedan.jpg";
-import suvImg from "@/assets/fleet-suv.jpg";
-import vanImg from "@/assets/fleet-van.jpg";
+import { categoryImage, categoryAlt, FALLBACK_FLEET_IMAGES } from "@/lib/fleet-images";
 
 const homeOpts = () => queryOptions({
   queryKey: ["public", "home"],
@@ -97,7 +95,7 @@ export const Route = createFileRoute("/_public/{-$locale}/")({
   component: Home,
 });
 
-const FLEET_IMAGES: Record<string, string> = { sedan: sedanImg, business: sedanImg, suv: suvImg, van: vanImg, premium: sedanImg };
+// Fleet images now flow from the DB via categoryImage() with a legacy fallback.
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return <span className="eyebrow"><span className="h-px w-8 bg-gold" />{children}</span>;
@@ -291,12 +289,13 @@ function Home() {
         <div className="grid gap-6 md:grid-cols-3">
           {data.fleet.slice(0, 3).map((c: any, i: number) => {
             const tr = c.vehicle_category_translations?.find((t: any) => t.locale === locale) || c.vehicle_category_translations?.[0];
-            const img = FLEET_IMAGES[c.code?.toLowerCase?.()] || [sedanImg, suvImg, vanImg][i % 3];
+            const img = categoryImage(c, i);
+            const alt = categoryAlt(c, locale);
             return (
               <Link key={c.id} to="/fleet" className="group">
                 <article className="hover-lift overflow-hidden rounded-2xl border border-border bg-card">
                   <div className="aspect-[4/3] overflow-hidden bg-primary">
-                    <img src={img} alt={tr?.name ?? c.code} width={1200} height={800} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <img src={img} alt={alt} width={1200} height={800} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   </div>
                   <div className="p-6 space-y-3">
                     <div className="flex items-center justify-between">
@@ -314,7 +313,7 @@ function Home() {
             );
           })}
           {data.fleet.length === 0 && (
-            [{ img: sedanImg, name: ar ? "سيدان أعمال" : "Business Sedan" }, { img: suvImg, name: "Executive SUV" }, { img: vanImg, name: ar ? "فان جماعي" : "Group Van" }].map((v, i) => (
+            [{ img: FALLBACK_FLEET_IMAGES[0], name: ar ? "سيدان أعمال" : "Business Sedan" }, { img: FALLBACK_FLEET_IMAGES[1], name: "Executive SUV" }, { img: FALLBACK_FLEET_IMAGES[2], name: ar ? "فان جماعي" : "Group Van" }].map((v, i) => (
               <article key={i} className="hover-lift overflow-hidden rounded-2xl border border-border bg-card">
                 <div className="aspect-[4/3] overflow-hidden bg-primary"><img src={v.img} alt={v.name} width={1200} height={800} loading="lazy" className="h-full w-full object-cover" /></div>
                 <div className="p-6"><h3 className="font-display text-2xl">{v.name}</h3></div>
