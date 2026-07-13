@@ -141,6 +141,12 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     if (isLocale(params.locale)) return params.locale;
     const fromUrl = localeFromPath(pathname);
     if (fromUrl) return fromUrl;
+    if (typeof window !== "undefined") {
+      try {
+        const stored = window.localStorage.getItem("locale");
+        if (isLocale(stored)) return stored;
+      } catch {}
+    }
     return DEFAULT_LOCALE;
   }, [params.locale, pathname]);
 
@@ -160,8 +166,13 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     try {
       window.localStorage.setItem("locale", l);
     } catch {}
-    const target = withLocale(l, pathname);
-    router.navigate({ to: target, replace: false });
+    const hasLocalePrefix = !!localeFromPath(pathname);
+    if (hasLocalePrefix) {
+      const target = withLocale(l, pathname);
+      router.navigate({ to: target, replace: false });
+    } else if (typeof window !== "undefined") {
+      window.location.reload();
+    }
   };
 
   const t = (key: string) => dict[key]?.[locale] ?? key;
