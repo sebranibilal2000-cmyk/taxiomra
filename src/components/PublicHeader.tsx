@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 export function PublicHeader() {
   const { locale, setLocale, t } = useI18n();
   const { theme, toggle } = useTheme();
+  const { phone, telHref, waHref } = useContactInfo();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
