@@ -24,7 +24,7 @@ export function AppSidebar() {
   const path = useRouterState({ select: (r) => r.location.pathname });
   const isActive = (p: string) => path === p || path.startsWith(p + "/");
 
-  const groups: { label: string; items: { title: string; url: string; icon: any }[] }[] = [
+  const groups: { label: string; items: { title: string; url: string; icon: any; external?: boolean }[] }[] = [
     { label: t("overview"), items: [{ title: t("dashboard"), url: "/admin/dashboard", icon: LayoutDashboard }] },
     { label: t("operations"), items: [
       { title: t("bookings"), url: "/admin/bookings", icon: CalendarCheck },
