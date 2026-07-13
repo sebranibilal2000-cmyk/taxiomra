@@ -37,6 +37,14 @@ const CANCEL_CATEGORIES = ["customer_request", "no_show", "duplicate", "weather"
 const CANCEL_CAT_AR: Record<string, string> = {
   customer_request: "طلب العميل", no_show: "لم يحضر", duplicate: "مكرر", weather: "طقس", vehicle_issue: "مشكلة مركبة", other: "أخرى",
 };
+const CATEGORY_LABEL_AR: Record<string, string> = {
+  economy: "اقتصادي", standard: "قياسي", business: "أعمال", premium: "بريميوم",
+  suv: "دفع رباعي", family_suv: "دفع رباعي عائلي", luxury_van: "فان فاخر", van: "فان", vip: "VIP",
+};
+function catLabel(code: string, locale: string) {
+  if (locale === "ar") return CATEGORY_LABEL_AR[code] ?? code;
+  return code.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 function BookingsPage() {
   const { t, locale } = useI18n();
