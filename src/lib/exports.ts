@@ -2,9 +2,26 @@
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { downloadCsv } from "./csv";
+import { downloadCsv, neutralizeFormula } from "./csv";
 
 export type Column = { key: string; label?: string; width?: number };
+
+function escapeHtml(v: any): string {
+  if (v === null || v === undefined) return "";
+  const s = typeof v === "object" ? JSON.stringify(v) : String(v);
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function safeCell(v: any): string {
+  if (v === null || v === undefined) return "";
+  const s = typeof v === "object" ? JSON.stringify(v) : String(v);
+  return neutralizeFormula(s);
+}
 
 export function exportCsv(filename: string, rows: any[], columns?: Column[]) {
   downloadCsv(filename, rows, columns);
@@ -12,7 +29,11 @@ export function exportCsv(filename: string, rows: any[], columns?: Column[]) {
 
 export function exportExcel(filename: string, rows: any[], columns?: Column[], sheetName = "Sheet1") {
   const cols: Column[] = columns ?? Object.keys(rows[0] ?? {}).map((k) => ({ key: k, label: k }));
-  const data = rows.map((r) => Object.fromEntries(cols.map((c) => [c.label ?? c.key, r[c.key] ?? ""])));
+  const data = rows.map((r) => Object.fromEntries(cols.map((c) => {
+    const v = r[c.key];
+    const safe = v === null || v === undefined ? "" : (typeof v === "string" ? neutralizeFormula(v) : (typeof v === "object" ? neutralizeFormula(JSON.stringify(v)) : v));
+    return [c.label ?? c.key, safe];
+  })));
   const ws = XLSX.utils.json_to_sheet(data);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, sheetName);
@@ -60,7 +81,8 @@ export function exportPdf(opts: {
 export function printHtml(html: string, title = "Print") {
   const w = window.open("", "_blank", "width=900,height=700");
   if (!w) return;
-  w.document.write(`<!doctype html><html><head><title>${title}</title>
+  const safeTitle = escapeHtml(title);
+  w.document.write(`<!doctype html><html><head><title>${safeTitle}</title>
     <style>
       body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:24px;color:#111}
       h1{font-size:20px;margin:0 0 8px}
@@ -69,14 +91,15 @@ export function printHtml(html: string, title = "Print") {
       th{background:#111;color:#fff;font-weight:600}
       tr:nth-child(even) td{background:#f7f7f7}
       @media print{@page{margin:1cm}}
-    </style></head><body>${html}<script>window.onload=()=>{window.print();setTimeout(()=>window.close(),300)}</script></body></html>`);
+    </style></head><body>${html}<script>window.onload=()=>{window.print();setTimeout(()=>window.close(),300)}<\/script></body></html>`);
   w.document.close();
 }
 
 export function printTable(title: string, rows: any[], columns: Column[]) {
-  const head = columns.map((c) => `<th>${c.label ?? c.key}</th>`).join("");
-  const body = rows.map((r) => `<tr>${columns.map((c) => `<td>${r[c.key] ?? ""}</td>`).join("")}</tr>`).join("");
-  printHtml(`<h1>${title}</h1><div style="color:#666;font-size:11px">Generated ${new Date().toLocaleString()}</div><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`, title);
+  const head = columns.map((c) => `<th>${escapeHtml(c.label ?? c.key)}</th>`).join("");
+  const body = rows.map((r) => `<tr>${columns.map((c) => `<td>${escapeHtml(r[c.key])}</td>`).join("")}</tr>`).join("");
+  const safeTitle = escapeHtml(title);
+  printHtml(`<h1>${safeTitle}</h1><div style="color:#666;font-size:11px">Generated ${escapeHtml(new Date().toLocaleString())}</div><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`, title);
 }
 
 // Universal export menu action set
@@ -89,3 +112,6 @@ export function exportData(format: ExportFormat, filename: string, rows: any[], 
     case "print": return printTable(title ?? filename, rows, columns);
   }
 }
+
+// Explicitly reference safeCell to keep it exported for potential external use.
+export { safeCell };
