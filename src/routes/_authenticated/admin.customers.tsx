@@ -112,7 +112,7 @@ function CustomersPage() {
                 first_booking_at: r.first_booking_at, last_booking_at: r.last_booking_at,
                 preferred_language: r.preferred_language, tags: (r.tags ?? []).join("|"), notes: r.notes,
               })));
-              toast.success(`${filtered.length} rows`);
+              toast.success(locale === "ar" ? `${filtered.length} صف` : `${filtered.length} rows`);
             }}><Download className="h-4 w-4 me-1" />CSV</Button>
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild><Button><Plus className="h-4 w-4 me-1" />{t("new")}</Button></DialogTrigger>
