@@ -14,6 +14,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { errorToMessage } from "@/lib/errors";
 import { SITE } from "@/lib/site-info";
+import { HeadInjector } from "@/components/HeadInjector";
 
 function NotFoundComponent() {
   return (
@@ -103,6 +104,7 @@ function RootComponent() {
       <ThemeProvider>
         <I18nProvider>
           <AuthProvider>
+            <HeadInjector />
             <ErrorBoundary>
               <Outlet />
             </ErrorBoundary>
