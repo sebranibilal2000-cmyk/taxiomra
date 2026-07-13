@@ -160,10 +160,17 @@ const REPORTS: ReportDef[] = [
 
 const CATEGORIES = Array.from(new Set(REPORTS.map((r) => r.category)));
 
+const CAT_LABEL_AR: Record<string, string> = {
+  Operations: "العمليات", Catalog: "الكتالوج", CMS: "المحتوى",
+  Finance: "المالية", Marketing: "التسويق", SEO: "السيو", System: "النظام",
+};
+
 const getVal = (obj: any, path: string): any => path.split(".").reduce((v, k) => (v == null ? v : v[k]), obj);
 
 function Reports() {
   const { locale } = useI18n();
+  const ar = locale === "ar";
+
   const gate = useHasPermission("reports.view");
   const [selected, setSelected] = useState<string>("bookings");
   const [rangeKey, setRangeKey] = useState<"7d"|"30d"|"90d"|"365d"|"mtd"|"ytd">("30d");
