@@ -258,9 +258,9 @@ function Reports() {
         <CardHeader className="flex flex-row items-center justify-between gap-4">
           <div>
             <CardTitle>{def.label}</CardTitle>
-            <div className="text-xs text-muted-foreground mt-1">{filtered.length} rows · {def.category}</div>
+            <div className="text-xs text-muted-foreground mt-1">{filtered.length} {ar ? "سجل" : "rows"} · {ar ? (CAT_LABEL_AR[def.category] ?? def.category) : def.category}</div>
           </div>
-          <Input placeholder="Search…" value={q} onChange={(e) => setQ(e.target.value)} className="max-w-sm" />
+          <Input placeholder={ar ? "بحث…" : "Search…"} value={q} onChange={(e) => setQ(e.target.value)} className="max-w-sm" />
         </CardHeader>
         <CardContent className="overflow-x-auto">
           <Table>
@@ -273,17 +273,18 @@ function Reports() {
                   {def.columns.map((c) => {
                     const v = getVal(r, c.key);
                     return <TableCell key={c.key} className="max-w-[220px] truncate">
-                      {typeof v === "boolean" ? <Badge variant="outline">{v ? "yes" : "no"}</Badge>
+                      {typeof v === "boolean" ? <Badge variant="outline">{v ? (ar ? "نعم" : "yes") : (ar ? "لا" : "no")}</Badge>
                         : typeof v === "number" && ["amount","total","fare","earnings","spent","paid","budget","credit","balance"].some((k) => c.key.toLowerCase().includes(k)) ? <span className="font-mono">{money(locale, v)}</span>
                         : v instanceof Date ? v.toLocaleString() : (v == null ? "—" : String(v))}
                     </TableCell>;
                   })}
                 </TableRow>
               ))}
-              {!filtered.length && <TableRow><TableCell colSpan={def.columns.length} className="text-center text-muted-foreground py-8">{query.isLoading ? "Loading…" : "No data"}</TableCell></TableRow>}
+              {!filtered.length && <TableRow><TableCell colSpan={def.columns.length} className="text-center text-muted-foreground py-8">{query.isLoading ? (ar ? "جارٍ التحميل…" : "Loading…") : (ar ? "لا توجد بيانات" : "No data")}</TableCell></TableRow>}
             </TableBody>
           </Table>
-          {filtered.length > 500 && <div className="text-center text-xs text-muted-foreground py-3">Showing first 500 of {filtered.length}. Export for full dataset.</div>}
+          {filtered.length > 500 && <div className="text-center text-xs text-muted-foreground py-3">{ar ? `يعرض أول 500 من ${filtered.length}. صدّر لكامل البيانات.` : `Showing first 500 of ${filtered.length}. Export for full dataset.`}</div>}
+
         </CardContent>
       </Card>
     </div>
