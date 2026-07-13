@@ -11,16 +11,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Search, AlertTriangle } from "lucide-react";
+import { Plus, Search, AlertTriangle, Edit, Trash2 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/drivers")({ component: Drivers });
 
 const DRIVER_STATUSES = ["available","offline","assigned","en_route","waiting","on_trip","on_break","vacation","suspended"];
+const DRIVER_STATUS_AR: Record<string, string> = {
+  available: "متاح", offline: "خارج الخدمة", assigned: "مُعيَّن", en_route: "في الطريق", waiting: "انتظار",
+  on_trip: "في رحلة", on_break: "استراحة", vacation: "إجازة", suspended: "موقوف",
+};
 
 function Drivers() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const ar = locale === "ar";
+  const statusLabel = (s: string) => ar ? (DRIVER_STATUS_AR[s] ?? s) : s;
+
   const qc = useQueryClient();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
