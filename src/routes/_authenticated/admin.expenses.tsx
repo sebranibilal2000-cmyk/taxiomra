@@ -160,7 +160,7 @@ function Expenses() {
           <SelectTrigger className="w-56 rounded-full"><SelectValue /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">{ar ? "كل الفئات" : "All categories"}</SelectItem>
-            {EXPENSE_CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c.replace(/_/g, " ")}</SelectItem>)}
+            {EXPENSE_CATEGORIES.map((c) => <SelectItem key={c} value={c}>{catLabel(c)}</SelectItem>)}
           </SelectContent>
         </Select>
       </div>
