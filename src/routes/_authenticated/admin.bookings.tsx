@@ -139,29 +139,29 @@ function BookingsPage() {
       <div className="flex flex-wrap gap-2 mb-4 items-center">
         <div className="relative">
           <Search className="absolute start-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search code, customer, phone, address…" className="ps-9 w-80" />
+          <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder={ar ? "ابحث بالرمز، العميل، الهاتف، العنوان…" : "Search code, customer, phone, address…"} className="ps-9 w-80" />
         </div>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
           <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All statuses</SelectItem>
+            <SelectItem value="all">{ar ? "كل الحالات" : "All statuses"}</SelectItem>
             {BOOKING_STATUSES.map((s) => <SelectItem key={s} value={s}>{STATUS_LABELS[s]}</SelectItem>)}
           </SelectContent>
         </Select>
-        <label className="flex items-center gap-2 text-sm"><Checkbox checked={priorityOnly} onCheckedChange={(v) => setPriorityOnly(!!v)} />Priority only</label>
-        <div className="text-sm text-muted-foreground">{filtered.length} of {(bookings.data ?? []).length}</div>
+        <label className="flex items-center gap-2 text-sm"><Checkbox checked={priorityOnly} onCheckedChange={(v) => setPriorityOnly(!!v)} />{ar ? "الأولوية فقط" : "Priority only"}</label>
+        <div className="text-sm text-muted-foreground">{filtered.length} {ar ? "من" : "of"} {(bookings.data ?? []).length}</div>
       </div>
 
       {selected.size > 0 && (
         <div className="mb-3 flex items-center gap-2 rounded-lg border border-gold/40 bg-gold/5 p-2 text-sm">
-          <span className="font-medium">{selected.size} selected</span>
+          <span className="font-medium">{selected.size} {ar ? "محدد" : "selected"}</span>
           <Select onValueChange={(v) => doBulk({ status: v })}>
-            <SelectTrigger className="w-44 h-8"><SelectValue placeholder="Set status…" /></SelectTrigger>
+            <SelectTrigger className="w-44 h-8"><SelectValue placeholder={ar ? "تعيين حالة…" : "Set status…"} /></SelectTrigger>
             <SelectContent>{BOOKING_STATUSES.map((s) => <SelectItem key={s} value={s}>{STATUS_LABELS[s]}</SelectItem>)}</SelectContent>
           </Select>
-          <Button size="sm" variant="outline" onClick={() => doBulk({ is_priority: true })}><Star className="h-3.5 w-3.5 me-1" />Mark priority</Button>
-          <Button size="sm" variant="outline" onClick={() => doBulk({ is_priority: false })}><StarOff className="h-3.5 w-3.5 me-1" />Clear priority</Button>
-          <Button size="sm" variant="ghost" onClick={() => setSelected(new Set())}>Clear</Button>
+          <Button size="sm" variant="outline" onClick={() => doBulk({ is_priority: true })}><Star className="h-3.5 w-3.5 me-1" />{ar ? "تعليم كأولوية" : "Mark priority"}</Button>
+          <Button size="sm" variant="outline" onClick={() => doBulk({ is_priority: false })}><StarOff className="h-3.5 w-3.5 me-1" />{ar ? "إزالة الأولوية" : "Clear priority"}</Button>
+          <Button size="sm" variant="ghost" onClick={() => setSelected(new Set())}>{ar ? "مسح" : "Clear"}</Button>
         </div>
       )}
 
@@ -170,14 +170,14 @@ function BookingsPage() {
           <thead className="bg-muted/30 text-xs uppercase tracking-wider text-muted-foreground">
             <tr>
               <th className="p-2 w-8"><Checkbox checked={selected.size > 0 && selected.size === filtered.length} onCheckedChange={toggleAll} /></th>
-              <th className="p-2 text-start">Code</th>
-              <th className="p-2 text-start">Customer</th>
-              <th className="p-2 text-start">Driver</th>
-              <th className="p-2 text-start">Pickup → Dropoff</th>
-              <th className="p-2 text-start">When</th>
-              <th className="p-2 text-end">Fare</th>
-              <th className="p-2 text-start">Status</th>
-              <th className="p-2 text-end">Actions</th>
+              <th className="p-2 text-start">{ar ? "الرمز" : "Code"}</th>
+              <th className="p-2 text-start">{ar ? "العميل" : "Customer"}</th>
+              <th className="p-2 text-start">{ar ? "السائق" : "Driver"}</th>
+              <th className="p-2 text-start">{ar ? "من ← إلى" : "Pickup → Dropoff"}</th>
+              <th className="p-2 text-start">{ar ? "الموعد" : "When"}</th>
+              <th className="p-2 text-end">{ar ? "الأجرة" : "Fare"}</th>
+              <th className="p-2 text-start">{ar ? "الحالة" : "Status"}</th>
+              <th className="p-2 text-end">{ar ? "إجراءات" : "Actions"}</th>
             </tr>
           </thead>
           <tbody>
@@ -194,29 +194,30 @@ function BookingsPage() {
                 <td className="p-2">{r.customer?.full_name ?? "—"}<div className="text-xs text-muted-foreground">{r.customer?.phone}</div></td>
                 <td className="p-2">{r.driver?.full_name ?? "—"}</td>
                 <td className="p-2 max-w-xs truncate"><span className="truncate">{r.pickup_location}</span><div className="text-xs text-muted-foreground truncate">→ {r.dropoff_location}</div></td>
-                <td className="p-2 text-xs">{new Date(r.pickup_at).toLocaleString()}</td>
+                <td className="p-2 text-xs">{new Date(r.pickup_at).toLocaleString(ar ? "ar" : "en")}</td>
                 <td className="p-2 text-end font-mono">{Number(r.total_fare || 0).toFixed(2)}</td>
                 <td className="p-2"><StatusBadge value={r.status} /></td>
                 <td className="p-2">
                   <div className="flex items-center gap-1 justify-end">
                     <WhatsAppSendMenu phone={r.customer?.phone} bookingId={r.id} customerId={r.customer?.id}
                       vars={{ code: r.code, customer_name: r.customer?.full_name, pickup: r.pickup_location, dropoff: r.dropoff_location, pickup_at: new Date(r.pickup_at).toLocaleString(), driver_name: r.driver?.full_name ?? "", total: Number(r.total_fare || 0).toFixed(2) }} />
-                    <Button variant="ghost" size="icon" className="h-8 w-8" title="Duplicate" onClick={() => duplicate(r.id)}><Copy className="h-4 w-4" /></Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8" title="Priority" onClick={() => togglePriority(r)}>
+                    <Button variant="ghost" size="icon" className="h-8 w-8" title={ar ? "تكرار" : "Duplicate"} onClick={() => duplicate(r.id)}><Copy className="h-4 w-4" /></Button>
+                    <Button variant="ghost" size="icon" className="h-8 w-8" title={ar ? "أولوية" : "Priority"} onClick={() => togglePriority(r)}>
                       {r.is_priority ? <Star className="h-4 w-4 fill-gold text-gold" /> : <StarOff className="h-4 w-4" />}
                     </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8" title="Timeline" onClick={() => setDetailId(r.id)}><ListTree className="h-4 w-4" /></Button>
-                    <a href={`/admin/bookings/${r.id}/print`} target="_blank" rel="noopener" title="Print" className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted"><Printer className="h-4 w-4" /></a>
+                    <Button variant="ghost" size="icon" className="h-8 w-8" title={ar ? "المخطط الزمني" : "Timeline"} onClick={() => setDetailId(r.id)}><ListTree className="h-4 w-4" /></Button>
+                    <a href={`/admin/bookings/${r.id}/print`} target="_blank" rel="noopener" title={ar ? "طباعة" : "Print"} className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted"><Printer className="h-4 w-4" /></a>
                   </div>
                 </td>
               </tr>
             ))}
             {!filtered.length && (
-              <tr><td colSpan={9} className="p-8 text-center text-muted-foreground">{bookings.isLoading ? "Loading…" : "No bookings match."}</td></tr>
+              <tr><td colSpan={9} className="p-8 text-center text-muted-foreground">{bookings.isLoading ? (ar ? "جارٍ التحميل…" : "Loading…") : (ar ? "لا توجد حجوزات مطابقة." : "No bookings match.")}</td></tr>
             )}
           </tbody>
         </table>
       </div>
+
 
       <BookingDetailDialog bookingId={detailId} onOpenChange={(o) => !o && setDetailId(null)} />
     </div>
