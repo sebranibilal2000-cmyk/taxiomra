@@ -24,7 +24,7 @@ export function AppSidebar() {
   const path = useRouterState({ select: (r) => r.location.pathname });
   const isActive = (p: string) => path === p || path.startsWith(p + "/");
 
-  const groups: { label: string; items: { title: string; url: string; icon: any }[] }[] = [
+  const groups: { label: string; items: { title: string; url: string; icon: any; external?: boolean }[] }[] = [
     { label: t("overview"), items: [{ title: t("dashboard"), url: "/admin/dashboard", icon: LayoutDashboard }] },
     { label: t("operations"), items: [
       { title: t("bookings"), url: "/admin/bookings", icon: CalendarCheck },
@@ -66,7 +66,7 @@ export function AppSidebar() {
       { title: locale === "ar" ? "المدونة" : "Blog", url: "/admin/blog", icon: Newspaper },
       { title: locale === "ar" ? "الأسئلة الشائعة" : "FAQ", url: "/admin/faqs", icon: HelpCircle },
       { title: locale === "ar" ? "مكتبة الوسائط" : "Media Library", url: "/admin/media", icon: ImageIcon2 },
-      { title: locale === "ar" ? "معاينة الموقع" : "Preview site", url: "/", icon: Globe },
+      { title: locale === "ar" ? "معاينة الموقع" : "Preview site", url: "/", icon: Globe, external: true },
     ]},
     { label: locale === "ar" ? "تحسين محركات البحث" : "SEO", items: [
       { title: locale === "ar" ? "مدير السيو" : "SEO Manager", url: "/admin/seo", icon: Search },
@@ -135,11 +135,18 @@ export function AppSidebar() {
                         isActive={active}
                         className="data-[active=true]:bg-sidebar-accent data-[active=true]:text-gold data-[active=true]:font-medium hover:bg-sidebar-accent/60 rounded-lg h-9"
                       >
-                        <Link to={item.url as any} className="flex items-center gap-2.5 relative">
-                          {active && <span className="absolute inset-y-1 start-0 w-0.5 rounded-full bg-gold" />}
-                          <item.icon className="h-4 w-4 shrink-0" />
-                          {!collapsed && <span className="text-sm">{item.title}</span>}
-                        </Link>
+                        {item.external ? (
+                          <a href={item.url} target="_blank" rel="noopener" className="flex items-center gap-2.5 relative">
+                            <item.icon className="h-4 w-4 shrink-0" />
+                            {!collapsed && <span className="text-sm">{item.title}</span>}
+                          </a>
+                        ) : (
+                          <Link to={item.url as any} className="flex items-center gap-2.5 relative">
+                            {active && <span className="absolute inset-y-1 start-0 w-0.5 rounded-full bg-gold" />}
+                            <item.icon className="h-4 w-4 shrink-0" />
+                            {!collapsed && <span className="text-sm">{item.title}</span>}
+                          </Link>
+                        )}
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   );

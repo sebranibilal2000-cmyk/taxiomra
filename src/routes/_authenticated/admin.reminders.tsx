@@ -12,11 +12,17 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export const Route = createFileRoute("/_authenticated/admin/reminders")({ component: RemindersPage });
 
 // Reminder windows (days). Spec: warn 90/60/30/14/7/1 days before expiry.
-const WINDOWS = [
+const WINDOWS_EN = [
   { key: "expired", label: "Expired", cls: "bg-destructive/15 text-destructive border-destructive/30" },
   { key: "7", label: "≤ 7 days", cls: "bg-destructive/10 text-destructive border-destructive/20" },
   { key: "30", label: "≤ 30 days", cls: "bg-orange-500/10 text-orange-600 border-orange-500/20" },
   { key: "90", label: "≤ 90 days", cls: "bg-yellow-500/10 text-yellow-700 border-yellow-500/20" },
+];
+const WINDOWS_AR = [
+  { key: "expired", label: "منتهية", cls: "bg-destructive/15 text-destructive border-destructive/30" },
+  { key: "7", label: "خلال 7 أيام", cls: "bg-destructive/10 text-destructive border-destructive/20" },
+  { key: "30", label: "خلال 30 يوم", cls: "bg-orange-500/10 text-orange-600 border-orange-500/20" },
+  { key: "90", label: "خلال 90 يوم", cls: "bg-yellow-500/10 text-yellow-700 border-yellow-500/20" },
 ];
 
 function bucket(dateStr: string | null | undefined): string | null {
@@ -36,6 +42,8 @@ type Item = {
 
 function RemindersPage() {
   const { locale } = useI18n();
+  const ar = locale === "ar";
+  const WINDOWS = ar ? WINDOWS_AR : WINDOWS_EN;
   const [tab, setTab] = useState<string>("all");
 
   const drivers = useQuery({
@@ -133,21 +141,21 @@ function RemindersPage() {
 
       <Tabs value={tab} onValueChange={setTab} className="mb-4">
         <TabsList className="flex-wrap h-auto">
-          <TabsTrigger value="all">All ({items.length})</TabsTrigger>
-          <TabsTrigger value="license">Licenses</TabsTrigger>
-          <TabsTrigger value="insurance">Insurance</TabsTrigger>
-          <TabsTrigger value="inspection">Inspection</TabsTrigger>
-          <TabsTrigger value="registration">Registration</TabsTrigger>
-          <TabsTrigger value="service">Service</TabsTrigger>
-          <TabsTrigger value="maintenance">Maintenance</TabsTrigger>
-          <TabsTrigger value="booking">Bookings</TabsTrigger>
+          <TabsTrigger value="all">{ar ? `الكل (${items.length})` : `All (${items.length})`}</TabsTrigger>
+          <TabsTrigger value="license">{ar ? "الرخص" : "Licenses"}</TabsTrigger>
+          <TabsTrigger value="insurance">{ar ? "التأمين" : "Insurance"}</TabsTrigger>
+          <TabsTrigger value="inspection">{ar ? "الفحص" : "Inspection"}</TabsTrigger>
+          <TabsTrigger value="registration">{ar ? "الاستمارة" : "Registration"}</TabsTrigger>
+          <TabsTrigger value="service">{ar ? "الخدمة" : "Service"}</TabsTrigger>
+          <TabsTrigger value="maintenance">{ar ? "الصيانة" : "Maintenance"}</TabsTrigger>
+          <TabsTrigger value="booking">{ar ? "الحجوزات" : "Bookings"}</TabsTrigger>
         </TabsList>
       </Tabs>
 
       <div className="space-y-2">
         {filtered.length === 0 && (
           <div className="text-center py-16 text-sm text-muted-foreground border rounded-lg">
-            {locale === "ar" ? "لا توجد تنبيهات" : "Nothing needs attention. Nice."}
+            {ar ? "لا توجد تنبيهات" : "Nothing needs attention. Nice."}
           </div>
         )}
         {filtered.map((i) => {
@@ -166,7 +174,7 @@ function RemindersPage() {
                   <div className="text-end">
                     <Badge variant="outline" className="text-[10px]">{w.label}</Badge>
                     <div className="text-xs text-muted-foreground mt-0.5">
-                      {days < 0 ? `${Math.abs(days)}d overdue` : `in ${days}d`}
+                      {ar ? (days < 0 ? `متأخر ${Math.abs(days)} يوم` : `خلال ${days} يوم`) : (days < 0 ? `${Math.abs(days)}d overdue` : `in ${days}d`)}
                     </div>
                   </div>
                 </div>

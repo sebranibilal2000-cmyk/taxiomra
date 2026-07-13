@@ -37,6 +37,14 @@ const CANCEL_CATEGORIES = ["customer_request", "no_show", "duplicate", "weather"
 const CANCEL_CAT_AR: Record<string, string> = {
   customer_request: "طلب العميل", no_show: "لم يحضر", duplicate: "مكرر", weather: "طقس", vehicle_issue: "مشكلة مركبة", other: "أخرى",
 };
+const CATEGORY_LABEL_AR: Record<string, string> = {
+  economy: "اقتصادي", standard: "قياسي", business: "أعمال", premium: "بريميوم",
+  suv: "دفع رباعي", family_suv: "دفع رباعي عائلي", luxury_van: "فان فاخر", van: "فان", vip: "VIP",
+};
+function catLabel(code: string, locale: string) {
+  if (locale === "ar") return CATEGORY_LABEL_AR[code] ?? code;
+  return code.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 function BookingsPage() {
   const { t, locale } = useI18n();
@@ -320,7 +328,7 @@ function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | 
                 <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "نقطة الانطلاق" : "Pickup"}</div><div>{b.pickup_location}</div></div>
                 <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "الوجهة" : "Dropoff"}</div><div>{b.dropoff_location}</div></div>
                 <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "المركبة" : "Vehicle"}</div><div>{b.vehicle ? `${b.vehicle.make} ${b.vehicle.model} · ${b.vehicle.plate_number}` : "—"}</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "الفئة" : "Category"}</div><div>{b.category?.code ?? "—"}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "الفئة" : "Category"}</div><div>{b.category?.code ? catLabel(b.category.code, locale) : "—"}</div></div>
                 <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "المسافة" : "Distance"}</div><div>{Number(b.distance_km || 0).toFixed(1)} {ar ? "كم" : "km"}</div></div>
                 <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "الإجمالي" : "Total"}</div><div className="font-display text-lg">{Number(b.total_fare || 0).toFixed(2)}</div></div>
               </div>
@@ -480,7 +488,7 @@ function NewBookingDialog({ customers, cats, drivers, onDone }: { customers: any
           <Label>{t("category")}</Label>
           <Select value={form.category_id} onValueChange={(v) => setForm({ ...form, category_id: v })}>
             <SelectTrigger><SelectValue placeholder="—" /></SelectTrigger>
-            <SelectContent>{cats.map((c) => <SelectItem key={c.id} value={c.id}>{c.code}</SelectItem>)}</SelectContent>
+            <SelectContent>{cats.map((c) => <SelectItem key={c.id} value={c.id}>{catLabel(c.code, locale)}</SelectItem>)}</SelectContent>
           </Select>
         </div>
         <div className="space-y-1 md:col-span-2"><Label>{t("pickup")}</Label><Input value={form.pickup_location} onChange={(e) => setForm({ ...form, pickup_location: e.target.value })} /></div>

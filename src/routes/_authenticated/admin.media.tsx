@@ -8,10 +8,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Upload, Copy, Trash2, ImageIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/admin/media")({ component: MediaAdmin });
 
 function MediaAdmin() {
+  const { locale } = useI18n();
+  const ar = locale === "ar";
   const qc = useQueryClient();
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -34,14 +37,14 @@ function MediaAdmin() {
         });
         if (error) throw error;
       }
-      toast.success("Uploaded");
+      toast.success(ar ? "تم الرفع" : "Uploaded");
       qc.invalidateQueries({ queryKey: ["media-lib"] });
     } catch (e: any) { toast.error(e.message); }
     finally { setUploading(false); }
   };
 
   const del = async (row: any) => {
-    if (!confirm("Delete file?")) return;
+    if (!confirm(ar ? "حذف الملف؟" : "Delete file?")) return;
     await supabase.storage.from("media-library").remove([row.path]);
     await supabase.from("media_library").delete().eq("id", row.id);
     qc.invalidateQueries({ queryKey: ["media-lib"] });
@@ -51,7 +54,7 @@ function MediaAdmin() {
     const { data } = await supabase.storage.from("media-library").createSignedUrl(path, 60 * 60 * 24 * 7);
     if (data?.signedUrl) {
       await navigator.clipboard.writeText(data.signedUrl);
-      toast.success("URL copied (7d signed)");
+      toast.success(ar ? "تم نسخ الرابط (صالح 7 أيام)" : "URL copied (7d signed)");
     }
   };
 
@@ -62,11 +65,11 @@ function MediaAdmin() {
   return (
     <div>
       <div className="flex flex-wrap items-start justify-between gap-3 mb-6">
-        <PageHeader title="Media Library" description="Central library for images and documents used across the CMS." />
+        <PageHeader title={ar ? "مكتبة الوسائط" : "Media Library"} description={ar ? "مكتبة مركزية للصور والمستندات المستخدمة في إدارة المحتوى." : "Central library for images and documents used across the CMS."} />
         <div className="flex gap-2">
-          <Input placeholder="Search…" value={search} onChange={(e) => setSearch(e.target.value)} className="w-56" />
+          <Input placeholder={ar ? "بحث…" : "Search…"} value={search} onChange={(e) => setSearch(e.target.value)} className="w-56" />
           <input ref={inputRef} type="file" multiple hidden onChange={(e) => e.target.files && upload(e.target.files)} accept="image/*,application/pdf" />
-          <Button onClick={() => inputRef.current?.click()} disabled={uploading}><Upload className="h-4 w-4 me-2" />{uploading ? "Uploading…" : "Upload"}</Button>
+          <Button onClick={() => inputRef.current?.click()} disabled={uploading}><Upload className="h-4 w-4 me-2" />{uploading ? (ar ? "جاري الرفع…" : "Uploading…") : (ar ? "رفع" : "Upload")}</Button>
         </div>
       </div>
 
@@ -84,19 +87,19 @@ function MediaAdmin() {
               <div className="p-2">
                 <div className="text-xs truncate font-medium">{r.filename}</div>
                 <div className="text-[10px] text-muted-foreground">{Math.round((r.size_bytes ?? 0) / 1024)} KB</div>
-                <Input defaultValue={r.alt_text ?? ""} placeholder="Alt text" className="mt-1.5 h-7 text-xs"
+                <Input defaultValue={r.alt_text ?? ""} placeholder={ar ? "نص بديل" : "Alt text"} className="mt-1.5 h-7 text-xs"
                   onBlur={async (e) => { await supabase.from("media_library").update({ alt_text: e.target.value }).eq("id", r.id); }}
                 />
                 <div className="flex gap-1 mt-1.5">
-                  <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => getUrl(r.path)} title="Copy URL"><Copy className="h-3 w-3" /></Button>
-                  <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => del(r)} title="Delete"><Trash2 className="h-3 w-3" /></Button>
+                  <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => getUrl(r.path)} title={ar ? "نسخ الرابط" : "Copy URL"}><Copy className="h-3 w-3" /></Button>
+                  <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => del(r)} title={ar ? "حذف" : "Delete"}><Trash2 className="h-3 w-3" /></Button>
                 </div>
               </div>
             </CardContent>
           </Card>
         ))}
         {filtered.length === 0 && !q.isLoading && (
-          <div className="col-span-full text-center py-16 text-muted-foreground">No media yet.</div>
+          <div className="col-span-full text-center py-16 text-muted-foreground">{ar ? "لا توجد وسائط بعد." : "No media yet."}</div>
         )}
       </div>
     </div>

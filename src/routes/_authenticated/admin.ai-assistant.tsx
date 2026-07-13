@@ -9,12 +9,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { Send, Plus, Bot, User as UserIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/admin/ai-assistant")({ component: AiAssistantPage });
 
 type Msg = { role: "user" | "assistant" | "tool" | "system"; content: any; created_at: string };
 
 function AiAssistantPage() {
+  const { locale } = useI18n();
+  const ar = locale === "ar";
   const qc = useQueryClient();
   const chatFn = useServerFn(aiChat);
   const listFn = useServerFn(listAiConversations);
@@ -41,7 +44,7 @@ function AiAssistantPage() {
       qc.invalidateQueries({ queryKey: ["ai-convs"] });
       qc.invalidateQueries({ queryKey: ["ai-conv", res.conversation_id] });
     },
-    onError: (e: any) => toast.error(e?.message ?? "Chat failed"),
+    onError: (e: any) => toast.error(e?.message ?? (ar ? "فشلت المحادثة" : "Chat failed")),
   });
 
   const submit = () => {
@@ -51,15 +54,25 @@ function AiAssistantPage() {
     send.mutate(text);
   };
 
+  const newChat = () => {
+    setActiveId(undefined);
+    setInput("");
+    send.reset();
+    qc.setQueryData(["ai-conv", undefined], []);
+  };
+
   const visible: Msg[] = (messages.data ?? []).filter((m: any) => m.role === "user" || m.role === "assistant") as Msg[];
 
   return (
     <div>
-      <PageHeader title="AI Assistant" description="Read-only operations copilot. Ask about bookings, customers, drivers, revenue, and conflicts." />
+      <PageHeader
+        title={ar ? "المساعد الذكي" : "AI Assistant"}
+        description={ar ? "مساعد تشغيلي للقراءة فقط. اسأل عن الحجوزات والعملاء والسائقين والإيرادات والتعارضات." : "Read-only operations copilot. Ask about bookings, customers, drivers, revenue, and conflicts."}
+      />
       <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 h-[calc(100vh-220px)] min-h-[500px]">
         <aside className="border rounded-lg p-3 flex flex-col overflow-hidden">
-          <Button size="sm" variant="outline" className="mb-3" onClick={() => setActiveId(undefined)}>
-            <Plus className="h-4 w-4 me-1" /> New chat
+          <Button size="sm" variant="outline" className="mb-3" onClick={newChat}>
+            <Plus className="h-4 w-4 me-1" /> {ar ? "محادثة جديدة" : "New chat"}
           </Button>
           <div className="flex-1 overflow-y-auto space-y-1">
             {(convs.data ?? []).map((c: any) => (
@@ -68,10 +81,13 @@ function AiAssistantPage() {
                 onClick={() => setActiveId(c.id)}
                 className={cn("w-full text-start px-3 py-2 rounded text-sm hover:bg-muted", activeId === c.id && "bg-muted font-medium")}
               >
-                <div className="truncate">{c.title || "Untitled"}</div>
-                <div className="text-[10px] text-muted-foreground">{new Date(c.updated_at).toLocaleString()}</div>
+                <div className="truncate">{c.title || (ar ? "بدون عنوان" : "Untitled")}</div>
+                <div className="text-[10px] text-muted-foreground">{new Date(c.updated_at).toLocaleString(ar ? "ar" : "en")}</div>
               </button>
             ))}
+            {(convs.data ?? []).length === 0 && (
+              <div className="text-xs text-muted-foreground text-center py-6">{ar ? "لا توجد محادثات بعد" : "No conversations yet"}</div>
+            )}
           </div>
         </aside>
         <section className="border rounded-lg flex flex-col overflow-hidden">
@@ -79,13 +95,25 @@ function AiAssistantPage() {
             {visible.length === 0 && (
               <div className="text-center text-muted-foreground py-12">
                 <Bot className="h-10 w-10 mx-auto mb-3 opacity-40" />
-                <p>Ask me things like:</p>
+                <p>{ar ? "اسألني مثلاً:" : "Ask me things like:"}</p>
                 <ul className="text-sm mt-2 space-y-1">
-                  <li>"Show today's activity"</li>
-                  <li>"Any scheduling conflicts this week?"</li>
-                  <li>"Find bookings for +9665… "</li>
-                  <li>"Revenue this month"</li>
-                  <li>"Which drivers are available now?"</li>
+                  {ar ? (
+                    <>
+                      <li>"أظهر نشاط اليوم"</li>
+                      <li>"هل توجد تعارضات في الجدولة هذا الأسبوع؟"</li>
+                      <li>"ابحث عن حجوزات للرقم +9665…"</li>
+                      <li>"إيرادات هذا الشهر"</li>
+                      <li>"أي سائقين متاحون الآن؟"</li>
+                    </>
+                  ) : (
+                    <>
+                      <li>"Show today's activity"</li>
+                      <li>"Any scheduling conflicts this week?"</li>
+                      <li>"Find bookings for +9665…"</li>
+                      <li>"Revenue this month"</li>
+                      <li>"Which drivers are available now?"</li>
+                    </>
+                  )}
                 </ul>
               </div>
             )}
@@ -102,7 +130,7 @@ function AiAssistantPage() {
             {send.isPending && (
               <div className="flex gap-3">
                 <div className="h-8 w-8 rounded-full grid place-items-center bg-muted"><Bot className="h-4 w-4" /></div>
-                <div className="rounded-lg px-4 py-2 bg-muted text-sm"><Loader2 className="h-4 w-4 animate-spin inline me-2" /> Thinking…</div>
+                <div className="rounded-lg px-4 py-2 bg-muted text-sm"><Loader2 className="h-4 w-4 animate-spin inline me-2" /> {ar ? "جاري التفكير…" : "Thinking…"}</div>
               </div>
             )}
           </div>
@@ -111,7 +139,7 @@ function AiAssistantPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); } }}
-              placeholder="Ask about bookings, customers, revenue…"
+              placeholder={ar ? "اسأل عن الحجوزات والعملاء والإيرادات…" : "Ask about bookings, customers, revenue…"}
               rows={2}
               className="resize-none"
               disabled={send.isPending}

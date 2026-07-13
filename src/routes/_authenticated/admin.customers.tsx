@@ -177,54 +177,82 @@ function CustomersPage() {
 
 function NewCustomerDialog({ onDone }: { onDone: () => void }) {
   const { t, locale } = useI18n();
+  const ar = locale === "ar";
+  const cats = useQuery({
+    queryKey: ["cats-active"],
+    queryFn: async () => (await supabase.from("vehicle_categories").select("id, code").eq("is_active", true).order("sort_order")).data ?? [],
+  });
+  const CATEGORY_LABEL_AR: Record<string, string> = {
+    economy: "اقتصادي", standard: "قياسي", business: "أعمال", premium: "بريميوم",
+    suv: "دفع رباعي", family_suv: "دفع رباعي عائلي", luxury_van: "فان فاخر", van: "فان", vip: "VIP",
+  };
+  const catLabel = (code: string) => ar ? (CATEGORY_LABEL_AR[code] ?? code) : code.replace(/_/g, " ");
+
   const [form, setForm] = useState({
     full_name: "", phone: "", alt_phone: "", whatsapp: "", email: "",
     company: "", vat_number: "", city: "", country: "",
     tier: "regular", preferred_language: "en", notes: "",
+    favorite_category_id: "", default_delivery_price: "",
   });
   const save = useMutation({
     mutationFn: async () => {
       const payload: any = { ...form };
+      if (payload.default_delivery_price === "") payload.default_delivery_price = null;
+      else payload.default_delivery_price = Number(payload.default_delivery_price);
+      if (payload.favorite_category_id === "") payload.favorite_category_id = null;
       Object.keys(payload).forEach((k) => { if (payload[k] === "") payload[k] = null; });
       const { error } = await supabase.from("customers").insert(payload);
       if (error) throw error;
     },
-    onSuccess: () => { toast.success(locale === "ar" ? "تم إنشاء العميل" : "Customer created"); onDone(); },
+    onSuccess: () => { toast.success(ar ? "تم إنشاء العميل" : "Customer created"); onDone(); },
     onError: (e: any) => toast.error(e.message),
   });
   return (
     <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-      <DialogHeader><DialogTitle>{locale === "ar" ? "عميل جديد" : `${t("new")} ${t("customer")}`}</DialogTitle></DialogHeader>
+      <DialogHeader><DialogTitle>{ar ? "عميل جديد" : `${t("new")} ${t("customer")}`}</DialogTitle></DialogHeader>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div className="md:col-span-2"><Label>{t("name")} *</Label><Input value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} /></div>
         <div><Label>{t("phone")}</Label><Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
-        <div><Label>{locale === "ar" ? "هاتف بديل" : "Alt phone"}</Label><Input value={form.alt_phone} onChange={(e) => setForm({ ...form, alt_phone: e.target.value })} /></div>
-        <div><Label>{locale === "ar" ? "واتساب" : "WhatsApp"}</Label><Input value={form.whatsapp} onChange={(e) => setForm({ ...form, whatsapp: e.target.value })} /></div>
+        <div><Label>{ar ? "هاتف بديل" : "Alt phone"}</Label><Input value={form.alt_phone} onChange={(e) => setForm({ ...form, alt_phone: e.target.value })} /></div>
+        <div><Label>{ar ? "واتساب" : "WhatsApp"}</Label><Input value={form.whatsapp} onChange={(e) => setForm({ ...form, whatsapp: e.target.value })} /></div>
         <div><Label>{t("email")}</Label><Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
-        <div><Label>{locale === "ar" ? "الشركة" : "Company"}</Label><Input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} /></div>
-        <div><Label>{locale === "ar" ? "الرقم الضريبي" : "VAT number"}</Label><Input value={form.vat_number} onChange={(e) => setForm({ ...form, vat_number: e.target.value })} /></div>
-        <div><Label>{locale === "ar" ? "المدينة" : "City"}</Label><Input value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></div>
-        <div><Label>{locale === "ar" ? "الدولة" : "Country"}</Label><Input value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} /></div>
+        <div><Label>{ar ? "الشركة" : "Company"}</Label><Input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} /></div>
+        <div><Label>{ar ? "الرقم الضريبي" : "VAT number"}</Label><Input value={form.vat_number} onChange={(e) => setForm({ ...form, vat_number: e.target.value })} /></div>
+        <div><Label>{ar ? "المدينة" : "City"}</Label><Input value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></div>
+        <div><Label>{ar ? "الدولة" : "Country"}</Label><Input value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} /></div>
         <div>
-          <Label>{locale === "ar" ? "الفئة" : "Tier"}</Label>
-          <Select value={form.tier} onValueChange={(v) => setForm({ ...form, tier: v })}>
-            <SelectTrigger><SelectValue /></SelectTrigger>
+          <Label>{ar ? "السيارة المفضلة" : "Preferred vehicle"}</Label>
+          <Select value={form.favorite_category_id} onValueChange={(v) => setForm({ ...form, favorite_category_id: v })}>
+            <SelectTrigger><SelectValue placeholder={ar ? "اختر السيارة" : "Select vehicle"} /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="regular">{locale === "ar" ? "عادي" : "Regular"}</SelectItem>
-              <SelectItem value="vip">VIP</SelectItem>
-              <SelectItem value="corporate">{locale === "ar" ? "شركات" : "Corporate"}</SelectItem>
-              <SelectItem value="blacklisted">{locale === "ar" ? "محظور" : "Blacklisted"}</SelectItem>
+              {(cats.data ?? []).map((c: any) => <SelectItem key={c.id} value={c.id}>{catLabel(c.code)}</SelectItem>)}
             </SelectContent>
           </Select>
         </div>
         <div>
-          <Label>{locale === "ar" ? "اللغة المفضلة" : "Preferred language"}</Label>
+          <Label>{ar ? "سعر التوصيل الافتراضي" : "Default delivery price"}</Label>
+          <Input type="number" step="0.01" value={form.default_delivery_price} onChange={(e) => setForm({ ...form, default_delivery_price: e.target.value })} placeholder="0.00" />
+        </div>
+        <div>
+          <Label>{ar ? "الفئة" : "Tier"}</Label>
+          <Select value={form.tier} onValueChange={(v) => setForm({ ...form, tier: v })}>
+            <SelectTrigger><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="regular">{ar ? "عادي" : "Regular"}</SelectItem>
+              <SelectItem value="vip">VIP</SelectItem>
+              <SelectItem value="corporate">{ar ? "شركات" : "Corporate"}</SelectItem>
+              <SelectItem value="blacklisted">{ar ? "محظور" : "Blacklisted"}</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <Label>{ar ? "اللغة المفضلة" : "Preferred language"}</Label>
           <Select value={form.preferred_language} onValueChange={(v) => setForm({ ...form, preferred_language: v })}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent><SelectItem value="en">English</SelectItem><SelectItem value="ar">العربية</SelectItem></SelectContent>
           </Select>
         </div>
-        <div className="md:col-span-2"><Label>{locale === "ar" ? "ملاحظات" : "Notes"}</Label><Textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
+        <div className="md:col-span-2"><Label>{ar ? "ملاحظات" : "Notes"}</Label><Textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
       </div>
       <DialogFooter>
         <Button variant="outline" onClick={() => onDone()}>{t("cancel")}</Button>

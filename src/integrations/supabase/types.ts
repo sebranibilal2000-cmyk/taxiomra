@@ -1036,6 +1036,7 @@ export type Database = {
           corporate_account_id: string | null
           country: string | null
           created_at: string
+          default_delivery_price: number | null
           email: string | null
           favorite_category_id: string | null
           favorite_driver_id: string | null
@@ -1071,6 +1072,7 @@ export type Database = {
           corporate_account_id?: string | null
           country?: string | null
           created_at?: string
+          default_delivery_price?: number | null
           email?: string | null
           favorite_category_id?: string | null
           favorite_driver_id?: string | null
@@ -1106,6 +1108,7 @@ export type Database = {
           corporate_account_id?: string | null
           country?: string | null
           created_at?: string
+          default_delivery_price?: number | null
           email?: string | null
           favorite_category_id?: string | null
           favorite_driver_id?: string | null
