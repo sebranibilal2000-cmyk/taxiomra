@@ -8,10 +8,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { Save } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/admin/homepage")({ component: HomepageAdmin });
 
 function HomepageAdmin() {
+  const { locale } = useI18n();
+  const ar = locale === "ar";
   const qc = useQueryClient();
   const q = useQuery({
     queryKey: ["homepage-sections"],
