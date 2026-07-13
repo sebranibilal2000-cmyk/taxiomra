@@ -107,9 +107,11 @@ function RootComponent() {
         <I18nProvider>
           <AuthProvider>
             <HeadInjector />
-            <ErrorBoundary>
-              <Outlet />
-            </ErrorBoundary>
+            <ContactInfoProvider>
+              <ErrorBoundary>
+                <Outlet />
+              </ErrorBoundary>
+            </ContactInfoProvider>
             <Toaster richColors position="top-center" />
           </AuthProvider>
         </I18nProvider>
