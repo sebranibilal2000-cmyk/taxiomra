@@ -286,7 +286,7 @@ function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | 
     if (!reason.trim() || !b) return;
     try {
       await cancelFn({ data: { id: b.id, reason, category: reasonCat } });
-      toast.success("Cancelled");
+      toast.success(ar ? "تم الإلغاء" : "Cancelled");
       setCancelOpen(false); setReason("");
       qc.invalidateQueries({ queryKey: ["booking-detail", bookingId] });
       qc.invalidateQueries({ queryKey: ["bookings"] });
@@ -296,7 +296,7 @@ function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | 
     if (!remAt || !b) return;
     try {
       await schedRem({ data: { booking_id: b.id, remind_at: new Date(remAt).toISOString(), note: remNote || null } });
-      toast.success("Reminder scheduled"); setRemAt(""); setRemNote("");
+      toast.success(ar ? "تمت جدولة التذكير" : "Reminder scheduled"); setRemAt(""); setRemNote("");
       qc.invalidateQueries({ queryKey: ["booking-reminders", bookingId] });
     } catch (e: any) { toast.error(e.message); }
   };
@@ -307,7 +307,7 @@ function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | 
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 font-display">
             {b?.is_priority && <Star className="h-5 w-5 fill-gold text-gold" />}
-            Booking <span className="font-mono text-base">{b?.code}</span>
+            {ar ? "حجز" : "Booking"} <span className="font-mono text-base">{b?.code}</span>
             {b && <StatusBadge value={b.status} />}
           </DialogTitle>
         </DialogHeader>
@@ -315,51 +315,51 @@ function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3 text-sm">
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Customer</div><div>{b.customer?.full_name ?? "—"}</div><div className="text-xs text-muted-foreground">{b.customer?.phone}</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Driver</div><div>{b.driver?.full_name ?? "—"}</div><div className="text-xs text-muted-foreground">{b.driver?.phone}</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Pickup</div><div>{b.pickup_location}</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Dropoff</div><div>{b.dropoff_location}</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Vehicle</div><div>{b.vehicle ? `${b.vehicle.make} ${b.vehicle.model} · ${b.vehicle.plate_number}` : "—"}</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Category</div><div>{b.category?.code ?? "—"}</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Distance</div><div>{Number(b.distance_km || 0).toFixed(1)} km</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Total</div><div className="font-display text-lg">{Number(b.total_fare || 0).toFixed(2)}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "العميل" : "Customer"}</div><div>{b.customer?.full_name ?? "—"}</div><div className="text-xs text-muted-foreground">{b.customer?.phone}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "السائق" : "Driver"}</div><div>{b.driver?.full_name ?? "—"}</div><div className="text-xs text-muted-foreground">{b.driver?.phone}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "نقطة الانطلاق" : "Pickup"}</div><div>{b.pickup_location}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "الوجهة" : "Dropoff"}</div><div>{b.dropoff_location}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "المركبة" : "Vehicle"}</div><div>{b.vehicle ? `${b.vehicle.make} ${b.vehicle.model} · ${b.vehicle.plate_number}` : "—"}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "الفئة" : "Category"}</div><div>{b.category?.code ?? "—"}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "المسافة" : "Distance"}</div><div>{Number(b.distance_km || 0).toFixed(1)} {ar ? "كم" : "km"}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "الإجمالي" : "Total"}</div><div className="font-display text-lg">{Number(b.total_fare || 0).toFixed(2)}</div></div>
               </div>
 
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Tags</div>
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">{ar ? "الوسوم" : "Tags"}</div>
                 <div className="flex flex-wrap gap-1 mb-2">
                   {(b.tags ?? []).map((tg: string) => (
                     <Badge key={tg} variant="secondary" className="cursor-pointer" onClick={() => removeTag(tg)}>{tg} ×</Badge>
                   ))}
                 </div>
-                <div className="flex gap-2"><Input value={tag} onChange={(e) => setTag(e.target.value)} placeholder="add tag" className="h-8" onKeyDown={(e) => e.key === "Enter" && addTag()} /><Button size="sm" variant="outline" onClick={addTag}>Add</Button></div>
+                <div className="flex gap-2"><Input value={tag} onChange={(e) => setTag(e.target.value)} placeholder={ar ? "إضافة وسم" : "add tag"} className="h-8" onKeyDown={(e) => e.key === "Enter" && addTag()} /><Button size="sm" variant="outline" onClick={addTag}>{ar ? "إضافة" : "Add"}</Button></div>
               </div>
 
               <div className="flex flex-wrap gap-2">
                 <Select value={b.status} onValueChange={async (v) => {
                   const { error } = await supabase.from("bookings").update({ status: v as any }).eq("id", b.id);
-                  if (error) toast.error(error.message); else { toast.success("Status updated"); qc.invalidateQueries({ queryKey: ["bookings"] }); qc.invalidateQueries({ queryKey: ["booking-detail", b.id] }); qc.invalidateQueries({ queryKey: ["activity", "booking", b.id] }); }
+                  if (error) toast.error(error.message); else { toast.success(ar ? "تم تحديث الحالة" : "Status updated"); qc.invalidateQueries({ queryKey: ["bookings"] }); qc.invalidateQueries({ queryKey: ["booking-detail", b.id] }); qc.invalidateQueries({ queryKey: ["activity", "booking", b.id] }); }
                 }}>
                   <SelectTrigger className="w-40 h-9"><SelectValue /></SelectTrigger>
                   <SelectContent>{BOOKING_STATUSES.map((s) => <SelectItem key={s} value={s}>{STATUS_LABELS[s]}</SelectItem>)}</SelectContent>
                 </Select>
-                <Button size="sm" variant="outline" onClick={() => setCancelOpen(true)}><XCircle className="h-4 w-4 me-1" />Cancel</Button>
-                <a href={`/admin/bookings/${b.id}/print`} target="_blank" rel="noopener" className="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-sm hover:bg-muted"><Printer className="h-4 w-4" />Print</a>
+                <Button size="sm" variant="outline" onClick={() => setCancelOpen(true)}><XCircle className="h-4 w-4 me-1" />{ar ? "إلغاء" : "Cancel"}</Button>
+                <a href={`/admin/bookings/${b.id}/print`} target="_blank" rel="noopener" className="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-sm hover:bg-muted"><Printer className="h-4 w-4" />{ar ? "طباعة" : "Print"}</a>
                 <WhatsAppSendMenu phone={b.customer?.phone} bookingId={b.id} customerId={b.customer?.id}
                   vars={{ code: b.code, customer_name: b.customer?.full_name, pickup: b.pickup_location, dropoff: b.dropoff_location, pickup_at: new Date(b.pickup_at).toLocaleString(), driver_name: b.driver?.full_name ?? "", total: Number(b.total_fare || 0).toFixed(2) }} />
               </div>
 
-              {b.cancellation_reason && <div className="rounded-lg border border-destructive/40 p-3 text-sm bg-destructive/5"><div className="text-[10px] uppercase tracking-wider text-destructive mb-1">Cancellation ({b.cancellation_category ?? "—"})</div>{b.cancellation_reason}</div>}
+              {b.cancellation_reason && <div className="rounded-lg border border-destructive/40 p-3 text-sm bg-destructive/5"><div className="text-[10px] uppercase tracking-wider text-destructive mb-1">{ar ? "الإلغاء" : "Cancellation"} ({(ar && b.cancellation_category ? (CANCEL_CAT_AR[b.cancellation_category] ?? b.cancellation_category) : (b.cancellation_category ?? "—"))})</div>{b.cancellation_reason}</div>}
 
               {cancelOpen && (
                 <div className="rounded-lg border border-destructive/40 p-3 space-y-2 bg-destructive/5">
-                  <Label className="text-xs">Cancellation reason</Label>
+                  <Label className="text-xs">{ar ? "سبب الإلغاء" : "Cancellation reason"}</Label>
                   <Select value={reasonCat} onValueChange={setReasonCat}>
                     <SelectTrigger className="h-8"><SelectValue /></SelectTrigger>
-                    <SelectContent>{CANCEL_CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c.replace(/_/g, " ")}</SelectItem>)}</SelectContent>
+                    <SelectContent>{CANCEL_CATEGORIES.map((c) => <SelectItem key={c} value={c}>{ar ? (CANCEL_CAT_AR[c] ?? c) : c.replace(/_/g, " ")}</SelectItem>)}</SelectContent>
                   </Select>
-                  <Textarea rows={2} value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Details…" />
-                  <div className="flex gap-2 justify-end"><Button size="sm" variant="ghost" onClick={() => setCancelOpen(false)}>Close</Button><Button size="sm" variant="destructive" onClick={doCancel}>Confirm cancel</Button></div>
+                  <Textarea rows={2} value={reason} onChange={(e) => setReason(e.target.value)} placeholder={ar ? "التفاصيل…" : "Details…"} />
+                  <div className="flex gap-2 justify-end"><Button size="sm" variant="ghost" onClick={() => setCancelOpen(false)}>{ar ? "إغلاق" : "Close"}</Button><Button size="sm" variant="destructive" onClick={doCancel}>{ar ? "تأكيد الإلغاء" : "Confirm cancel"}</Button></div>
                 </div>
               )}
             </div>
@@ -367,48 +367,48 @@ function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | 
             <div>
               <Tabs defaultValue="timeline">
                 <TabsList>
-                  <TabsTrigger value="timeline">Timeline</TabsTrigger>
-                  <TabsTrigger value="notes">Notes ({notes.data?.length ?? 0})</TabsTrigger>
-                  <TabsTrigger value="reminders">Reminders</TabsTrigger>
-                  <TabsTrigger value="whatsapp">WhatsApp ({waHistory.data?.length ?? 0})</TabsTrigger>
+                  <TabsTrigger value="timeline">{ar ? "المخطط الزمني" : "Timeline"}</TabsTrigger>
+                  <TabsTrigger value="notes">{ar ? "ملاحظات" : "Notes"} ({notes.data?.length ?? 0})</TabsTrigger>
+                  <TabsTrigger value="reminders">{ar ? "التذكيرات" : "Reminders"}</TabsTrigger>
+                  <TabsTrigger value="whatsapp">{ar ? "واتساب" : "WhatsApp"} ({waHistory.data?.length ?? 0})</TabsTrigger>
                 </TabsList>
                 <TabsContent value="timeline"><ActivityTimeline entityType="booking" entityId={b.id} /></TabsContent>
                 <TabsContent value="notes" className="space-y-2">
                   <div className="space-y-2">
-                    <Textarea rows={2} value={note} onChange={(e) => setNote(e.target.value)} placeholder="Add an internal note…" />
-                    <Button size="sm" onClick={submitNote} disabled={!note.trim()}>Add note</Button>
+                    <Textarea rows={2} value={note} onChange={(e) => setNote(e.target.value)} placeholder={ar ? "أضف ملاحظة داخلية…" : "Add an internal note…"} />
+                    <Button size="sm" onClick={submitNote} disabled={!note.trim()}>{ar ? "إضافة ملاحظة" : "Add note"}</Button>
                   </div>
                   <div className="space-y-2 mt-3">
                     {(notes.data ?? []).map((n: any) => (
                       <div key={n.id} className="rounded-md border p-2 text-sm">
-                        <div className="text-[10px] text-muted-foreground">{new Date(n.created_at).toLocaleString()}{n.pinned && " · pinned"}</div>
+                        <div className="text-[10px] text-muted-foreground">{new Date(n.created_at).toLocaleString(ar ? "ar" : "en")}{n.pinned && (ar ? " · مثبت" : " · pinned")}</div>
                         <div className="whitespace-pre-line">{n.body}</div>
                       </div>
                     ))}
-                    {!notes.data?.length && <div className="text-xs text-muted-foreground">No notes yet.</div>}
+                    {!notes.data?.length && <div className="text-xs text-muted-foreground">{ar ? "لا توجد ملاحظات بعد." : "No notes yet."}</div>}
                   </div>
                 </TabsContent>
                 <TabsContent value="reminders" className="space-y-2">
                   <div className="grid grid-cols-2 gap-2">
                     <Input type="datetime-local" value={remAt} onChange={(e) => setRemAt(e.target.value)} />
-                    <Input value={remNote} onChange={(e) => setRemNote(e.target.value)} placeholder="Note (optional)" />
+                    <Input value={remNote} onChange={(e) => setRemNote(e.target.value)} placeholder={ar ? "ملاحظة (اختياري)" : "Note (optional)"} />
                   </div>
-                  <Button size="sm" onClick={doReminder} disabled={!remAt}>Schedule reminder</Button>
+                  <Button size="sm" onClick={doReminder} disabled={!remAt}>{ar ? "جدولة التذكير" : "Schedule reminder"}</Button>
                   <div className="space-y-1 mt-2">
                     {(reminders.data ?? []).map((r: any) => (
-                      <div key={r.id} className="text-xs flex justify-between rounded border p-2"><span>{new Date(r.remind_at).toLocaleString()} · {r.channel} · {r.status}</span><span className="text-muted-foreground">{r.note}</span></div>
+                      <div key={r.id} className="text-xs flex justify-between rounded border p-2"><span>{new Date(r.remind_at).toLocaleString(ar ? "ar" : "en")} · {r.channel} · {r.status}</span><span className="text-muted-foreground">{r.note}</span></div>
                     ))}
-                    {!reminders.data?.length && <div className="text-xs text-muted-foreground">No reminders.</div>}
+                    {!reminders.data?.length && <div className="text-xs text-muted-foreground">{ar ? "لا توجد تذكيرات." : "No reminders."}</div>}
                   </div>
                 </TabsContent>
                 <TabsContent value="whatsapp" className="space-y-2">
                   {(waHistory.data ?? []).map((m: any) => (
                     <div key={m.id} className="rounded-md border p-2 text-xs">
-                      <div className="text-[10px] text-muted-foreground">{new Date(m.created_at).toLocaleString()} · {m.template_code ?? "custom"} · {m.locale}</div>
+                      <div className="text-[10px] text-muted-foreground">{new Date(m.created_at).toLocaleString(ar ? "ar" : "en")} · {m.template_code ?? (ar ? "مخصص" : "custom")} · {m.locale}</div>
                       <div className="whitespace-pre-line mt-1">{m.body}</div>
                     </div>
                   ))}
-                  {!waHistory.data?.length && <div className="text-xs text-muted-foreground">No WhatsApp messages yet.</div>}
+                  {!waHistory.data?.length && <div className="text-xs text-muted-foreground">{ar ? "لا توجد رسائل واتساب بعد." : "No WhatsApp messages yet."}</div>}
                 </TabsContent>
               </Tabs>
             </div>
