@@ -195,14 +195,14 @@ function TasksPage() {
 }
 
 
-function NewTaskDialog({ staff, onDone }: { staff: any[]; onDone: () => void }) {
+function NewTaskDialog({ ar, staff, onDone }: { ar: boolean; staff: any[]; onDone: () => void }) {
   const { user } = useAuth();
   const [form, setForm] = useState({
     title: "", description: "", priority: "normal", status: "open" as any,
     assignee_id: user?.id ?? "", due_at: "",
   });
   const save = async () => {
-    if (!form.title.trim()) return toast.error("Title required");
+    if (!form.title.trim()) return toast.error(ar ? "العنوان مطلوب" : "Title required");
     const payload: any = {
       title: form.title.trim(),
       description: form.description || null,
@@ -214,51 +214,51 @@ function NewTaskDialog({ staff, onDone }: { staff: any[]; onDone: () => void }) 
     };
     const { error } = await (supabase.from as any)("tasks").insert(payload);
     if (error) return toast.error(error.message);
-    toast.success("Task created");
+    toast.success(ar ? "تم إنشاء المهمة" : "Task created");
     onDone();
   };
   return (
     <DialogContent className="max-w-lg">
-      <DialogHeader><DialogTitle>New task</DialogTitle></DialogHeader>
+      <DialogHeader><DialogTitle>{ar ? "مهمة جديدة" : "New task"}</DialogTitle></DialogHeader>
       <div className="space-y-3">
         <div>
-          <label className="text-xs uppercase tracking-wider text-muted-foreground">Title</label>
+          <label className="text-xs uppercase tracking-wider text-muted-foreground">{ar ? "العنوان" : "Title"}</label>
           <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
         </div>
         <div>
-          <label className="text-xs uppercase tracking-wider text-muted-foreground">Description</label>
+          <label className="text-xs uppercase tracking-wider text-muted-foreground">{ar ? "الوصف" : "Description"}</label>
           <Textarea rows={4} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
         </div>
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="text-xs uppercase tracking-wider text-muted-foreground">Priority</label>
+            <label className="text-xs uppercase tracking-wider text-muted-foreground">{ar ? "الأولوية" : "Priority"}</label>
             <Select value={form.priority} onValueChange={(v) => setForm({ ...form, priority: v })}>
               <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>{PRIORITIES.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}</SelectContent>
+              <SelectContent>{PRIORITIES.map((p) => <SelectItem key={p} value={p}>{ar ? (PRIORITY_LABEL_AR[p] ?? p) : p}</SelectItem>)}</SelectContent>
             </Select>
           </div>
           <div>
-            <label className="text-xs uppercase tracking-wider text-muted-foreground">Assignee</label>
+            <label className="text-xs uppercase tracking-wider text-muted-foreground">{ar ? "المكلَّف" : "Assignee"}</label>
             <Select value={form.assignee_id || "unassigned"} onValueChange={(v) => setForm({ ...form, assignee_id: v === "unassigned" ? "" : v })}>
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="unassigned">Unassigned</SelectItem>
+                <SelectItem value="unassigned">{ar ? "غير محدد" : "Unassigned"}</SelectItem>
                 {staff.map((p) => <SelectItem key={p.id} value={p.id}>{p.full_name ?? p.email}</SelectItem>)}
               </SelectContent>
             </Select>
           </div>
         </div>
         <div>
-          <label className="text-xs uppercase tracking-wider text-muted-foreground">Due date</label>
+          <label className="text-xs uppercase tracking-wider text-muted-foreground">{ar ? "تاريخ الاستحقاق" : "Due date"}</label>
           <Input type="datetime-local" value={form.due_at} onChange={(e) => setForm({ ...form, due_at: e.target.value })} />
         </div>
       </div>
-      <DialogFooter><Button onClick={save}>Create</Button></DialogFooter>
+      <DialogFooter><Button onClick={save}>{ar ? "إنشاء" : "Create"}</Button></DialogFooter>
     </DialogContent>
   );
 }
 
-function TaskDetailDialog({ task, onClose, staff, staffMap, onChange }: { task: any; onClose: () => void; staff: any[]; staffMap: Record<string, string>; onChange: () => void }) {
+function TaskDetailDialog({ ar, task, onClose, staff, staffMap, onChange, statusLabel, priorityLabel }: { ar: boolean; task: any; onClose: () => void; staff: any[]; staffMap: Record<string, string>; onChange: () => void; statusLabel: (v: string) => string; priorityLabel: (v: string) => string }) {
   const { user } = useAuth();
   const [comment, setComment] = useState("");
 
@@ -289,60 +289,60 @@ function TaskDetailDialog({ task, onClose, staff, staffMap, onChange }: { task: 
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">{task.title}
-            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase ${PRIORITY_COLOR[task.priority]}`}><Flag className="h-3 w-3 me-1" />{task.priority}</span>
+            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase ${PRIORITY_COLOR[task.priority]}`}><Flag className="h-3 w-3 me-1" />{priorityLabel(task.priority)}</span>
           </DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           {task.description && <div className="text-sm whitespace-pre-line rounded-lg border bg-muted/30 p-3">{task.description}</div>}
           <div className="grid grid-cols-3 gap-2">
             <div>
-              <label className="text-xs uppercase tracking-wider text-muted-foreground">Status</label>
+              <label className="text-xs uppercase tracking-wider text-muted-foreground">{ar ? "الحالة" : "Status"}</label>
               <Select defaultValue={task.status} onValueChange={(v) => update({ status: v })}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{s.replace("_", " ")}</SelectItem>)}</SelectContent>
+                <SelectContent>{STATUSES.map((s) => <SelectItem key={s} value={s}>{statusLabel(s)}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div>
-              <label className="text-xs uppercase tracking-wider text-muted-foreground">Priority</label>
+              <label className="text-xs uppercase tracking-wider text-muted-foreground">{ar ? "الأولوية" : "Priority"}</label>
               <Select defaultValue={task.priority} onValueChange={(v) => update({ priority: v })}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>{PRIORITIES.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}</SelectContent>
+                <SelectContent>{PRIORITIES.map((p) => <SelectItem key={p} value={p}>{priorityLabel(p)}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div>
-              <label className="text-xs uppercase tracking-wider text-muted-foreground">Assignee</label>
+              <label className="text-xs uppercase tracking-wider text-muted-foreground">{ar ? "المكلَّف" : "Assignee"}</label>
               <Select defaultValue={task.assignee_id ?? "unassigned"} onValueChange={(v) => update({ assignee_id: v === "unassigned" ? null : v })}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="unassigned">Unassigned</SelectItem>
+                  <SelectItem value="unassigned">{ar ? "غير محدد" : "Unassigned"}</SelectItem>
                   {staff.map((p) => <SelectItem key={p.id} value={p.id}>{p.full_name ?? p.email}</SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
           </div>
           <div>
-            <label className="text-xs uppercase tracking-wider text-muted-foreground">Due date</label>
+            <label className="text-xs uppercase tracking-wider text-muted-foreground">{ar ? "تاريخ الاستحقاق" : "Due date"}</label>
             <Input type="datetime-local" defaultValue={task.due_at ? new Date(task.due_at).toISOString().slice(0, 16) : ""}
               onBlur={(e) => update({ due_at: e.target.value ? new Date(e.target.value).toISOString() : null })} />
           </div>
 
           <div className="border-t pt-3">
-            <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-2"><MessageSquare className="h-3 w-3" />Comments ({comments.data?.length ?? 0})</div>
+            <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-2"><MessageSquare className="h-3 w-3" />{ar ? "التعليقات" : "Comments"} ({comments.data?.length ?? 0})</div>
             <div className="space-y-2 max-h-64 overflow-auto mb-2">
               {(comments.data ?? []).map((c: any) => (
                 <div key={c.id} className="rounded-lg border bg-muted/30 p-2 text-sm">
                   <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
-                    <span>{staffMap[c.author_id] ?? "Staff"}</span>
+                    <span>{staffMap[c.author_id] ?? (ar ? "موظف" : "Staff")}</span>
                     <span>{formatDistanceToNow(new Date(c.created_at), { addSuffix: true })}</span>
                   </div>
                   <div className="whitespace-pre-line">{c.body}</div>
                 </div>
               ))}
-              {(comments.data ?? []).length === 0 && <div className="text-xs text-muted-foreground text-center py-3">No comments yet</div>}
+              {(comments.data ?? []).length === 0 && <div className="text-xs text-muted-foreground text-center py-3">{ar ? "لا توجد تعليقات بعد" : "No comments yet"}</div>}
             </div>
             <div className="flex gap-2">
-              <Input value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Add a comment…" onKeyDown={(e) => e.key === "Enter" && addComment()} />
-              <Button onClick={addComment} disabled={!comment.trim()}>Send</Button>
+              <Input value={comment} onChange={(e) => setComment(e.target.value)} placeholder={ar ? "أضف تعليقاً…" : "Add a comment…"} onKeyDown={(e) => e.key === "Enter" && addComment()} />
+              <Button onClick={addComment} disabled={!comment.trim()}>{ar ? "إرسال" : "Send"}</Button>
             </div>
           </div>
 
@@ -356,3 +356,4 @@ function TaskDetailDialog({ task, onClose, staff, staffMap, onChange }: { task: 
     </Dialog>
   );
 }
+
