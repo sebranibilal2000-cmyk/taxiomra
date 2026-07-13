@@ -79,21 +79,30 @@ function Drivers() {
     { key: "full_name", header: t("name"), render: (r) => (
       <div><div className="font-medium">{r.full_name}</div><div className="text-xs text-muted-foreground">{r.phone ?? "—"}</div></div>
     ) },
-    { key: "license_number", header: "License", render: (r) => (
+    { key: "license_number", header: ar ? "الرخصة" : "License", render: (r) => (
       <div className="space-y-1">
         <div className="text-xs">{r.license_number ?? "—"}</div>
         <ExpiryPill date={r.license_expiry} />
       </div>
     ) },
-    { key: "medical_expiry", header: "Medical", render: (r) => <ExpiryPill date={r.medical_expiry} /> },
+    { key: "medical_expiry", header: ar ? "الفحص الطبي" : "Medical", render: (r) => <ExpiryPill date={r.medical_expiry} /> },
     { key: "vehicle", header: t("vehicle"), render: (r) => r.vehicle ? <span className="font-mono text-xs">{r.vehicle.plate_number}</span> : "—" },
-    { key: "total_trips", header: "Trips", render: (r) => <span className="tabular-nums">{r.total_trips ?? 0}</span> },
-    { key: "total_earnings", header: "Revenue", render: (r) => <span className="tabular-nums">{Number(r.total_earnings ?? 0).toFixed(2)}</span> },
-    { key: "avg_rating", header: "Rating", render: (r) => r.avg_rating ? Number(r.avg_rating).toFixed(2) : "—" },
+    { key: "total_trips", header: ar ? "الرحلات" : "Trips", render: (r) => <span className="tabular-nums">{r.total_trips ?? 0}</span> },
+    { key: "total_earnings", header: ar ? "الإيرادات" : "Revenue", render: (r) => <span className="tabular-nums">{Number(r.total_earnings ?? 0).toFixed(2)}</span> },
+    { key: "avg_rating", header: ar ? "التقييم" : "Rating", render: (r) => r.avg_rating ? Number(r.avg_rating).toFixed(2) : "—" },
     { key: "status", header: t("status"), render: (r) => <StatusBadge value={r.status} /> },
   ];
 
+  const del = async (id: string) => {
+    if (!confirm(ar ? "حذف السائق؟" : "Delete driver?")) return;
+    const { error } = await supabase.from("drivers").update({ deleted_at: new Date().toISOString() as any }).eq("id", id);
+    if (error) return toast.error(error.message);
+    toast.success(ar ? "تم الحذف" : "Deleted");
+    qc.invalidateQueries({ queryKey: ["drivers"] });
+  };
+
   const alerts = (q.data ?? []).filter((d: any) => [d.license_expiry, d.medical_expiry, d.work_permit_expiry, d.insurance_expiry].some((x: string | null) => x && daysUntil(x)! <= 30)).length;
+
 
   return (
     <div>
