@@ -21,7 +21,7 @@ export function PublicFooter() {
             />
             <div className="flex flex-col leading-tight">
               <span className="font-display text-xl">{SITE.brand[locale]}</span>
-              <span className="text-[10px] uppercase tracking-[0.22em] text-primary-foreground/60">Chauffeur · 24/7</span>
+              <span className="text-[11px] tracking-[0.02em] text-primary-foreground/70" dir="rtl">تاكسي من مطار جدة إلى مكة المكرمة</span>
             </div>
           </Link>
           <p className="text-sm text-primary-foreground/70 max-w-sm leading-relaxed">
