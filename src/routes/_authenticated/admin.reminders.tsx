@@ -42,6 +42,8 @@ type Item = {
 
 function RemindersPage() {
   const { locale } = useI18n();
+  const ar = locale === "ar";
+  const WINDOWS = ar ? WINDOWS_AR : WINDOWS_EN;
   const [tab, setTab] = useState<string>("all");
 
   const drivers = useQuery({
