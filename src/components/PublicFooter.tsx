@@ -1,10 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { Phone, MessageCircle, Mail, MapPin, Clock } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import { SITE, waLink, telLink } from "@/lib/site-info";
+import { SITE } from "@/lib/site-info";
+import { useContactInfo } from "@/lib/contact-info";
 
 export function PublicFooter() {
   const { locale } = useI18n();
+  const { phone, whatsapp, telHref, waHref } = useContactInfo();
   const ar = locale === "ar";
   const l = (p: string) => `/${locale}${p}`;
   return (
