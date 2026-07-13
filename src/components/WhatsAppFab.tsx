@@ -22,7 +22,7 @@ export function WhatsAppFab() {
       const get = (k: string) => {
         const row = data?.find((r: any) => r.key === k);
         if (!row) return "";
-        return typeof row.value === "string" ? row.value : (row.value?.value ?? "");
+        return typeof row.value === "string" ? row.value : ((row.value as any)?.value ?? "");
       };
       const n = get("whatsapp_number");
       const m = get("whatsapp_default_message");
