@@ -141,21 +141,21 @@ function RemindersPage() {
 
       <Tabs value={tab} onValueChange={setTab} className="mb-4">
         <TabsList className="flex-wrap h-auto">
-          <TabsTrigger value="all">All ({items.length})</TabsTrigger>
-          <TabsTrigger value="license">Licenses</TabsTrigger>
-          <TabsTrigger value="insurance">Insurance</TabsTrigger>
-          <TabsTrigger value="inspection">Inspection</TabsTrigger>
-          <TabsTrigger value="registration">Registration</TabsTrigger>
-          <TabsTrigger value="service">Service</TabsTrigger>
-          <TabsTrigger value="maintenance">Maintenance</TabsTrigger>
-          <TabsTrigger value="booking">Bookings</TabsTrigger>
+          <TabsTrigger value="all">{ar ? `الكل (${items.length})` : `All (${items.length})`}</TabsTrigger>
+          <TabsTrigger value="license">{ar ? "الرخص" : "Licenses"}</TabsTrigger>
+          <TabsTrigger value="insurance">{ar ? "التأمين" : "Insurance"}</TabsTrigger>
+          <TabsTrigger value="inspection">{ar ? "الفحص" : "Inspection"}</TabsTrigger>
+          <TabsTrigger value="registration">{ar ? "الاستمارة" : "Registration"}</TabsTrigger>
+          <TabsTrigger value="service">{ar ? "الخدمة" : "Service"}</TabsTrigger>
+          <TabsTrigger value="maintenance">{ar ? "الصيانة" : "Maintenance"}</TabsTrigger>
+          <TabsTrigger value="booking">{ar ? "الحجوزات" : "Bookings"}</TabsTrigger>
         </TabsList>
       </Tabs>
 
       <div className="space-y-2">
         {filtered.length === 0 && (
           <div className="text-center py-16 text-sm text-muted-foreground border rounded-lg">
-            {locale === "ar" ? "لا توجد تنبيهات" : "Nothing needs attention. Nice."}
+            {ar ? "لا توجد تنبيهات" : "Nothing needs attention. Nice."}
           </div>
         )}
         {filtered.map((i) => {
@@ -174,7 +174,7 @@ function RemindersPage() {
                   <div className="text-end">
                     <Badge variant="outline" className="text-[10px]">{w.label}</Badge>
                     <div className="text-xs text-muted-foreground mt-0.5">
-                      {days < 0 ? `${Math.abs(days)}d overdue` : `in ${days}d`}
+                      {ar ? (days < 0 ? `متأخر ${Math.abs(days)} يوم` : `خلال ${days} يوم`) : (days < 0 ? `${Math.abs(days)}d overdue` : `in ${days}d`)}
                     </div>
                   </div>
                 </div>
