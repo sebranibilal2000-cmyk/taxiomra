@@ -11,6 +11,8 @@ import { I18nProvider } from "@/lib/i18n";
 import { ThemeProvider } from "@/lib/theme";
 import { AuthProvider } from "@/lib/auth";
 import { Toaster } from "@/components/ui/sonner";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { errorToMessage } from "@/lib/errors";
 import { SITE } from "@/lib/site-info";
 
 function NotFoundComponent() {
@@ -27,13 +29,17 @@ function NotFoundComponent() {
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter();
-  useEffect(() => { reportLovableError(error, { boundary: "root" }); }, [error]);
+  useEffect(() => { console.error(error); reportLovableError(error, { boundary: "root" }); }, [error]);
+  const friendly = errorToMessage(error);
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-xl font-semibold">حدث خطأ / Something went wrong</h1>
-        <p className="mt-2 text-sm text-muted-foreground">{error.message}</p>
-        <button onClick={() => { router.invalidate(); reset(); }} className="mt-6 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">Try again</button>
+        <p className="mt-2 text-sm text-muted-foreground">{friendly}</p>
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          <button onClick={() => { router.invalidate(); reset(); }} className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">Try again</button>
+          <a href="/" className="rounded-md border px-4 py-2 text-sm font-medium">Home</a>
+        </div>
       </div>
     </div>
   );
@@ -91,7 +97,9 @@ function RootComponent() {
       <ThemeProvider>
         <I18nProvider>
           <AuthProvider>
-            <Outlet />
+            <ErrorBoundary>
+              <Outlet />
+            </ErrorBoundary>
             <Toaster richColors position="top-center" />
           </AuthProvider>
         </I18nProvider>

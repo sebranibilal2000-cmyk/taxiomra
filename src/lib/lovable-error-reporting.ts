@@ -47,10 +47,29 @@ export function reportLovableError(error: unknown, context: Record<string, unkno
 export function installGlobalErrorHandlers() {
   if (typeof window === "undefined" || window.__errorReporterInstalled) return;
   window.__errorReporterInstalled = true;
+
+  // Throttle user-facing toasts so a chatty rejection storm doesn't spam.
+  let lastToastAt = 0;
+  const notify = async (err: unknown) => {
+    const now = Date.now();
+    if (now - lastToastAt < 3000) return;
+    lastToastAt = now;
+    try {
+      const [{ toast }, { errorToMessage }] = await Promise.all([
+        import("sonner"),
+        import("./errors"),
+      ]);
+      toast.error(errorToMessage(err));
+    } catch {
+      // Toast infra unavailable — swallow, we already persisted.
+    }
+  };
+
   window.addEventListener("error", (e) => {
     void persist(e.error ?? e.message, { filename: e.filename, lineno: e.lineno, colno: e.colno }, "onerror");
   });
   window.addEventListener("unhandledrejection", (e) => {
     void persist(e.reason, {}, "unhandledrejection");
+    void notify(e.reason);
   });
 }
