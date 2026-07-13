@@ -40,10 +40,22 @@ export const Route = createFileRoute("/api/public/hooks/process-queues")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        // Authorize via anon apikey header — canonical pg_cron pattern.
-        const apiKey = request.headers.get("apikey");
-        const expected = process.env.SUPABASE_PUBLISHABLE_KEY;
-        if (!apiKey || !expected || apiKey !== expected) {
+        // Authorize via a private shared secret sent in a custom header.
+        // The public anon key is NOT accepted — it ships in the client bundle.
+        const expected = process.env.CRON_SECRET;
+        if (!expected) {
+          return new Response("Server not configured", { status: 503 });
+        }
+        const provided =
+          request.headers.get("x-cron-secret") ??
+          request.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ??
+          "";
+        // Constant-time-ish comparison.
+        const a = new TextEncoder().encode(provided);
+        const b = new TextEncoder().encode(expected);
+        let ok = a.length === b.length;
+        for (let i = 0; i < Math.min(a.length, b.length); i++) ok = ok && a[i] === b[i];
+        if (!ok) {
           return new Response("Unauthorized", { status: 401 });
         }
 
