@@ -25,14 +25,23 @@ import { duplicateBooking, bulkUpdateBookings, cancelBooking, addBookingNote, sc
 export const Route = createFileRoute("/_authenticated/admin/bookings")({ component: BookingsPage });
 
 const BOOKING_STATUSES = ["pending", "confirmed", "assigned", "en_route", "on_trip", "picked_up", "completed", "cancelled", "no_show"] as const;
-const STATUS_LABELS: Record<string, string> = {
+const STATUS_LABELS_EN: Record<string, string> = {
   pending: "Pending", confirmed: "Confirmed", assigned: "Driver Assigned", en_route: "En Route",
   on_trip: "On Trip", picked_up: "Picked Up", completed: "Completed", cancelled: "Cancelled", no_show: "No Show",
 };
+const STATUS_LABELS_AR: Record<string, string> = {
+  pending: "قيد الانتظار", confirmed: "مؤكد", assigned: "مُعيَّن للسائق", en_route: "في الطريق",
+  on_trip: "في رحلة", picked_up: "تم الاستلام", completed: "مكتمل", cancelled: "ملغي", no_show: "لم يحضر",
+};
 const CANCEL_CATEGORIES = ["customer_request", "no_show", "duplicate", "weather", "vehicle_issue", "other"];
+const CANCEL_CAT_AR: Record<string, string> = {
+  customer_request: "طلب العميل", no_show: "لم يحضر", duplicate: "مكرر", weather: "طقس", vehicle_issue: "مشكلة مركبة", other: "أخرى",
+};
 
 function BookingsPage() {
   const { t, locale } = useI18n();
+  const ar = locale === "ar";
+  const STATUS_LABELS = ar ? STATUS_LABELS_AR : STATUS_LABELS_EN;
   const qc = useQueryClient();
   const [open, setOpen] = useState(false);
   const [detailId, setDetailId] = useState<string | null>(null);
@@ -130,29 +139,29 @@ function BookingsPage() {
       <div className="flex flex-wrap gap-2 mb-4 items-center">
         <div className="relative">
           <Search className="absolute start-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search code, customer, phone, address…" className="ps-9 w-80" />
+          <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder={ar ? "ابحث بالرمز، العميل، الهاتف، العنوان…" : "Search code, customer, phone, address…"} className="ps-9 w-80" />
         </div>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
           <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All statuses</SelectItem>
+            <SelectItem value="all">{ar ? "كل الحالات" : "All statuses"}</SelectItem>
             {BOOKING_STATUSES.map((s) => <SelectItem key={s} value={s}>{STATUS_LABELS[s]}</SelectItem>)}
           </SelectContent>
         </Select>
-        <label className="flex items-center gap-2 text-sm"><Checkbox checked={priorityOnly} onCheckedChange={(v) => setPriorityOnly(!!v)} />Priority only</label>
-        <div className="text-sm text-muted-foreground">{filtered.length} of {(bookings.data ?? []).length}</div>
+        <label className="flex items-center gap-2 text-sm"><Checkbox checked={priorityOnly} onCheckedChange={(v) => setPriorityOnly(!!v)} />{ar ? "الأولوية فقط" : "Priority only"}</label>
+        <div className="text-sm text-muted-foreground">{filtered.length} {ar ? "من" : "of"} {(bookings.data ?? []).length}</div>
       </div>
 
       {selected.size > 0 && (
         <div className="mb-3 flex items-center gap-2 rounded-lg border border-gold/40 bg-gold/5 p-2 text-sm">
-          <span className="font-medium">{selected.size} selected</span>
+          <span className="font-medium">{selected.size} {ar ? "محدد" : "selected"}</span>
           <Select onValueChange={(v) => doBulk({ status: v })}>
-            <SelectTrigger className="w-44 h-8"><SelectValue placeholder="Set status…" /></SelectTrigger>
+            <SelectTrigger className="w-44 h-8"><SelectValue placeholder={ar ? "تعيين حالة…" : "Set status…"} /></SelectTrigger>
             <SelectContent>{BOOKING_STATUSES.map((s) => <SelectItem key={s} value={s}>{STATUS_LABELS[s]}</SelectItem>)}</SelectContent>
           </Select>
-          <Button size="sm" variant="outline" onClick={() => doBulk({ is_priority: true })}><Star className="h-3.5 w-3.5 me-1" />Mark priority</Button>
-          <Button size="sm" variant="outline" onClick={() => doBulk({ is_priority: false })}><StarOff className="h-3.5 w-3.5 me-1" />Clear priority</Button>
-          <Button size="sm" variant="ghost" onClick={() => setSelected(new Set())}>Clear</Button>
+          <Button size="sm" variant="outline" onClick={() => doBulk({ is_priority: true })}><Star className="h-3.5 w-3.5 me-1" />{ar ? "تعليم كأولوية" : "Mark priority"}</Button>
+          <Button size="sm" variant="outline" onClick={() => doBulk({ is_priority: false })}><StarOff className="h-3.5 w-3.5 me-1" />{ar ? "إزالة الأولوية" : "Clear priority"}</Button>
+          <Button size="sm" variant="ghost" onClick={() => setSelected(new Set())}>{ar ? "مسح" : "Clear"}</Button>
         </div>
       )}
 
@@ -161,14 +170,14 @@ function BookingsPage() {
           <thead className="bg-muted/30 text-xs uppercase tracking-wider text-muted-foreground">
             <tr>
               <th className="p-2 w-8"><Checkbox checked={selected.size > 0 && selected.size === filtered.length} onCheckedChange={toggleAll} /></th>
-              <th className="p-2 text-start">Code</th>
-              <th className="p-2 text-start">Customer</th>
-              <th className="p-2 text-start">Driver</th>
-              <th className="p-2 text-start">Pickup → Dropoff</th>
-              <th className="p-2 text-start">When</th>
-              <th className="p-2 text-end">Fare</th>
-              <th className="p-2 text-start">Status</th>
-              <th className="p-2 text-end">Actions</th>
+              <th className="p-2 text-start">{ar ? "الرمز" : "Code"}</th>
+              <th className="p-2 text-start">{ar ? "العميل" : "Customer"}</th>
+              <th className="p-2 text-start">{ar ? "السائق" : "Driver"}</th>
+              <th className="p-2 text-start">{ar ? "من ← إلى" : "Pickup → Dropoff"}</th>
+              <th className="p-2 text-start">{ar ? "الموعد" : "When"}</th>
+              <th className="p-2 text-end">{ar ? "الأجرة" : "Fare"}</th>
+              <th className="p-2 text-start">{ar ? "الحالة" : "Status"}</th>
+              <th className="p-2 text-end">{ar ? "إجراءات" : "Actions"}</th>
             </tr>
           </thead>
           <tbody>
@@ -185,29 +194,30 @@ function BookingsPage() {
                 <td className="p-2">{r.customer?.full_name ?? "—"}<div className="text-xs text-muted-foreground">{r.customer?.phone}</div></td>
                 <td className="p-2">{r.driver?.full_name ?? "—"}</td>
                 <td className="p-2 max-w-xs truncate"><span className="truncate">{r.pickup_location}</span><div className="text-xs text-muted-foreground truncate">→ {r.dropoff_location}</div></td>
-                <td className="p-2 text-xs">{new Date(r.pickup_at).toLocaleString()}</td>
+                <td className="p-2 text-xs">{new Date(r.pickup_at).toLocaleString(ar ? "ar" : "en")}</td>
                 <td className="p-2 text-end font-mono">{Number(r.total_fare || 0).toFixed(2)}</td>
                 <td className="p-2"><StatusBadge value={r.status} /></td>
                 <td className="p-2">
                   <div className="flex items-center gap-1 justify-end">
                     <WhatsAppSendMenu phone={r.customer?.phone} bookingId={r.id} customerId={r.customer?.id}
                       vars={{ code: r.code, customer_name: r.customer?.full_name, pickup: r.pickup_location, dropoff: r.dropoff_location, pickup_at: new Date(r.pickup_at).toLocaleString(), driver_name: r.driver?.full_name ?? "", total: Number(r.total_fare || 0).toFixed(2) }} />
-                    <Button variant="ghost" size="icon" className="h-8 w-8" title="Duplicate" onClick={() => duplicate(r.id)}><Copy className="h-4 w-4" /></Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8" title="Priority" onClick={() => togglePriority(r)}>
+                    <Button variant="ghost" size="icon" className="h-8 w-8" title={ar ? "تكرار" : "Duplicate"} onClick={() => duplicate(r.id)}><Copy className="h-4 w-4" /></Button>
+                    <Button variant="ghost" size="icon" className="h-8 w-8" title={ar ? "أولوية" : "Priority"} onClick={() => togglePriority(r)}>
                       {r.is_priority ? <Star className="h-4 w-4 fill-gold text-gold" /> : <StarOff className="h-4 w-4" />}
                     </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8" title="Timeline" onClick={() => setDetailId(r.id)}><ListTree className="h-4 w-4" /></Button>
-                    <a href={`/admin/bookings/${r.id}/print`} target="_blank" rel="noopener" title="Print" className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted"><Printer className="h-4 w-4" /></a>
+                    <Button variant="ghost" size="icon" className="h-8 w-8" title={ar ? "المخطط الزمني" : "Timeline"} onClick={() => setDetailId(r.id)}><ListTree className="h-4 w-4" /></Button>
+                    <a href={`/admin/bookings/${r.id}/print`} target="_blank" rel="noopener" title={ar ? "طباعة" : "Print"} className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted"><Printer className="h-4 w-4" /></a>
                   </div>
                 </td>
               </tr>
             ))}
             {!filtered.length && (
-              <tr><td colSpan={9} className="p-8 text-center text-muted-foreground">{bookings.isLoading ? "Loading…" : "No bookings match."}</td></tr>
+              <tr><td colSpan={9} className="p-8 text-center text-muted-foreground">{bookings.isLoading ? (ar ? "جارٍ التحميل…" : "Loading…") : (ar ? "لا توجد حجوزات مطابقة." : "No bookings match.")}</td></tr>
             )}
           </tbody>
         </table>
       </div>
+
 
       <BookingDetailDialog bookingId={detailId} onOpenChange={(o) => !o && setDetailId(null)} />
     </div>
@@ -215,6 +225,9 @@ function BookingsPage() {
 }
 
 function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | null; onOpenChange: (o: boolean) => void }) {
+  const { locale } = useI18n();
+  const ar = locale === "ar";
+  const STATUS_LABELS = ar ? STATUS_LABELS_AR : STATUS_LABELS_EN;
   const qc = useQueryClient();
   const cancelFn = useServerFn(cancelBooking);
   const addNote = useServerFn(addBookingNote);
@@ -273,7 +286,7 @@ function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | 
     if (!reason.trim() || !b) return;
     try {
       await cancelFn({ data: { id: b.id, reason, category: reasonCat } });
-      toast.success("Cancelled");
+      toast.success(ar ? "تم الإلغاء" : "Cancelled");
       setCancelOpen(false); setReason("");
       qc.invalidateQueries({ queryKey: ["booking-detail", bookingId] });
       qc.invalidateQueries({ queryKey: ["bookings"] });
@@ -283,7 +296,7 @@ function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | 
     if (!remAt || !b) return;
     try {
       await schedRem({ data: { booking_id: b.id, remind_at: new Date(remAt).toISOString(), note: remNote || null } });
-      toast.success("Reminder scheduled"); setRemAt(""); setRemNote("");
+      toast.success(ar ? "تمت جدولة التذكير" : "Reminder scheduled"); setRemAt(""); setRemNote("");
       qc.invalidateQueries({ queryKey: ["booking-reminders", bookingId] });
     } catch (e: any) { toast.error(e.message); }
   };
@@ -294,7 +307,7 @@ function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | 
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 font-display">
             {b?.is_priority && <Star className="h-5 w-5 fill-gold text-gold" />}
-            Booking <span className="font-mono text-base">{b?.code}</span>
+            {ar ? "حجز" : "Booking"} <span className="font-mono text-base">{b?.code}</span>
             {b && <StatusBadge value={b.status} />}
           </DialogTitle>
         </DialogHeader>
@@ -302,51 +315,51 @@ function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3 text-sm">
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Customer</div><div>{b.customer?.full_name ?? "—"}</div><div className="text-xs text-muted-foreground">{b.customer?.phone}</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Driver</div><div>{b.driver?.full_name ?? "—"}</div><div className="text-xs text-muted-foreground">{b.driver?.phone}</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Pickup</div><div>{b.pickup_location}</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Dropoff</div><div>{b.dropoff_location}</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Vehicle</div><div>{b.vehicle ? `${b.vehicle.make} ${b.vehicle.model} · ${b.vehicle.plate_number}` : "—"}</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Category</div><div>{b.category?.code ?? "—"}</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Distance</div><div>{Number(b.distance_km || 0).toFixed(1)} km</div></div>
-                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">Total</div><div className="font-display text-lg">{Number(b.total_fare || 0).toFixed(2)}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "العميل" : "Customer"}</div><div>{b.customer?.full_name ?? "—"}</div><div className="text-xs text-muted-foreground">{b.customer?.phone}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "السائق" : "Driver"}</div><div>{b.driver?.full_name ?? "—"}</div><div className="text-xs text-muted-foreground">{b.driver?.phone}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "نقطة الانطلاق" : "Pickup"}</div><div>{b.pickup_location}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "الوجهة" : "Dropoff"}</div><div>{b.dropoff_location}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "المركبة" : "Vehicle"}</div><div>{b.vehicle ? `${b.vehicle.make} ${b.vehicle.model} · ${b.vehicle.plate_number}` : "—"}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "الفئة" : "Category"}</div><div>{b.category?.code ?? "—"}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "المسافة" : "Distance"}</div><div>{Number(b.distance_km || 0).toFixed(1)} {ar ? "كم" : "km"}</div></div>
+                <div><div className="text-[10px] uppercase tracking-wider text-muted-foreground">{ar ? "الإجمالي" : "Total"}</div><div className="font-display text-lg">{Number(b.total_fare || 0).toFixed(2)}</div></div>
               </div>
 
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Tags</div>
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">{ar ? "الوسوم" : "Tags"}</div>
                 <div className="flex flex-wrap gap-1 mb-2">
                   {(b.tags ?? []).map((tg: string) => (
                     <Badge key={tg} variant="secondary" className="cursor-pointer" onClick={() => removeTag(tg)}>{tg} ×</Badge>
                   ))}
                 </div>
-                <div className="flex gap-2"><Input value={tag} onChange={(e) => setTag(e.target.value)} placeholder="add tag" className="h-8" onKeyDown={(e) => e.key === "Enter" && addTag()} /><Button size="sm" variant="outline" onClick={addTag}>Add</Button></div>
+                <div className="flex gap-2"><Input value={tag} onChange={(e) => setTag(e.target.value)} placeholder={ar ? "إضافة وسم" : "add tag"} className="h-8" onKeyDown={(e) => e.key === "Enter" && addTag()} /><Button size="sm" variant="outline" onClick={addTag}>{ar ? "إضافة" : "Add"}</Button></div>
               </div>
 
               <div className="flex flex-wrap gap-2">
                 <Select value={b.status} onValueChange={async (v) => {
                   const { error } = await supabase.from("bookings").update({ status: v as any }).eq("id", b.id);
-                  if (error) toast.error(error.message); else { toast.success("Status updated"); qc.invalidateQueries({ queryKey: ["bookings"] }); qc.invalidateQueries({ queryKey: ["booking-detail", b.id] }); qc.invalidateQueries({ queryKey: ["activity", "booking", b.id] }); }
+                  if (error) toast.error(error.message); else { toast.success(ar ? "تم تحديث الحالة" : "Status updated"); qc.invalidateQueries({ queryKey: ["bookings"] }); qc.invalidateQueries({ queryKey: ["booking-detail", b.id] }); qc.invalidateQueries({ queryKey: ["activity", "booking", b.id] }); }
                 }}>
                   <SelectTrigger className="w-40 h-9"><SelectValue /></SelectTrigger>
                   <SelectContent>{BOOKING_STATUSES.map((s) => <SelectItem key={s} value={s}>{STATUS_LABELS[s]}</SelectItem>)}</SelectContent>
                 </Select>
-                <Button size="sm" variant="outline" onClick={() => setCancelOpen(true)}><XCircle className="h-4 w-4 me-1" />Cancel</Button>
-                <a href={`/admin/bookings/${b.id}/print`} target="_blank" rel="noopener" className="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-sm hover:bg-muted"><Printer className="h-4 w-4" />Print</a>
+                <Button size="sm" variant="outline" onClick={() => setCancelOpen(true)}><XCircle className="h-4 w-4 me-1" />{ar ? "إلغاء" : "Cancel"}</Button>
+                <a href={`/admin/bookings/${b.id}/print`} target="_blank" rel="noopener" className="inline-flex items-center gap-1 rounded-md border px-3 py-1.5 text-sm hover:bg-muted"><Printer className="h-4 w-4" />{ar ? "طباعة" : "Print"}</a>
                 <WhatsAppSendMenu phone={b.customer?.phone} bookingId={b.id} customerId={b.customer?.id}
                   vars={{ code: b.code, customer_name: b.customer?.full_name, pickup: b.pickup_location, dropoff: b.dropoff_location, pickup_at: new Date(b.pickup_at).toLocaleString(), driver_name: b.driver?.full_name ?? "", total: Number(b.total_fare || 0).toFixed(2) }} />
               </div>
 
-              {b.cancellation_reason && <div className="rounded-lg border border-destructive/40 p-3 text-sm bg-destructive/5"><div className="text-[10px] uppercase tracking-wider text-destructive mb-1">Cancellation ({b.cancellation_category ?? "—"})</div>{b.cancellation_reason}</div>}
+              {b.cancellation_reason && <div className="rounded-lg border border-destructive/40 p-3 text-sm bg-destructive/5"><div className="text-[10px] uppercase tracking-wider text-destructive mb-1">{ar ? "الإلغاء" : "Cancellation"} ({(ar && b.cancellation_category ? (CANCEL_CAT_AR[b.cancellation_category] ?? b.cancellation_category) : (b.cancellation_category ?? "—"))})</div>{b.cancellation_reason}</div>}
 
               {cancelOpen && (
                 <div className="rounded-lg border border-destructive/40 p-3 space-y-2 bg-destructive/5">
-                  <Label className="text-xs">Cancellation reason</Label>
+                  <Label className="text-xs">{ar ? "سبب الإلغاء" : "Cancellation reason"}</Label>
                   <Select value={reasonCat} onValueChange={setReasonCat}>
                     <SelectTrigger className="h-8"><SelectValue /></SelectTrigger>
-                    <SelectContent>{CANCEL_CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c.replace(/_/g, " ")}</SelectItem>)}</SelectContent>
+                    <SelectContent>{CANCEL_CATEGORIES.map((c) => <SelectItem key={c} value={c}>{ar ? (CANCEL_CAT_AR[c] ?? c) : c.replace(/_/g, " ")}</SelectItem>)}</SelectContent>
                   </Select>
-                  <Textarea rows={2} value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Details…" />
-                  <div className="flex gap-2 justify-end"><Button size="sm" variant="ghost" onClick={() => setCancelOpen(false)}>Close</Button><Button size="sm" variant="destructive" onClick={doCancel}>Confirm cancel</Button></div>
+                  <Textarea rows={2} value={reason} onChange={(e) => setReason(e.target.value)} placeholder={ar ? "التفاصيل…" : "Details…"} />
+                  <div className="flex gap-2 justify-end"><Button size="sm" variant="ghost" onClick={() => setCancelOpen(false)}>{ar ? "إغلاق" : "Close"}</Button><Button size="sm" variant="destructive" onClick={doCancel}>{ar ? "تأكيد الإلغاء" : "Confirm cancel"}</Button></div>
                 </div>
               )}
             </div>
@@ -354,48 +367,48 @@ function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | 
             <div>
               <Tabs defaultValue="timeline">
                 <TabsList>
-                  <TabsTrigger value="timeline">Timeline</TabsTrigger>
-                  <TabsTrigger value="notes">Notes ({notes.data?.length ?? 0})</TabsTrigger>
-                  <TabsTrigger value="reminders">Reminders</TabsTrigger>
-                  <TabsTrigger value="whatsapp">WhatsApp ({waHistory.data?.length ?? 0})</TabsTrigger>
+                  <TabsTrigger value="timeline">{ar ? "المخطط الزمني" : "Timeline"}</TabsTrigger>
+                  <TabsTrigger value="notes">{ar ? "ملاحظات" : "Notes"} ({notes.data?.length ?? 0})</TabsTrigger>
+                  <TabsTrigger value="reminders">{ar ? "التذكيرات" : "Reminders"}</TabsTrigger>
+                  <TabsTrigger value="whatsapp">{ar ? "واتساب" : "WhatsApp"} ({waHistory.data?.length ?? 0})</TabsTrigger>
                 </TabsList>
                 <TabsContent value="timeline"><ActivityTimeline entityType="booking" entityId={b.id} /></TabsContent>
                 <TabsContent value="notes" className="space-y-2">
                   <div className="space-y-2">
-                    <Textarea rows={2} value={note} onChange={(e) => setNote(e.target.value)} placeholder="Add an internal note…" />
-                    <Button size="sm" onClick={submitNote} disabled={!note.trim()}>Add note</Button>
+                    <Textarea rows={2} value={note} onChange={(e) => setNote(e.target.value)} placeholder={ar ? "أضف ملاحظة داخلية…" : "Add an internal note…"} />
+                    <Button size="sm" onClick={submitNote} disabled={!note.trim()}>{ar ? "إضافة ملاحظة" : "Add note"}</Button>
                   </div>
                   <div className="space-y-2 mt-3">
                     {(notes.data ?? []).map((n: any) => (
                       <div key={n.id} className="rounded-md border p-2 text-sm">
-                        <div className="text-[10px] text-muted-foreground">{new Date(n.created_at).toLocaleString()}{n.pinned && " · pinned"}</div>
+                        <div className="text-[10px] text-muted-foreground">{new Date(n.created_at).toLocaleString(ar ? "ar" : "en")}{n.pinned && (ar ? " · مثبت" : " · pinned")}</div>
                         <div className="whitespace-pre-line">{n.body}</div>
                       </div>
                     ))}
-                    {!notes.data?.length && <div className="text-xs text-muted-foreground">No notes yet.</div>}
+                    {!notes.data?.length && <div className="text-xs text-muted-foreground">{ar ? "لا توجد ملاحظات بعد." : "No notes yet."}</div>}
                   </div>
                 </TabsContent>
                 <TabsContent value="reminders" className="space-y-2">
                   <div className="grid grid-cols-2 gap-2">
                     <Input type="datetime-local" value={remAt} onChange={(e) => setRemAt(e.target.value)} />
-                    <Input value={remNote} onChange={(e) => setRemNote(e.target.value)} placeholder="Note (optional)" />
+                    <Input value={remNote} onChange={(e) => setRemNote(e.target.value)} placeholder={ar ? "ملاحظة (اختياري)" : "Note (optional)"} />
                   </div>
-                  <Button size="sm" onClick={doReminder} disabled={!remAt}>Schedule reminder</Button>
+                  <Button size="sm" onClick={doReminder} disabled={!remAt}>{ar ? "جدولة التذكير" : "Schedule reminder"}</Button>
                   <div className="space-y-1 mt-2">
                     {(reminders.data ?? []).map((r: any) => (
-                      <div key={r.id} className="text-xs flex justify-between rounded border p-2"><span>{new Date(r.remind_at).toLocaleString()} · {r.channel} · {r.status}</span><span className="text-muted-foreground">{r.note}</span></div>
+                      <div key={r.id} className="text-xs flex justify-between rounded border p-2"><span>{new Date(r.remind_at).toLocaleString(ar ? "ar" : "en")} · {r.channel} · {r.status}</span><span className="text-muted-foreground">{r.note}</span></div>
                     ))}
-                    {!reminders.data?.length && <div className="text-xs text-muted-foreground">No reminders.</div>}
+                    {!reminders.data?.length && <div className="text-xs text-muted-foreground">{ar ? "لا توجد تذكيرات." : "No reminders."}</div>}
                   </div>
                 </TabsContent>
                 <TabsContent value="whatsapp" className="space-y-2">
                   {(waHistory.data ?? []).map((m: any) => (
                     <div key={m.id} className="rounded-md border p-2 text-xs">
-                      <div className="text-[10px] text-muted-foreground">{new Date(m.created_at).toLocaleString()} · {m.template_code ?? "custom"} · {m.locale}</div>
+                      <div className="text-[10px] text-muted-foreground">{new Date(m.created_at).toLocaleString(ar ? "ar" : "en")} · {m.template_code ?? (ar ? "مخصص" : "custom")} · {m.locale}</div>
                       <div className="whitespace-pre-line mt-1">{m.body}</div>
                     </div>
                   ))}
-                  {!waHistory.data?.length && <div className="text-xs text-muted-foreground">No WhatsApp messages yet.</div>}
+                  {!waHistory.data?.length && <div className="text-xs text-muted-foreground">{ar ? "لا توجد رسائل واتساب بعد." : "No WhatsApp messages yet."}</div>}
                 </TabsContent>
               </Tabs>
             </div>
@@ -472,17 +485,17 @@ function NewBookingDialog({ customers, cats, drivers, onDone }: { customers: any
         </div>
         <div className="space-y-1 md:col-span-2"><Label>{t("pickup")}</Label><Input value={form.pickup_location} onChange={(e) => setForm({ ...form, pickup_location: e.target.value })} /></div>
         <div className="space-y-1 md:col-span-2"><Label>{t("dropoff")}</Label><Input value={form.dropoff_location} onChange={(e) => setForm({ ...form, dropoff_location: e.target.value })} /></div>
-        <div className="space-y-1"><Label>Pickup at</Label><Input type="datetime-local" value={form.pickup_at} onChange={(e) => setForm({ ...form, pickup_at: e.target.value })} /></div>
-        <div className="space-y-1"><Label>Source</Label>
+        <div className="space-y-1"><Label>{locale === "ar" ? "موعد الانطلاق" : "Pickup at"}</Label><Input type="datetime-local" value={form.pickup_at} onChange={(e) => setForm({ ...form, pickup_at: e.target.value })} /></div>
+        <div className="space-y-1"><Label>{locale === "ar" ? "المصدر" : "Source"}</Label>
           <Select value={form.source} onValueChange={(v) => setForm({ ...form, source: v })}>
             <SelectTrigger><SelectValue /></SelectTrigger>
-            <SelectContent>{["whatsapp", "phone", "email", "walk_in", "website", "corporate"].map((s) => <SelectItem key={s} value={s}>{s.replace(/_/g, " ")}</SelectItem>)}</SelectContent>
+            <SelectContent>{["whatsapp", "phone", "email", "walk_in", "website", "corporate"].map((s) => <SelectItem key={s} value={s}>{locale === "ar" ? ({whatsapp:"واتساب",phone:"هاتف",email:"بريد",walk_in:"حضور",website:"موقع",corporate:"شركات"} as any)[s] ?? s : s.replace(/_/g, " ")}</SelectItem>)}</SelectContent>
           </Select>
         </div>
         <div className="space-y-1"><Label>{t("distance_km")}</Label><Input type="number" value={form.distance_km} onChange={(e) => setForm({ ...form, distance_km: e.target.value })} /></div>
         <div className="space-y-1"><Label>{t("duration_min")}</Label><Input type="number" value={form.duration_min} onChange={(e) => setForm({ ...form, duration_min: e.target.value })} /></div>
-        <div className="space-y-1"><Label>Waiting min</Label><Input type="number" value={form.waiting_min} onChange={(e) => setForm({ ...form, waiting_min: e.target.value })} /></div>
-        <div className="space-y-1"><Label>Airport fee</Label><Input type="number" value={form.airport_fee} onChange={(e) => setForm({ ...form, airport_fee: e.target.value })} /></div>
+        <div className="space-y-1"><Label>{locale === "ar" ? "دقائق الانتظار" : "Waiting min"}</Label><Input type="number" value={form.waiting_min} onChange={(e) => setForm({ ...form, waiting_min: e.target.value })} /></div>
+        <div className="space-y-1"><Label>{locale === "ar" ? "رسوم المطار" : "Airport fee"}</Label><Input type="number" value={form.airport_fee} onChange={(e) => setForm({ ...form, airport_fee: e.target.value })} /></div>
         <div className="space-y-1 md:col-span-2">
           <Label>{t("assign_driver")}</Label>
           <Select value={form.driver_id} onValueChange={(v) => setForm({ ...form, driver_id: v })}>
@@ -490,15 +503,15 @@ function NewBookingDialog({ customers, cats, drivers, onDone }: { customers: any
             <SelectContent>{drivers.map((d) => <SelectItem key={d.id} value={d.id}>{d.full_name}</SelectItem>)}</SelectContent>
           </Select>
         </div>
-        <div className="space-y-1 md:col-span-2"><Label>Notes</Label><Textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
+        <div className="space-y-1 md:col-span-2"><Label>{locale === "ar" ? "ملاحظات" : "Notes"}</Label><Textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
       </div>
       <div className="rounded-lg border p-3 bg-muted/40 text-sm space-y-1">
-        <div className="flex justify-between"><span>Base</span><span>{baseFare.toFixed(2)}</span></div>
-        <div className="flex justify-between"><span>Distance</span><span>{distanceFare.toFixed(2)}</span></div>
-        <div className="flex justify-between"><span>Time</span><span>{timeFare.toFixed(2)}</span></div>
-        <div className="flex justify-between"><span>Waiting</span><span>{waitingFare.toFixed(2)}</span></div>
-        <div className="flex justify-between"><span>Airport</span><span>{airportFee.toFixed(2)}</span></div>
-        {isNight && <div className="flex justify-between text-warning"><span>Night surcharge (15%)</span><span>{night.toFixed(2)}</span></div>}
+        <div className="flex justify-between"><span>{locale === "ar" ? "الأساسي" : "Base"}</span><span>{baseFare.toFixed(2)}</span></div>
+        <div className="flex justify-between"><span>{locale === "ar" ? "المسافة" : "Distance"}</span><span>{distanceFare.toFixed(2)}</span></div>
+        <div className="flex justify-between"><span>{locale === "ar" ? "الوقت" : "Time"}</span><span>{timeFare.toFixed(2)}</span></div>
+        <div className="flex justify-between"><span>{locale === "ar" ? "الانتظار" : "Waiting"}</span><span>{waitingFare.toFixed(2)}</span></div>
+        <div className="flex justify-between"><span>{locale === "ar" ? "المطار" : "Airport"}</span><span>{airportFee.toFixed(2)}</span></div>
+        {isNight && <div className="flex justify-between text-warning"><span>{locale === "ar" ? "رسوم ليلية (١٥٪)" : "Night surcharge (15%)"}</span><span>{night.toFixed(2)}</span></div>}
         <div className="flex justify-between font-bold pt-1 border-t"><span>{t("estimated_fare")}</span><span>{totalFare.toFixed(2)}</span></div>
       </div>
       <DialogFooter>

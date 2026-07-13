@@ -54,7 +54,7 @@ export function AppSidebar() {
       { title: t("coupons"), url: "/admin/coupons", icon: TicketPercent },
       { title: locale === "ar" ? "إعدادات المالية" : "Finance Settings", url: "/admin/finance-settings", icon: Settings },
     ]},
-    { label: "CMS", items: [
+    { label: locale === "ar" ? "إدارة المحتوى" : "CMS", items: [
       { title: locale === "ar" ? "الخدمات" : "Services", url: "/admin/services", icon: ConciergeBell },
       { title: locale === "ar" ? "المدن" : "Cities", url: "/admin/cities", icon: Building },
       { title: locale === "ar" ? "المطارات" : "Airports", url: "/admin/airports", icon: Plane },
@@ -67,10 +67,9 @@ export function AppSidebar() {
       { title: locale === "ar" ? "الأسئلة الشائعة" : "FAQ", url: "/admin/faqs", icon: HelpCircle },
       { title: locale === "ar" ? "مكتبة الوسائط" : "Media Library", url: "/admin/media", icon: ImageIcon2 },
       { title: locale === "ar" ? "معاينة الموقع" : "Preview site", url: "/", icon: Globe },
-
     ]},
-    { label: "SEO", items: [
-      { title: locale === "ar" ? "مدير SEO" : "SEO Manager", url: "/admin/seo", icon: Search },
+    { label: locale === "ar" ? "تحسين محركات البحث" : "SEO", items: [
+      { title: locale === "ar" ? "مدير السيو" : "SEO Manager", url: "/admin/seo", icon: Search },
       { title: locale === "ar" ? "التوجيهات" : "Redirects", url: "/admin/redirects", icon: ArrowRightLeft },
       { title: locale === "ar" ? "مولد الصفحات" : "Programmatic Generator", url: "/admin/seo-generator", icon: Wand2 },
     ]},
