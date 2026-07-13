@@ -33,7 +33,7 @@ export function PublicFooter() {
           </p>
           <div className="flex gap-2">
             <a
-              href={waLink()}
+              href={waHref()}
               target="_blank"
               rel="noopener"
               className="inline-flex h-10 items-center gap-2 rounded-full bg-gold px-4 text-sm font-semibold text-primary hover:bg-gold-soft transition-colors"
@@ -41,10 +41,10 @@ export function PublicFooter() {
               <MessageCircle className="h-4 w-4" /> {ar ? "احجز الآن" : "Book now"}
             </a>
             <a
-              href={telLink()}
+              href={telHref}
               className="inline-flex h-10 items-center gap-2 rounded-full border border-primary-foreground/20 px-4 text-sm text-primary-foreground hover:border-gold hover:text-gold transition-colors"
             >
-              <Phone className="h-4 w-4" /> {SITE.phone}
+              <Phone className="h-4 w-4" /> {phone}
             </a>
           </div>
         </div>
@@ -72,8 +72,8 @@ export function PublicFooter() {
         <div className="md:col-span-4">
           <h3 className="text-xs uppercase tracking-[0.22em] text-gold mb-4">{ar ? "تواصل" : "Contact"}</h3>
           <ul className="space-y-3 text-sm text-primary-foreground/80">
-            <li className="flex items-start gap-3"><Phone className="h-4 w-4 mt-0.5 text-gold shrink-0" /><a href={telLink()} className="hover:text-gold transition">{SITE.phone}</a></li>
-            <li className="flex items-start gap-3"><MessageCircle className="h-4 w-4 mt-0.5 text-gold shrink-0" /><a href={waLink()} target="_blank" rel="noopener" className="hover:text-gold transition">WhatsApp — +{SITE.whatsapp}</a></li>
+            <li className="flex items-start gap-3"><Phone className="h-4 w-4 mt-0.5 text-gold shrink-0" /><a href={telHref} className="hover:text-gold transition">{phone}</a></li>
+            <li className="flex items-start gap-3"><MessageCircle className="h-4 w-4 mt-0.5 text-gold shrink-0" /><a href={waHref()} target="_blank" rel="noopener" className="hover:text-gold transition">WhatsApp — +{whatsapp}</a></li>
             <li className="flex items-start gap-3"><Mail className="h-4 w-4 mt-0.5 text-gold shrink-0" /><a href={`mailto:${SITE.email}`} className="hover:text-gold transition">{SITE.email}</a></li>
             <li className="flex items-start gap-3"><MapPin className="h-4 w-4 mt-0.5 text-gold shrink-0" />{SITE.address[locale]}</li>
             <li className="flex items-start gap-3"><Clock className="h-4 w-4 mt-0.5 text-gold shrink-0" />{SITE.hours[locale]}</li>
