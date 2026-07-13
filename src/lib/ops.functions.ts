@@ -150,10 +150,10 @@ export const importAllData = createServerFn({ method: "POST" })
       let lastErr: string | undefined;
       for (let i = 0; i < rows.length; i += 500) {
         const chunk = rows.slice(i, i + 500);
-        const q = supabaseAdmin.from(table as any).upsert(chunk, { onConflict: "id", ignoreDuplicates: data.mode === "insert" });
-        const { error, count } = await q.select("id", { count: "exact", head: false });
+        const q = supabaseAdmin.from(table as any).upsert(chunk as any);
+        const { error } = await q;
         if (error) { lastErr = error.message; break; }
-        inserted += count ?? chunk.length;
+        inserted += chunk.length;
       }
       report.push({ table, inserted, error: lastErr });
     }
