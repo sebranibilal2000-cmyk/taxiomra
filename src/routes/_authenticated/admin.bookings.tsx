@@ -25,11 +25,18 @@ import { duplicateBooking, bulkUpdateBookings, cancelBooking, addBookingNote, sc
 export const Route = createFileRoute("/_authenticated/admin/bookings")({ component: BookingsPage });
 
 const BOOKING_STATUSES = ["pending", "confirmed", "assigned", "en_route", "on_trip", "picked_up", "completed", "cancelled", "no_show"] as const;
-const STATUS_LABELS: Record<string, string> = {
+const STATUS_LABELS_EN: Record<string, string> = {
   pending: "Pending", confirmed: "Confirmed", assigned: "Driver Assigned", en_route: "En Route",
   on_trip: "On Trip", picked_up: "Picked Up", completed: "Completed", cancelled: "Cancelled", no_show: "No Show",
 };
+const STATUS_LABELS_AR: Record<string, string> = {
+  pending: "قيد الانتظار", confirmed: "مؤكد", assigned: "مُعيَّن للسائق", en_route: "في الطريق",
+  on_trip: "في رحلة", picked_up: "تم الاستلام", completed: "مكتمل", cancelled: "ملغي", no_show: "لم يحضر",
+};
 const CANCEL_CATEGORIES = ["customer_request", "no_show", "duplicate", "weather", "vehicle_issue", "other"];
+const CANCEL_CAT_AR: Record<string, string> = {
+  customer_request: "طلب العميل", no_show: "لم يحضر", duplicate: "مكرر", weather: "طقس", vehicle_issue: "مشكلة مركبة", other: "أخرى",
+};
 
 function BookingsPage() {
   const { t, locale } = useI18n();
