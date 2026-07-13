@@ -59,9 +59,17 @@ function Expenses() {
       });
       if (error) throw error;
     },
-    onSuccess: () => { toast.success("Created"); setOpen(false); setForm({ ...form, amount: "", supplier: "", notes: "", receipt_url: "" }); qc.invalidateQueries({ queryKey: ["expenses"] }); },
+    onSuccess: () => { toast.success(ar ? "تم الحفظ" : "Created"); setOpen(false); setForm({ ...form, amount: "", supplier: "", notes: "", receipt_url: "" }); qc.invalidateQueries({ queryKey: ["expenses"] }); },
     onError: (e: any) => toast.error(e.message),
   });
+
+  const CAT_LABEL_AR: Record<string, string> = {
+    fuel: "وقود", maintenance: "صيانة", insurance: "تأمين", tolls: "رسوم مرور", parking: "مواقف",
+    fines: "مخالفات", salaries: "رواتب", commission: "عمولات", office: "مكتب", marketing: "تسويق",
+    utilities: "خدمات عامة", rent: "إيجار", tax: "ضرائب", supplies: "لوازم", other: "أخرى",
+    vehicle_purchase: "شراء مركبة", software: "برمجيات", cleaning: "تنظيف",
+  };
+  const catLabel = (c: string) => ar ? (CAT_LABEL_AR[c] ?? c.replace(/_/g, " ")) : c.replace(/_/g, " ");
 
   const rows = (q.data ?? []).filter((r: any) => category === "all" || r.category === category);
   const totalMonth = rows.filter((r: any) => new Date(r.expense_date) >= new Date(Date.now() - 30 * 864e5)).reduce((a, b) => a + Number(b.amount || 0), 0);
@@ -69,14 +77,15 @@ function Expenses() {
 
   const cols: Column<any>[] = [
     { key: "reference", header: "#", render: (r) => <span className="font-mono text-xs">{r.reference}</span> },
-    { key: "expense_date", header: ar ? "التاريخ" : "Date", render: (r) => new Date(r.expense_date).toLocaleDateString() },
-    { key: "category", header: ar ? "الفئة" : "Category", render: (r) => <span className="capitalize">{r.category.replace(/_/g, " ")}</span> },
+    { key: "expense_date", header: ar ? "التاريخ" : "Date", render: (r) => new Date(r.expense_date).toLocaleDateString(ar ? "ar" : "en") },
+    { key: "category", header: ar ? "الفئة" : "Category", render: (r) => <span className="capitalize">{catLabel(r.category)}</span> },
     { key: "supplier", header: ar ? "المورد" : "Supplier", render: (r) => r.supplier ?? "—" },
     { key: "vehicle", header: ar ? "المركبة" : "Vehicle", render: (r) => r.vehicle?.plate_number ?? "—" },
     { key: "driver", header: ar ? "السائق" : "Driver", render: (r) => r.driver?.full_name ?? "—" },
     { key: "amount", header: ar ? "المبلغ" : "Amount", render: (r) => <span className="font-display text-warning">{fmtMoney(r.amount, r.currency, locale)}</span> },
-    { key: "receipt", header: ar ? "إيصال" : "Receipt", render: (r) => r.receipt_url ? <a href={r.receipt_url} target="_blank" rel="noreferrer" className="text-gold hover:underline text-xs">View</a> : "—" },
+    { key: "receipt", header: ar ? "إيصال" : "Receipt", render: (r) => r.receipt_url ? <a href={r.receipt_url} target="_blank" rel="noreferrer" className="text-gold hover:underline text-xs">{ar ? "عرض" : "View"}</a> : "—" },
   ];
+
 
   const exportCSV = () => downloadCSV(`expenses-${new Date().toISOString().slice(0, 10)}.csv`,
     rows.map((r: any) => ({
@@ -101,7 +110,7 @@ function Expenses() {
                     <Label>{ar ? "الفئة" : "Category"}</Label>
                     <Select value={form.category} onValueChange={(v) => setForm({ ...form, category: v })}>
                       <SelectTrigger><SelectValue /></SelectTrigger>
-                      <SelectContent>{EXPENSE_CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c.replace(/_/g, " ")}</SelectItem>)}</SelectContent>
+                      <SelectContent>{EXPENSE_CATEGORIES.map((c) => <SelectItem key={c} value={c}>{catLabel(c)}</SelectItem>)}</SelectContent>
                     </Select>
                   </div>
                   <div><Label>{ar ? "المبلغ" : "Amount"}</Label><Input type="number" step="0.01" value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} /></div>
@@ -151,7 +160,7 @@ function Expenses() {
           <SelectTrigger className="w-56 rounded-full"><SelectValue /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">{ar ? "كل الفئات" : "All categories"}</SelectItem>
-            {EXPENSE_CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c.replace(/_/g, " ")}</SelectItem>)}
+            {EXPENSE_CATEGORIES.map((c) => <SelectItem key={c} value={c}>{catLabel(c)}</SelectItem>)}
           </SelectContent>
         </Select>
       </div>

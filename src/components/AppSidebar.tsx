@@ -63,10 +63,11 @@ export function AppSidebar() {
       { title: locale === "ar" ? "القوائم" : "Menus", url: "/admin/menus", icon: ListTree },
       { title: locale === "ar" ? "الشهادات" : "Testimonials", url: "/admin/testimonials", icon: Quote },
       { title: locale === "ar" ? "الفريق" : "Team", url: "/admin/team", icon: UsersRound },
-      { title: "Blog", url: "/admin/blog", icon: Newspaper },
-      { title: "FAQ", url: "/admin/faqs", icon: HelpCircle },
-      { title: "Media Library", url: "/admin/media", icon: ImageIcon2 },
-      { title: "Preview site", url: "/", icon: Globe },
+      { title: locale === "ar" ? "المدونة" : "Blog", url: "/admin/blog", icon: Newspaper },
+      { title: locale === "ar" ? "الأسئلة الشائعة" : "FAQ", url: "/admin/faqs", icon: HelpCircle },
+      { title: locale === "ar" ? "مكتبة الوسائط" : "Media Library", url: "/admin/media", icon: ImageIcon2 },
+      { title: locale === "ar" ? "معاينة الموقع" : "Preview site", url: "/", icon: Globe },
+
     ]},
     { label: "SEO", items: [
       { title: locale === "ar" ? "مدير SEO" : "SEO Manager", url: "/admin/seo", icon: Search },
@@ -74,12 +75,13 @@ export function AppSidebar() {
       { title: locale === "ar" ? "مولد الصفحات" : "Programmatic Generator", url: "/admin/seo-generator", icon: Wand2 },
     ]},
     { label: locale === "ar" ? "التسويق" : "Marketing", items: [
-      { title: "Homepage", url: "/admin/homepage", icon: LayoutTemplate },
-      { title: "Hero Slides", url: "/admin/hero", icon: Sparkles },
-      { title: "Promotions", url: "/admin/promotions", icon: Megaphone },
-      { title: "Partners", url: "/admin/partners", icon: Handshake },
-      { title: "Contact Inbox", url: "/admin/contacts", icon: Inbox },
+      { title: locale === "ar" ? "الصفحة الرئيسية" : "Homepage", url: "/admin/homepage", icon: LayoutTemplate },
+      { title: locale === "ar" ? "شرائح الهيرو" : "Hero Slides", url: "/admin/hero", icon: Sparkles },
+      { title: locale === "ar" ? "العروض الترويجية" : "Promotions", url: "/admin/promotions", icon: Megaphone },
+      { title: locale === "ar" ? "الشركاء" : "Partners", url: "/admin/partners", icon: Handshake },
+      { title: locale === "ar" ? "صندوق التواصل" : "Contact Inbox", url: "/admin/contacts", icon: Inbox },
     ]},
+
     { label: locale === "ar" ? "الذكاء الاصطناعي" : "Intelligence", items: [
       { title: locale === "ar" ? "المساعد الذكي" : "AI Assistant", url: "/admin/ai-assistant", icon: Bot },
       { title: locale === "ar" ? "استوديو الذكاء" : "AI Studio", url: "/admin/ai-studio", icon: Sparkles },

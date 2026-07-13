@@ -160,16 +160,25 @@ const REPORTS: ReportDef[] = [
 
 const CATEGORIES = Array.from(new Set(REPORTS.map((r) => r.category)));
 
+const CAT_LABEL_AR: Record<string, string> = {
+  Operations: "العمليات", Catalog: "الكتالوج", CMS: "المحتوى",
+  Finance: "المالية", Marketing: "التسويق", SEO: "السيو", System: "النظام",
+};
+
 const getVal = (obj: any, path: string): any => path.split(".").reduce((v, k) => (v == null ? v : v[k]), obj);
 
 function Reports() {
   const { locale } = useI18n();
+  const ar = locale === "ar";
+
   const gate = useHasPermission("reports.view");
+  const [category, setCategory] = useState<string>(CATEGORIES[0]);
   const [selected, setSelected] = useState<string>("bookings");
   const [rangeKey, setRangeKey] = useState<"7d"|"30d"|"90d"|"365d"|"mtd"|"ytd">("30d");
   const [q, setQ] = useState("");
   const range = useMemo(() => rangeFromKey(rangeKey), [rangeKey]);
   const def = REPORTS.find((r) => r.key === selected)!;
+
 
   const query = useQuery({
     queryKey: ["report", selected, rangeKey],
@@ -202,24 +211,23 @@ function Reports() {
   });
   const flatCols = def.columns.map((c) => ({ key: c.key.replaceAll(".", "_"), label: c.label }));
 
-  if (!gate.loading && !gate.allowed) return <div className="p-8 text-center text-muted-foreground">Not authorized</div>;
+  if (!gate.loading && !gate.allowed) return <div className="p-8 text-center text-muted-foreground">{ar ? "غير مصرح" : "Not authorized"}</div>;
+
+  const RANGE_LABEL: Record<string, string> = ar
+    ? { "7d": "آخر 7 أيام", "30d": "آخر 30 يوم", "90d": "آخر 90 يوم", mtd: "منذ بداية الشهر", ytd: "منذ بداية السنة", "365d": "آخر 365 يوم" }
+    : { "7d": "Last 7 days", "30d": "Last 30 days", "90d": "Last 90 days", mtd: "Month to date", ytd: "Year to date", "365d": "Last 365 days" };
 
   return (
     <div>
       <PageHeader
-        title={locale === "ar" ? "التقارير" : "Reports"}
-        description={locale === "ar" ? "تقارير مؤسسية قابلة للتصدير" : `${REPORTS.length} reports across ${CATEGORIES.length} categories`}
+        title={ar ? "التقارير" : "Reports"}
+        description={ar ? `${REPORTS.length} تقرير عبر ${CATEGORIES.length} فئات` : `${REPORTS.length} reports across ${CATEGORIES.length} categories`}
         actions={
           <div className="flex items-center gap-2">
             <Select value={rangeKey} onValueChange={(v: any) => setRangeKey(v)}>
-              <SelectTrigger className="w-32"><SelectValue /></SelectTrigger>
+              <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="7d">Last 7 days</SelectItem>
-                <SelectItem value="30d">Last 30 days</SelectItem>
-                <SelectItem value="90d">Last 90 days</SelectItem>
-                <SelectItem value="mtd">Month to date</SelectItem>
-                <SelectItem value="ytd">Year to date</SelectItem>
-                <SelectItem value="365d">Last 365 days</SelectItem>
+                {(["7d","30d","90d","mtd","ytd","365d"] as const).map((k) => <SelectItem key={k} value={k}>{RANGE_LABEL[k]}</SelectItem>)}
               </SelectContent>
             </Select>
             <ExportMenu module="reports" filename={`report-${selected}-${rangeKey}`} title={def.label} rows={flatRows} columns={flatCols} />
@@ -227,31 +235,32 @@ function Reports() {
         }
       />
 
-      <Tabs value={CATEGORIES.find((c) => REPORTS.find((r) => r.key === selected && r.category === c))} onValueChange={() => {}}>
+      <Tabs value={category} onValueChange={(v) => {
+        setCategory(v);
+        const first = REPORTS.find((r) => r.category === v);
+        if (first) setSelected(first.key);
+      }}>
         <TabsList className="mb-4 flex-wrap h-auto">
-          {CATEGORIES.map((c) => <TabsTrigger key={c} value={c}>{c}</TabsTrigger>)}
+          {CATEGORIES.map((c) => <TabsTrigger key={c} value={c}>{ar ? (CAT_LABEL_AR[c] ?? c) : c}</TabsTrigger>)}
         </TabsList>
-        {CATEGORIES.map((c) => (
-          <TabsContent key={c} value={c}>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {REPORTS.filter((r) => r.category === c).map((r) => (
-                <button key={r.key} onClick={() => setSelected(r.key)}
-                  className={`px-3 py-1.5 rounded-full text-xs border transition ${selected === r.key ? "bg-primary text-primary-foreground border-primary" : "border-border hover:border-gold"}`}>
-                  {r.label}
-                </button>
-              ))}
-            </div>
-          </TabsContent>
-        ))}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {REPORTS.filter((r) => r.category === category).map((r) => (
+            <button key={r.key} onClick={() => setSelected(r.key)}
+              className={`px-3 py-1.5 rounded-full text-xs border transition ${selected === r.key ? "bg-primary text-primary-foreground border-primary" : "border-border hover:border-gold"}`}>
+              {r.label}
+            </button>
+          ))}
+        </div>
       </Tabs>
+
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-4">
           <div>
             <CardTitle>{def.label}</CardTitle>
-            <div className="text-xs text-muted-foreground mt-1">{filtered.length} rows · {def.category}</div>
+            <div className="text-xs text-muted-foreground mt-1">{filtered.length} {ar ? "سجل" : "rows"} · {ar ? (CAT_LABEL_AR[def.category] ?? def.category) : def.category}</div>
           </div>
-          <Input placeholder="Search…" value={q} onChange={(e) => setQ(e.target.value)} className="max-w-sm" />
+          <Input placeholder={ar ? "بحث…" : "Search…"} value={q} onChange={(e) => setQ(e.target.value)} className="max-w-sm" />
         </CardHeader>
         <CardContent className="overflow-x-auto">
           <Table>
@@ -264,17 +273,18 @@ function Reports() {
                   {def.columns.map((c) => {
                     const v = getVal(r, c.key);
                     return <TableCell key={c.key} className="max-w-[220px] truncate">
-                      {typeof v === "boolean" ? <Badge variant="outline">{v ? "yes" : "no"}</Badge>
+                      {typeof v === "boolean" ? <Badge variant="outline">{v ? (ar ? "نعم" : "yes") : (ar ? "لا" : "no")}</Badge>
                         : typeof v === "number" && ["amount","total","fare","earnings","spent","paid","budget","credit","balance"].some((k) => c.key.toLowerCase().includes(k)) ? <span className="font-mono">{money(locale, v)}</span>
                         : v instanceof Date ? v.toLocaleString() : (v == null ? "—" : String(v))}
                     </TableCell>;
                   })}
                 </TableRow>
               ))}
-              {!filtered.length && <TableRow><TableCell colSpan={def.columns.length} className="text-center text-muted-foreground py-8">{query.isLoading ? "Loading…" : "No data"}</TableCell></TableRow>}
+              {!filtered.length && <TableRow><TableCell colSpan={def.columns.length} className="text-center text-muted-foreground py-8">{query.isLoading ? (ar ? "جارٍ التحميل…" : "Loading…") : (ar ? "لا توجد بيانات" : "No data")}</TableCell></TableRow>}
             </TableBody>
           </Table>
-          {filtered.length > 500 && <div className="text-center text-xs text-muted-foreground py-3">Showing first 500 of {filtered.length}. Export for full dataset.</div>}
+          {filtered.length > 500 && <div className="text-center text-xs text-muted-foreground py-3">{ar ? `يعرض أول 500 من ${filtered.length}. صدّر لكامل البيانات.` : `Showing first 500 of ${filtered.length}. Export for full dataset.`}</div>}
+
         </CardContent>
       </Card>
     </div>

@@ -78,14 +78,12 @@ function TeamAdmin() {
 
   const cols: Column<any>[] = [
     { key: "name_en", header: locale === "ar" ? "الاسم" : "Name", render: (r) => (
-      <div className="flex items-center gap-3">
-        {r.photo_url ? <img src={r.photo_url} alt="" className="h-9 w-9 rounded-full object-cover" /> : <div className="h-9 w-9 rounded-full bg-muted" />}
-        <div>
-          <div className="font-medium">{locale === "ar" ? r.name_ar : r.name_en}</div>
-          <div className="text-xs text-muted-foreground">{locale === "ar" ? r.role_ar : r.role_en}</div>
-        </div>
+      <div>
+        <div className="font-medium">{locale === "ar" ? r.name_ar : r.name_en}</div>
+        <div className="text-xs text-muted-foreground">{locale === "ar" ? r.role_ar : r.role_en}</div>
       </div>
     )},
+
     { key: "email", header: "Contact", render: (r) => <div className="text-xs">{r.email || "—"}<br/>{r.phone || ""}</div> },
     { key: "status", header: "Status", render: (r) => <Badge variant="outline">{r.status}</Badge> },
     { key: "sort_order", header: "#", render: (r) => <span className="text-xs">{r.sort_order}</span> },

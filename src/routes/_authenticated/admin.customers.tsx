@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Search, ExternalLink, Crown, Building2, User, Ban, Download } from "lucide-react";
+import { Plus, Search, ExternalLink, Crown, Building2, User, Ban, Download, Edit, Trash2 } from "lucide-react";
 import { downloadCsv } from "@/lib/csv";
 import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
@@ -112,7 +112,7 @@ function CustomersPage() {
                 first_booking_at: r.first_booking_at, last_booking_at: r.last_booking_at,
                 preferred_language: r.preferred_language, tags: (r.tags ?? []).join("|"), notes: r.notes,
               })));
-              toast.success(`${filtered.length} rows`);
+              toast.success(locale === "ar" ? `${filtered.length} صف` : `${filtered.length} rows`);
             }}><Download className="h-4 w-4 me-1" />CSV</Button>
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild><Button><Plus className="h-4 w-4 me-1" />{t("new")}</Button></DialogTrigger>
@@ -132,7 +132,10 @@ function CustomersPage() {
           <SelectContent>
             {TIERS.map((v) => {
               const Icon = TIER_ICONS[v];
-              return <SelectItem key={v} value={v}><span className="inline-flex items-center gap-2"><Icon className="h-3.5 w-3.5" />{v === "all" ? (locale === "ar" ? "كل الفئات" : "All tiers") : v}</span></SelectItem>;
+              const TIER_LABEL_AR: Record<string, string> = { regular: "عادي", vip: "VIP", corporate: "شركات", blacklisted: "محظور", all: "الكل" };
+              const label = v === "all" ? (locale === "ar" ? "كل الفئات" : "All tiers") : (locale === "ar" ? TIER_LABEL_AR[v] : v);
+              return <SelectItem key={v} value={v}><span className="inline-flex items-center gap-2"><Icon className="h-3.5 w-3.5" />{label}</span></SelectItem>;
+
             })}
           </SelectContent>
         </Select>
@@ -156,11 +159,18 @@ function CustomersPage() {
         actions={(r) => (
           <div className="flex items-center gap-1">
             <Link to="/admin/customers/$id" params={{ id: r.id }}>
-              <Button variant="ghost" size="sm">{locale === "ar" ? "عرض" : "Open"}</Button>
+              <Button variant="ghost" size="sm" title={locale === "ar" ? "تعديل" : "Edit"}><Edit className="h-4 w-4" /></Button>
             </Link>
+            <Button variant="ghost" size="sm" title={locale === "ar" ? "حذف" : "Delete"} onClick={async () => {
+              if (!confirm(locale === "ar" ? "حذف العميل؟" : "Delete customer?")) return;
+              const { error } = await supabase.from("customers").delete().eq("id", r.id);
+              if (error) toast.error(error.message);
+              else { toast.success(locale === "ar" ? "تم الحذف" : "Deleted"); qc.invalidateQueries({ queryKey: ["customers"] }); }
+            }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
           </div>
         )}
       />
+
     </div>
   );
 }
@@ -184,37 +194,37 @@ function NewCustomerDialog({ onDone }: { onDone: () => void }) {
   });
   return (
     <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-      <DialogHeader><DialogTitle>{t("new")} {t("customer")}</DialogTitle></DialogHeader>
+      <DialogHeader><DialogTitle>{locale === "ar" ? "عميل جديد" : `${t("new")} ${t("customer")}`}</DialogTitle></DialogHeader>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div className="md:col-span-2"><Label>{t("name")} *</Label><Input value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} /></div>
         <div><Label>{t("phone")}</Label><Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
-        <div><Label>Alt phone</Label><Input value={form.alt_phone} onChange={(e) => setForm({ ...form, alt_phone: e.target.value })} /></div>
-        <div><Label>WhatsApp</Label><Input value={form.whatsapp} onChange={(e) => setForm({ ...form, whatsapp: e.target.value })} /></div>
+        <div><Label>{locale === "ar" ? "هاتف بديل" : "Alt phone"}</Label><Input value={form.alt_phone} onChange={(e) => setForm({ ...form, alt_phone: e.target.value })} /></div>
+        <div><Label>{locale === "ar" ? "واتساب" : "WhatsApp"}</Label><Input value={form.whatsapp} onChange={(e) => setForm({ ...form, whatsapp: e.target.value })} /></div>
         <div><Label>{t("email")}</Label><Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
-        <div><Label>Company</Label><Input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} /></div>
-        <div><Label>VAT number</Label><Input value={form.vat_number} onChange={(e) => setForm({ ...form, vat_number: e.target.value })} /></div>
-        <div><Label>City</Label><Input value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></div>
-        <div><Label>Country</Label><Input value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} /></div>
+        <div><Label>{locale === "ar" ? "الشركة" : "Company"}</Label><Input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} /></div>
+        <div><Label>{locale === "ar" ? "الرقم الضريبي" : "VAT number"}</Label><Input value={form.vat_number} onChange={(e) => setForm({ ...form, vat_number: e.target.value })} /></div>
+        <div><Label>{locale === "ar" ? "المدينة" : "City"}</Label><Input value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></div>
+        <div><Label>{locale === "ar" ? "الدولة" : "Country"}</Label><Input value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} /></div>
         <div>
-          <Label>Tier</Label>
+          <Label>{locale === "ar" ? "الفئة" : "Tier"}</Label>
           <Select value={form.tier} onValueChange={(v) => setForm({ ...form, tier: v })}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="regular">Regular</SelectItem>
+              <SelectItem value="regular">{locale === "ar" ? "عادي" : "Regular"}</SelectItem>
               <SelectItem value="vip">VIP</SelectItem>
-              <SelectItem value="corporate">Corporate</SelectItem>
-              <SelectItem value="blacklisted">Blacklisted</SelectItem>
+              <SelectItem value="corporate">{locale === "ar" ? "شركات" : "Corporate"}</SelectItem>
+              <SelectItem value="blacklisted">{locale === "ar" ? "محظور" : "Blacklisted"}</SelectItem>
             </SelectContent>
           </Select>
         </div>
         <div>
-          <Label>Preferred language</Label>
+          <Label>{locale === "ar" ? "اللغة المفضلة" : "Preferred language"}</Label>
           <Select value={form.preferred_language} onValueChange={(v) => setForm({ ...form, preferred_language: v })}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent><SelectItem value="en">English</SelectItem><SelectItem value="ar">العربية</SelectItem></SelectContent>
           </Select>
         </div>
-        <div className="md:col-span-2"><Label>Notes</Label><Textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
+        <div className="md:col-span-2"><Label>{locale === "ar" ? "ملاحظات" : "Notes"}</Label><Textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
       </div>
       <DialogFooter>
         <Button variant="outline" onClick={() => onDone()}>{t("cancel")}</Button>
@@ -223,3 +233,4 @@ function NewCustomerDialog({ onDone }: { onDone: () => void }) {
     </DialogContent>
   );
 }
+
