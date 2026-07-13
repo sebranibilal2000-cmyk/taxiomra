@@ -135,11 +135,18 @@ export function AppSidebar() {
                         isActive={active}
                         className="data-[active=true]:bg-sidebar-accent data-[active=true]:text-gold data-[active=true]:font-medium hover:bg-sidebar-accent/60 rounded-lg h-9"
                       >
-                        <Link to={item.url as any} className="flex items-center gap-2.5 relative">
-                          {active && <span className="absolute inset-y-1 start-0 w-0.5 rounded-full bg-gold" />}
-                          <item.icon className="h-4 w-4 shrink-0" />
-                          {!collapsed && <span className="text-sm">{item.title}</span>}
-                        </Link>
+                        {item.external ? (
+                          <a href={item.url} target="_blank" rel="noopener" className="flex items-center gap-2.5 relative">
+                            <item.icon className="h-4 w-4 shrink-0" />
+                            {!collapsed && <span className="text-sm">{item.title}</span>}
+                          </a>
+                        ) : (
+                          <Link to={item.url as any} className="flex items-center gap-2.5 relative">
+                            {active && <span className="absolute inset-y-1 start-0 w-0.5 rounded-full bg-gold" />}
+                            <item.icon className="h-4 w-4 shrink-0" />
+                            {!collapsed && <span className="text-sm">{item.title}</span>}
+                          </Link>
+                        )}
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   );
