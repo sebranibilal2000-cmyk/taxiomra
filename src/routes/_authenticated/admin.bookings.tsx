@@ -40,6 +40,8 @@ const CANCEL_CAT_AR: Record<string, string> = {
 
 function BookingsPage() {
   const { t, locale } = useI18n();
+  const ar = locale === "ar";
+  const STATUS_LABELS = ar ? STATUS_LABELS_AR : STATUS_LABELS_EN;
   const qc = useQueryClient();
   const [open, setOpen] = useState(false);
   const [detailId, setDetailId] = useState<string | null>(null);
@@ -222,6 +224,9 @@ function BookingsPage() {
 }
 
 function BookingDetailDialog({ bookingId, onOpenChange }: { bookingId: string | null; onOpenChange: (o: boolean) => void }) {
+  const { locale } = useI18n();
+  const ar = locale === "ar";
+  const STATUS_LABELS = ar ? STATUS_LABELS_AR : STATUS_LABELS_EN;
   const qc = useQueryClient();
   const cancelFn = useServerFn(cancelBooking);
   const addNote = useServerFn(addBookingNote);
