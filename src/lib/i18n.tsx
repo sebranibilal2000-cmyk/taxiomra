@@ -128,10 +128,8 @@ const I18nCtx = createContext<Ctx | null>(null);
 /**
  * URL-first i18n provider. Locale is resolved from:
  *   1. Path prefix /ar or /en (authoritative)
- *   2. localStorage("locale") as user preference
- *   3. DEFAULT_LOCALE ("ar")
- * `setLocale` navigates to the same path with the swapped locale prefix and
- * persists the preference to localStorage.
+ *   2. DEFAULT_LOCALE ("ar")
+ * `setLocale` navigates to the same path with the swapped locale prefix.
  */
 export function I18nProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -143,10 +141,6 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     if (isLocale(params.locale)) return params.locale;
     const fromUrl = localeFromPath(pathname);
     if (fromUrl) return fromUrl;
-    if (typeof window !== "undefined") {
-      const stored = window.localStorage.getItem("locale");
-      if (isLocale(stored)) return stored;
-    }
     return DEFAULT_LOCALE;
   }, [params.locale, pathname]);
 

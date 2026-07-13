@@ -1,17 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getRequest } from "@tanstack/react-start/server";
-import { pickLocaleFromAcceptLanguage, type Locale } from "@/lib/i18n";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
 
 /**
- * Server-side locale detection based on the Accept-Language header of the
- * incoming SSR request. Called from `beforeLoad` on the public layout to
- * pick a preferred locale when the URL has no /ar or /en prefix.
+ * Locale fallback for legacy call sites. Root/public routes must always use
+ * Arabic as the default and never infer English from request headers.
  */
 export const resolveLocale = createServerFn({ method: "GET" }).handler(async (): Promise<Locale> => {
-  try {
-    const req = getRequest();
-    return pickLocaleFromAcceptLanguage(req?.headers.get("accept-language"));
-  } catch {
-    return "ar";
-  }
+  return DEFAULT_LOCALE;
 });

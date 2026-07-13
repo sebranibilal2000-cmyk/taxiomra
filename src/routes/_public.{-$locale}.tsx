@@ -8,11 +8,9 @@ import {
   isLocale,
   LOCALES,
   DEFAULT_LOCALE,
-  pickLocaleFromAcceptLanguage,
   withLocale,
   type Locale,
 } from "@/lib/i18n";
-import { resolveLocale } from "@/lib/locale-detect.functions";
 import { resolveRedirect } from "@/lib/seo-tools.functions";
 
 export const Route = createFileRoute("/_public/{-$locale}")({
@@ -35,20 +33,10 @@ export const Route = createFileRoute("/_public/{-$locale}")({
       throw redirect({ to: "/", replace: true });
     }
 
-    // 3) Missing prefix → resolve preferred locale and redirect.
+    // 3) Missing prefix → always redirect to Arabic. Do not infer from
+    //    browser language, Accept-Language, cookies, localStorage, or cache.
     if (!params.locale) {
-      let preferred: Locale = DEFAULT_LOCALE;
-      if (typeof window === "undefined") {
-        try {
-          preferred = (await resolveLocale()) as Locale;
-        } catch {
-          preferred = DEFAULT_LOCALE;
-        }
-      } else {
-        const stored = window.localStorage.getItem("locale");
-        preferred = stored === "ar" || stored === "en" ? stored : DEFAULT_LOCALE;
-      }
-      const target = withLocale(preferred, location.pathname);
+      const target = withLocale(DEFAULT_LOCALE, location.pathname);
       throw redirect({ to: target, replace: true });
     }
   },
