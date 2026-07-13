@@ -63,10 +63,11 @@ export function AppSidebar() {
       { title: locale === "ar" ? "القوائم" : "Menus", url: "/admin/menus", icon: ListTree },
       { title: locale === "ar" ? "الشهادات" : "Testimonials", url: "/admin/testimonials", icon: Quote },
       { title: locale === "ar" ? "الفريق" : "Team", url: "/admin/team", icon: UsersRound },
-      { title: "Blog", url: "/admin/blog", icon: Newspaper },
-      { title: "FAQ", url: "/admin/faqs", icon: HelpCircle },
-      { title: "Media Library", url: "/admin/media", icon: ImageIcon2 },
-      { title: "Preview site", url: "/", icon: Globe },
+      { title: locale === "ar" ? "المدونة" : "Blog", url: "/admin/blog", icon: Newspaper },
+      { title: locale === "ar" ? "الأسئلة الشائعة" : "FAQ", url: "/admin/faqs", icon: HelpCircle },
+      { title: locale === "ar" ? "مكتبة الوسائط" : "Media Library", url: "/admin/media", icon: ImageIcon2 },
+      { title: locale === "ar" ? "معاينة الموقع" : "Preview site", url: "/", icon: Globe },
+
     ]},
     { label: "SEO", items: [
       { title: locale === "ar" ? "مدير SEO" : "SEO Manager", url: "/admin/seo", icon: Search },
