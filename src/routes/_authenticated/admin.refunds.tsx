@@ -86,7 +86,7 @@ function Refunds() {
                     const p: any = (payments.data ?? []).find((x: any) => x.id === v);
                     setForm({ ...form, payment_id: v, amount: p ? String(p.paid_amount || p.amount) : "" });
                   }}>
-                    <SelectTrigger><SelectValue placeholder="Select payment" /></SelectTrigger>
+                    <SelectTrigger><SelectValue placeholder={ar ? "اختر الدفعة" : "Select payment"} /></SelectTrigger>
                     <SelectContent>
                       {(payments.data ?? []).map((p: any) => <SelectItem key={p.id} value={p.id}>{p.payment_number} · {p.customer?.full_name ?? "—"} · {fmtMoney(p.amount, "SAR", locale)}</SelectItem>)}
                     </SelectContent>
@@ -97,7 +97,7 @@ function Refunds() {
                     <Label>{ar ? "النوع" : "Type"}</Label>
                     <Select value={form.refund_type} onValueChange={(v) => setForm({ ...form, refund_type: v })}>
                       <SelectTrigger><SelectValue /></SelectTrigger>
-                      <SelectContent><SelectItem value="full">Full</SelectItem><SelectItem value="partial">Partial</SelectItem></SelectContent>
+                      <SelectContent><SelectItem value="full">{TYPE_LABEL.full}</SelectItem><SelectItem value="partial">{TYPE_LABEL.partial}</SelectItem></SelectContent>
                     </Select>
                   </div>
                   <div><Label>{ar ? "المبلغ" : "Amount"}</Label><Input type="number" step="0.01" value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} /></div>
@@ -106,9 +106,10 @@ function Refunds() {
                   <Label>{ar ? "طريقة الاسترداد" : "Method"}</Label>
                   <Select value={form.method} onValueChange={(v) => setForm({ ...form, method: v })}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>{PAYMENT_METHODS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}</SelectContent>
+                    <SelectContent>{PAYMENT_METHODS.map((m) => <SelectItem key={m} value={m}>{METHOD_LABEL[m] ?? m}</SelectItem>)}</SelectContent>
                   </Select>
                 </div>
+
                 <div><Label>{ar ? "السبب" : "Reason"}</Label><Input value={form.reason} onChange={(e) => setForm({ ...form, reason: e.target.value })} /></div>
                 <div><Label>{ar ? "ملاحظات" : "Notes"}</Label><Textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
               </div>
