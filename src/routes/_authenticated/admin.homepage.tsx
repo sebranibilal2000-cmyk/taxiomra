@@ -24,13 +24,13 @@ function HomepageAdmin() {
   const saveSection = async (id: string, patch: Record<string, any>) => {
     const { error } = await supabase.from("homepage_sections").update(patch as any).eq("id", id);
     if (error) return toast.error(error.message);
-    toast.success("Saved");
+    toast.success(ar ? "تم الحفظ" : "Saved");
     qc.invalidateQueries({ queryKey: ["homepage-sections"] });
   };
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Homepage Sections" description="Toggle, reorder, and label the sections that appear on the public homepage." />
+      <PageHeader title={ar ? "أقسام الصفحة الرئيسية" : "Homepage Sections"} description={ar ? "تفعيل وترتيب وتسمية الأقسام الظاهرة في الصفحة الرئيسية" : "Toggle, reorder, and label the sections that appear on the public homepage."} />
       <div className="grid gap-3">
         {(q.data ?? []).map((s: any) => (
           <Card key={s.id} className="rounded-2xl">
