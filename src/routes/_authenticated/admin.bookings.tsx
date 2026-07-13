@@ -485,17 +485,17 @@ function NewBookingDialog({ customers, cats, drivers, onDone }: { customers: any
         </div>
         <div className="space-y-1 md:col-span-2"><Label>{t("pickup")}</Label><Input value={form.pickup_location} onChange={(e) => setForm({ ...form, pickup_location: e.target.value })} /></div>
         <div className="space-y-1 md:col-span-2"><Label>{t("dropoff")}</Label><Input value={form.dropoff_location} onChange={(e) => setForm({ ...form, dropoff_location: e.target.value })} /></div>
-        <div className="space-y-1"><Label>Pickup at</Label><Input type="datetime-local" value={form.pickup_at} onChange={(e) => setForm({ ...form, pickup_at: e.target.value })} /></div>
-        <div className="space-y-1"><Label>Source</Label>
+        <div className="space-y-1"><Label>{locale === "ar" ? "موعد الانطلاق" : "Pickup at"}</Label><Input type="datetime-local" value={form.pickup_at} onChange={(e) => setForm({ ...form, pickup_at: e.target.value })} /></div>
+        <div className="space-y-1"><Label>{locale === "ar" ? "المصدر" : "Source"}</Label>
           <Select value={form.source} onValueChange={(v) => setForm({ ...form, source: v })}>
             <SelectTrigger><SelectValue /></SelectTrigger>
-            <SelectContent>{["whatsapp", "phone", "email", "walk_in", "website", "corporate"].map((s) => <SelectItem key={s} value={s}>{s.replace(/_/g, " ")}</SelectItem>)}</SelectContent>
+            <SelectContent>{["whatsapp", "phone", "email", "walk_in", "website", "corporate"].map((s) => <SelectItem key={s} value={s}>{locale === "ar" ? ({whatsapp:"واتساب",phone:"هاتف",email:"بريد",walk_in:"حضور",website:"موقع",corporate:"شركات"} as any)[s] ?? s : s.replace(/_/g, " ")}</SelectItem>)}</SelectContent>
           </Select>
         </div>
         <div className="space-y-1"><Label>{t("distance_km")}</Label><Input type="number" value={form.distance_km} onChange={(e) => setForm({ ...form, distance_km: e.target.value })} /></div>
         <div className="space-y-1"><Label>{t("duration_min")}</Label><Input type="number" value={form.duration_min} onChange={(e) => setForm({ ...form, duration_min: e.target.value })} /></div>
-        <div className="space-y-1"><Label>Waiting min</Label><Input type="number" value={form.waiting_min} onChange={(e) => setForm({ ...form, waiting_min: e.target.value })} /></div>
-        <div className="space-y-1"><Label>Airport fee</Label><Input type="number" value={form.airport_fee} onChange={(e) => setForm({ ...form, airport_fee: e.target.value })} /></div>
+        <div className="space-y-1"><Label>{locale === "ar" ? "دقائق الانتظار" : "Waiting min"}</Label><Input type="number" value={form.waiting_min} onChange={(e) => setForm({ ...form, waiting_min: e.target.value })} /></div>
+        <div className="space-y-1"><Label>{locale === "ar" ? "رسوم المطار" : "Airport fee"}</Label><Input type="number" value={form.airport_fee} onChange={(e) => setForm({ ...form, airport_fee: e.target.value })} /></div>
         <div className="space-y-1 md:col-span-2">
           <Label>{t("assign_driver")}</Label>
           <Select value={form.driver_id} onValueChange={(v) => setForm({ ...form, driver_id: v })}>
@@ -503,15 +503,15 @@ function NewBookingDialog({ customers, cats, drivers, onDone }: { customers: any
             <SelectContent>{drivers.map((d) => <SelectItem key={d.id} value={d.id}>{d.full_name}</SelectItem>)}</SelectContent>
           </Select>
         </div>
-        <div className="space-y-1 md:col-span-2"><Label>Notes</Label><Textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
+        <div className="space-y-1 md:col-span-2"><Label>{locale === "ar" ? "ملاحظات" : "Notes"}</Label><Textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
       </div>
       <div className="rounded-lg border p-3 bg-muted/40 text-sm space-y-1">
-        <div className="flex justify-between"><span>Base</span><span>{baseFare.toFixed(2)}</span></div>
-        <div className="flex justify-between"><span>Distance</span><span>{distanceFare.toFixed(2)}</span></div>
-        <div className="flex justify-between"><span>Time</span><span>{timeFare.toFixed(2)}</span></div>
-        <div className="flex justify-between"><span>Waiting</span><span>{waitingFare.toFixed(2)}</span></div>
-        <div className="flex justify-between"><span>Airport</span><span>{airportFee.toFixed(2)}</span></div>
-        {isNight && <div className="flex justify-between text-warning"><span>Night surcharge (15%)</span><span>{night.toFixed(2)}</span></div>}
+        <div className="flex justify-between"><span>{locale === "ar" ? "الأساسي" : "Base"}</span><span>{baseFare.toFixed(2)}</span></div>
+        <div className="flex justify-between"><span>{locale === "ar" ? "المسافة" : "Distance"}</span><span>{distanceFare.toFixed(2)}</span></div>
+        <div className="flex justify-between"><span>{locale === "ar" ? "الوقت" : "Time"}</span><span>{timeFare.toFixed(2)}</span></div>
+        <div className="flex justify-between"><span>{locale === "ar" ? "الانتظار" : "Waiting"}</span><span>{waitingFare.toFixed(2)}</span></div>
+        <div className="flex justify-between"><span>{locale === "ar" ? "المطار" : "Airport"}</span><span>{airportFee.toFixed(2)}</span></div>
+        {isNight && <div className="flex justify-between text-warning"><span>{locale === "ar" ? "رسوم ليلية (١٥٪)" : "Night surcharge (15%)"}</span><span>{night.toFixed(2)}</span></div>}
         <div className="flex justify-between font-bold pt-1 border-t"><span>{t("estimated_fare")}</span><span>{totalFare.toFixed(2)}</span></div>
       </div>
       <DialogFooter>
