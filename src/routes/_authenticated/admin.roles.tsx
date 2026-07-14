@@ -17,6 +17,56 @@ import { Shield, Sparkles } from "lucide-react";
 const ROLES = ["admin", "manager", "dispatcher", "accountant", "driver"] as const;
 type Role = (typeof ROLES)[number];
 
+const ROLE_LABELS_AR: Record<Role, string> = {
+  admin: "مدير عام",
+  manager: "مدير",
+  dispatcher: "منسق حركة",
+  accountant: "محاسب",
+  driver: "سائق",
+};
+
+const ACTION_LABELS_AR: Record<string, string> = {
+  view: "عرض",
+  create: "إنشاء",
+  edit: "تعديل",
+  delete: "حذف",
+  export: "تصدير",
+  manage: "إدارة",
+  approve: "اعتماد",
+  assign: "تعيين",
+};
+
+const MODULE_LABELS_AR: Record<string, string> = {
+  bookings: "الحجوزات",
+  customers: "العملاء",
+  drivers: "السائقون",
+  vehicles: "المركبات",
+  invoices: "الفواتير",
+  payments: "المدفوعات",
+  expenses: "المصروفات",
+  reports: "التقارير",
+  analytics: "التحليلات",
+  cms: "المحتوى",
+  seo: "تحسين الظهور",
+  marketing: "التسويق",
+  roles: "الأدوار",
+  users: "المستخدمون",
+  audit: "التدقيق",
+  operations: "العمليات",
+  settings: "الإعدادات",
+  fleet: "الأسطول",
+  routes: "الرحلات",
+  blog: "المدونة",
+  faqs: "الأسئلة الشائعة",
+  media: "الوسائط",
+  finance: "المالية",
+  payroll: "الرواتب",
+  refunds: "المرتجعات",
+  coupons: "القسائم",
+  tasks: "المهام",
+  whatsapp: "واتساب",
+};
+
 export const Route = createFileRoute("/_authenticated/admin/roles")({ component: RolesPage });
 
 function RolesPage() {
