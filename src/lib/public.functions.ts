@@ -139,6 +139,20 @@ export const listPartners = createServerFn({ method: "GET" }).handler(async () =
   return data ?? [];
 });
 
+// Active site-wide announcement banners (extends coupons: rows with is_announcement=true).
+// Public row-level policy already restricts to active + within date window.
+export const listAnnouncements = createServerFn({ method: "GET" }).handler(async () => {
+  const sb = serverPublic();
+  const { data } = await sb
+    .from("coupons")
+    .select("id,code,title_ar,title_en,description_ar,description_en,cta_text_ar,cta_text_en,cta_url,bg_color,text_color,icon,priority,target_pages,show_once,dismissible,valid_until")
+    .eq("is_announcement", true)
+    .eq("is_active", true)
+    .order("priority", { ascending: false })
+    .limit(5);
+  return data ?? [];
+});
+
 const contactSchema = z.object({
   name: z.string().trim().min(2).max(120),
   email: z.string().trim().email().max(200).optional().or(z.literal("")),
