@@ -9,14 +9,25 @@ const opts = () => queryOptions({ queryKey: ["public", "blog"], queryFn: () => l
 
 export const Route = createFileRoute("/_public/{-$locale}/blog/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
-  head: () => ({
-    meta: [
-      { title: "Journal — Travel Tips, Airport Guides & Chauffeur Stories" },
-      { name: "description", content: "Travel notes, airport guides, and industry insights from our chauffeur team." },
-      { property: "og:title", content: `The Journal — ${SITE.brand.en}` },
+  head: ({ params }) => {
+    const isAr = (params?.locale ?? "ar") === "ar";
+    const title = isAr
+      ? `المدونة — نصائح السفر ودليل المطار وقصص السائق | ${SITE.brand.ar}`
+      : `Journal — Travel Tips, Airport Guides & Chauffeur Stories | ${SITE.brand.en}`;
+    const description = isAr
+      ? "دليل السفر والعمرة وتوصيل مطار جدة، ونصائح من فريق السائقين على مدار الساعة."
+      : "Travel notes, Umrah tips, Jeddah airport guides, and industry insights from our chauffeur team.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
       ],
-    links: [],
-  }),
+      links: [],
+    };
+  },
   component: Blog,
 });
 
