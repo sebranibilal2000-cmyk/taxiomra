@@ -11,24 +11,37 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_public/{-$locale}/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact — Book Your Chauffeur 24/7" },
-      { name: "description", content: "Reach our dispatch desk via WhatsApp, phone or email. Available around the clock." },
-      { property: "og:title", content: `Contact — ${SITE.brand.en}` },
+  head: ({ params }) => {
+    const isAr = (params?.locale ?? "ar") === "ar";
+    const title = isAr
+      ? `تواصل معنا — احجز سائقك ٢٤/٧ | ${SITE.brand.ar}`
+      : `Contact — Book Your Chauffeur 24/7 | ${SITE.brand.en}`;
+    const description = isAr
+      ? "تواصل مع فريق الحجز عبر واتساب أو الاتصال أو البريد. متاحون على مدار الساعة لتوصيلك من مطار جدة إلى مكة والمدينة."
+      : "Reach our dispatch desk via WhatsApp, phone or email. Available 24/7 for Jeddah airport transfers to Makkah and Madinah.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
       ],
-    links: [],
-    scripts: [{
-      type: "application/ld+json",
-      children: JSON.stringify({
-        "@context": "https://schema.org", "@type": "LocalBusiness",
-        name: SITE.brand.en, telephone: SITE.phone, email: SITE.email,
-        address: { "@type": "PostalAddress", addressLocality: SITE.city, addressCountry: SITE.country },
-        geo: { "@type": "GeoCoordinates", latitude: SITE.latitude, longitude: SITE.longitude },
-        openingHours: "Mo-Su 00:00-23:59",
-      }),
-    }],
-  }),
+      links: [],
+      scripts: [{
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org", "@type": "LocalBusiness",
+          name: isAr ? SITE.brand.ar : SITE.brand.en,
+          telephone: SITE.phone, email: SITE.email,
+          address: { "@type": "PostalAddress", addressLocality: SITE.city, addressCountry: SITE.country },
+          geo: { "@type": "GeoCoordinates", latitude: SITE.latitude, longitude: SITE.longitude },
+          openingHours: "Mo-Su 00:00-23:59",
+          contactPoint: [{ "@type": "ContactPoint", telephone: SITE.phone, contactType: "reservations", availableLanguage: ["ar","en"] }],
+        }),
+      }],
+    };
+  },
   component: Contact,
 });
 
