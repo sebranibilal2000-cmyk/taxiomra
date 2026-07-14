@@ -12,7 +12,7 @@ const opts = () =>
     queryFn: async () => await listCmsPages({ data: { type: "airport" } }),
   });
 
-export const Route = createFileRoute("/_public/{-$locale}/airports")({
+export const Route = createFileRoute("/_public/{-$locale}/airports/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
   head: ({ params }) => {
     const locale = params.locale ?? "ar";
