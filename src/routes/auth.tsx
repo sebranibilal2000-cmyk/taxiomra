@@ -21,10 +21,9 @@ function AuthPage() {
   const { t, locale, setLocale } = useI18n();
   const { refresh } = useAuth();
   const navigate = useNavigate();
-  const [tab, setTab] = useState<"signin" | "signup" | "forgot">("signin");
+  const [tab, setTab] = useState<"signin" | "forgot">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleForgot = async (e: React.FormEvent) => {
@@ -50,18 +49,6 @@ function AuthPage() {
     navigate({ to: "/admin/dashboard" });
   };
 
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email, password,
-      options: { data: { full_name: fullName }, emailRedirectTo: window.location.origin },
-    });
-    setLoading(false);
-    if (error) { toast.error(error.message); return; }
-    toast.success(locale === "ar" ? "تم إنشاء الحساب. يمكنك تسجيل الدخول الآن." : "Account created. You can sign in now.");
-    setTab("signin");
-  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-accent/30 p-4">
@@ -80,9 +67,8 @@ function AuthPage() {
         </CardHeader>
         <CardContent>
           <Tabs value={tab} onValueChange={(v) => setTab(v as any)}>
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-1">
               <TabsTrigger value="signin">{t("signin")}</TabsTrigger>
-              <TabsTrigger value="signup">{t("signup")}</TabsTrigger>
             </TabsList>
             <TabsContent value="signin">
               <form onSubmit={handleSignIn} className="space-y-4 mt-4">
@@ -127,29 +113,7 @@ function AuthPage() {
                 </button>
               </form>
             </TabsContent>
-            <TabsContent value="signup">
-              <form onSubmit={handleSignUp} className="space-y-4 mt-4">
-                <div className="space-y-2">
-                  <Label>{t("fullname")}</Label>
-                  <Input required value={fullName} onChange={(e) => setFullName(e.target.value)} />
-                </div>
-                <div className="space-y-2">
-                  <Label>{t("email")}</Label>
-                  <Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-                </div>
-                <div className="space-y-2">
-                  <Label>{t("password")}</Label>
-                  <Input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} />
-                </div>
-                <Button className="w-full" disabled={loading}>{t("signup")}</Button>
-              </form>
-            </TabsContent>
           </Tabs>
-          <p className="mt-4 text-center text-xs text-muted-foreground">
-            {locale === "ar"
-              ? "أول مستخدم يسجّل يحتاج لتعيين دور admin يدوياً من قاعدة البيانات."
-              : "The first registered user needs to be assigned the admin role manually in the database."}
-          </p>
         </CardContent>
       </Card>
     </div>
