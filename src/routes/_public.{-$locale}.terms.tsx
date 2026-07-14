@@ -3,15 +3,23 @@ import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/site-info";
 
 export const Route = createFileRoute("/_public/{-$locale}/terms")({
-  head: () => ({
-    meta: [
-      { title: `Terms of Service — ${SITE.brand.en}` },
-      { name: "description", content: "The terms that govern the use of our chauffeur services." },
-      { property: "og:title", content: "Terms of Service" },
-      { name: "robots", content: "index,follow" },
-    ],
-    links: [],
-  }),
+  head: ({ params }) => {
+    const isAr = (params?.locale ?? "ar") === "ar";
+    const title = isAr ? `شروط الخدمة — ${SITE.brand.ar}` : `Terms of Service — ${SITE.brand.en}`;
+    const description = isAr
+      ? "الشروط التي تحكم استخدام خدمات السائق الخاص لدى تاكسي العمرة."
+      : "The terms that govern the use of our chauffeur services.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { name: "robots", content: "index,follow" },
+      ],
+      links: [],
+    };
+  },
   component: Terms,
 });
 
