@@ -17,6 +17,56 @@ import { Shield, Sparkles } from "lucide-react";
 const ROLES = ["admin", "manager", "dispatcher", "accountant", "driver"] as const;
 type Role = (typeof ROLES)[number];
 
+const ROLE_LABELS_AR: Record<Role, string> = {
+  admin: "مدير عام",
+  manager: "مدير",
+  dispatcher: "منسق حركة",
+  accountant: "محاسب",
+  driver: "سائق",
+};
+
+const ACTION_LABELS_AR: Record<string, string> = {
+  view: "عرض",
+  create: "إنشاء",
+  edit: "تعديل",
+  delete: "حذف",
+  export: "تصدير",
+  manage: "إدارة",
+  approve: "اعتماد",
+  assign: "تعيين",
+};
+
+const MODULE_LABELS_AR: Record<string, string> = {
+  bookings: "الحجوزات",
+  customers: "العملاء",
+  drivers: "السائقون",
+  vehicles: "المركبات",
+  invoices: "الفواتير",
+  payments: "المدفوعات",
+  expenses: "المصروفات",
+  reports: "التقارير",
+  analytics: "التحليلات",
+  cms: "المحتوى",
+  seo: "تحسين الظهور",
+  marketing: "التسويق",
+  roles: "الأدوار",
+  users: "المستخدمون",
+  audit: "التدقيق",
+  operations: "العمليات",
+  settings: "الإعدادات",
+  fleet: "الأسطول",
+  routes: "الرحلات",
+  blog: "المدونة",
+  faqs: "الأسئلة الشائعة",
+  media: "الوسائط",
+  finance: "المالية",
+  payroll: "الرواتب",
+  refunds: "المرتجعات",
+  coupons: "القسائم",
+  tasks: "المهام",
+  whatsapp: "واتساب",
+};
+
 export const Route = createFileRoute("/_authenticated/admin/roles")({ component: RolesPage });
 
 function RolesPage() {
@@ -55,8 +105,10 @@ function RolesPage() {
 
   const filteredModules = modules.filter(([m]) => !q.trim() || m.toLowerCase().includes(q.toLowerCase()));
 
+  const ar = locale === "ar";
+
   const toggle = async (role: Role, permissionId: string, checked: boolean) => {
-    if (role === "admin") { toast.info("Admin has full access by design"); return; }
+    if (role === "admin") { toast.info(ar ? "المدير العام لديه صلاحيات كاملة تلقائياً" : "Admin has full access by design"); return; }
     if (checked) {
       const { error } = await supabase.from("role_permissions").insert({ role, permission_id: permissionId });
       if (error && !error.message.includes("duplicate")) return toast.error(error.message);
@@ -78,19 +130,23 @@ function RolesPage() {
     }
     qc.invalidateQueries({ queryKey: ["all-role-perms"] });
     qc.invalidateQueries({ queryKey: ["me-perms"] });
-    toast.success(`${grant ? "Granted" : "Revoked"} ${moduleName}`);
+    const modLabel = ar ? (MODULE_LABELS_AR[moduleName] ?? moduleName) : moduleName;
+    toast.success(ar ? `${grant ? "تم منح" : "تم سحب"} ${modLabel}` : `${grant ? "Granted" : "Revoked"} ${moduleName}`);
   };
 
-  if (!gate.loading && !gate.allowed) return <div className="p-8 text-center text-muted-foreground">Not authorized</div>;
+  if (!gate.loading && !gate.allowed) return <div className="p-8 text-center text-muted-foreground">{ar ? "غير مصرح" : "Not authorized"}</div>;
 
   const activeGranted = grantedByRole.get(activeRole) ?? new Set();
   const totalPerms = perms.data?.length ?? 0;
+  const roleLabel = (r: Role) => ar ? ROLE_LABELS_AR[r] : r;
+  const modLabel = (m: string) => ar ? (MODULE_LABELS_AR[m] ?? m) : m;
+  const actLabel = (a: string) => ar ? (ACTION_LABELS_AR[a] ?? a) : a;
 
   return (
     <div>
       <PageHeader
-        title={locale === "ar" ? "الأدوار والصلاحيات" : "Roles & Permissions"}
-        description={locale === "ar" ? "مصفوفة صلاحيات كاملة لكل وحدة وإجراء" : `Enterprise RBAC — ${totalPerms} permissions across ${modules.length} modules × ${ACTIONS.length} actions`}
+        title={ar ? "الأدوار والصلاحيات" : "Roles & Permissions"}
+        description={ar ? `مصفوفة صلاحيات المؤسسة — ${totalPerms} صلاحية عبر ${modules.length} وحدة × ${ACTIONS.length} إجراءات` : `Enterprise RBAC — ${totalPerms} permissions across ${modules.length} modules × ${ACTIONS.length} actions`}
       />
 
       {/* Role selector */}
@@ -105,7 +161,7 @@ function RolesPage() {
                 <Shield className="h-4 w-4 text-gold" />
                 {r === "admin" && <Sparkles className="h-3 w-3 text-gold" />}
               </div>
-              <div className="capitalize font-display text-lg">{r}</div>
+              <div className="capitalize font-display text-lg">{roleLabel(r)}</div>
               <div className="text-xs text-muted-foreground">{count} / {totalPerms}</div>
               <div className="mt-2 h-1 bg-muted rounded overflow-hidden">
                 <div className="h-full bg-gold" style={{ width: `${pct}%` }} />
@@ -117,22 +173,22 @@ function RolesPage() {
 
       <Card className="mb-4">
         <CardContent className="pt-6 flex items-center gap-3">
-          <Input placeholder="Filter modules…" value={q} onChange={(e) => setQ(e.target.value)} className="max-w-sm" />
-          <Badge variant="outline" className="capitalize">Editing: {activeRole}</Badge>
-          {activeRole === "admin" && <span className="text-xs text-muted-foreground">Admin has full access — matrix is read-only</span>}
+          <Input placeholder={ar ? "تصفية الوحدات…" : "Filter modules…"} value={q} onChange={(e) => setQ(e.target.value)} className="max-w-sm" />
+          <Badge variant="outline" className="capitalize">{ar ? "التعديل" : "Editing"}: {roleLabel(activeRole)}</Badge>
+          {activeRole === "admin" && <span className="text-xs text-muted-foreground">{ar ? "المدير العام يمتلك صلاحيات كاملة — المصفوفة للقراءة فقط" : "Admin has full access — matrix is read-only"}</span>}
         </CardContent>
       </Card>
 
       <Card>
-        <CardHeader><CardTitle className="text-sm">Permission Matrix</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="text-sm">{ar ? "مصفوفة الصلاحيات" : "Permission Matrix"}</CardTitle></CardHeader>
         <CardContent className="p-0">
           <ScrollArea className="max-h-[70vh]">
             <table className="w-full text-xs">
               <thead className="sticky top-0 bg-background/95 backdrop-blur border-b z-10">
                 <tr>
-                  <th className="text-start px-3 py-2 font-medium">Module</th>
-                  {ACTIONS.map((a) => <th key={a} className="text-center px-1 py-2 font-medium capitalize w-16">{a}</th>)}
-                  <th className="text-center px-2 py-2 font-medium w-24">Bulk</th>
+                  <th className="text-start px-3 py-2 font-medium">{ar ? "الوحدة" : "Module"}</th>
+                  {ACTIONS.map((a) => <th key={a} className="text-center px-1 py-2 font-medium capitalize w-16">{actLabel(a)}</th>)}
+                  <th className="text-center px-2 py-2 font-medium w-24">{ar ? "الكل" : "Bulk"}</th>
                 </tr>
               </thead>
               <tbody>
@@ -142,7 +198,7 @@ function RolesPage() {
                   const all = grantedCount === modPerms.length;
                   return (
                     <tr key={modName} className="border-b hover:bg-muted/30">
-                      <td className="px-3 py-1.5 font-medium capitalize">{modName}
+                      <td className="px-3 py-1.5 font-medium capitalize">{modLabel(modName)}
                         <span className="ms-2 text-[10px] text-muted-foreground">{grantedCount}/{modPerms.length}</span>
                       </td>
                       {ACTIONS.map((a) => {
@@ -167,7 +223,7 @@ function RolesPage() {
                           onClick={() => toggleModule(activeRole, modName, !all)}
                           className="h-6 text-[10px]"
                         >
-                          {all ? "Revoke" : "Grant"}
+                          {all ? (ar ? "سحب" : "Revoke") : (ar ? "منح" : "Grant")}
                         </Button>
                       </td>
                     </tr>
