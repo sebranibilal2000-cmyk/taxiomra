@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
+import { organizationJsonLd, localBusinessJsonLd, breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
 import heroImg from "@/assets/hero-luxury-car.jpg";
 import airportImg from "@/assets/airport-transfer.jpg";
 import businessImg from "@/assets/business-travel.jpg";
@@ -20,34 +21,83 @@ const homeOpts = () => queryOptions({
     services: await listCmsPages({ data: { type: "service" } }),
     airports: await listCmsPages({ data: { type: "airport" } }),
     cities: await listCmsPages({ data: { type: "city" } }),
+    routes: await listCmsPages({ data: { type: "route" } }),
     testimonials: await listTestimonials(),
     faqs: await listFaqs(),
     fleet: await listVehicleCategories(),
   }),
 });
 
+const KEYWORDS_AR = [
+  "تاكسي العمرة","التوصيل من مطار جدة إلى مكة","تاكسي من مطار جدة إلى مكة","نقل من مطار جدة إلى مكة",
+  "حجز تاكسي من مطار جدة","سيارة من مطار جدة إلى مكة","مواصلات من مطار جدة إلى مكة","استقبال من مطار جدة",
+  "تاكسي مطار جدة","نقل المعتمرين","تاكسي مكة","تاكسي جدة",
+];
+const KEYWORDS_EN = [
+  "Umrah Taxi","Jeddah Airport Taxi","Taxi from Jeddah Airport to Makkah","Jeddah Airport Transfer",
+  "Airport Transfer Jeddah to Makkah","Makkah Taxi","Jeddah Taxi","Umrah Transportation",
+  "Private Transfer Jeddah Airport","Taxi to Makkah","Saudi Airport Taxi","Airport Taxi Saudi Arabia",
+];
+
 export const Route = createFileRoute("/_public/{-$locale}/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(homeOpts()),
   head: ({ params }: any) => {
     const locale = (params?.locale === "en" ? "en" : "ar") as "ar" | "en";
     const isEn = locale === "en";
-    const titleAr = `${SITE.brand.ar} | تاكسي من مطار جدة إلى مكة المكرمة`;
-    const titleEn = `${SITE.brand.en} | Jeddah Airport Taxi to Makkah`;
-    const descAr = "احجز خدمة التوصيل من مطار جدة إلى مكة بسهولة مع تاكسي العمرة. سيارات حديثة، سائقون محترفون، أسعار ثابتة، خدمة متوفرة 24 ساعة، وحجز سريع عبر واتساب.";
-    const descEn = "Book your Jeddah Airport to Makkah taxi with Omra Taxi. Fixed prices, professional drivers, modern vehicles and 24/7 airport transfer service.";
+    const titleAr = `تاكسي العمرة | التوصيل من مطار جدة إلى مكة المكرمة ٢٤/٧`;
+    const titleEn = `Umrah Taxi | Taxi from Jeddah Airport to Makkah — 24/7 Transfers`;
+    const descAr = "احجز تاكسي العمرة للتوصيل من مطار جدة إلى مكة المكرمة على مدار الساعة. أسعار ثابتة، سائقون محترفون، استقبال شخصي، سيارات حديثة، وحجز فوري عبر واتساب لخدمة نقل المعتمرين.";
+    const descEn = "Book Umrah Taxi for reliable Jeddah Airport to Makkah transfers, 24/7. Fixed fares, licensed drivers, meet & greet at KAIA and instant WhatsApp booking across Jeddah, Makkah and Madinah.";
     const ogImage = `${SITE.url}${isEn ? "/og-home-en.jpg" : "/og-home-ar.jpg"}`;
-    const canonical = SITE.url + (params?.locale ? `/${params.locale}` : "/");
+    const url = SITE.url + `/${locale}`;
     const title = isEn ? titleEn : titleAr;
     const desc = isEn ? descEn : descAr;
+    const keywords = (isEn ? KEYWORDS_EN : KEYWORDS_AR).join(", ");
+
+    // Rich JSON-LD stack — canonical/hreflang emitted by parent layout (avoid dupes).
+    const graph = [
+      organizationJsonLd(),
+      localBusinessJsonLd(),
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": `${SITE.url}/#website`,
+        url: SITE.url,
+        name: SITE.brand.en,
+        alternateName: SITE.brand.ar,
+        description: descEn,
+        inLanguage: ["ar", "en"],
+        publisher: { "@id": `${SITE.url}/#organization` },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: { "@type": "EntryPoint", urlTemplate: `${SITE.url}/${locale}/search?q={search_term_string}` },
+          "query-input": "required name=search_term_string",
+        },
+      },
+      breadcrumbJsonLd([{ name: isEn ? "Home" : "الرئيسية", url }]),
+      serviceJsonLd({
+        name: isEn ? "Taxi from Jeddah Airport to Makkah" : "التوصيل من مطار جدة إلى مكة المكرمة",
+        description: desc,
+        areaServed: "Jeddah, Makkah, Madinah, Taif",
+        url,
+      }),
+      serviceJsonLd({
+        name: isEn ? "Umrah Transportation" : "نقل المعتمرين",
+        description: isEn ? "Chauffeur transfers for Umrah pilgrims from KAIA to Makkah and Madinah." : "خدمة توصيل المعتمرين من مطار جدة إلى مكة المكرمة والمدينة المنورة.",
+        url,
+      }),
+    ];
+
     return {
       meta: [
         { title },
         { name: "description", content: desc },
+        { name: "keywords", content: keywords },
+        { name: "robots", content: "index,follow,max-image-preview:large,max-snippet:-1" },
         { property: "og:site_name", content: SITE.brand.en },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "website" },
-        { property: "og:url", content: canonical },
         { property: "og:locale", content: isEn ? "en_US" : "ar_SA" },
         { property: "og:locale:alternate", content: isEn ? "ar_SA" : "en_US" },
         { property: "og:image", content: ogImage },
@@ -60,36 +110,7 @@ export const Route = createFileRoute("/_public/{-$locale}/")({
         { name: "twitter:image", content: ogImage },
         { name: "twitter:image:alt", content: title },
       ],
-      links: [
-        { rel: "canonical", href: canonical },
-        { rel: "alternate", hrefLang: "ar", href: SITE.url + "/ar" },
-        { rel: "alternate", hrefLang: "en", href: SITE.url + "/en" },
-        { rel: "alternate", hrefLang: "x-default", href: SITE.url + "/" },
-      ],
-      scripts: [
-        {
-          type: "application/ld+json",
-          children: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "@id": `${SITE.url}/#website`,
-            url: SITE.url,
-            name: SITE.brand.en,
-            alternateName: SITE.brand.ar,
-            description: descEn,
-            inLanguage: ["ar", "en"],
-            publisher: { "@id": `${SITE.url}/#organization` },
-            potentialAction: {
-              "@type": "SearchAction",
-              target: {
-                "@type": "EntryPoint",
-                urlTemplate: `${SITE.url}/en/search?q={search_term_string}`,
-              },
-              "query-input": "required name=search_term_string",
-            },
-          }),
-        },
-      ],
+      scripts: graph.map((g) => ({ type: "application/ld+json", children: JSON.stringify(g) })),
     };
   },
   component: Home,
