@@ -70,13 +70,18 @@ function SingleForm({ ar }: { ar: boolean }) {
   });
   const [busy, setBusy] = useState(false);
 
+  const slugify = (s: string) =>
+    (s || "").toLowerCase().trim().replace(/[^a-z0-9-]+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "").slice(0, 120);
+
   const submit = async () => {
     setBusy(true);
     try {
+      const cleanSlug = slugify(form.slug) || slugify(form.title_en);
+      if (!cleanSlug) { toast.error(ar ? "الرابط الدائم مطلوب" : "Slug is required"); setBusy(false); return; }
       const res = await gen({
         data: {
           type: form.type,
-          slug: form.slug,
+          slug: cleanSlug,
           title_en: form.title_en,
           title_ar: form.title_ar,
           subtitle_en: form.subtitle_en || null,
@@ -108,7 +113,8 @@ function SingleForm({ ar }: { ar: boolean }) {
         </div>
         <div>
           <Label>{ar ? "الرابط الدائم" : "Slug"}</Label>
-          <Input placeholder="jeddah-to-makkah" pattern="[a-z0-9-]+" value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value.toLowerCase() }))} />
+          <Input placeholder="jeddah-to-makkah" value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value.toLowerCase() }))} />
+          <p className="text-[10px] text-muted-foreground mt-1">{ar ? "أحرف صغيرة وأرقام وشرطات فقط. سيُطبَّع تلقائياً عند الحفظ." : "Lowercase letters, digits and dashes. Auto-normalized on save."}</p>
         </div>
         <div>
           <Label>{ar ? "العنوان (إنجليزي)" : "Title (EN)"}</Label>

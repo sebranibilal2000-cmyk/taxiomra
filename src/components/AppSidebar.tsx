@@ -5,7 +5,7 @@ import {
   FileText, HelpCircle, Newspaper, Globe, Radio, Wrench, GaugeCircle,
   PieChart, Receipt, Building2, Undo2, Wallet, Briefcase,
   Sparkles, Image as ImageIcon2, Megaphone, Handshake, Inbox, LayoutTemplate,
-  Bot, MessageCircle, Activity, AlertTriangle, DatabaseBackup,
+  MessageCircle, Activity, AlertTriangle, DatabaseBackup,
   Building, Plane, MapPin, ConciergeBell, Quote, UsersRound, ListTree,
   Search, ArrowRightLeft, Wand2, CalendarDays, ListChecks, BellRing,
 } from "lucide-react";
@@ -81,9 +81,7 @@ export function AppSidebar() {
       { title: locale === "ar" ? "صندوق التواصل" : "Contact Inbox", url: "/admin/contacts", icon: Inbox },
     ]},
 
-    { label: locale === "ar" ? "الذكاء الاصطناعي" : "Intelligence", items: [
-      { title: locale === "ar" ? "المساعد الذكي" : "AI Assistant", url: "/admin/ai-assistant", icon: Bot },
-      { title: locale === "ar" ? "استوديو الذكاء" : "AI Studio", url: "/admin/ai-studio", icon: Sparkles },
+    { label: locale === "ar" ? "الاتصالات" : "Communications", items: [
       { title: locale === "ar" ? "قوالب واتساب" : "WhatsApp Templates", url: "/admin/whatsapp-templates", icon: MessageCircle },
       { title: locale === "ar" ? "قائمة الإشعارات" : "Notification Queue", url: "/admin/notification-queue", icon: BellRing },
     ]},

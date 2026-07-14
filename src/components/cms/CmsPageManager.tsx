@@ -68,14 +68,29 @@ export function CmsPageManager({ pageType, title, description, publicPathPrefix,
   const paged = filtered.slice(page * pageSize, page * pageSize + pageSize);
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
 
+  const slugify = (s: string) =>
+    (s || "")
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\u0600-\u06FF\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "")
+      .slice(0, 120);
+
   const save = async (fd: FormData) => {
     const kw = String(fd.get("keywords") || "").split(",").map((s) => s.trim()).filter(Boolean);
     const gallery = String(fd.get("gallery") || "").split("\n").map((s) => s.trim()).filter(Boolean);
+    let slug = String(fd.get("slug") || "").trim();
+    const title_en = String(fd.get("title_en") || "").trim();
+    const title_ar = String(fd.get("title_ar") || "").trim();
+    if (!slug) slug = slugify(title_en || title_ar);
+    if (!slug) { toast.error(locale === "ar" ? "الرابط الدائم مطلوب" : "Slug is required"); return; }
+    slug = slugify(slug);
     const payload: any = {
-      slug: fd.get("slug"),
+      slug,
       page_type: pageType,
-      title_en: fd.get("title_en"),
-      title_ar: fd.get("title_ar"),
+      title_en, title_ar,
       subtitle_en: fd.get("subtitle_en") || null,
       subtitle_ar: fd.get("subtitle_ar") || null,
       body_en: fd.get("body_en") || null,
@@ -197,9 +212,9 @@ export function CmsPageManager({ pageType, title, description, publicPathPrefix,
                   <TabsTrigger value="settings">{locale === "ar" ? "الإعدادات" : "Settings"}</TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="content" className="space-y-3 pt-4">
+                <TabsContent forceMount value="content" className="space-y-3 pt-4 data-[state=inactive]:hidden">
                   <div className="grid grid-cols-2 gap-3">
-                    <div><label className="text-sm">Slug *</label><Input name="slug" defaultValue={editing?.slug} required pattern="[a-z0-9-]+" /></div>
+                    <div><label className="text-sm">Slug</label><Input name="slug" defaultValue={editing?.slug} placeholder={locale === "ar" ? "يُنشأ تلقائياً من العنوان" : "auto-generated from title"} /></div>
                     <div><label className="text-sm">{locale === "ar" ? "الحالة" : "Status"} *</label>
                       <Select name="status" defaultValue={editing?.status ?? "draft"}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
@@ -208,33 +223,33 @@ export function CmsPageManager({ pageType, title, description, publicPathPrefix,
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
-                    <div><label className="text-sm">Title (EN) *</label><Input name="title_en" defaultValue={editing?.title_en} required /></div>
-                    <div><label className="text-sm">Title (AR) *</label><Input name="title_ar" defaultValue={editing?.title_ar} dir="rtl" required /></div>
+                    <div><label className="text-sm">{locale === "ar" ? "العنوان (إنجليزي)" : "Title (EN)"} *</label><Input name="title_en" defaultValue={editing?.title_en} required /></div>
+                    <div><label className="text-sm">{locale === "ar" ? "العنوان (عربي)" : "Title (AR)"} *</label><Input name="title_ar" defaultValue={editing?.title_ar} dir="rtl" required /></div>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
-                    <div><label className="text-sm">Subtitle (EN)</label><Input name="subtitle_en" defaultValue={editing?.subtitle_en} /></div>
-                    <div><label className="text-sm">Subtitle (AR)</label><Input name="subtitle_ar" defaultValue={editing?.subtitle_ar} dir="rtl" /></div>
+                    <div><label className="text-sm">{locale === "ar" ? "العنوان الفرعي (إنجليزي)" : "Subtitle (EN)"}</label><Input name="subtitle_en" defaultValue={editing?.subtitle_en} /></div>
+                    <div><label className="text-sm">{locale === "ar" ? "العنوان الفرعي (عربي)" : "Subtitle (AR)"}</label><Input name="subtitle_ar" defaultValue={editing?.subtitle_ar} dir="rtl" /></div>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
-                    <div><label className="text-sm">Body (EN)</label><Textarea name="body_en" defaultValue={editing?.body_en} rows={10} /></div>
-                    <div><label className="text-sm">Body (AR)</label><Textarea name="body_ar" defaultValue={editing?.body_ar} rows={10} dir="rtl" /></div>
+                    <div><label className="text-sm">{locale === "ar" ? "المحتوى (إنجليزي)" : "Body (EN)"}</label><Textarea name="body_en" defaultValue={editing?.body_en} rows={10} /></div>
+                    <div><label className="text-sm">{locale === "ar" ? "المحتوى (عربي)" : "Body (AR)"}</label><Textarea name="body_ar" defaultValue={editing?.body_ar} rows={10} dir="rtl" /></div>
                   </div>
                 </TabsContent>
 
-                <TabsContent value="media" className="space-y-3 pt-4">
-                  <div><label className="text-sm">Hero image URL</label><Input name="hero_image_url" defaultValue={editing?.hero_image_url} type="url" /></div>
-                  <div><label className="text-sm">Featured image URL</label><Input name="featured_image_url" defaultValue={editing?.featured_image_url} type="url" /></div>
-                  <div><label className="text-sm">Gallery (one URL per line)</label>
+                <TabsContent forceMount value="media" className="space-y-3 pt-4 data-[state=inactive]:hidden">
+                  <div><label className="text-sm">{locale === "ar" ? "صورة الغلاف (Hero)" : "Hero image URL"}</label><Input name="hero_image_url" defaultValue={editing?.hero_image_url} type="url" /></div>
+                  <div><label className="text-sm">{locale === "ar" ? "الصورة المميزة" : "Featured image URL"}</label><Input name="featured_image_url" defaultValue={editing?.featured_image_url} type="url" /></div>
+                  <div><label className="text-sm">{locale === "ar" ? "المعرض (رابط في كل سطر)" : "Gallery (one URL per line)"}</label>
                     <Textarea name="gallery" defaultValue={Array.isArray(editing?.gallery) ? editing.gallery.join("\n") : ""} rows={5} />
                   </div>
                 </TabsContent>
 
-                <TabsContent value="seo" className="space-y-3 pt-4">
-                  <div><label className="text-sm">Meta title</label><Input name="meta_title" defaultValue={editing?.meta_title} maxLength={70} /></div>
-                  <div><label className="text-sm">Meta description</label><Textarea name="meta_description" defaultValue={editing?.meta_description} rows={2} maxLength={160} /></div>
-                  <div><label className="text-sm">Keywords (comma separated)</label><Input name="keywords" defaultValue={editing?.keywords?.join(", ") ?? ""} /></div>
+                <TabsContent forceMount value="seo" className="space-y-3 pt-4 data-[state=inactive]:hidden">
+                  <div><label className="text-sm">{locale === "ar" ? "عنوان الميتا" : "Meta title"}</label><Input name="meta_title" defaultValue={editing?.meta_title} maxLength={70} /></div>
+                  <div><label className="text-sm">{locale === "ar" ? "وصف الميتا" : "Meta description"}</label><Textarea name="meta_description" defaultValue={editing?.meta_description} rows={2} maxLength={160} /></div>
+                  <div><label className="text-sm">{locale === "ar" ? "الكلمات المفتاحية (مفصولة بفواصل)" : "Keywords (comma separated)"}</label><Input name="keywords" defaultValue={editing?.keywords?.join(", ") ?? ""} /></div>
                   <div className="grid grid-cols-3 gap-3">
-                    <div><label className="text-sm">Canonical URL</label><Input name="canonical_url" defaultValue={editing?.canonical_url} placeholder="auto" /></div>
+                    <div><label className="text-sm">{locale === "ar" ? "الرابط الكانوني" : "Canonical URL"}</label><Input name="canonical_url" defaultValue={editing?.canonical_url} placeholder="auto" /></div>
                     <div><label className="text-sm">Robots</label>
                       <Select name="robots" defaultValue={editing?.robots ?? "index,follow"}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
@@ -255,7 +270,7 @@ export function CmsPageManager({ pageType, title, description, publicPathPrefix,
                   </div>
                 </TabsContent>
 
-                <TabsContent value="social" className="space-y-3 pt-4">
+                <TabsContent forceMount value="social" className="space-y-3 pt-4 data-[state=inactive]:hidden">
                   <div className="grid grid-cols-2 gap-3">
                     <div><label className="text-sm">OG title</label><Input name="og_title" defaultValue={editing?.og_title} /></div>
                     <div><label className="text-sm">OG description</label><Input name="og_description" defaultValue={editing?.og_description} /></div>
@@ -279,8 +294,8 @@ export function CmsPageManager({ pageType, title, description, publicPathPrefix,
                   </div>
                 </TabsContent>
 
-                <TabsContent value="settings" className="space-y-3 pt-4">
-                  <div><label className="text-sm">Sort order</label><Input name="sort_order" type="number" defaultValue={editing?.sort_order ?? 0} /></div>
+                <TabsContent forceMount value="settings" className="space-y-3 pt-4 data-[state=inactive]:hidden">
+                  <div><label className="text-sm">{locale === "ar" ? "الترتيب" : "Sort order"}</label><Input name="sort_order" type="number" defaultValue={editing?.sort_order ?? 0} /></div>
                 </TabsContent>
               </Tabs>
 

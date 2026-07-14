@@ -89,8 +89,6 @@ import { Route as AuthenticatedAdminBackupRouteImport } from './routes/_authenti
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
 import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin.analytics'
 import { Route as AuthenticatedAdminAirportsRouteImport } from './routes/_authenticated/admin.airports'
-import { Route as AuthenticatedAdminAiStudioRouteImport } from './routes/_authenticated/admin.ai-studio'
-import { Route as AuthenticatedAdminAiAssistantRouteImport } from './routes/_authenticated/admin.ai-assistant'
 import { Route as PublicChar123LocaleChar125ServicesIndexRouteImport } from './routes/_public.{-$locale}.services.index'
 import { Route as PublicChar123LocaleChar125RoutesIndexRouteImport } from './routes/_public.{-$locale}.routes.index'
 import { Route as PublicChar123LocaleChar125FleetIndexRouteImport } from './routes/_public.{-$locale}.fleet.index'
@@ -572,18 +570,6 @@ const AuthenticatedAdminAirportsRoute =
     path: '/admin/airports',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedAdminAiStudioRoute =
-  AuthenticatedAdminAiStudioRouteImport.update({
-    id: '/admin/ai-studio',
-    path: '/admin/ai-studio',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminAiAssistantRoute =
-  AuthenticatedAdminAiAssistantRouteImport.update({
-    id: '/admin/ai-assistant',
-    path: '/admin/ai-assistant',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const PublicChar123LocaleChar125ServicesIndexRoute =
   PublicChar123LocaleChar125ServicesIndexRouteImport.update({
     id: '/services/',
@@ -713,8 +699,6 @@ export interface FileRoutesByFullPath {
   '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
-  '/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
-  '/admin/ai-studio': typeof AuthenticatedAdminAiStudioRoute
   '/admin/airports': typeof AuthenticatedAdminAirportsRoute
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
@@ -816,8 +800,6 @@ export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
-  '/admin/ai-studio': typeof AuthenticatedAdminAiStudioRoute
   '/admin/airports': typeof AuthenticatedAdminAirportsRoute
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
@@ -921,8 +903,6 @@ export interface FileRoutesById {
   '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_public/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
-  '/_authenticated/admin/ai-assistant': typeof AuthenticatedAdminAiAssistantRoute
-  '/_authenticated/admin/ai-studio': typeof AuthenticatedAdminAiStudioRoute
   '/_authenticated/admin/airports': typeof AuthenticatedAdminAirportsRoute
   '/_authenticated/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
@@ -1027,8 +1007,6 @@ export interface FileRouteTypes {
     | '/sitemap-images.xml'
     | '/sitemap.xml'
     | '/{-$locale}'
-    | '/admin/ai-assistant'
-    | '/admin/ai-studio'
     | '/admin/airports'
     | '/admin/analytics'
     | '/admin/audit'
@@ -1130,8 +1108,6 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap-images.xml'
     | '/sitemap.xml'
-    | '/admin/ai-assistant'
-    | '/admin/ai-studio'
     | '/admin/airports'
     | '/admin/analytics'
     | '/admin/audit'
@@ -1234,8 +1210,6 @@ export interface FileRouteTypes {
     | '/sitemap-images.xml'
     | '/sitemap.xml'
     | '/_public/{-$locale}'
-    | '/_authenticated/admin/ai-assistant'
-    | '/_authenticated/admin/ai-studio'
     | '/_authenticated/admin/airports'
     | '/_authenticated/admin/analytics'
     | '/_authenticated/admin/audit'
@@ -1904,20 +1878,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAirportsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/ai-studio': {
-      id: '/_authenticated/admin/ai-studio'
-      path: '/admin/ai-studio'
-      fullPath: '/admin/ai-studio'
-      preLoaderRoute: typeof AuthenticatedAdminAiStudioRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/ai-assistant': {
-      id: '/_authenticated/admin/ai-assistant'
-      path: '/admin/ai-assistant'
-      fullPath: '/admin/ai-assistant'
-      preLoaderRoute: typeof AuthenticatedAdminAiAssistantRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_public/{-$locale}/services/': {
       id: '/_public/{-$locale}/services/'
       path: '/services'
@@ -2133,8 +2093,6 @@ const AuthenticatedAdminInvoicesRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminAiAssistantRoute: typeof AuthenticatedAdminAiAssistantRoute
-  AuthenticatedAdminAiStudioRoute: typeof AuthenticatedAdminAiStudioRoute
   AuthenticatedAdminAirportsRoute: typeof AuthenticatedAdminAirportsRoute
   AuthenticatedAdminAnalyticsRoute: typeof AuthenticatedAdminAnalyticsRoute
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
@@ -2192,8 +2150,6 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminAiAssistantRoute: AuthenticatedAdminAiAssistantRoute,
-  AuthenticatedAdminAiStudioRoute: AuthenticatedAdminAiStudioRoute,
   AuthenticatedAdminAirportsRoute: AuthenticatedAdminAirportsRoute,
   AuthenticatedAdminAnalyticsRoute: AuthenticatedAdminAnalyticsRoute,
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
