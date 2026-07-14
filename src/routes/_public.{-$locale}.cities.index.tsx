@@ -16,11 +16,15 @@ export const Route = createFileRoute("/_public/{-$locale}/cities/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
   head: ({ params }) => {
     const locale = params.locale ?? "ar";
+    const isAr = locale === "ar";
     const path = `/${locale}/cities`;
     const url = absoluteUrl(path);
-    const title = brandTitle("Cities we serve", locale === "ar" ? "ar" : "en");
-    const description =
-      "Explore taxi and chauffeur coverage across Jeddah, Makkah, Madinah, Taif and Riyadh — 24/7 airport transfers and intercity rides.";
+    const title = isAr
+      ? `المدن التي نخدمها — تاكسي جدة ومكة والمدينة والطائف والرياض | ${SITE.brand.ar}`
+      : brandTitle("Cities we serve — Jeddah, Makkah, Madinah, Taif, Riyadh", "en");
+    const description = isAr
+      ? "تغطية تاكسي وسائق خاص في جدة ومكة المكرمة والمدينة المنورة والطائف والرياض — توصيل مطار على مدار الساعة ورحلات بين المدن."
+      : "Explore taxi and chauffeur coverage across Jeddah, Makkah, Madinah, Taif and Riyadh — 24/7 airport transfers and intercity rides.";
     return {
       meta: [
         { title },
