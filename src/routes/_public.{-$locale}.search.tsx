@@ -19,13 +19,18 @@ const opts = queryOptions({
 
 export const Route = createFileRoute("/_public/{-$locale}/search")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts),
-  head: () => ({
-    meta: [
-      { title: "Search" },
-      { name: "robots", content: "noindex,follow" },
-      { name: "description", content: "Search the site." },
-    ],
-  }),
+  head: ({ params }) => {
+    const isAr = (params?.locale ?? "ar") === "ar";
+    return {
+      meta: [
+        { title: isAr ? "بحث — تاكسي العمرة" : "Search — Omra Taxi" },
+        { name: "robots", content: "noindex,follow" },
+        { name: "description", content: isAr ? "ابحث في موقع تاكسي العمرة عن المدن والمطارات والمسارات والمدونة." : "Search Omra Taxi for cities, airports, routes and blog articles." },
+        { property: "og:title", content: isAr ? "بحث — تاكسي العمرة" : "Search — Omra Taxi" },
+        { property: "og:description", content: isAr ? "ابحث في موقع تاكسي العمرة." : "Search the Omra Taxi site." },
+      ],
+    };
+  },
   component: SearchPage,
 });
 

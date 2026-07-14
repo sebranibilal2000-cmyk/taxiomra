@@ -3,17 +3,24 @@ import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/site-info";
 
 export const Route = createFileRoute("/_public/{-$locale}/cancellation")({
-  head: () => ({
-    meta: [
-      { title: `Cancellation Policy — ${SITE.brand.en}` },
-      { name: "description", content: "How to cancel a taxi booking, notice windows, and applicable fees." },
-      { property: "og:title", content: "Cancellation Policy" },
-      { property: "og:description", content: "Cancellation policy for taxi and chauffeur bookings." },
-      { property: "og:type", content: "website" },
-      { name: "robots", content: "index,follow" },
-    ],
-    links: [],
-  }),
+  head: ({ params }) => {
+    const isAr = (params?.locale ?? "ar") === "ar";
+    const title = isAr ? `سياسة الإلغاء — ${SITE.brand.ar}` : `Cancellation Policy — ${SITE.brand.en}`;
+    const description = isAr
+      ? "كيفية إلغاء حجز التاكسي، نوافذ الإشعار، والرسوم المطبقة قبل موعد الالتقاط."
+      : "How to cancel a taxi booking, notice windows, and applicable fees.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
+        { name: "robots", content: "index,follow" },
+      ],
+      links: [],
+    };
+  },
   component: CancellationPage,
 });
 
