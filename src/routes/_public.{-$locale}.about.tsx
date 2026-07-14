@@ -5,15 +5,33 @@ import { Shield, Award, Users, Clock } from "lucide-react";
 import { SITE } from "@/lib/site-info";
 
 export const Route = createFileRoute("/_public/{-$locale}/about")({
-  head: () => ({
-    meta: [
-      { title: `About Us — ${SITE.brand.en} Company` },
-      { name: "description", content: "Learn about our taxi company: our story, mission, licensed drivers, and commitment to safe reliable rides 24/7." },
-      { property: "og:title", content: `About — ${SITE.brand.en}` },
-      { property: "og:description", content: "Our story, mission, and commitment to reliable transportation." },
+  head: ({ params }) => {
+    const ar = (params.locale ?? "ar") === "ar";
+    const title = ar
+      ? `من نحن — ${SITE.brand.ar} | تاكسي العمرة من مطار جدة إلى مكة`
+      : `About Us — ${SITE.brand.en} | Jeddah Airport to Makkah Taxi`;
+    const description = ar
+      ? "تعرّف على تاكسي العمرة: شركة نقل متخصصة في التوصيل من مطار جدة إلى مكة والمدينة، بسائقين مرخصين وأسطول حديث وخدمة على مدار الساعة."
+      : "Learn about Omra Taxi — a licensed Saudi chauffeur company specialising in Jeddah Airport transfers to Makkah and Madinah, with a modern fleet and 24/7 service.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
       ],
-    links: [],
-  }),
+      links: [],
+      scripts: [
+        { type: "application/ld+json", children: JSON.stringify(breadcrumbJsonLd([
+          { name: ar ? "الرئيسية" : "Home", url: `${SITE.url}/${ar ? "ar" : "en"}` },
+          { name: ar ? "من نحن" : "About", url: `${SITE.url}/${ar ? "ar" : "en"}/about` },
+        ])) },
+      ],
+    };
+  },
   component: About,
 });
 
