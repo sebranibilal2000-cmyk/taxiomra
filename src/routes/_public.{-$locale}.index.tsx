@@ -164,18 +164,20 @@ function Home() {
                 </a>
               </Button>
             </div>
-            <dl className="grid grid-cols-3 gap-6 pt-6 border-t border-border/60">
+            <dl className="grid grid-cols-2 gap-5 pt-6 border-t border-border/60">
               {[
-                { k: "24/7", v: ar ? "توفر مستمر" : "Availability" },
-                { k: "< 1 min", v: ar ? "وقت الاستجابة" : "Response time" },
-                { k: "100%", v: ar ? "سائقون معتمدون" : "Licensed drivers" },
+                { k: ar ? "سيارات حديثة" : "Modern fleet", v: ar ? "أسطول حديث ومكيّف بالكامل لراحتكم" : "Fully air-conditioned modern fleet" },
+                { k: ar ? "سائقون محترفون" : "Professional drivers", v: ar ? "سائقون مدرّبون يعرفون أفضل الطرق" : "Trained drivers who know every route" },
+                { k: ar ? "خدمة 24/7" : "24/7 service", v: ar ? "متاحون على مدار الساعة طوال الأسبوع" : "Available around the clock, all week" },
+                { k: ar ? "أمان وموثوقية" : "Safety & trust", v: ar ? "سلامتكم أولويتنا بمعايير صارمة" : "Your safety is our top priority" },
               ].map((s) => (
-                <div key={s.v}>
-                  <dt className="font-display text-3xl leading-none text-foreground">{s.k}</dt>
-                  <dd className="mt-1.5 text-xs uppercase tracking-wider text-muted-foreground">{s.v}</dd>
+                <div key={s.k}>
+                  <dt className="font-display text-lg leading-tight text-foreground">{s.k}</dt>
+                  <dd className="mt-1.5 text-xs text-muted-foreground leading-relaxed">{s.v}</dd>
                 </div>
               ))}
             </dl>
+
           </div>
 
           <div className="lg:col-span-6 relative">
