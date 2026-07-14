@@ -41,7 +41,7 @@ const KEYWORDS_EN = [
 
 export const Route = createFileRoute("/_public/{-$locale}/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(homeOpts()),
-  head: ({ params }: any) => {
+  head: ({ params, loaderData }: any) => {
     const locale = (params?.locale === "en" ? "en" : "ar") as "ar" | "en";
     const isEn = locale === "en";
     const titleAr = `تاكسي العمرة | التوصيل من مطار جدة إلى مكة المكرمة ٢٤/٧`;
