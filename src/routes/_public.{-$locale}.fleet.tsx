@@ -17,14 +17,26 @@ const FEATURES = [
 
 export const Route = createFileRoute("/_public/{-$locale}/fleet")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
-  head: () => ({
-    meta: [
-      { title: "Our Fleet — Executive Sedans, SUVs & Vans" },
-      { name: "description", content: "A meticulously maintained fleet of executive sedans, SUVs and vans. Licensed chauffeurs, premium comfort." },
-      { property: "og:title", content: `The Fleet — ${SITE.brand.en}` },
+  head: ({ params }) => {
+    const ar = (params.locale ?? "ar") === "ar";
+    const title = ar
+      ? `الأسطول — سيدان و GMC وهايس وفانات عائلية | ${SITE.brand.ar}`
+      : `Our Fleet — Sedan, GMC SUV, Hiace & Family Vans | ${SITE.brand.en}`;
+    const description = ar
+      ? "أسطول حديث لتوصيل العمرة والمطار: سيدان أعمال، GMC يوكن، تويوتا هايس، وفانات عائلية. مقاعد جلدية، واي‑فاي مجاني، سائقون مرخصون."
+      : "Modern fleet for Umrah and airport transfers: business sedan, GMC Yukon, Toyota Hiace, and family vans. Leather seats, complimentary Wi-Fi, licensed chauffeurs.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
       ],
-    links: [],
-  }),
+      links: [],
+    };
+  },
   component: Fleet,
 });
 

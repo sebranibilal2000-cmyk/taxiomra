@@ -1,7 +1,31 @@
 User-agent: *
 Allow: /
 Disallow: /admin
+Disallow: /admin/
 Disallow: /auth
+Disallow: /reset-password
+Disallow: /_authenticated/
 Disallow: /api/
 
-Sitemap: https://omrataxi-sa.online/sitemap.xml
+# AI crawlers — allow (opt-in for AI Overviews, ChatGPT, Perplexity, Claude, Gemini).
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://taxiomra.lovable.app/sitemap.xml
+Sitemap: https://taxiomra.lovable.app/sitemap-images.xml

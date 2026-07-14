@@ -4,6 +4,7 @@ import { listCmsPages } from "@/lib/public.functions";
 import { ArrowRight, Plane, Building2, Briefcase, MapPin, Car, Sparkles } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/site-info";
+import { breadcrumbJsonLd, serviceJsonLd } from "@/lib/seo";
 
 const opts = () => queryOptions({
   queryKey: ["public", "services"],
@@ -17,14 +18,37 @@ const ICON: Record<string, any> = { service: Sparkles, airport: Plane, city: Map
 
 export const Route = createFileRoute("/_public/{-$locale}/services")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
-  head: () => ({
-    meta: [
-      { title: "Services — Airport, Corporate & Private Chauffeur" },
-      { name: "description", content: "Full range of chauffeur services: airport transfers, corporate contracts, hotel pickups, events, and private hourly hire." },
-      { property: "og:title", content: `Services — ${SITE.brand.en}` },
+  head: ({ params }) => {
+    const ar = (params.locale ?? "ar") === "ar";
+    const title = ar
+      ? `الخدمات — نقل المطار والعمرة والسائق الخاص | ${SITE.brand.ar}`
+      : `Services — Airport Transfers, Umrah & Private Chauffeur | ${SITE.brand.en}`;
+    const description = ar
+      ? "خدمات نقل احترافية: توصيل من مطار جدة إلى مكة والمدينة، باقات العمرة بسائق، عقود الشركات، والسائق بالساعة. أسعار ثابتة وسيارات حديثة."
+      : "Professional transfer services: Jeddah Airport to Makkah and Madinah, Umrah packages with driver, corporate contracts, and hourly hire. Fixed fares, modern fleet.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
       ],
-    links: [],
-  }),
+      links: [],
+      scripts: [
+        { type: "application/ld+json", children: JSON.stringify(serviceJsonLd({
+          name: ar ? "خدمات النقل" : "Chauffeur & Airport Transfer Services",
+          description,
+          url: `${SITE.url}/${ar ? "ar" : "en"}/services`,
+        })) },
+        { type: "application/ld+json", children: JSON.stringify(breadcrumbJsonLd([
+          { name: ar ? "الرئيسية" : "Home", url: `${SITE.url}/${ar ? "ar" : "en"}` },
+          { name: ar ? "الخدمات" : "Services", url: `${SITE.url}/${ar ? "ar" : "en"}/services` },
+        ])) },
+      ],
+    };
+  },
   component: Services,
 });
 

@@ -6,29 +6,42 @@ import { SITE, waLink, telLink } from "@/lib/site-info";
 import { serviceJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/_public/{-$locale}/airport-transfers")({
-  head: () => ({
-    meta: [
-      { title: "Airport Transfers — On-Time Chauffeur Service" },
-      { name: "description", content: "Meet-and-greet airport transfers with flight tracking, fixed fares, and a chauffeur waiting at arrivals — 24/7." },
-      { property: "og:title", content: "Airport Transfers" },
-      { property: "og:description", content: "Meet-and-greet chauffeur transfers with flight tracking and fixed fares." },
-      { property: "og:type", content: "website" },
-      { name: "keywords", content: "airport transfer, airport taxi, chauffeur, meet and greet, Riyadh airport" },
-    ],
-    links: [],
-    scripts: [
-      { type: "application/ld+json", children: JSON.stringify(serviceJsonLd({
-        name: "Airport Transfers",
-        description: "Meet-and-greet chauffeur transfers with flight tracking, fixed fares and 60-minute complimentary wait time.",
-        url: "/airport-transfers",
-      })) },
-      { type: "application/ld+json", children: JSON.stringify(breadcrumbJsonLd([
-        { name: "Home", url: "/" },
-        { name: "Services", url: "/services" },
-        { name: "Airport Transfers", url: "/airport-transfers" },
-      ])) },
-    ],
-  }),
+  head: ({ params }) => {
+    const ar = (params.locale ?? "ar") === "ar";
+    const title = ar
+      ? `توصيل مطار جدة — تاكسي إلى مكة والمدينة مع استقبال في الصالة | ${SITE.brand.ar}`
+      : `Jeddah Airport Transfers — Taxi to Makkah & Madinah with Meet & Greet | ${SITE.brand.en}`;
+    const description = ar
+      ? "استقبال شخصي في صالة الوصول بمطار الملك عبدالعزيز، متابعة الرحلة، أسعار ثابتة، وانتظار مجاني حتى ٦٠ دقيقة. متاح ٢٤ ساعة."
+      : "Meet-and-greet at Jeddah King Abdulaziz Airport arrivals hall, live flight tracking, fixed fares, and up to 60 minutes of complimentary wait. Available 24/7.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        { name: "keywords", content: ar
+          ? "تاكسي مطار جدة, توصيل من مطار جدة إلى مكة, تاكسي العمرة, نقل المطار, سائق خاص جدة"
+          : "Jeddah airport taxi, Jeddah to Makkah transfer, Umrah taxi, airport chauffeur, KAIA airport transfer" },
+      ],
+      links: [],
+      scripts: [
+        { type: "application/ld+json", children: JSON.stringify(serviceJsonLd({
+          name: ar ? "توصيل من مطار جدة إلى مكة" : "Jeddah Airport to Makkah Transfer",
+          description,
+          url: `${SITE.url}/${ar ? "ar" : "en"}/airport-transfers`,
+        })) },
+        { type: "application/ld+json", children: JSON.stringify(breadcrumbJsonLd([
+          { name: ar ? "الرئيسية" : "Home", url: `${SITE.url}/${ar ? "ar" : "en"}` },
+          { name: ar ? "الخدمات" : "Services", url: `${SITE.url}/${ar ? "ar" : "en"}/services` },
+          { name: ar ? "نقل المطار" : "Airport Transfers", url: `${SITE.url}/${ar ? "ar" : "en"}/airport-transfers` },
+        ])) },
+      ],
+    };
+  },
   component: AirportTransfers,
 });
 

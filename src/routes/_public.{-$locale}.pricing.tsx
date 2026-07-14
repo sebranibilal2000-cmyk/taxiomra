@@ -6,15 +6,26 @@ import { useI18n } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 
 export const Route = createFileRoute("/_public/{-$locale}/pricing")({
-  head: () => ({
-    meta: [
-      { title: "Taxi Pricing — Fixed Fares & Transparent Rates" },
-      { name: "description", content: "Transparent taxi pricing: fixed airport fares, per-km city rates, and corporate contracts. No hidden fees." },
-      { property: "og:title", content: `Pricing — ${SITE.brand.en}` },
-      { property: "og:description", content: "Fixed airport fares, city rates, corporate contracts. No hidden fees." },
+  head: ({ params }) => {
+    const ar = (params.locale ?? "ar") === "ar";
+    const title = ar
+      ? `الأسعار — تعرفة ثابتة من مطار جدة إلى مكة والمدينة | ${SITE.brand.ar}`
+      : `Pricing — Fixed Fares from Jeddah Airport to Makkah & Madinah | ${SITE.brand.en}`;
+    const description = ar
+      ? "أسعار شفافة: تعرفة ثابتة لتوصيل المطار، سعر لكل كيلومتر داخل المدن، وعقود شهرية للشركات. بدون رسوم مخفية."
+      : "Transparent taxi pricing: fixed airport fares, per-km city rates, and monthly corporate contracts. No hidden fees.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
       ],
-    links: [],
-  }),
+      links: [],
+    };
+  },
   component: Pricing,
 });
 

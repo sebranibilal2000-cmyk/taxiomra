@@ -9,21 +9,38 @@ const opts = () => queryOptions({ queryKey: ["public", "faqs"], queryFn: () => l
 
 export const Route = createFileRoute("/_public/{-$locale}/faq")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: "FAQ — Booking, Pricing & Chauffeur Questions" },
-      { name: "description", content: "Answers to common questions about booking, pricing, wait time, and payment." },
-      { property: "og:title", content: `FAQ — ${SITE.brand.en}` },
+  head: ({ params, loaderData }) => {
+    const ar = (params.locale ?? "ar") === "ar";
+    const title = ar
+      ? `الأسئلة الشائعة — الحجز والأسعار وخدمة العمرة | ${SITE.brand.ar}`
+      : `FAQ — Booking, Prices & Umrah Chauffeur Service | ${SITE.brand.en}`;
+    const description = ar
+      ? "إجابات على أكثر الأسئلة تكراراً حول الحجز، الأسعار الثابتة، مدة الانتظار، طرق الدفع، وخدمة التوصيل من مطار جدة إلى مكة."
+      : "Answers to the most common questions about booking, fixed fares, waiting time, payment methods, and Jeddah Airport to Makkah transfers.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
       ],
-    links: [],
-    scripts: loaderData ? [{
-      type: "application/ld+json",
-      children: JSON.stringify({
-        "@context": "https://schema.org", "@type": "FAQPage",
-        mainEntity: loaderData.map((f) => ({ "@type": "Question", name: f.question_en, acceptedAnswer: { "@type": "Answer", text: f.answer_en } })),
-      }),
-    }] : undefined,
-  }),
+      links: [],
+      scripts: loaderData ? [{
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org", "@type": "FAQPage",
+          inLanguage: ar ? "ar" : "en",
+          mainEntity: loaderData.map((f) => ({
+            "@type": "Question",
+            name: ar ? f.question_ar : f.question_en,
+            acceptedAnswer: { "@type": "Answer", text: ar ? f.answer_ar : f.answer_en },
+          })),
+        }),
+      }] : undefined,
+    };
+  },
   component: FAQ,
 });
 
