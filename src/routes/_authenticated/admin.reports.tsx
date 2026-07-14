@@ -236,6 +236,9 @@ function Reports() {
     ? { "7d": "آخر 7 أيام", "30d": "آخر 30 يوم", "90d": "آخر 90 يوم", mtd: "منذ بداية الشهر", ytd: "منذ بداية السنة", "365d": "آخر 365 يوم" }
     : { "7d": "Last 7 days", "30d": "Last 30 days", "90d": "Last 90 days", mtd: "Month to date", ytd: "Year to date", "365d": "Last 365 days" };
 
+  const reportLabel = (r: ReportDef) => ar ? r.label_ar : r.label;
+  const colLabel = (c: Col) => ar && c.label_ar ? c.label_ar : c.label;
+
   return (
     <div>
       <PageHeader
@@ -249,7 +252,10 @@ function Reports() {
                 {(["7d","30d","90d","mtd","ytd","365d"] as const).map((k) => <SelectItem key={k} value={k}>{RANGE_LABEL[k]}</SelectItem>)}
               </SelectContent>
             </Select>
-            <ExportMenu module="reports" filename={`report-${selected}-${rangeKey}`} title={def.label} rows={flatRows} columns={flatCols} />
+            <ExportMenu module="reports" filename={`report-${selected}-${rangeKey}`} title={reportLabel(def)} rows={flatRows} columns={flatCols.map((c) => {
+              const src = def.columns.find((x) => x.key.replaceAll(".", "_") === c.key);
+              return { key: c.key, label: ar && src?.label_ar ? src.label_ar : c.label };
+            })} />
           </div>
         }
       />
@@ -266,7 +272,7 @@ function Reports() {
           {REPORTS.filter((r) => r.category === category).map((r) => (
             <button key={r.key} onClick={() => setSelected(r.key)}
               className={`px-3 py-1.5 rounded-full text-xs border transition ${selected === r.key ? "bg-primary text-primary-foreground border-primary" : "border-border hover:border-gold"}`}>
-              {r.label}
+              {reportLabel(r)}
             </button>
           ))}
         </div>
@@ -276,15 +282,16 @@ function Reports() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-4">
           <div>
-            <CardTitle>{def.label}</CardTitle>
+            <CardTitle>{reportLabel(def)}</CardTitle>
             <div className="text-xs text-muted-foreground mt-1">{filtered.length} {ar ? "سجل" : "rows"} · {ar ? (CAT_LABEL_AR[def.category] ?? def.category) : def.category}</div>
           </div>
           <Input placeholder={ar ? "بحث…" : "Search…"} value={q} onChange={(e) => setQ(e.target.value)} className="max-w-sm" />
         </CardHeader>
         <CardContent className="overflow-x-auto">
+          {query.error && <div className="text-sm text-destructive mb-3">{(query.error as Error).message}</div>}
           <Table>
             <TableHeader>
-              <TableRow>{def.columns.map((c) => <TableHead key={c.key}>{c.label}</TableHead>)}</TableRow>
+              <TableRow>{def.columns.map((c) => <TableHead key={c.key}>{colLabel(c)}</TableHead>)}</TableRow>
             </TableHeader>
             <TableBody>
               {filtered.slice(0, 500).map((r: any, i: number) => (
@@ -294,12 +301,12 @@ function Reports() {
                     return <TableCell key={c.key} className="max-w-[220px] truncate">
                       {typeof v === "boolean" ? <Badge variant="outline">{v ? (ar ? "نعم" : "yes") : (ar ? "لا" : "no")}</Badge>
                         : typeof v === "number" && ["amount","total","fare","earnings","spent","paid","budget","credit","balance"].some((k) => c.key.toLowerCase().includes(k)) ? <span className="font-mono">{money(locale, v)}</span>
-                        : v instanceof Date ? v.toLocaleString() : (v == null ? "—" : String(v))}
+                        : v instanceof Date ? v.toLocaleString(ar ? "ar" : "en") : (v == null ? "—" : String(v))}
                     </TableCell>;
                   })}
                 </TableRow>
               ))}
-              {!filtered.length && <TableRow><TableCell colSpan={def.columns.length} className="text-center text-muted-foreground py-8">{query.isLoading ? (ar ? "جارٍ التحميل…" : "Loading…") : (ar ? "لا توجد بيانات" : "No data")}</TableCell></TableRow>}
+              {!filtered.length && <TableRow><TableCell colSpan={def.columns.length} className="text-center text-muted-foreground py-8">{query.isLoading ? (ar ? "جارٍ التحميل…" : "Loading…") : (ar ? "لا توجد بيانات في هذه الفترة" : "No data in this range")}</TableCell></TableRow>}
             </TableBody>
           </Table>
           {filtered.length > 500 && <div className="text-center text-xs text-muted-foreground py-3">{ar ? `يعرض أول 500 من ${filtered.length}. صدّر لكامل البيانات.` : `Showing first 500 of ${filtered.length}. Export for full dataset.`}</div>}
