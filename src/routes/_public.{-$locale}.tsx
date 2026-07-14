@@ -91,6 +91,7 @@ export const Route = createFileRoute("/_public/{-$locale}")({
 function PublicLayout() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <AnnouncementBar />
       <PublicHeader />
       <main className="flex-1">
         <Outlet />
