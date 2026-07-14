@@ -16,11 +16,15 @@ export const Route = createFileRoute("/_public/{-$locale}/airports/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
   head: ({ params }) => {
     const locale = params.locale ?? "ar";
+    const isAr = locale === "ar";
     const path = `/${locale}/airports`;
     const url = absoluteUrl(path);
-    const title = brandTitle("Airport transfers", locale === "ar" ? "ar" : "en");
-    const description =
-      "Meet-and-greet chauffeur transfers from King Abdulaziz (Jeddah), Prince Mohammad Bin Abdulaziz (Madinah), Taif and Riyadh airports.";
+    const title = isAr
+      ? `توصيل المطارات — مطار جدة والمدينة والطائف والرياض | ${'تاكسي العمرة'}`
+      : brandTitle("Airport transfers — Jeddah, Madinah, Taif, Riyadh", "en");
+    const description = isAr
+      ? "خدمة توصيل من مطار الملك عبدالعزيز بجدة ومطار الأمير محمد بن عبدالعزيز بالمدينة ومطاري الطائف والرياض مع استقبال في الصالة وأسعار ثابتة."
+      : "Meet-and-greet chauffeur transfers from King Abdulaziz (Jeddah), Prince Mohammad Bin Abdulaziz (Madinah), Taif and Riyadh airports.";
     return {
       meta: [
         { title },
