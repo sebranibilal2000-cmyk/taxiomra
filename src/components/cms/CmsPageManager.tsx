@@ -68,14 +68,29 @@ export function CmsPageManager({ pageType, title, description, publicPathPrefix,
   const paged = filtered.slice(page * pageSize, page * pageSize + pageSize);
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
 
+  const slugify = (s: string) =>
+    (s || "")
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\u0600-\u06FF\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "")
+      .slice(0, 120);
+
   const save = async (fd: FormData) => {
     const kw = String(fd.get("keywords") || "").split(",").map((s) => s.trim()).filter(Boolean);
     const gallery = String(fd.get("gallery") || "").split("\n").map((s) => s.trim()).filter(Boolean);
+    let slug = String(fd.get("slug") || "").trim();
+    const title_en = String(fd.get("title_en") || "").trim();
+    const title_ar = String(fd.get("title_ar") || "").trim();
+    if (!slug) slug = slugify(title_en || title_ar);
+    if (!slug) { toast.error(locale === "ar" ? "الرابط الدائم مطلوب" : "Slug is required"); return; }
+    slug = slugify(slug);
     const payload: any = {
-      slug: fd.get("slug"),
+      slug,
       page_type: pageType,
-      title_en: fd.get("title_en"),
-      title_ar: fd.get("title_ar"),
+      title_en, title_ar,
       subtitle_en: fd.get("subtitle_en") || null,
       subtitle_ar: fd.get("subtitle_ar") || null,
       body_en: fd.get("body_en") || null,
