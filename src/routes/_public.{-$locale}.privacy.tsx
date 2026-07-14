@@ -3,15 +3,23 @@ import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/site-info";
 
 export const Route = createFileRoute("/_public/{-$locale}/privacy")({
-  head: () => ({
-    meta: [
-      { title: `Privacy Policy — ${SITE.brand.en}` },
-      { name: "description", content: "How we collect, use, and protect your personal data." },
-      { property: "og:title", content: "Privacy Policy" },
-      { name: "robots", content: "index,follow" },
-    ],
-    links: [],
-  }),
+  head: ({ params }) => {
+    const isAr = (params?.locale ?? "ar") === "ar";
+    const title = isAr ? `سياسة الخصوصية — ${SITE.brand.ar}` : `Privacy Policy — ${SITE.brand.en}`;
+    const description = isAr
+      ? "كيف نجمع بياناتك الشخصية ونستخدمها ونحميها في تاكسي العمرة."
+      : "How we collect, use, and protect your personal data.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { name: "robots", content: "index,follow" },
+      ],
+      links: [],
+    };
+  },
   component: Privacy,
 });
 
