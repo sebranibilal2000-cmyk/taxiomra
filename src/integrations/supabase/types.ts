@@ -888,37 +888,82 @@ export type Database = {
       }
       coupons: {
         Row: {
+          bg_color: string | null
           code: string
           created_at: string
+          cta_text_ar: string | null
+          cta_text_en: string | null
+          cta_url: string | null
+          description_ar: string | null
+          description_en: string | null
           discount_type: string
           discount_value: number
+          dismissible: boolean
+          icon: string | null
           id: string
           is_active: boolean
+          is_announcement: boolean
           max_uses: number | null
+          priority: number
+          show_once: boolean
+          target_pages: string[]
+          text_color: string | null
+          title_ar: string | null
+          title_en: string | null
           used_count: number
           valid_from: string | null
           valid_until: string | null
         }
         Insert: {
+          bg_color?: string | null
           code: string
           created_at?: string
+          cta_text_ar?: string | null
+          cta_text_en?: string | null
+          cta_url?: string | null
+          description_ar?: string | null
+          description_en?: string | null
           discount_type: string
           discount_value: number
+          dismissible?: boolean
+          icon?: string | null
           id?: string
           is_active?: boolean
+          is_announcement?: boolean
           max_uses?: number | null
+          priority?: number
+          show_once?: boolean
+          target_pages?: string[]
+          text_color?: string | null
+          title_ar?: string | null
+          title_en?: string | null
           used_count?: number
           valid_from?: string | null
           valid_until?: string | null
         }
         Update: {
+          bg_color?: string | null
           code?: string
           created_at?: string
+          cta_text_ar?: string | null
+          cta_text_en?: string | null
+          cta_url?: string | null
+          description_ar?: string | null
+          description_en?: string | null
           discount_type?: string
           discount_value?: number
+          dismissible?: boolean
+          icon?: string | null
           id?: string
           is_active?: boolean
+          is_announcement?: boolean
           max_uses?: number | null
+          priority?: number
+          show_once?: boolean
+          target_pages?: string[]
+          text_color?: string | null
+          title_ar?: string | null
+          title_en?: string | null
           used_count?: number
           valid_from?: string | null
           valid_until?: string | null
