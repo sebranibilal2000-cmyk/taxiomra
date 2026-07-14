@@ -3,17 +3,24 @@ import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/site-info";
 
 export const Route = createFileRoute("/_public/{-$locale}/refund")({
-  head: () => ({
-    meta: [
-      { title: `Refund Policy — ${SITE.brand.en}` },
-      { name: "description", content: "Our refund policy for taxi bookings, cancellations, and disputed charges." },
-      { property: "og:title", content: "Refund Policy" },
-      { property: "og:description", content: "Refund policy for taxi and chauffeur bookings." },
-      { property: "og:type", content: "website" },
-      { name: "robots", content: "index,follow" },
-    ],
-    links: [],
-  }),
+  head: ({ params }) => {
+    const isAr = (params?.locale ?? "ar") === "ar";
+    const title = isAr ? `سياسة الاسترداد — ${SITE.brand.ar}` : `Refund Policy — ${SITE.brand.en}`;
+    const description = isAr
+      ? "سياسة الاسترداد لحجوزات تاكسي العمرة، الإلغاءات، والرسوم المتنازع عليها."
+      : "Our refund policy for taxi bookings, cancellations, and disputed charges.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
+        { name: "robots", content: "index,follow" },
+      ],
+      links: [],
+    };
+  },
   component: RefundPage,
 });
 
