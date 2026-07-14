@@ -88,6 +88,13 @@ export const Route = createFileRoute("/_public/{-$locale}/")({
       }),
     ];
 
+    const faqs = (loaderData?.faqs ?? []).slice(0, 12).map((f: any) => ({
+      q: isEn ? (f.question_en || f.question_ar) : (f.question_ar || f.question_en),
+      a: isEn ? (f.answer_en || f.answer_ar) : (f.answer_ar || f.answer_en),
+    })).filter((x: any) => x.q && x.a);
+    if (faqs.length) graph.push(faqPageJsonLd(faqs));
+
+
     return {
       meta: [
         { title },
