@@ -28,21 +28,38 @@ export const Route = createFileRoute("/sitemap-images.xml")({
             t === "city" ? "cities" :
             t === "airport" ? "airports" :
             t === "route_page" ? "routes" : "p";
+          const seen = new Set<string>();
+          const pushImg = (arr: { url: string; caption?: string }[], url: string, caption?: string) => {
+            const k = url;
+            if (!k || seen.has(k)) return;
+            seen.add(k);
+            arr.push({ url, caption });
+          };
           for (const p of pages ?? []) {
             const images: { url: string; caption?: string }[] = [];
-            if ((p as any).featured_image_url) images.push({ url: (p as any).featured_image_url, caption: p.title_en });
-            if ((p as any).og_image_url) images.push({ url: (p as any).og_image_url, caption: p.title_en });
+            seen.clear();
+            if ((p as any).featured_image_url) pushImg(images, (p as any).featured_image_url, p.title_en);
+            if ((p as any).og_image_url) pushImg(images, (p as any).og_image_url, p.title_en);
             const gallery = (p as any).gallery;
             if (Array.isArray(gallery)) {
               for (const g of gallery.slice(0, 20)) {
-                if (typeof g === "string") images.push({ url: g });
-                else if (g && typeof g === "object" && "url" in g) images.push({ url: String((g as any).url), caption: (g as any).caption });
+                if (typeof g === "string") pushImg(images, g);
+                else if (g && typeof g === "object" && "url" in g) pushImg(images, String((g as any).url), (g as any).caption);
               }
             }
-            if (images.length) entries.push({ loc: `/${prefixOf((p as any).page_type)}/${p.slug}`, images });
+            if (images.length) {
+              const path = `/${prefixOf((p as any).page_type)}/${p.slug}`;
+              // Emit both locale-prefixed URLs so crawlers associate images with real pages.
+              entries.push({ loc: `/ar${path}`, images });
+              entries.push({ loc: `/en${path}`, images });
+            }
           }
           for (const p of posts ?? []) {
-            if ((p as any).og_image_url) entries.push({ loc: `/blog/${p.slug}`, images: [{ url: (p as any).og_image_url, caption: p.title_en }] });
+            if ((p as any).og_image_url) {
+              const imgs = [{ url: (p as any).og_image_url, caption: p.title_en }];
+              entries.push({ loc: `/ar/blog/${p.slug}`, images: imgs });
+              entries.push({ loc: `/en/blog/${p.slug}`, images: imgs });
+            }
           }
         } catch {
           /* fall through */

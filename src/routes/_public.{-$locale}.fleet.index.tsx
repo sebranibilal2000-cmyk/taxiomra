@@ -15,7 +15,7 @@ const FEATURES = [
   { ar: "أمتعة كبيرة", en: "Ample luggage space" },
 ];
 
-export const Route = createFileRoute("/_public/{-$locale}/fleet")({
+export const Route = createFileRoute("/_public/{-$locale}/fleet/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(opts()),
   head: ({ params }) => {
     const ar = (params.locale ?? "ar") === "ar";
