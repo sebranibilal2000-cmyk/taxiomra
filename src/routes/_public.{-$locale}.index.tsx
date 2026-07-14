@@ -55,7 +55,7 @@ export const Route = createFileRoute("/_public/{-$locale}/")({
     const keywords = (isEn ? KEYWORDS_EN : KEYWORDS_AR).join(", ");
 
     // Rich JSON-LD stack — canonical/hreflang emitted by parent layout (avoid dupes).
-    const graph = [
+    const graph: any[] = [
       organizationJsonLd(),
       localBusinessJsonLd(),
       {
