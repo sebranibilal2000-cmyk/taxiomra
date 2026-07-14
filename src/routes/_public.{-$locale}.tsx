@@ -3,6 +3,7 @@ import { PublicHeader } from "@/components/PublicHeader";
 import { PublicFooter } from "@/components/PublicFooter";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { CookieConsent } from "@/components/CookieConsent";
+import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { SITE } from "@/lib/site-info";
 import {
   isLocale,
