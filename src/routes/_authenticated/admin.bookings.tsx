@@ -238,7 +238,8 @@ function BookingsPage() {
           </tbody>
         </table>
       </div>
-
+        </TabsContent>
+      </Tabs>
 
       <BookingDetailDialog bookingId={detailId} onOpenChange={(o) => !o && setDetailId(null)} />
     </div>
