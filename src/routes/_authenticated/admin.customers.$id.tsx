@@ -19,6 +19,7 @@ import { CustomerTierBadge } from "@/components/CustomerTierBadge";
 import { ActivityTimeline } from "@/components/ActivityTimeline";
 import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
+import { UnifiedBookingDialog } from "@/components/admin/UnifiedBookingDialog";
 
 export const Route = createFileRoute("/_authenticated/admin/customers/$id")({ component: CustomerProfilePage });
 
