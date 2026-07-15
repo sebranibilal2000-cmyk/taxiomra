@@ -22,6 +22,7 @@ import { WhatsAppSendMenu } from "@/components/WhatsAppSendMenu";
 import { downloadCsv } from "@/lib/csv";
 import { duplicateBooking, bulkUpdateBookings, cancelBooking, addBookingNote, scheduleBookingReminder } from "@/lib/booking-ops.functions";
 import { CustomersListPanel } from "@/components/admin/CustomersListPanel";
+import { UnifiedBookingDialog } from "@/components/admin/UnifiedBookingDialog";
 import { CalendarCheck, Users } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/bookings")({ component: BookingsPage });
