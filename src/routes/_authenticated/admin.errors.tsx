@@ -98,7 +98,7 @@ function ErrorsPage() {
     <div>
       <PageHeader
         title={ar ? "سجلات الأخطاء" : "Error Logs"}
-        description={ar ? "أخطاء التنفيذ المسجلة من العميل والخادم." : "Captured runtime errors from client and server."}
+        description={ar ? "أخطاء التنفيذ الفعلية المُلتقطة تلقائيًا من متصفحات الزوار والخادم (فشل الشبكة، استثناءات JS، أخطاء API). تساعدك على اكتشاف المشاكل قبل الشكاوى. ليست بيانات تجريبية." : "Real runtime errors auto-captured from visitor browsers and the server (network failures, JS exceptions, API errors). Helps you catch issues before customer complaints. Not demo data."}
         actions={
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={resolveAll}>{ar ? "حل الكل" : "Resolve all"}</Button>
