@@ -142,33 +142,6 @@ function Fleet() {
         actions={<Button onClick={openNew}><Plus className="h-4 w-4 me-1" />{ar ? "مركبة جديدة" : "New Vehicle"}</Button>}
       />
 
-      <Tabs defaultValue="vehicles" className="mb-4">
-        <TabsList>
-          <TabsTrigger value="vehicles">{ar ? "المركبات" : "Vehicles"}</TabsTrigger>
-          <TabsTrigger value="categories">{ar ? "الفئات" : "Categories"}</TabsTrigger>
-        </TabsList>
-        <TabsContent value="categories" className="mt-4">
-          <VehicleCategoriesPanel onAddVehicle={openNew} />
-        </TabsContent>
-        <TabsContent value="vehicles" className="mt-4 space-y-0">
-          <FleetVehiclesInner
-            filtered={filtered}
-            columns={columns}
-            loading={q.isLoading}
-            search={search} setSearch={setSearch}
-            statusFilter={statusFilter} setStatusFilter={setStatusFilter}
-            expiryFilter={expiryFilter} setExpiryFilter={setExpiryFilter}
-            alerts={alerts}
-            navigate={navigate}
-            qc={qc}
-            openEdit={openEdit}
-            del={del}
-            ar={ar}
-          />
-        </TabsContent>
-      </Tabs>
-
-
       <Dialog open={open} onOpenChange={(o) => { setOpen(o); if (!o) { setEditing(null); setForm(emptyForm); } }}>
         <DialogContent>
           <DialogHeader><DialogTitle>{editing ? (ar ? "تعديل مركبة" : "Edit vehicle") : (ar ? "مركبة جديدة" : "New vehicle")}</DialogTitle></DialogHeader>
@@ -194,46 +167,59 @@ function Fleet() {
         </DialogContent>
       </Dialog>
 
-      <div className="flex flex-wrap gap-2 mb-4">
-        <div className="relative">
-          <Search className="absolute start-3 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input placeholder={ar ? "بحث عن لوحة، رقم هيكل، شركة…" : "Search plate, VIN, make…"} value={search} onChange={(e) => setSearch(e.target.value)} className="ps-9 w-64" />
-        </div>
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
-          <SelectContent><SelectItem value="all">{ar ? "كل الحالات" : "All statuses"}</SelectItem>{VEHICLE_STATUSES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-        </Select>
-        <Select value={expiryFilter} onValueChange={setExpiryFilter}>
-          <SelectTrigger className="w-52"><SelectValue /></SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">{ar ? "الكل" : "All"}</SelectItem>
-            <SelectItem value="soon">{ar ? "مستندات قريبة الانتهاء (30 يوم)" : "Docs expiring 30d"}</SelectItem>
-            <SelectItem value="expired">{ar ? "مستندات منتهية" : "Docs expired"}</SelectItem>
-            <SelectItem value="maint">{ar ? "صيانة مستحقة" : "Maintenance due"}</SelectItem>
-          </SelectContent>
-        </Select>
-        {alerts > 0 && <div className="ms-auto inline-flex items-center gap-2 rounded-md bg-warning/15 text-warning-foreground px-3 py-2 text-xs"><AlertTriangle className="h-3.5 w-3.5" />{ar ? `${alerts} تنبيه` : `${alerts} alerts`}</div>}
-      </div>
+      <Tabs defaultValue="vehicles">
+        <TabsList>
+          <TabsTrigger value="vehicles">{ar ? "المركبات" : "Vehicles"}</TabsTrigger>
+          <TabsTrigger value="categories">{ar ? "الفئات" : "Categories"}</TabsTrigger>
+        </TabsList>
 
-      <DataTable
-        data={filtered}
-        columns={columns}
-        loading={q.isLoading}
-        onRowClick={(r) => navigate({ to: "/admin/fleet/$id" as any, params: { id: r.id } as any })}
-        actions={(r) => (
-          <div className="flex items-center gap-1">
-            <Select value={r.status} onValueChange={async (v) => {
-              const { error } = await supabase.from("vehicles").update({ status: v as any }).eq("id", r.id);
-              if (error) toast.error(error.message); else qc.invalidateQueries({ queryKey: ["vehicles"] });
-            }}>
-              <SelectTrigger className="w-32 h-8" onClick={(e) => e.stopPropagation()}><SelectValue /></SelectTrigger>
-              <SelectContent>{VEHICLE_STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+        <TabsContent value="categories" className="mt-4">
+          <VehicleCategoriesPanel onAddVehicle={openNew} />
+        </TabsContent>
+
+        <TabsContent value="vehicles" className="mt-4">
+          <div className="flex flex-wrap gap-2 mb-4">
+            <div className="relative">
+              <Search className="absolute start-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input placeholder={ar ? "بحث عن لوحة، رقم هيكل، شركة…" : "Search plate, VIN, make…"} value={search} onChange={(e) => setSearch(e.target.value)} className="ps-9 w-64" />
+            </div>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
+              <SelectContent><SelectItem value="all">{ar ? "كل الحالات" : "All statuses"}</SelectItem>{VEHICLE_STATUSES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
             </Select>
-            <Button size="icon" variant="ghost" onClick={(e) => { e.stopPropagation(); openEdit(r); }}><Edit className="h-4 w-4" /></Button>
-            <Button size="icon" variant="ghost" onClick={(e) => { e.stopPropagation(); del(r.id); }}><Trash2 className="h-4 w-4" /></Button>
+            <Select value={expiryFilter} onValueChange={setExpiryFilter}>
+              <SelectTrigger className="w-52"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{ar ? "الكل" : "All"}</SelectItem>
+                <SelectItem value="soon">{ar ? "مستندات قريبة الانتهاء (30 يوم)" : "Docs expiring 30d"}</SelectItem>
+                <SelectItem value="expired">{ar ? "مستندات منتهية" : "Docs expired"}</SelectItem>
+                <SelectItem value="maint">{ar ? "صيانة مستحقة" : "Maintenance due"}</SelectItem>
+              </SelectContent>
+            </Select>
+            {alerts > 0 && <div className="ms-auto inline-flex items-center gap-2 rounded-md bg-warning/15 text-warning-foreground px-3 py-2 text-xs"><AlertTriangle className="h-3.5 w-3.5" />{ar ? `${alerts} تنبيه` : `${alerts} alerts`}</div>}
           </div>
-        )}
-      />
+
+          <DataTable
+            data={filtered}
+            columns={columns}
+            loading={q.isLoading}
+            onRowClick={(r) => navigate({ to: "/admin/fleet/$id" as any, params: { id: r.id } as any })}
+            actions={(r) => (
+              <div className="flex items-center gap-1">
+                <Select value={r.status} onValueChange={async (v) => {
+                  const { error } = await supabase.from("vehicles").update({ status: v as any }).eq("id", r.id);
+                  if (error) toast.error(error.message); else qc.invalidateQueries({ queryKey: ["vehicles"] });
+                }}>
+                  <SelectTrigger className="w-32 h-8" onClick={(e) => e.stopPropagation()}><SelectValue /></SelectTrigger>
+                  <SelectContent>{VEHICLE_STATUSES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+                </Select>
+                <Button size="icon" variant="ghost" onClick={(e) => { e.stopPropagation(); openEdit(r); }}><Edit className="h-4 w-4" /></Button>
+                <Button size="icon" variant="ghost" onClick={(e) => { e.stopPropagation(); del(r.id); }}><Trash2 className="h-4 w-4" /></Button>
+              </div>
+            )}
+          />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
