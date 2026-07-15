@@ -56,7 +56,7 @@ function HtmlSitemap() {
     { p: "/services", label: isAr ? "الخدمات" : "Services" },
     { p: "/fleet", label: isAr ? "الأسطول" : "Fleet" },
     { p: "/airport-transfers", label: isAr ? "نقل المطار" : "Airport Transfers" },
-    { p: "/pricing", label: isAr ? "الأسعار" : "Pricing" },
+    
     { p: "/blog", label: isAr ? "المدونة" : "Blog" },
     { p: "/faq", label: "FAQ" },
     { p: "/contact", label: isAr ? "اتصل بنا" : "Contact" },
