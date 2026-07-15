@@ -1,7 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { PageHeader } from "@/components/PageHeader";
 import { DataTable, type Column } from "@/components/DataTable";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -10,9 +9,7 @@ import { Plus } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/admin/categories")({ component: Categories });
-
-function Categories() {
+export function VehicleCategoriesPanel({ onAddVehicle }: { onAddVehicle?: () => void }) {
   const { t, locale } = useI18n();
   const ar = locale === "ar";
   const qc = useQueryClient();
@@ -36,18 +33,17 @@ function Categories() {
     },
     { key: "code", header: t("code"), render: (r) => <span className="font-medium uppercase">{r.code}</span> },
     { key: "seats", header: t("seats"), render: (r) => <Input type="number" defaultValue={r.seats} className="w-20 h-8" onBlur={(e) => update(r.id, { seats: Number(e.target.value) })} /> },
-    { key: "base_fare", header: ar ? "الأجرة الأساسية" : "Base", render: (r) => <Input type="number" step="0.01" defaultValue={r.base_fare} className="w-24 h-8" onBlur={(e) => update(r.id, { base_fare: Number(e.target.value) })} /> },
-    { key: "price_per_km", header: ar ? "لكل كم" : "Per km", render: (r) => <Input type="number" step="0.01" defaultValue={r.price_per_km} className="w-24 h-8" onBlur={(e) => update(r.id, { price_per_km: Number(e.target.value) })} /> },
-    { key: "price_per_min", header: ar ? "لكل دقيقة" : "Per min", render: (r) => <Input type="number" step="0.01" defaultValue={r.price_per_min} className="w-24 h-8" onBlur={(e) => update(r.id, { price_per_min: Number(e.target.value) })} /> },
     { key: "is_active", header: t("status"), render: (r) => <Switch checked={r.is_active} onCheckedChange={(v) => update(r.id, { is_active: v })} /> },
     { key: "a", header: "", render: () => (
-      <Button asChild size="sm" variant="outline"><Link to={"/admin/fleet" as any}><Plus className="h-3.5 w-3.5 me-1" />{ar ? "إضافة مركبة" : "Add vehicle"}</Link></Button>
+      <Button size="sm" variant="outline" onClick={onAddVehicle}><Plus className="h-3.5 w-3.5 me-1" />{ar ? "إضافة مركبة" : "Add vehicle"}</Button>
     ) },
   ];
 
   return (
     <div>
-      <PageHeader title={t("categories")} description={ar ? "اقتصادية · قياسية · أعمال · دفع رباعي · فان · بريميوم" : "Economy · Standard · Business · SUV · Van · Premium"} />
+      <div className="text-sm text-muted-foreground mb-3">
+        {ar ? "فئات المركبات: اقتصادية · قياسية · أعمال · دفع رباعي · فان · بريميوم. الأسعار تحدد يدويًا لكل حجز حسب الموسم." : "Vehicle categories. Prices are set manually per booking based on season."}
+      </div>
       <DataTable data={q.data ?? []} columns={cols} loading={q.isLoading} />
     </div>
   );

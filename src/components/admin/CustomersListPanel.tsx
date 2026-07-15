@@ -1,8 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useMemo, useState } from "react";
-import { PageHeader } from "@/components/PageHeader";
 import { DataTable, type Column } from "@/components/DataTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,20 +15,17 @@ import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { CustomerTierBadge } from "@/components/CustomerTierBadge";
-import { BookingsCustomersNav } from "@/components/BookingsCustomersNav";
-
-export const Route = createFileRoute("/_authenticated/admin/customers")({ component: CustomersPage });
 
 const TIERS = ["all", "regular", "vip", "corporate", "blacklisted"] as const;
 const TIER_ICONS: Record<string, any> = { all: User, regular: User, vip: Crown, corporate: Building2, blacklisted: Ban };
 
-function CustomersPage() {
+export function CustomersListPanel() {
   const { t, locale } = useI18n();
   const qc = useQueryClient();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [tier, setTier] = useState<string>("all");
-  const [activity, setActivity] = useState<string>("any"); // any | active | inactive_30 | inactive_60 | inactive_90 | upcoming
+  const [activity, setActivity] = useState<string>("any");
   const [minRevenue, setMinRevenue] = useState<string>("");
 
   const q = useQuery({
@@ -99,30 +95,26 @@ function CustomersPage() {
 
   return (
     <div>
-      <BookingsCustomersNav />
-      <PageHeader
-        title={t("customers")}
-        description={locale === "ar" ? "قاعدة بيانات العملاء الكاملة" : "Enterprise customer CRM"}
-        actions={
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={() => {
-              downloadCsv(`customers-${new Date().toISOString().slice(0,10)}.csv`, filtered.map((r: any) => ({
-                full_name: r.full_name, tier: r.tier, phone: r.phone, alt_phone: r.alt_phone, whatsapp: r.whatsapp, email: r.email,
-                company: r.company, vat_number: r.vat_number, city: r.city, country: r.country,
-                total_trips: r.total_trips, completed_trips: r.completed_trips, cancelled_trips: r.cancelled_trips,
-                total_spent: r.total_spent, avg_booking_value: r.avg_booking_value,
-                first_booking_at: r.first_booking_at, last_booking_at: r.last_booking_at,
-                preferred_language: r.preferred_language, tags: (r.tags ?? []).join("|"), notes: r.notes,
-              })));
-              toast.success(locale === "ar" ? `${filtered.length} صف` : `${filtered.length} rows`);
-            }}><Download className="h-4 w-4 me-1" />CSV</Button>
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger asChild><Button><Plus className="h-4 w-4 me-1" />{t("new")}</Button></DialogTrigger>
-              <NewCustomerDialog onDone={() => { setOpen(false); qc.invalidateQueries({ queryKey: ["customers"] }); }} />
-            </Dialog>
-          </div>
-        }
-      />
+      <div className="flex items-center justify-between mb-4">
+        <div className="text-sm text-muted-foreground">{locale === "ar" ? "قاعدة بيانات العملاء الكاملة" : "Enterprise customer CRM"}</div>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm" onClick={() => {
+            downloadCsv(`customers-${new Date().toISOString().slice(0,10)}.csv`, filtered.map((r: any) => ({
+              full_name: r.full_name, tier: r.tier, phone: r.phone, alt_phone: r.alt_phone, whatsapp: r.whatsapp, email: r.email,
+              company: r.company, vat_number: r.vat_number, city: r.city, country: r.country,
+              total_trips: r.total_trips, completed_trips: r.completed_trips, cancelled_trips: r.cancelled_trips,
+              total_spent: r.total_spent, avg_booking_value: r.avg_booking_value,
+              first_booking_at: r.first_booking_at, last_booking_at: r.last_booking_at,
+              preferred_language: r.preferred_language, tags: (r.tags ?? []).join("|"), notes: r.notes,
+            })));
+            toast.success(locale === "ar" ? `${filtered.length} صف` : `${filtered.length} rows`);
+          }}><Download className="h-4 w-4 me-1" />CSV</Button>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild><Button><Plus className="h-4 w-4 me-1" />{t("new")}</Button></DialogTrigger>
+            <NewCustomerDialog onDone={() => { setOpen(false); qc.invalidateQueries({ queryKey: ["customers"] }); }} />
+          </Dialog>
+        </div>
+      </div>
 
       <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_auto_auto_auto] mb-4">
         <div className="relative">
@@ -137,7 +129,6 @@ function CustomersPage() {
               const TIER_LABEL_AR: Record<string, string> = { regular: "عادي", vip: "VIP", corporate: "شركات", blacklisted: "محظور", all: "الكل" };
               const label = v === "all" ? (locale === "ar" ? "كل الفئات" : "All tiers") : (locale === "ar" ? TIER_LABEL_AR[v] : v);
               return <SelectItem key={v} value={v}><span className="inline-flex items-center gap-2"><Icon className="h-3.5 w-3.5" />{label}</span></SelectItem>;
-
             })}
           </SelectContent>
         </Select>
@@ -172,7 +163,6 @@ function CustomersPage() {
           </div>
         )}
       />
-
     </div>
   );
 }
@@ -263,4 +253,3 @@ function NewCustomerDialog({ onDone }: { onDone: () => void }) {
     </DialogContent>
   );
 }
-

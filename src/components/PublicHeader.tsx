@@ -36,7 +36,7 @@ export function PublicHeader() {
     { path: "", label: locale === "ar" ? "الرئيسية" : "Home" },
     { path: "/services", label: locale === "ar" ? "الخدمات" : "Services" },
     { path: "/fleet", label: locale === "ar" ? "الأسطول" : "Fleet" },
-    { path: "/pricing", label: locale === "ar" ? "الأسعار" : "Pricing" },
+    
     { path: "/blog", label: locale === "ar" ? "المدونة" : "Journal" },
     { path: "/about", label: locale === "ar" ? "من نحن" : "About" },
     { path: "/contact", label: locale === "ar" ? "تواصل" : "Contact" },

@@ -51,7 +51,7 @@ function CustomerProfilePage() {
   });
 
   if (q.isLoading) return <div className="p-8 text-sm text-muted-foreground">Loading…</div>;
-  if (!q.data) return <div className="p-8"><Button variant="outline" onClick={() => navigate({ to: "/admin/customers" })}><ArrowLeft className="h-4 w-4 me-2" />Back</Button><div className="mt-4">Customer not found</div></div>;
+  if (!q.data) return <div className="p-8"><Button variant="outline" onClick={() => navigate({ to: "/admin/bookings" })}><ArrowLeft className="h-4 w-4 me-2" />Back</Button><div className="mt-4">Customer not found</div></div>;
 
   const c = q.data;
   const daysSince = c.last_booking_at ? Math.floor((Date.now() - new Date(c.last_booking_at).getTime()) / 86400_000) : null;
@@ -61,7 +61,7 @@ function CustomerProfilePage() {
   return (
     <div>
       <div className="flex items-center gap-2 mb-4">
-        <Link to="/admin/customers"><Button variant="ghost" size="sm"><ArrowLeft className="h-4 w-4 me-1" />Customers</Button></Link>
+        <Link to="/admin/bookings"><Button variant="ghost" size="sm"><ArrowLeft className="h-4 w-4 me-1" />Bookings</Button></Link>
       </div>
 
       <PageHeader

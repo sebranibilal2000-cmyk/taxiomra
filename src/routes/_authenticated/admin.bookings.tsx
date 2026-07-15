@@ -21,7 +21,8 @@ import { ActivityTimeline } from "@/components/ActivityTimeline";
 import { WhatsAppSendMenu } from "@/components/WhatsAppSendMenu";
 import { downloadCsv } from "@/lib/csv";
 import { duplicateBooking, bulkUpdateBookings, cancelBooking, addBookingNote, scheduleBookingReminder } from "@/lib/booking-ops.functions";
-import { BookingsCustomersNav } from "@/components/BookingsCustomersNav";
+import { CustomersListPanel } from "@/components/admin/CustomersListPanel";
+import { CalendarCheck, Users } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/bookings")({ component: BookingsPage });
 
@@ -130,10 +131,9 @@ function BookingsPage() {
 
   return (
     <div>
-      <BookingsCustomersNav />
       <PageHeader
-        title={t("bookings")}
-        description={locale === "ar" ? "إدارة كافة الحجوزات" : "Manage all bookings"}
+        title={ar ? "الحجوزات والعملاء" : "Bookings & Customers"}
+        description={ar ? "إدارة الحجوزات والعملاء في مكان واحد" : "Bookings and customers, unified"}
         actions={
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={exportCsv}><Download className="h-4 w-4 me-1" />CSV</Button>
@@ -145,6 +145,17 @@ function BookingsPage() {
           </div>
         }
       />
+
+      <Tabs defaultValue="bookings" className="mb-4">
+        <TabsList>
+          <TabsTrigger value="bookings"><CalendarCheck className="h-4 w-4 me-2" />{ar ? "الحجوزات" : "Bookings"}</TabsTrigger>
+          <TabsTrigger value="customers"><Users className="h-4 w-4 me-2" />{ar ? "العملاء" : "Customers"}</TabsTrigger>
+        </TabsList>
+        <TabsContent value="customers" className="mt-4">
+          <CustomersListPanel />
+        </TabsContent>
+        <TabsContent value="bookings" className="mt-4">
+
 
       <div className="flex flex-wrap gap-2 mb-4 items-center">
         <div className="relative">
@@ -227,7 +238,8 @@ function BookingsPage() {
           </tbody>
         </table>
       </div>
-
+        </TabsContent>
+      </Tabs>
 
       <BookingDetailDialog bookingId={detailId} onOpenChange={(o) => !o && setDetailId(null)} />
     </div>

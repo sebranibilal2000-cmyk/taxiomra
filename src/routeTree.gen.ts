@@ -26,7 +26,6 @@ import { Route as PublicChar123LocaleChar125RefundPolicyRouteImport } from './ro
 import { Route as PublicChar123LocaleChar125RefundRouteImport } from './routes/_public.{-$locale}.refund'
 import { Route as PublicChar123LocaleChar125PrivacyPolicyRouteImport } from './routes/_public.{-$locale}.privacy-policy'
 import { Route as PublicChar123LocaleChar125PrivacyRouteImport } from './routes/_public.{-$locale}.privacy'
-import { Route as PublicChar123LocaleChar125PricingRouteImport } from './routes/_public.{-$locale}.pricing'
 import { Route as PublicChar123LocaleChar125FaqRouteImport } from './routes/_public.{-$locale}.faq'
 import { Route as PublicChar123LocaleChar125ContactRouteImport } from './routes/_public.{-$locale}.contact'
 import { Route as PublicChar123LocaleChar125CancellationRouteImport } from './routes/_public.{-$locale}.cancellation'
@@ -52,7 +51,6 @@ import { Route as AuthenticatedAdminRemindersRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminRefundsRouteImport } from './routes/_authenticated/admin.refunds'
 import { Route as AuthenticatedAdminRedirectsRouteImport } from './routes/_authenticated/admin.redirects'
 import { Route as AuthenticatedAdminPromotionsRouteImport } from './routes/_authenticated/admin.promotions'
-import { Route as AuthenticatedAdminPricingRouteImport } from './routes/_authenticated/admin.pricing'
 import { Route as AuthenticatedAdminPayrollRouteImport } from './routes/_authenticated/admin.payroll'
 import { Route as AuthenticatedAdminPaymentsRouteImport } from './routes/_authenticated/admin.payments'
 import { Route as AuthenticatedAdminPartnersRouteImport } from './routes/_authenticated/admin.partners'
@@ -76,12 +74,10 @@ import { Route as AuthenticatedAdminErrorsRouteImport } from './routes/_authenti
 import { Route as AuthenticatedAdminDriversRouteImport } from './routes/_authenticated/admin.drivers'
 import { Route as AuthenticatedAdminDispatchRouteImport } from './routes/_authenticated/admin.dispatch'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
-import { Route as AuthenticatedAdminCustomersRouteImport } from './routes/_authenticated/admin.customers'
 import { Route as AuthenticatedAdminCouponsRouteImport } from './routes/_authenticated/admin.coupons'
 import { Route as AuthenticatedAdminCorporateRouteImport } from './routes/_authenticated/admin.corporate'
 import { Route as AuthenticatedAdminContactsRouteImport } from './routes/_authenticated/admin.contacts'
 import { Route as AuthenticatedAdminCitiesRouteImport } from './routes/_authenticated/admin.cities'
-import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin.categories'
 import { Route as AuthenticatedAdminCalendarRouteImport } from './routes/_authenticated/admin.calendar'
 import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin.bookings'
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin.blog'
@@ -203,12 +199,6 @@ const PublicChar123LocaleChar125PrivacyRoute =
   PublicChar123LocaleChar125PrivacyRouteImport.update({
     id: '/privacy',
     path: '/privacy',
-    getParentRoute: () => PublicChar123LocaleChar125Route,
-  } as any)
-const PublicChar123LocaleChar125PricingRoute =
-  PublicChar123LocaleChar125PricingRouteImport.update({
-    id: '/pricing',
-    path: '/pricing',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
 const PublicChar123LocaleChar125FaqRoute =
@@ -356,12 +346,6 @@ const AuthenticatedAdminPromotionsRoute =
     path: '/admin/promotions',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedAdminPricingRoute =
-  AuthenticatedAdminPricingRouteImport.update({
-    id: '/admin/pricing',
-    path: '/admin/pricing',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedAdminPayrollRoute =
   AuthenticatedAdminPayrollRouteImport.update({
     id: '/admin/payroll',
@@ -494,12 +478,6 @@ const AuthenticatedAdminDashboardRoute =
     path: '/admin/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedAdminCustomersRoute =
-  AuthenticatedAdminCustomersRouteImport.update({
-    id: '/admin/customers',
-    path: '/admin/customers',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedAdminCouponsRoute =
   AuthenticatedAdminCouponsRouteImport.update({
     id: '/admin/coupons',
@@ -522,12 +500,6 @@ const AuthenticatedAdminCitiesRoute =
   AuthenticatedAdminCitiesRouteImport.update({
     id: '/admin/cities',
     path: '/admin/cities',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminCategoriesRoute =
-  AuthenticatedAdminCategoriesRouteImport.update({
-    id: '/admin/categories',
-    path: '/admin/categories',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminCalendarRoute =
@@ -680,9 +652,9 @@ const AuthenticatedAdminDriversIdRoute =
   } as any)
 const AuthenticatedAdminCustomersIdRoute =
   AuthenticatedAdminCustomersIdRouteImport.update({
-    id: '/$id',
-    path: '/$id',
-    getParentRoute: () => AuthenticatedAdminCustomersRoute,
+    id: '/admin/customers/$id',
+    path: '/admin/customers/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminBookingsIdPrintRoute =
   AuthenticatedAdminBookingsIdPrintRouteImport.update({
@@ -706,12 +678,10 @@ export interface FileRoutesByFullPath {
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRouteWithChildren
   '/admin/calendar': typeof AuthenticatedAdminCalendarRoute
-  '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/cities': typeof AuthenticatedAdminCitiesRoute
   '/admin/contacts': typeof AuthenticatedAdminContactsRoute
   '/admin/corporate': typeof AuthenticatedAdminCorporateRoute
   '/admin/coupons': typeof AuthenticatedAdminCouponsRoute
-  '/admin/customers': typeof AuthenticatedAdminCustomersRouteWithChildren
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/dispatch': typeof AuthenticatedAdminDispatchRoute
   '/admin/drivers': typeof AuthenticatedAdminDriversRouteWithChildren
@@ -735,7 +705,6 @@ export interface FileRoutesByFullPath {
   '/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/admin/payments': typeof AuthenticatedAdminPaymentsRoute
   '/admin/payroll': typeof AuthenticatedAdminPayrollRoute
-  '/admin/pricing': typeof AuthenticatedAdminPricingRoute
   '/admin/promotions': typeof AuthenticatedAdminPromotionsRoute
   '/admin/redirects': typeof AuthenticatedAdminRedirectsRoute
   '/admin/refunds': typeof AuthenticatedAdminRefundsRoute
@@ -761,7 +730,6 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
   '/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
   '/{-$locale}/faq': typeof PublicChar123LocaleChar125FaqRoute
-  '/{-$locale}/pricing': typeof PublicChar123LocaleChar125PricingRoute
   '/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
   '/{-$locale}/privacy-policy': typeof PublicChar123LocaleChar125PrivacyPolicyRoute
   '/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
@@ -807,12 +775,10 @@ export interface FileRoutesByTo {
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRouteWithChildren
   '/admin/calendar': typeof AuthenticatedAdminCalendarRoute
-  '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/cities': typeof AuthenticatedAdminCitiesRoute
   '/admin/contacts': typeof AuthenticatedAdminContactsRoute
   '/admin/corporate': typeof AuthenticatedAdminCorporateRoute
   '/admin/coupons': typeof AuthenticatedAdminCouponsRoute
-  '/admin/customers': typeof AuthenticatedAdminCustomersRouteWithChildren
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/dispatch': typeof AuthenticatedAdminDispatchRoute
   '/admin/drivers': typeof AuthenticatedAdminDriversRouteWithChildren
@@ -836,7 +802,6 @@ export interface FileRoutesByTo {
   '/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/admin/payments': typeof AuthenticatedAdminPaymentsRoute
   '/admin/payroll': typeof AuthenticatedAdminPayrollRoute
-  '/admin/pricing': typeof AuthenticatedAdminPricingRoute
   '/admin/promotions': typeof AuthenticatedAdminPromotionsRoute
   '/admin/redirects': typeof AuthenticatedAdminRedirectsRoute
   '/admin/refunds': typeof AuthenticatedAdminRefundsRoute
@@ -862,7 +827,6 @@ export interface FileRoutesByTo {
   '/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
   '/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
   '/{-$locale}/faq': typeof PublicChar123LocaleChar125FaqRoute
-  '/{-$locale}/pricing': typeof PublicChar123LocaleChar125PricingRoute
   '/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
   '/{-$locale}/privacy-policy': typeof PublicChar123LocaleChar125PrivacyPolicyRoute
   '/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
@@ -910,12 +874,10 @@ export interface FileRoutesById {
   '/_authenticated/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRouteWithChildren
   '/_authenticated/admin/calendar': typeof AuthenticatedAdminCalendarRoute
-  '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/_authenticated/admin/cities': typeof AuthenticatedAdminCitiesRoute
   '/_authenticated/admin/contacts': typeof AuthenticatedAdminContactsRoute
   '/_authenticated/admin/corporate': typeof AuthenticatedAdminCorporateRoute
   '/_authenticated/admin/coupons': typeof AuthenticatedAdminCouponsRoute
-  '/_authenticated/admin/customers': typeof AuthenticatedAdminCustomersRouteWithChildren
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/dispatch': typeof AuthenticatedAdminDispatchRoute
   '/_authenticated/admin/drivers': typeof AuthenticatedAdminDriversRouteWithChildren
@@ -939,7 +901,6 @@ export interface FileRoutesById {
   '/_authenticated/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/_authenticated/admin/payments': typeof AuthenticatedAdminPaymentsRoute
   '/_authenticated/admin/payroll': typeof AuthenticatedAdminPayrollRoute
-  '/_authenticated/admin/pricing': typeof AuthenticatedAdminPricingRoute
   '/_authenticated/admin/promotions': typeof AuthenticatedAdminPromotionsRoute
   '/_authenticated/admin/redirects': typeof AuthenticatedAdminRedirectsRoute
   '/_authenticated/admin/refunds': typeof AuthenticatedAdminRefundsRoute
@@ -965,7 +926,6 @@ export interface FileRoutesById {
   '/_public/{-$locale}/cancellation': typeof PublicChar123LocaleChar125CancellationRoute
   '/_public/{-$locale}/contact': typeof PublicChar123LocaleChar125ContactRoute
   '/_public/{-$locale}/faq': typeof PublicChar123LocaleChar125FaqRoute
-  '/_public/{-$locale}/pricing': typeof PublicChar123LocaleChar125PricingRoute
   '/_public/{-$locale}/privacy': typeof PublicChar123LocaleChar125PrivacyRoute
   '/_public/{-$locale}/privacy-policy': typeof PublicChar123LocaleChar125PrivacyPolicyRoute
   '/_public/{-$locale}/refund': typeof PublicChar123LocaleChar125RefundRoute
@@ -1014,12 +974,10 @@ export interface FileRouteTypes {
     | '/admin/blog'
     | '/admin/bookings'
     | '/admin/calendar'
-    | '/admin/categories'
     | '/admin/cities'
     | '/admin/contacts'
     | '/admin/corporate'
     | '/admin/coupons'
-    | '/admin/customers'
     | '/admin/dashboard'
     | '/admin/dispatch'
     | '/admin/drivers'
@@ -1043,7 +1001,6 @@ export interface FileRouteTypes {
     | '/admin/partners'
     | '/admin/payments'
     | '/admin/payroll'
-    | '/admin/pricing'
     | '/admin/promotions'
     | '/admin/redirects'
     | '/admin/refunds'
@@ -1069,7 +1026,6 @@ export interface FileRouteTypes {
     | '/{-$locale}/cancellation'
     | '/{-$locale}/contact'
     | '/{-$locale}/faq'
-    | '/{-$locale}/pricing'
     | '/{-$locale}/privacy'
     | '/{-$locale}/privacy-policy'
     | '/{-$locale}/refund'
@@ -1115,12 +1071,10 @@ export interface FileRouteTypes {
     | '/admin/blog'
     | '/admin/bookings'
     | '/admin/calendar'
-    | '/admin/categories'
     | '/admin/cities'
     | '/admin/contacts'
     | '/admin/corporate'
     | '/admin/coupons'
-    | '/admin/customers'
     | '/admin/dashboard'
     | '/admin/dispatch'
     | '/admin/drivers'
@@ -1144,7 +1098,6 @@ export interface FileRouteTypes {
     | '/admin/partners'
     | '/admin/payments'
     | '/admin/payroll'
-    | '/admin/pricing'
     | '/admin/promotions'
     | '/admin/redirects'
     | '/admin/refunds'
@@ -1170,7 +1123,6 @@ export interface FileRouteTypes {
     | '/{-$locale}/cancellation'
     | '/{-$locale}/contact'
     | '/{-$locale}/faq'
-    | '/{-$locale}/pricing'
     | '/{-$locale}/privacy'
     | '/{-$locale}/privacy-policy'
     | '/{-$locale}/refund'
@@ -1217,12 +1169,10 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/blog'
     | '/_authenticated/admin/bookings'
     | '/_authenticated/admin/calendar'
-    | '/_authenticated/admin/categories'
     | '/_authenticated/admin/cities'
     | '/_authenticated/admin/contacts'
     | '/_authenticated/admin/corporate'
     | '/_authenticated/admin/coupons'
-    | '/_authenticated/admin/customers'
     | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/dispatch'
     | '/_authenticated/admin/drivers'
@@ -1246,7 +1196,6 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/partners'
     | '/_authenticated/admin/payments'
     | '/_authenticated/admin/payroll'
-    | '/_authenticated/admin/pricing'
     | '/_authenticated/admin/promotions'
     | '/_authenticated/admin/redirects'
     | '/_authenticated/admin/refunds'
@@ -1272,7 +1221,6 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/cancellation'
     | '/_public/{-$locale}/contact'
     | '/_public/{-$locale}/faq'
-    | '/_public/{-$locale}/pricing'
     | '/_public/{-$locale}/privacy'
     | '/_public/{-$locale}/privacy-policy'
     | '/_public/{-$locale}/refund'
@@ -1435,13 +1383,6 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/{-$locale}/privacy'
       preLoaderRoute: typeof PublicChar123LocaleChar125PrivacyRouteImport
-      parentRoute: typeof PublicChar123LocaleChar125Route
-    }
-    '/_public/{-$locale}/pricing': {
-      id: '/_public/{-$locale}/pricing'
-      path: '/pricing'
-      fullPath: '/{-$locale}/pricing'
-      preLoaderRoute: typeof PublicChar123LocaleChar125PricingRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
     '/_public/{-$locale}/faq': {
@@ -1619,13 +1560,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminPromotionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/pricing': {
-      id: '/_authenticated/admin/pricing'
-      path: '/admin/pricing'
-      fullPath: '/admin/pricing'
-      preLoaderRoute: typeof AuthenticatedAdminPricingRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/admin/payroll': {
       id: '/_authenticated/admin/payroll'
       path: '/admin/payroll'
@@ -1787,13 +1721,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/customers': {
-      id: '/_authenticated/admin/customers'
-      path: '/admin/customers'
-      fullPath: '/admin/customers'
-      preLoaderRoute: typeof AuthenticatedAdminCustomersRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/admin/coupons': {
       id: '/_authenticated/admin/coupons'
       path: '/admin/coupons'
@@ -1820,13 +1747,6 @@ declare module '@tanstack/react-router' {
       path: '/admin/cities'
       fullPath: '/admin/cities'
       preLoaderRoute: typeof AuthenticatedAdminCitiesRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/categories': {
-      id: '/_authenticated/admin/categories'
-      path: '/admin/categories'
-      fullPath: '/admin/categories'
-      preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/calendar': {
@@ -2006,10 +1926,10 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated/admin/customers/$id': {
       id: '/_authenticated/admin/customers/$id'
-      path: '/$id'
+      path: '/admin/customers/$id'
       fullPath: '/admin/customers/$id'
       preLoaderRoute: typeof AuthenticatedAdminCustomersIdRouteImport
-      parentRoute: typeof AuthenticatedAdminCustomersRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/bookings/$id/print': {
       id: '/_authenticated/admin/bookings/$id/print'
@@ -2034,20 +1954,6 @@ const AuthenticatedAdminBookingsRouteChildren: AuthenticatedAdminBookingsRouteCh
 const AuthenticatedAdminBookingsRouteWithChildren =
   AuthenticatedAdminBookingsRoute._addFileChildren(
     AuthenticatedAdminBookingsRouteChildren,
-  )
-
-interface AuthenticatedAdminCustomersRouteChildren {
-  AuthenticatedAdminCustomersIdRoute: typeof AuthenticatedAdminCustomersIdRoute
-}
-
-const AuthenticatedAdminCustomersRouteChildren: AuthenticatedAdminCustomersRouteChildren =
-  {
-    AuthenticatedAdminCustomersIdRoute: AuthenticatedAdminCustomersIdRoute,
-  }
-
-const AuthenticatedAdminCustomersRouteWithChildren =
-  AuthenticatedAdminCustomersRoute._addFileChildren(
-    AuthenticatedAdminCustomersRouteChildren,
   )
 
 interface AuthenticatedAdminDriversRouteChildren {
@@ -2100,12 +2006,10 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminBlogRoute: typeof AuthenticatedAdminBlogRoute
   AuthenticatedAdminBookingsRoute: typeof AuthenticatedAdminBookingsRouteWithChildren
   AuthenticatedAdminCalendarRoute: typeof AuthenticatedAdminCalendarRoute
-  AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
   AuthenticatedAdminCitiesRoute: typeof AuthenticatedAdminCitiesRoute
   AuthenticatedAdminContactsRoute: typeof AuthenticatedAdminContactsRoute
   AuthenticatedAdminCorporateRoute: typeof AuthenticatedAdminCorporateRoute
   AuthenticatedAdminCouponsRoute: typeof AuthenticatedAdminCouponsRoute
-  AuthenticatedAdminCustomersRoute: typeof AuthenticatedAdminCustomersRouteWithChildren
   AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
   AuthenticatedAdminDispatchRoute: typeof AuthenticatedAdminDispatchRoute
   AuthenticatedAdminDriversRoute: typeof AuthenticatedAdminDriversRouteWithChildren
@@ -2129,7 +2033,6 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminPartnersRoute: typeof AuthenticatedAdminPartnersRoute
   AuthenticatedAdminPaymentsRoute: typeof AuthenticatedAdminPaymentsRoute
   AuthenticatedAdminPayrollRoute: typeof AuthenticatedAdminPayrollRoute
-  AuthenticatedAdminPricingRoute: typeof AuthenticatedAdminPricingRoute
   AuthenticatedAdminPromotionsRoute: typeof AuthenticatedAdminPromotionsRoute
   AuthenticatedAdminRedirectsRoute: typeof AuthenticatedAdminRedirectsRoute
   AuthenticatedAdminRefundsRoute: typeof AuthenticatedAdminRefundsRoute
@@ -2147,6 +2050,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminTestimonialsRoute: typeof AuthenticatedAdminTestimonialsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAdminWhatsappTemplatesRoute: typeof AuthenticatedAdminWhatsappTemplatesRoute
+  AuthenticatedAdminCustomersIdRoute: typeof AuthenticatedAdminCustomersIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -2157,13 +2061,10 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminBlogRoute: AuthenticatedAdminBlogRoute,
   AuthenticatedAdminBookingsRoute: AuthenticatedAdminBookingsRouteWithChildren,
   AuthenticatedAdminCalendarRoute: AuthenticatedAdminCalendarRoute,
-  AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
   AuthenticatedAdminCitiesRoute: AuthenticatedAdminCitiesRoute,
   AuthenticatedAdminContactsRoute: AuthenticatedAdminContactsRoute,
   AuthenticatedAdminCorporateRoute: AuthenticatedAdminCorporateRoute,
   AuthenticatedAdminCouponsRoute: AuthenticatedAdminCouponsRoute,
-  AuthenticatedAdminCustomersRoute:
-    AuthenticatedAdminCustomersRouteWithChildren,
   AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
   AuthenticatedAdminDispatchRoute: AuthenticatedAdminDispatchRoute,
   AuthenticatedAdminDriversRoute: AuthenticatedAdminDriversRouteWithChildren,
@@ -2189,7 +2090,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminPartnersRoute: AuthenticatedAdminPartnersRoute,
   AuthenticatedAdminPaymentsRoute: AuthenticatedAdminPaymentsRoute,
   AuthenticatedAdminPayrollRoute: AuthenticatedAdminPayrollRoute,
-  AuthenticatedAdminPricingRoute: AuthenticatedAdminPricingRoute,
   AuthenticatedAdminPromotionsRoute: AuthenticatedAdminPromotionsRoute,
   AuthenticatedAdminRedirectsRoute: AuthenticatedAdminRedirectsRoute,
   AuthenticatedAdminRefundsRoute: AuthenticatedAdminRefundsRoute,
@@ -2208,6 +2108,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedAdminWhatsappTemplatesRoute:
     AuthenticatedAdminWhatsappTemplatesRoute,
+  AuthenticatedAdminCustomersIdRoute: AuthenticatedAdminCustomersIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -2237,7 +2138,6 @@ interface PublicChar123LocaleChar125RouteChildren {
   PublicChar123LocaleChar125CancellationRoute: typeof PublicChar123LocaleChar125CancellationRoute
   PublicChar123LocaleChar125ContactRoute: typeof PublicChar123LocaleChar125ContactRoute
   PublicChar123LocaleChar125FaqRoute: typeof PublicChar123LocaleChar125FaqRoute
-  PublicChar123LocaleChar125PricingRoute: typeof PublicChar123LocaleChar125PricingRoute
   PublicChar123LocaleChar125PrivacyRoute: typeof PublicChar123LocaleChar125PrivacyRoute
   PublicChar123LocaleChar125PrivacyPolicyRoute: typeof PublicChar123LocaleChar125PrivacyPolicyRoute
   PublicChar123LocaleChar125RefundRoute: typeof PublicChar123LocaleChar125RefundRoute
@@ -2278,8 +2178,6 @@ const PublicChar123LocaleChar125RouteChildren: PublicChar123LocaleChar125RouteCh
     PublicChar123LocaleChar125ContactRoute:
       PublicChar123LocaleChar125ContactRoute,
     PublicChar123LocaleChar125FaqRoute: PublicChar123LocaleChar125FaqRoute,
-    PublicChar123LocaleChar125PricingRoute:
-      PublicChar123LocaleChar125PricingRoute,
     PublicChar123LocaleChar125PrivacyRoute:
       PublicChar123LocaleChar125PrivacyRoute,
     PublicChar123LocaleChar125PrivacyPolicyRoute:
