@@ -94,7 +94,7 @@ function Audit() {
     <div>
       <PageHeader
         title={ar ? "سجل التدقيق" : "Audit Log"}
-        description={ar ? "سجل نشاط شامل مع بحث وتصفية وتصدير" : "Full activity trail with search, filters and export"}
+        description={ar ? "سجل تلقائي لكل تغييرات النظام: إنشاء وتعديل الحجوزات، تغيير الحالات، إسناد السائقين والمركبات، تسجيل الدخول وإجراءات المستخدمين. يُستخدم للمحاسبة والمساءلة وتتبّع التلاعب." : "Automatic trail of every system change: bookings created/updated, status changes, driver/vehicle assignments, sign-ins and user actions. Used for accountability and tamper tracking."}
         actions={
           <div className="flex items-center gap-2">
             <Select value={rangeKey} onValueChange={(v: any) => setRangeKey(v)}>
