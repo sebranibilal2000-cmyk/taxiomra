@@ -50,7 +50,7 @@ export function AppSidebar() {
       { title: locale === "ar" ? "المرتجعات" : "Refunds", url: "/admin/refunds", icon: Undo2 },
       { title: locale === "ar" ? "الحسابات المؤسسية" : "Corporate", url: "/admin/corporate", icon: Building2 },
       { title: locale === "ar" ? "الرواتب" : "Payroll", url: "/admin/payroll", icon: Briefcase },
-      { title: t("pricing"), url: "/admin/pricing", icon: DollarSign },
+      
       { title: t("coupons"), url: "/admin/coupons", icon: TicketPercent },
       { title: locale === "ar" ? "إعدادات المالية" : "Finance Settings", url: "/admin/finance-settings", icon: Settings },
     ]},
