@@ -74,7 +74,6 @@ function MenusAdmin() {
     qc.invalidateQueries({ queryKey: ["admin-menu-items"] });
   };
 
-  const ar = locale === "ar";
 
 
   return (
