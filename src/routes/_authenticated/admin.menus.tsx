@@ -17,6 +17,7 @@ export const Route = createFileRoute("/_authenticated/admin/menus")({ component:
 
 function MenusAdmin() {
   const { locale } = useI18n();
+  const ar = locale === "ar";
   const qc = useQueryClient();
   const [activeMenu, setActiveMenu] = useState<string>("header");
   const [open, setOpen] = useState(false);
