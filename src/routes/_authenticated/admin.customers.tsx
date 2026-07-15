@@ -16,6 +16,7 @@ import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { CustomerTierBadge } from "@/components/CustomerTierBadge";
+import { BookingsCustomersNav } from "@/components/BookingsCustomersNav";
 
 export const Route = createFileRoute("/_authenticated/admin/customers")({ component: CustomersPage });
 
@@ -98,6 +99,7 @@ function CustomersPage() {
 
   return (
     <div>
+      <BookingsCustomersNav />
       <PageHeader
         title={t("customers")}
         description={locale === "ar" ? "قاعدة بيانات العملاء الكاملة" : "Enterprise customer CRM"}

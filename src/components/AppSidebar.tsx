@@ -32,7 +32,7 @@ export function AppSidebar() {
       { title: locale === "ar" ? "التقويم" : "Calendar", url: "/admin/calendar", icon: CalendarDays },
       { title: locale === "ar" ? "المهام" : "Tasks", url: "/admin/tasks", icon: ListChecks },
       { title: locale === "ar" ? "التنبيهات" : "Reminders", url: "/admin/reminders", icon: BellRing },
-      { title: t("customers"), url: "/admin/customers", icon: Users },
+      
       { title: t("drivers"), url: "/admin/drivers", icon: IdCard },
     ]},
     { label: t("catalog"), items: [

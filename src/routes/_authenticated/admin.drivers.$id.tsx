@@ -332,8 +332,15 @@ function DocumentsPanel({ driverId, docs, onChange }: { driverId: string; docs: 
 }
 
 function EditDriverDialog({ driver, onSaved }: { driver: any; onSaved: () => void }) {
+  const { locale } = useI18n();
+  const ar = locale === "ar";
   const [open, setOpen] = useState(false);
-  const [f, setF] = useState({ ...driver, languages: (driver.languages ?? []).join(", ") });
+  const [f, setF] = useState<any>({ ...driver, languages: (driver.languages ?? []).join(", ") });
+
+  const openDialog = () => {
+    setF({ ...driver, languages: (driver.languages ?? []).join(", ") });
+    setOpen(true);
+  };
 
   const save = useMutation({
     mutationFn: async () => {
@@ -351,51 +358,53 @@ function EditDriverDialog({ driver, onSaved }: { driver: any; onSaved: () => voi
       const { error } = await supabase.from("drivers").update(payload).eq("id", driver.id);
       if (error) throw error;
     },
-    onSuccess: () => { toast.success("Saved"); setOpen(false); onSaved(); },
+    onSuccess: () => { toast.success(ar ? "تم الحفظ" : "Saved"); setOpen(false); onSaved(); },
     onError: (e: any) => toast.error(e.message),
   });
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild><Button variant="outline" size="sm">Edit</Button></DialogTrigger>
-      <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
-        <DialogHeader><DialogTitle>Edit driver</DialogTitle></DialogHeader>
-        <div className="grid grid-cols-2 gap-3">
-          <div className="col-span-2"><Label>Full name</Label><Input value={f.full_name ?? ""} onChange={(e) => setF({ ...f, full_name: e.target.value })} /></div>
-          <div><Label>Phone</Label><Input value={f.phone ?? ""} onChange={(e) => setF({ ...f, phone: e.target.value })} /></div>
-          <div><Label>WhatsApp</Label><Input value={f.whatsapp ?? ""} onChange={(e) => setF({ ...f, whatsapp: e.target.value })} /></div>
-          <div><Label>Email</Label><Input value={f.email ?? ""} onChange={(e) => setF({ ...f, email: e.target.value })} /></div>
-          <div><Label>National ID</Label><Input value={f.national_id ?? ""} onChange={(e) => setF({ ...f, national_id: e.target.value })} /></div>
-          <div className="col-span-2"><Label>Address</Label><Input value={f.address ?? ""} onChange={(e) => setF({ ...f, address: e.target.value })} /></div>
-          <div><Label>License #</Label><Input value={f.license_number ?? ""} onChange={(e) => setF({ ...f, license_number: e.target.value })} /></div>
-          <div><Label>License class</Label><Input value={f.license_class ?? ""} onChange={(e) => setF({ ...f, license_class: e.target.value })} /></div>
-          <div><Label>License expiry</Label><Input type="date" value={f.license_expiry ?? ""} onChange={(e) => setF({ ...f, license_expiry: e.target.value })} /></div>
-          <div><Label>Medical expiry</Label><Input type="date" value={f.medical_expiry ?? ""} onChange={(e) => setF({ ...f, medical_expiry: e.target.value })} /></div>
-          <div><Label>Work permit expiry</Label><Input type="date" value={f.work_permit_expiry ?? ""} onChange={(e) => setF({ ...f, work_permit_expiry: e.target.value })} /></div>
-          <div><Label>Insurance expiry</Label><Input type="date" value={f.insurance_expiry ?? ""} onChange={(e) => setF({ ...f, insurance_expiry: e.target.value })} /></div>
-          <div><Label>Employment date</Label><Input type="date" value={f.hired_at ?? ""} onChange={(e) => setF({ ...f, hired_at: e.target.value })} /></div>
-          <div><Label>Employment status</Label>
-            <Select value={f.employment_status} onValueChange={(v) => setF({ ...f, employment_status: v })}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>{EMPLOYMENT_STATUSES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-            </Select>
+    <>
+      <Button variant="outline" size="sm" onClick={openDialog}>{ar ? "تعديل" : "Edit"}</Button>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader><DialogTitle>{ar ? "تعديل السائق" : "Edit driver"}</DialogTitle></DialogHeader>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="col-span-2"><Label>{ar ? "الاسم الكامل" : "Full name"}</Label><Input value={f.full_name ?? ""} onChange={(e) => setF({ ...f, full_name: e.target.value })} /></div>
+            <div><Label>{ar ? "الهاتف" : "Phone"}</Label><Input value={f.phone ?? ""} onChange={(e) => setF({ ...f, phone: e.target.value })} /></div>
+            <div><Label>{ar ? "واتساب" : "WhatsApp"}</Label><Input value={f.whatsapp ?? ""} onChange={(e) => setF({ ...f, whatsapp: e.target.value })} /></div>
+            <div><Label>{ar ? "البريد" : "Email"}</Label><Input value={f.email ?? ""} onChange={(e) => setF({ ...f, email: e.target.value })} /></div>
+            <div><Label>{ar ? "الهوية الوطنية" : "National ID"}</Label><Input value={f.national_id ?? ""} onChange={(e) => setF({ ...f, national_id: e.target.value })} /></div>
+            <div className="col-span-2"><Label>{ar ? "العنوان" : "Address"}</Label><Input value={f.address ?? ""} onChange={(e) => setF({ ...f, address: e.target.value })} /></div>
+            <div><Label>{ar ? "رقم الرخصة" : "License #"}</Label><Input value={f.license_number ?? ""} onChange={(e) => setF({ ...f, license_number: e.target.value })} /></div>
+            <div><Label>{ar ? "فئة الرخصة" : "License class"}</Label><Input value={f.license_class ?? ""} onChange={(e) => setF({ ...f, license_class: e.target.value })} /></div>
+            <div><Label>{ar ? "انتهاء الرخصة" : "License expiry"}</Label><Input type="date" value={f.license_expiry ?? ""} onChange={(e) => setF({ ...f, license_expiry: e.target.value })} /></div>
+            <div><Label>{ar ? "انتهاء الفحص الطبي" : "Medical expiry"}</Label><Input type="date" value={f.medical_expiry ?? ""} onChange={(e) => setF({ ...f, medical_expiry: e.target.value })} /></div>
+            <div><Label>{ar ? "انتهاء تصريح العمل" : "Work permit expiry"}</Label><Input type="date" value={f.work_permit_expiry ?? ""} onChange={(e) => setF({ ...f, work_permit_expiry: e.target.value })} /></div>
+            <div><Label>{ar ? "انتهاء التأمين" : "Insurance expiry"}</Label><Input type="date" value={f.insurance_expiry ?? ""} onChange={(e) => setF({ ...f, insurance_expiry: e.target.value })} /></div>
+            <div><Label>{ar ? "تاريخ التوظيف" : "Employment date"}</Label><Input type="date" value={f.hired_at ?? ""} onChange={(e) => setF({ ...f, hired_at: e.target.value })} /></div>
+            <div><Label>{ar ? "حالة التوظيف" : "Employment status"}</Label>
+              <Select value={f.employment_status} onValueChange={(v) => setF({ ...f, employment_status: v })}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{EMPLOYMENT_STATUSES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+              </Select>
+            </div>
+            <div><Label>{ar ? "حالة السائق" : "Driver status"}</Label>
+              <Select value={f.status} onValueChange={(v) => setF({ ...f, status: v })}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{DRIVER_STATUSES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+              </Select>
+            </div>
+            <div><Label>{ar ? "اسم جهة الاتصال للطوارئ" : "Emergency name"}</Label><Input value={f.emergency_contact_name ?? ""} onChange={(e) => setF({ ...f, emergency_contact_name: e.target.value })} /></div>
+            <div><Label>{ar ? "هاتف الطوارئ" : "Emergency phone"}</Label><Input value={f.emergency_contact_phone ?? ""} onChange={(e) => setF({ ...f, emergency_contact_phone: e.target.value })} /></div>
+            <div className="col-span-2"><Label>{ar ? "اللغات (مفصولة بفواصل)" : "Languages (comma-separated)"}</Label><Input value={f.languages ?? ""} onChange={(e) => setF({ ...f, languages: e.target.value })} /></div>
+            <div className="col-span-2"><Label>{ar ? "ملاحظات" : "Notes"}</Label><Textarea value={f.notes ?? ""} onChange={(e) => setF({ ...f, notes: e.target.value })} rows={3} /></div>
           </div>
-          <div><Label>Driver status</Label>
-            <Select value={f.status} onValueChange={(v) => setF({ ...f, status: v })}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>{DRIVER_STATUSES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-            </Select>
-          </div>
-          <div><Label>Emergency name</Label><Input value={f.emergency_contact_name ?? ""} onChange={(e) => setF({ ...f, emergency_contact_name: e.target.value })} /></div>
-          <div><Label>Emergency phone</Label><Input value={f.emergency_contact_phone ?? ""} onChange={(e) => setF({ ...f, emergency_contact_phone: e.target.value })} /></div>
-          <div className="col-span-2"><Label>Languages (comma-separated)</Label><Input value={f.languages ?? ""} onChange={(e) => setF({ ...f, languages: e.target.value })} /></div>
-          <div className="col-span-2"><Label>Notes</Label><Textarea value={f.notes ?? ""} onChange={(e) => setF({ ...f, notes: e.target.value })} rows={3} /></div>
-        </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-          <Button disabled={save.isPending} onClick={() => save.mutate()}><Save className="h-4 w-4 me-1" />Save</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setOpen(false)}>{ar ? "إلغاء" : "Cancel"}</Button>
+            <Button disabled={save.isPending} onClick={() => save.mutate()}><Save className="h-4 w-4 me-1" />{ar ? "حفظ" : "Save"}</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

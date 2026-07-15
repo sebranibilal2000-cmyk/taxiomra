@@ -21,6 +21,7 @@ import { ActivityTimeline } from "@/components/ActivityTimeline";
 import { WhatsAppSendMenu } from "@/components/WhatsAppSendMenu";
 import { downloadCsv } from "@/lib/csv";
 import { duplicateBooking, bulkUpdateBookings, cancelBooking, addBookingNote, scheduleBookingReminder } from "@/lib/booking-ops.functions";
+import { BookingsCustomersNav } from "@/components/BookingsCustomersNav";
 
 export const Route = createFileRoute("/_authenticated/admin/bookings")({ component: BookingsPage });
 
@@ -129,6 +130,7 @@ function BookingsPage() {
 
   return (
     <div>
+      <BookingsCustomersNav />
       <PageHeader
         title={t("bookings")}
         description={locale === "ar" ? "إدارة كافة الحجوزات" : "Manage all bookings"}
