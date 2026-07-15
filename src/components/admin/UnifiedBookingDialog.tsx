@@ -71,7 +71,7 @@ export function UnifiedBookingDialog({ open, onOpenChange, initialCustomer, onCr
 
   // Lookups
   const cats = useQuery({ queryKey: ["cats-active"], queryFn: async () => (await supabase.from("vehicle_categories").select("id, code").eq("is_active", true).order("sort_order")).data ?? [] });
-  const vehicles = useQuery({ queryKey: ["vehicles-active"], queryFn: async () => (await supabase.from("vehicles").select("id, plate_number, make, model, category_id").eq("is_active", true).order("plate_number")).data ?? [] });
+  const vehicles = useQuery({ queryKey: ["vehicles-active"], queryFn: async () => (await supabase.from("vehicles").select("id, plate_number, make, model, category_id").order("plate_number")).data ?? [] });
 
   // Customer form (used only in 'new' mode)
   const [cust, setCust] = useState({
