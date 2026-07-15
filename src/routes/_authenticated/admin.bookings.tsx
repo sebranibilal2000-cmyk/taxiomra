@@ -137,11 +137,10 @@ function BookingsPage() {
         actions={
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={exportCsv}><Download className="h-4 w-4 me-1" />CSV</Button>
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger asChild><Button><Plus className="h-4 w-4 me-1" />{t("new_booking")}</Button></DialogTrigger>
-              <NewBookingDialog customers={customers.data ?? []} cats={cats.data ?? []} drivers={drivers.data ?? []}
-                onDone={() => { setOpen(false); qc.invalidateQueries({ queryKey: ["bookings"] }); qc.invalidateQueries({ queryKey: ["dashboard-stats"] }); }} />
-            </Dialog>
+            <Button onClick={() => setOpen(true)}><Plus className="h-4 w-4 me-1" />{t("new_booking")}</Button>
+            <UnifiedBookingDialog open={open} onOpenChange={setOpen}
+              onCreated={() => { qc.invalidateQueries({ queryKey: ["bookings"] }); qc.invalidateQueries({ queryKey: ["dashboard-stats"] }); }} />
+
           </div>
         }
       />
