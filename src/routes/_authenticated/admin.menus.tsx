@@ -88,32 +88,32 @@ function MenusAdmin() {
             </SelectContent>
           </Select>
           <Dialog open={open} onOpenChange={(o) => { setOpen(o); if (!o) setEditing(null); }}>
-            <DialogTrigger asChild><Button disabled={!current}><Plus className="h-4 w-4 me-2" />Add item</Button></DialogTrigger>
+            <DialogTrigger asChild><Button disabled={!current}><Plus className="h-4 w-4 me-2" />{ar ? "إضافة عنصر" : "Add item"}</Button></DialogTrigger>
             <DialogContent>
-              <DialogHeader><DialogTitle>{editing ? "Edit" : "Add"} menu item</DialogTitle></DialogHeader>
+              <DialogHeader><DialogTitle>{editing ? (ar ? "تعديل عنصر القائمة" : "Edit menu item") : (ar ? "إضافة عنصر قائمة" : "Add menu item")}</DialogTitle></DialogHeader>
               <form onSubmit={(e) => { e.preventDefault(); void save(new FormData(e.currentTarget)); }} className="space-y-3">
                 <div className="grid grid-cols-2 gap-3">
-                  <div><label className="text-sm">Label (EN) *</label><Input name="label_en" defaultValue={editing?.label_en} required /></div>
-                  <div><label className="text-sm">Label (AR) *</label><Input name="label_ar" defaultValue={editing?.label_ar} dir="rtl" required /></div>
+                  <div><label className="text-sm">{ar ? "التسمية (إنجليزي) *" : "Label (EN) *"}</label><Input name="label_en" defaultValue={editing?.label_en} required /></div>
+                  <div><label className="text-sm">{ar ? "التسمية (عربي) *" : "Label (AR) *"}</label><Input name="label_ar" defaultValue={editing?.label_ar} dir="rtl" required /></div>
                 </div>
-                <div><label className="text-sm">URL *</label><Input name="url" defaultValue={editing?.url} required placeholder="/services or https://..." /></div>
+                <div><label className="text-sm">{ar ? "الرابط *" : "URL *"}</label><Input name="url" defaultValue={editing?.url} required placeholder="/services or https://..." /></div>
                 <div className="grid grid-cols-3 gap-3">
-                  <div><label className="text-sm">Target</label>
+                  <div><label className="text-sm">{ar ? "الهدف" : "Target"}</label>
                     <Select name="target" defaultValue={editing?.target ?? "_self"}>
                       <SelectTrigger><SelectValue /></SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="_self">Same tab</SelectItem>
-                        <SelectItem value="_blank">New tab</SelectItem>
+                        <SelectItem value="_self">{ar ? "نفس التبويب" : "Same tab"}</SelectItem>
+                        <SelectItem value="_blank">{ar ? "تبويب جديد" : "New tab"}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
-                  <div><label className="text-sm">Icon</label><Input name="icon" defaultValue={editing?.icon} placeholder="lucide name" /></div>
-                  <div><label className="text-sm">Sort order</label><Input name="sort_order" type="number" defaultValue={editing?.sort_order ?? 0} /></div>
+                  <div><label className="text-sm">{ar ? "الأيقونة" : "Icon"}</label><Input name="icon" defaultValue={editing?.icon} placeholder={ar ? "اسم من lucide" : "lucide name"} /></div>
+                  <div><label className="text-sm">{ar ? "الترتيب" : "Sort order"}</label><Input name="sort_order" type="number" defaultValue={editing?.sort_order ?? 0} /></div>
                 </div>
-                <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="is_active" defaultChecked={editing?.is_active ?? true} /> Active</label>
+                <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="is_active" defaultChecked={editing?.is_active ?? true} /> {ar ? "مُفعّل" : "Active"}</label>
                 <DialogFooter>
-                  <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-                  <Button type="submit">Save</Button>
+                  <Button type="button" variant="outline" onClick={() => setOpen(false)}>{ar ? "إلغاء" : "Cancel"}</Button>
+                  <Button type="submit">{ar ? "حفظ" : "Save"}</Button>
                 </DialogFooter>
               </form>
             </DialogContent>
@@ -122,8 +122,8 @@ function MenusAdmin() {
       </div>
 
       <Card className="p-4">
-        {!current && <div className="text-muted-foreground text-sm">Select a menu.</div>}
-        {current && (itemsQ.data ?? []).length === 0 && <div className="text-muted-foreground text-sm py-6 text-center">No items yet.</div>}
+        {!current && <div className="text-muted-foreground text-sm">{ar ? "اختر قائمة." : "Select a menu."}</div>}
+        {current && (itemsQ.data ?? []).length === 0 && <div className="text-muted-foreground text-sm py-6 text-center">{ar ? "لا توجد عناصر بعد." : "No items yet."}</div>}
         <div className="space-y-2">
           {(itemsQ.data ?? []).map((item: any) => (
             <div key={item.id} className="flex items-center gap-3 p-3 rounded-md border border-border hover:bg-muted/40">
