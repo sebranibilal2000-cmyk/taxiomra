@@ -31,6 +31,7 @@ function CustomerProfilePage() {
   const { locale } = useI18n();
   const navigate = useNavigate();
   const qc = useQueryClient();
+  const [newBookingOpen, setNewBookingOpen] = useState(false);
 
   const q = useQuery({
     queryKey: ["customer", id],
