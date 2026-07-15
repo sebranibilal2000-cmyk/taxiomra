@@ -15,6 +15,7 @@ import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { CustomerTierBadge } from "@/components/CustomerTierBadge";
+import { UnifiedBookingDialog } from "@/components/admin/UnifiedBookingDialog";
 
 const TIERS = ["all", "regular", "vip", "corporate", "blacklisted"] as const;
 const TIER_ICONS: Record<string, any> = { all: User, regular: User, vip: Crown, corporate: Building2, blacklisted: Ban };
