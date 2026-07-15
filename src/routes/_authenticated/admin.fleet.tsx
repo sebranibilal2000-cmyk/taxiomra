@@ -142,6 +142,33 @@ function Fleet() {
         actions={<Button onClick={openNew}><Plus className="h-4 w-4 me-1" />{ar ? "مركبة جديدة" : "New Vehicle"}</Button>}
       />
 
+      <Tabs defaultValue="vehicles" className="mb-4">
+        <TabsList>
+          <TabsTrigger value="vehicles">{ar ? "المركبات" : "Vehicles"}</TabsTrigger>
+          <TabsTrigger value="categories">{ar ? "الفئات" : "Categories"}</TabsTrigger>
+        </TabsList>
+        <TabsContent value="categories" className="mt-4">
+          <VehicleCategoriesPanel onAddVehicle={openNew} />
+        </TabsContent>
+        <TabsContent value="vehicles" className="mt-4 space-y-0">
+          <FleetVehiclesInner
+            filtered={filtered}
+            columns={columns}
+            loading={q.isLoading}
+            search={search} setSearch={setSearch}
+            statusFilter={statusFilter} setStatusFilter={setStatusFilter}
+            expiryFilter={expiryFilter} setExpiryFilter={setExpiryFilter}
+            alerts={alerts}
+            navigate={navigate}
+            qc={qc}
+            openEdit={openEdit}
+            del={del}
+            ar={ar}
+          />
+        </TabsContent>
+      </Tabs>
+
+
       <Dialog open={open} onOpenChange={(o) => { setOpen(o); if (!o) { setEditing(null); setForm(emptyForm); } }}>
         <DialogContent>
           <DialogHeader><DialogTitle>{editing ? (ar ? "تعديل مركبة" : "Edit vehicle") : (ar ? "مركبة جديدة" : "New vehicle")}</DialogTitle></DialogHeader>
