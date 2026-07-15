@@ -65,7 +65,7 @@ export function PublicFooter() {
             <li><Link to={l("/about")} className="hover:text-gold transition">{ar ? "من نحن" : "About"}</Link></li>
             <li><Link to={l("/blog")} className="hover:text-gold transition">{ar ? "المدونة" : "Journal"}</Link></li>
             <li><Link to={l("/faq")} className="hover:text-gold transition">FAQ</Link></li>
-            <li><Link to={l("/pricing")} className="hover:text-gold transition">{ar ? "الأسعار" : "Pricing"}</Link></li>
+            
           </ul>
         </div>
 
