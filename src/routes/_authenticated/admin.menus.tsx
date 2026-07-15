@@ -51,12 +51,12 @@ function MenusAdmin() {
       ? await supabase.from("menu_items").update(payload).eq("id", editing.id)
       : await supabase.from("menu_items").insert(payload);
     if (res.error) { toast.error(res.error.message); return; }
-    toast.success("Saved"); setOpen(false); setEditing(null);
+    toast.success(ar ? "تم الحفظ" : "Saved"); setOpen(false); setEditing(null);
     qc.invalidateQueries({ queryKey: ["admin-menu-items"] });
   };
 
   const del = async (id: string) => {
-    if (!confirm("Delete item?")) return;
+    if (!confirm(ar ? "حذف العنصر؟" : "Delete item?")) return;
     const { error } = await supabase.from("menu_items").delete().eq("id", id);
     if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["admin-menu-items"] });
@@ -72,6 +72,9 @@ function MenusAdmin() {
     await supabase.from("menu_items").update({ sort_order: a.sort_order }).eq("id", b.id);
     qc.invalidateQueries({ queryKey: ["admin-menu-items"] });
   };
+
+  const ar = locale === "ar";
+
 
   return (
     <div>
