@@ -12,6 +12,8 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Search, AlertTriangle, Edit, Trash2 } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { VehicleCategoriesPanel } from "@/components/admin/VehicleCategoriesPanel";
 import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 
