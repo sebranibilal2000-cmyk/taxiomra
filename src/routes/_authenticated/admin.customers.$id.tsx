@@ -19,6 +19,7 @@ import { CustomerTierBadge } from "@/components/CustomerTierBadge";
 import { ActivityTimeline } from "@/components/ActivityTimeline";
 import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
+import { UnifiedBookingDialog } from "@/components/admin/UnifiedBookingDialog";
 
 export const Route = createFileRoute("/_authenticated/admin/customers/$id")({ component: CustomerProfilePage });
 
@@ -30,6 +31,7 @@ function CustomerProfilePage() {
   const { locale } = useI18n();
   const navigate = useNavigate();
   const qc = useQueryClient();
+  const [newBookingOpen, setNewBookingOpen] = useState(false);
 
   const q = useQuery({
     queryKey: ["customer", id],
@@ -71,9 +73,16 @@ function CustomerProfilePage() {
         actions={
           <div className="flex items-center gap-2">
             <CustomerTierBadge value={c.tier} />
+            <Button size="sm" onClick={() => setNewBookingOpen(true)}><Plus className="h-4 w-4 me-1" />{locale === "ar" ? "حجز جديد" : "New booking"}</Button>
             <EditCustomerDialog customer={c} onSaved={() => qc.invalidateQueries({ queryKey: ["customer", id] })} />
           </div>
         }
+      />
+      <UnifiedBookingDialog
+        open={newBookingOpen}
+        onOpenChange={setNewBookingOpen}
+        initialCustomer={{ id: c.id, full_name: c.full_name, phone: c.phone, whatsapp: c.whatsapp, email: c.email }}
+        onCreated={() => { qc.invalidateQueries({ queryKey: ["customer-bookings", id] }); qc.invalidateQueries({ queryKey: ["customer", id] }); }}
       />
 
       {/* Contact strip */}

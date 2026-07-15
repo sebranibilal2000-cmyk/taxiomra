@@ -15,6 +15,7 @@ import { useI18n } from "@/lib/i18n";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { CustomerTierBadge } from "@/components/CustomerTierBadge";
+import { UnifiedBookingDialog } from "@/components/admin/UnifiedBookingDialog";
 
 const TIERS = ["all", "regular", "vip", "corporate", "blacklisted"] as const;
 const TIER_ICONS: Record<string, any> = { all: User, regular: User, vip: Crown, corporate: Building2, blacklisted: Ban };
@@ -109,10 +110,10 @@ export function CustomersListPanel() {
             })));
             toast.success(locale === "ar" ? `${filtered.length} صف` : `${filtered.length} rows`);
           }}><Download className="h-4 w-4 me-1" />CSV</Button>
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild><Button><Plus className="h-4 w-4 me-1" />{t("new")}</Button></DialogTrigger>
-            <NewCustomerDialog onDone={() => { setOpen(false); qc.invalidateQueries({ queryKey: ["customers"] }); }} />
-          </Dialog>
+          <Button onClick={() => setOpen(true)}><Plus className="h-4 w-4 me-1" />{t("new")}</Button>
+          <UnifiedBookingDialog open={open} onOpenChange={setOpen}
+            onCreated={() => { qc.invalidateQueries({ queryKey: ["customers"] }); qc.invalidateQueries({ queryKey: ["bookings"] }); }} />
+
         </div>
       </div>
 
