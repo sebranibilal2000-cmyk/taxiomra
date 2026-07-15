@@ -73,9 +73,16 @@ function CustomerProfilePage() {
         actions={
           <div className="flex items-center gap-2">
             <CustomerTierBadge value={c.tier} />
+            <Button size="sm" onClick={() => setNewBookingOpen(true)}><Plus className="h-4 w-4 me-1" />{locale === "ar" ? "حجز جديد" : "New booking"}</Button>
             <EditCustomerDialog customer={c} onSaved={() => qc.invalidateQueries({ queryKey: ["customer", id] })} />
           </div>
         }
+      />
+      <UnifiedBookingDialog
+        open={newBookingOpen}
+        onOpenChange={setNewBookingOpen}
+        initialCustomer={{ id: c.id, full_name: c.full_name, phone: c.phone, whatsapp: c.whatsapp, email: c.email }}
+        onCreated={() => { qc.invalidateQueries({ queryKey: ["customer-bookings", id] }); qc.invalidateQueries({ queryKey: ["customer", id] }); }}
       />
 
       {/* Contact strip */}
