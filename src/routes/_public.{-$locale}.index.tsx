@@ -28,15 +28,17 @@ const homeOpts = () => queryOptions({
 });
 
 const KEYWORDS_AR = [
-  "تاكسي العمرة","التوصيل من مطار جدة إلى مكة","تاكسي من مطار جدة إلى مكة","نقل من مطار جدة إلى مكة",
-  "حجز تاكسي من مطار جدة","سيارة من مطار جدة إلى مكة","مواصلات من مطار جدة إلى مكة","استقبال من مطار جدة",
+  "التوصيل من مطار جدة إلى مكة","تاكسي من مطار جدة إلى مكة","حجز تاكسي مطار جدة",
+  "نقل من مطار الملك عبدالعزيز إلى مكة","تاكسي العمرة","نقل من مطار جدة إلى مكة",
+  "سيارة من مطار جدة إلى مكة","مواصلات من مطار جدة إلى مكة","استقبال من مطار جدة",
   "تاكسي مطار جدة","نقل المعتمرين","تاكسي مكة","تاكسي جدة",
 ];
 const KEYWORDS_EN = [
   "Umrah Taxi","Jeddah Airport Taxi","Taxi from Jeddah Airport to Makkah","Jeddah Airport Transfer",
-  "Airport Transfer Jeddah to Makkah","Makkah Taxi","Jeddah Taxi","Umrah Transportation",
-  "Private Transfer Jeddah Airport","Taxi to Makkah","Saudi Airport Taxi","Airport Taxi Saudi Arabia",
+  "Airport Transfer Jeddah to Makkah","King Abdulaziz Airport to Makkah transfer","Makkah Taxi","Jeddah Taxi",
+  "Umrah Transportation","Private Transfer Jeddah Airport","Taxi to Makkah","Airport Taxi Saudi Arabia",
 ];
+
 
 export const Route = createFileRoute("/_public/{-$locale}/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(homeOpts()),
