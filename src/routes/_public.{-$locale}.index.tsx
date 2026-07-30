@@ -45,15 +45,23 @@ export const Route = createFileRoute("/_public/{-$locale}/")({
   head: ({ params, loaderData }: any) => {
     const locale = (params?.locale === "en" ? "en" : "ar") as "ar" | "en";
     const isEn = locale === "en";
-    const titleAr = `تاكسي العمرة | التوصيل من مطار جدة إلى مكة المكرمة ٢٤/٧`;
-    const titleEn = `Umrah Taxi | Taxi from Jeddah Airport to Makkah — 24/7 Transfers`;
-    const descAr = "احجز تاكسي العمرة للتوصيل من مطار جدة إلى مكة المكرمة على مدار الساعة. أسعار ثابتة، سائقون محترفون، استقبال شخصي، سيارات حديثة، وحجز فوري عبر واتساب لخدمة نقل المعتمرين.";
-    const descEn = "Book Umrah Taxi for reliable Jeddah Airport to Makkah transfers, 24/7. Fixed fares, licensed drivers, meet & greet at KAIA and instant WhatsApp booking across Jeddah, Makkah and Madinah.";
-    const ogImage = `${SITE.url}${isEn ? "/og-home-en.jpg" : "/og-home-ar.jpg"}`;
+    const titleAr = `التوصيل من مطار جدة إلى مكة | تاكسي من مطار جدة إلى مكة - تاكسي العمرة`;
+    const titleEn = `Jeddah Airport to Makkah Transfer | Taxi from Jeddah Airport — Omra Taxi`;
+    const descAr = "احجز خدمة التوصيل من مطار جدة إلى مكة مع تاكسي العمرة. نوفر سيارات حديثة، سائقين محترفين، استقبال من مطار الملك عبدالعزيز، أسعار ثابتة، وخدمة متوفرة 24 ساعة لجميع رحلات العمرة والزيارة.";
+    const descEn = "Book your Jeddah Airport to Makkah transfer with Omra Taxi. Modern cars, professional drivers, meet & greet at King Abdulaziz Airport, fixed fares and 24-hour service for Umrah and Ziyarah trips.";
+    const ogTitleAr = `التوصيل من مطار جدة إلى مكة | تاكسي العمرة`;
+    const ogTitleEn = `Jeddah Airport to Makkah Transfer | Omra Taxi`;
+    const ogDescAr = "أفضل خدمة تاكسي من مطار جدة إلى مكة بسيارات حديثة وأسعار ثابتة وخدمة 24/7. احجز رحلتك الآن مع تاكسي العمرة.";
+    const ogDescEn = "The best taxi service from Jeddah Airport to Makkah — modern cars, fixed fares and 24/7 service. Book your ride now with Omra Taxi.";
+    const ogImage = `${SITE.url}/og-cover.jpg`;
     const url = SITE.url + `/${locale}`;
     const title = isEn ? titleEn : titleAr;
     const desc = isEn ? descEn : descAr;
+    const ogTitle = isEn ? ogTitleEn : ogTitleAr;
+    const ogDesc = isEn ? ogDescEn : ogDescAr;
+    const siteName = `${SITE.brand.ar} | ${SITE.brand.en}`;
     const keywords = (isEn ? KEYWORDS_EN : KEYWORDS_AR).join(", ");
+
 
     // Rich JSON-LD stack — canonical/hreflang emitted by parent layout (avoid dupes).
     const graph: any[] = [
