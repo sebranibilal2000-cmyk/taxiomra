@@ -76,6 +76,61 @@ export function organizationJsonLd() {
   };
 }
 
+/**
+ * WebApplication schema for the booking app itself.
+ * `ratingValue`/`reviewCount` are only emitted when there is at least one
+ * real review — Google rejects aggregateRating with a zero review count.
+ */
+export function webApplicationJsonLd(opts?: {
+  description?: string;
+  ratingValue?: number;
+  reviewCount?: number;
+}) {
+  const node: Record<string, any> = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "@id": `${SITE.url}/#webapp`,
+    name: `${SITE.brand.ar} | ${SITE.brand.en}`,
+    alternateName: SITE.brand.en,
+    url: SITE.url,
+    applicationCategory: "TravelApplication",
+    operatingSystem: "Web (All)",
+    browserRequirements: "Requires JavaScript. Works in any modern browser.",
+    inLanguage: ["ar", "en"],
+    image: `${SITE.url}${SITE.ogImage}`,
+    screenshot: `${SITE.url}${SITE.ogImage}`,
+    description:
+      opts?.description ??
+      "خدمة تاكسي العمرة والتوصيل من مطار جدة إلى مكة المكرمة وجميع مدن المملكة، مع حجوزات سهلة، أسعار ثابتة، وسيارات حديثة تعمل على مدار 24 ساعة.",
+    publisher: { "@id": `${SITE.url}/#organization` },
+    author: {
+      "@type": "Organization",
+      name: SITE.brand.en,
+      url: SITE.url,
+      logo: `${SITE.url}${SITE.logo}`,
+    },
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: SITE.currency,
+      availability: "https://schema.org/InStock",
+      description: "Free booking request — fares are quoted per trip.",
+      url: SITE.url,
+    },
+    sameAs: Object.values(SITE.socials).filter(Boolean),
+  };
+  if (opts?.reviewCount && opts.reviewCount > 0) {
+    node.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: String(opts.ratingValue ?? 5),
+      bestRating: "5",
+      worstRating: "1",
+      reviewCount: String(opts.reviewCount),
+    };
+  }
+  return node;
+}
+
 export function breadcrumbJsonLd(trail: { name: string; url: string }[]) {
   return {
     "@context": "https://schema.org",
