@@ -28,30 +28,40 @@ const homeOpts = () => queryOptions({
 });
 
 const KEYWORDS_AR = [
-  "تاكسي العمرة","التوصيل من مطار جدة إلى مكة","تاكسي من مطار جدة إلى مكة","نقل من مطار جدة إلى مكة",
-  "حجز تاكسي من مطار جدة","سيارة من مطار جدة إلى مكة","مواصلات من مطار جدة إلى مكة","استقبال من مطار جدة",
+  "التوصيل من مطار جدة إلى مكة","تاكسي من مطار جدة إلى مكة","حجز تاكسي مطار جدة",
+  "نقل من مطار الملك عبدالعزيز إلى مكة","تاكسي العمرة","نقل من مطار جدة إلى مكة",
+  "سيارة من مطار جدة إلى مكة","مواصلات من مطار جدة إلى مكة","استقبال من مطار جدة",
   "تاكسي مطار جدة","نقل المعتمرين","تاكسي مكة","تاكسي جدة",
 ];
 const KEYWORDS_EN = [
   "Umrah Taxi","Jeddah Airport Taxi","Taxi from Jeddah Airport to Makkah","Jeddah Airport Transfer",
-  "Airport Transfer Jeddah to Makkah","Makkah Taxi","Jeddah Taxi","Umrah Transportation",
-  "Private Transfer Jeddah Airport","Taxi to Makkah","Saudi Airport Taxi","Airport Taxi Saudi Arabia",
+  "Airport Transfer Jeddah to Makkah","King Abdulaziz Airport to Makkah transfer","Makkah Taxi","Jeddah Taxi",
+  "Umrah Transportation","Private Transfer Jeddah Airport","Taxi to Makkah","Airport Taxi Saudi Arabia",
 ];
+
 
 export const Route = createFileRoute("/_public/{-$locale}/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(homeOpts()),
   head: ({ params, loaderData }: any) => {
     const locale = (params?.locale === "en" ? "en" : "ar") as "ar" | "en";
     const isEn = locale === "en";
-    const titleAr = `تاكسي العمرة | التوصيل من مطار جدة إلى مكة المكرمة ٢٤/٧`;
-    const titleEn = `Umrah Taxi | Taxi from Jeddah Airport to Makkah — 24/7 Transfers`;
-    const descAr = "احجز تاكسي العمرة للتوصيل من مطار جدة إلى مكة المكرمة على مدار الساعة. أسعار ثابتة، سائقون محترفون، استقبال شخصي، سيارات حديثة، وحجز فوري عبر واتساب لخدمة نقل المعتمرين.";
-    const descEn = "Book Umrah Taxi for reliable Jeddah Airport to Makkah transfers, 24/7. Fixed fares, licensed drivers, meet & greet at KAIA and instant WhatsApp booking across Jeddah, Makkah and Madinah.";
-    const ogImage = `${SITE.url}${isEn ? "/og-home-en.jpg" : "/og-home-ar.jpg"}`;
+    const titleAr = `التوصيل من مطار جدة إلى مكة | تاكسي من مطار جدة إلى مكة - تاكسي العمرة`;
+    const titleEn = `Jeddah Airport to Makkah Transfer | Taxi from Jeddah Airport — Omra Taxi`;
+    const descAr = "احجز خدمة التوصيل من مطار جدة إلى مكة مع تاكسي العمرة. نوفر سيارات حديثة، سائقين محترفين، استقبال من مطار الملك عبدالعزيز، أسعار ثابتة، وخدمة متوفرة 24 ساعة لجميع رحلات العمرة والزيارة.";
+    const descEn = "Book your Jeddah Airport to Makkah transfer with Omra Taxi. Modern cars, professional drivers, meet & greet at King Abdulaziz Airport, fixed fares and 24-hour service for Umrah and Ziyarah trips.";
+    const ogTitleAr = `التوصيل من مطار جدة إلى مكة | تاكسي العمرة`;
+    const ogTitleEn = `Jeddah Airport to Makkah Transfer | Omra Taxi`;
+    const ogDescAr = "أفضل خدمة تاكسي من مطار جدة إلى مكة بسيارات حديثة وأسعار ثابتة وخدمة 24/7. احجز رحلتك الآن مع تاكسي العمرة.";
+    const ogDescEn = "The best taxi service from Jeddah Airport to Makkah — modern cars, fixed fares and 24/7 service. Book your ride now with Omra Taxi.";
+    const ogImage = `${SITE.url}/og-cover.jpg`;
     const url = SITE.url + `/${locale}`;
     const title = isEn ? titleEn : titleAr;
     const desc = isEn ? descEn : descAr;
+    const ogTitle = isEn ? ogTitleEn : ogTitleAr;
+    const ogDesc = isEn ? ogDescEn : ogDescAr;
+    const siteName = `${SITE.brand.ar} | ${SITE.brand.en}`;
     const keywords = (isEn ? KEYWORDS_EN : KEYWORDS_AR).join(", ");
+
 
     // Rich JSON-LD stack — canonical/hreflang emitted by parent layout (avoid dupes).
     const graph: any[] = [
@@ -99,22 +109,26 @@ export const Route = createFileRoute("/_public/{-$locale}/")({
         { title },
         { name: "description", content: desc },
         { name: "keywords", content: keywords },
-        { name: "robots", content: "index,follow,max-image-preview:large,max-snippet:-1" },
-        { property: "og:site_name", content: SITE.brand.en },
-        { property: "og:title", content: title },
-        { property: "og:description", content: desc },
+        { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
+        { name: "language", content: isEn ? "en" : "ar" },
+        { property: "og:site_name", content: siteName },
+        { property: "og:title", content: ogTitle },
+        { property: "og:description", content: ogDesc },
         { property: "og:type", content: "website" },
         { property: "og:locale", content: isEn ? "en_US" : "ar_SA" },
         { property: "og:locale:alternate", content: isEn ? "ar_SA" : "en_US" },
         { property: "og:image", content: ogImage },
+        { property: "og:image:secure_url", content: ogImage },
+        { property: "og:image:type", content: "image/jpeg" },
         { property: "og:image:width", content: "1200" },
         { property: "og:image:height", content: "630" },
-        { property: "og:image:alt", content: title },
+        { property: "og:image:alt", content: ogTitle },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: title },
-        { name: "twitter:description", content: desc },
+        { name: "twitter:title", content: ogTitle },
+        { name: "twitter:description", content: ogDesc },
         { name: "twitter:image", content: ogImage },
-        { name: "twitter:image:alt", content: title },
+        { name: "twitter:image:alt", content: ogTitle },
+
       ],
       scripts: graph.map((g) => ({ type: "application/ld+json", children: JSON.stringify(g) })),
     };
