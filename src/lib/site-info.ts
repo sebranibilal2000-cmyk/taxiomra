@@ -86,9 +86,9 @@ export const SITE = {
   ogImage: pick("VITE_SITE_OG_IMAGE", DEFAULTS.ogImage),
   logo: pick("VITE_SITE_LOGO", DEFAULTS.logo),
   socials: {
-    twitter: pick("VITE_SITE_TWITTER", ""),
-    instagram: pick("VITE_SITE_INSTAGRAM", ""),
-    facebook: pick("VITE_SITE_FACEBOOK", ""),
+    twitter: pick("VITE_SITE_TWITTER", "https://x.com/omrataxi"),
+    instagram: pick("VITE_SITE_INSTAGRAM", "https://instagram.com/omrataxi"),
+    facebook: pick("VITE_SITE_FACEBOOK", "https://facebook.com/omrataxi"),
     tiktok: pick("VITE_SITE_TIKTOK", ""),
     youtube: pick("VITE_SITE_YOUTUBE", ""),
     linkedin: pick("VITE_SITE_LINKEDIN", ""),
