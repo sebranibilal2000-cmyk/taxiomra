@@ -96,6 +96,7 @@ import { Route as PublicChar123LocaleChar125VehiclesSlugRouteImport } from './ro
 import { Route as PublicChar123LocaleChar125ServicesSlugRouteImport } from './routes/_public.{-$locale}.services.$slug'
 import { Route as PublicChar123LocaleChar125RoutesSlugRouteImport } from './routes/_public.{-$locale}.routes.$slug'
 import { Route as PublicChar123LocaleChar125PSlugRouteImport } from './routes/_public.{-$locale}.p.$slug'
+import { Route as PublicChar123LocaleChar125GuideTaxiFaresRouteImport } from './routes/_public.{-$locale}.guide.taxi-fares'
 import { Route as PublicChar123LocaleChar125FleetSlugRouteImport } from './routes/_public.{-$locale}.fleet.$slug'
 import { Route as PublicChar123LocaleChar125CitiesSlugRouteImport } from './routes/_public.{-$locale}.cities.$slug'
 import { Route as PublicChar123LocaleChar125BlogSlugRouteImport } from './routes/_public.{-$locale}.blog.$slug'
@@ -608,6 +609,12 @@ const PublicChar123LocaleChar125PSlugRoute =
     path: '/p/$slug',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
+const PublicChar123LocaleChar125GuideTaxiFaresRoute =
+  PublicChar123LocaleChar125GuideTaxiFaresRouteImport.update({
+    id: '/guide/taxi-fares',
+    path: '/guide/taxi-fares',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
 const PublicChar123LocaleChar125FleetSlugRoute =
   PublicChar123LocaleChar125FleetSlugRouteImport.update({
     id: '/fleet/$slug',
@@ -748,6 +755,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/blog/$slug': typeof PublicChar123LocaleChar125BlogSlugRoute
   '/{-$locale}/cities/$slug': typeof PublicChar123LocaleChar125CitiesSlugRoute
   '/{-$locale}/fleet/$slug': typeof PublicChar123LocaleChar125FleetSlugRoute
+  '/{-$locale}/guide/taxi-fares': typeof PublicChar123LocaleChar125GuideTaxiFaresRoute
   '/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
@@ -845,6 +853,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/blog/$slug': typeof PublicChar123LocaleChar125BlogSlugRoute
   '/{-$locale}/cities/$slug': typeof PublicChar123LocaleChar125CitiesSlugRoute
   '/{-$locale}/fleet/$slug': typeof PublicChar123LocaleChar125FleetSlugRoute
+  '/{-$locale}/guide/taxi-fares': typeof PublicChar123LocaleChar125GuideTaxiFaresRoute
   '/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
@@ -944,6 +953,7 @@ export interface FileRoutesById {
   '/_public/{-$locale}/blog/$slug': typeof PublicChar123LocaleChar125BlogSlugRoute
   '/_public/{-$locale}/cities/$slug': typeof PublicChar123LocaleChar125CitiesSlugRoute
   '/_public/{-$locale}/fleet/$slug': typeof PublicChar123LocaleChar125FleetSlugRoute
+  '/_public/{-$locale}/guide/taxi-fares': typeof PublicChar123LocaleChar125GuideTaxiFaresRoute
   '/_public/{-$locale}/p/$slug': typeof PublicChar123LocaleChar125PSlugRoute
   '/_public/{-$locale}/routes/$slug': typeof PublicChar123LocaleChar125RoutesSlugRoute
   '/_public/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
@@ -1044,6 +1054,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/blog/$slug'
     | '/{-$locale}/cities/$slug'
     | '/{-$locale}/fleet/$slug'
+    | '/{-$locale}/guide/taxi-fares'
     | '/{-$locale}/p/$slug'
     | '/{-$locale}/routes/$slug'
     | '/{-$locale}/services/$slug'
@@ -1141,6 +1152,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/blog/$slug'
     | '/{-$locale}/cities/$slug'
     | '/{-$locale}/fleet/$slug'
+    | '/{-$locale}/guide/taxi-fares'
     | '/{-$locale}/p/$slug'
     | '/{-$locale}/routes/$slug'
     | '/{-$locale}/services/$slug'
@@ -1239,6 +1251,7 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/blog/$slug'
     | '/_public/{-$locale}/cities/$slug'
     | '/_public/{-$locale}/fleet/$slug'
+    | '/_public/{-$locale}/guide/taxi-fares'
     | '/_public/{-$locale}/p/$slug'
     | '/_public/{-$locale}/routes/$slug'
     | '/_public/{-$locale}/services/$slug'
@@ -1875,6 +1888,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicChar123LocaleChar125PSlugRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
+    '/_public/{-$locale}/guide/taxi-fares': {
+      id: '/_public/{-$locale}/guide/taxi-fares'
+      path: '/guide/taxi-fares'
+      fullPath: '/{-$locale}/guide/taxi-fares'
+      preLoaderRoute: typeof PublicChar123LocaleChar125GuideTaxiFaresRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
+    }
     '/_public/{-$locale}/fleet/$slug': {
       id: '/_public/{-$locale}/fleet/$slug'
       path: '/fleet/$slug'
@@ -2152,6 +2172,7 @@ interface PublicChar123LocaleChar125RouteChildren {
   PublicChar123LocaleChar125BlogSlugRoute: typeof PublicChar123LocaleChar125BlogSlugRoute
   PublicChar123LocaleChar125CitiesSlugRoute: typeof PublicChar123LocaleChar125CitiesSlugRoute
   PublicChar123LocaleChar125FleetSlugRoute: typeof PublicChar123LocaleChar125FleetSlugRoute
+  PublicChar123LocaleChar125GuideTaxiFaresRoute: typeof PublicChar123LocaleChar125GuideTaxiFaresRoute
   PublicChar123LocaleChar125PSlugRoute: typeof PublicChar123LocaleChar125PSlugRoute
   PublicChar123LocaleChar125RoutesSlugRoute: typeof PublicChar123LocaleChar125RoutesSlugRoute
   PublicChar123LocaleChar125ServicesSlugRoute: typeof PublicChar123LocaleChar125ServicesSlugRoute
@@ -2204,6 +2225,8 @@ const PublicChar123LocaleChar125RouteChildren: PublicChar123LocaleChar125RouteCh
       PublicChar123LocaleChar125CitiesSlugRoute,
     PublicChar123LocaleChar125FleetSlugRoute:
       PublicChar123LocaleChar125FleetSlugRoute,
+    PublicChar123LocaleChar125GuideTaxiFaresRoute:
+      PublicChar123LocaleChar125GuideTaxiFaresRoute,
     PublicChar123LocaleChar125PSlugRoute: PublicChar123LocaleChar125PSlugRoute,
     PublicChar123LocaleChar125RoutesSlugRoute:
       PublicChar123LocaleChar125RoutesSlugRoute,
@@ -2241,13 +2264,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
