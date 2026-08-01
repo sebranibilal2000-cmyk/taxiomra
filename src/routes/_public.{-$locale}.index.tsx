@@ -318,7 +318,7 @@ function Home() {
                 <a href={waLink()} target="_blank" rel="noopener"><MessageCircle className="h-5 w-5 me-2" /> {ar ? "احجز الآن" : "Book transfer"}</a>
               </Button>
               <Button asChild size="lg" variant="outline" className="rounded-full border-primary-foreground/20 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 h-12 px-6">
-                <Link to="/p/$slug" params={{ slug: "airport-transfer" }}>{ar ? "التفاصيل" : "Learn more"}</Link>
+                <Link to="/p/$slug" params={{ slug: "airport-transfer" }}>{ar ? "تفاصيل خدمة استقبال المطار" : "See airport transfer details"}</Link>
               </Button>
             </div>
           </div>
