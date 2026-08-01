@@ -64,6 +64,7 @@ export function PublicFooter() {
           <ul className="space-y-2.5 text-sm text-primary-foreground/70">
             <li><Link to={l("/about")} className="hover:text-gold transition">{ar ? "من نحن" : "About"}</Link></li>
             <li><Link to={l("/blog")} className="hover:text-gold transition">{ar ? "المدونة" : "Journal"}</Link></li>
+            <li><Link to={l("/guide/taxi-fares")} className="hover:text-gold transition">{ar ? "أسعار التاكسي من مطار جدة" : "Jeddah Airport fare guide"}</Link></li>
             <li><Link to={l("/faq")} className="hover:text-gold transition">FAQ</Link></li>
             
           </ul>
