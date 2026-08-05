@@ -37,9 +37,11 @@ export function HeadInjector() {
 
       const addMeta = (name: string, content: string) => {
         if (!content) return;
+        // Already server-rendered by the root route head() — don't duplicate.
+        if (document.head.querySelector(`meta[name="${name}"]`)) return;
         const el = document.createElement("meta");
         el.setAttribute("name", name);
-        el.setAttribute("content", content);
+        el.setAttribute("content", content.includes("<") ? (content.match(/content=["']([^"']+)["']/i)?.[1] ?? "") : content);
         el.setAttribute("data-injected", "settings");
         document.head.appendChild(el);
         injected.push(el);
