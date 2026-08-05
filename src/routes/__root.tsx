@@ -15,7 +15,33 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { errorToMessage } from "@/lib/errors";
 import { SITE } from "@/lib/site-info";
 import { HeadInjector } from "@/components/HeadInjector";
+import { getPublicHeadSettings } from "@/lib/head-settings.functions";
 import { ContactInfoProvider } from "@/lib/contact-info";
+
+/**
+ * Server-rendered head tags coming from the admin "System settings" page.
+ * These MUST be in the SSR HTML — Google Search Console cannot see tags that
+ * are only injected client-side after hydration.
+ */
+function extraHeadMeta(settings: Record<string, string>) {
+  const meta: Array<Record<string, string>> = [];
+  const g = settings["google_site_verification"]?.trim();
+  const b = settings["bing_site_verification"]?.trim();
+  const contentOf = (raw: string) =>
+    raw.includes("<") ? (raw.match(/content=["']([^"']+)["']/i)?.[1] ?? "") : raw;
+  if (g) meta.push({ name: "google-site-verification", content: contentOf(g) });
+  if (b) meta.push({ name: "msvalidate.01", content: contentOf(b) });
+
+  const custom = settings["head_meta_custom"] ?? "";
+  for (const tag of custom.match(/<meta\b[^>]*>/gi) ?? []) {
+    const name = tag.match(/\sname=["']([^"']+)["']/i)?.[1];
+    const property = tag.match(/\sproperty=["']([^"']+)["']/i)?.[1];
+    const content = tag.match(/\scontent=["']([^"']*)["']/i)?.[1] ?? "";
+    if (name) meta.push({ name, content });
+    else if (property) meta.push({ property, content });
+  }
+  return meta;
+}
 
 
 function NotFoundComponent() {
@@ -49,8 +75,16 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
+  loader: async () => {
+    try {
+      return { headSettings: await getPublicHeadSettings() };
+    } catch {
+      return { headSettings: {} as Record<string, string> };
+    }
+  },
+  head: ({ loaderData }) => ({
     meta: [
+      ...extraHeadMeta(loaderData?.headSettings ?? {}),
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: `${SITE.brand.en} | Jeddah Airport Taxi to Makkah` },
