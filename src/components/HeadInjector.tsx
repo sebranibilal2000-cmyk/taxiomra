@@ -66,6 +66,9 @@ export function HeadInjector() {
               document.head.appendChild(s);
               injected.push(s);
             } else {
+              // Meta tags from head_meta_custom are already server-rendered.
+              const mName = src.getAttribute("name");
+              if (src.tagName === "META" && mName && document.head.querySelector(`meta[name="${mName}"]`)) return;
               src.setAttribute("data-injected", "settings");
               document.head.appendChild(src);
               injected.push(src);
