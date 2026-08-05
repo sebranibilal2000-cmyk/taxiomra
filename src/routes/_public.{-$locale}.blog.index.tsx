@@ -53,7 +53,7 @@ function Blog() {
       )}
 
       {featured && (
-        <Link to="/blog/$slug" params={{ slug: featured.slug }} className="group block mb-16">
+        <Link to="/{-$locale}/blog/$slug" params={(prev: Record<string, string>) => ({ ...prev, slug: featured.slug })} className="group block mb-16">
           <article className="grid gap-8 lg:grid-cols-12 items-center">
             <div className="lg:col-span-7 aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
               {featured.cover_url ? (
@@ -80,7 +80,7 @@ function Blog() {
       {rest.length > 0 && (
         <div className="border-t border-border/60 pt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
           {rest.map((p) => (
-            <Link key={p.id} to="/blog/$slug" params={{ slug: p.slug }} className="group">
+            <Link key={p.id} to="/{-$locale}/blog/$slug" params={(prev: Record<string, string>) => ({ ...prev, slug: p.slug })} className="group">
               <article className="space-y-4">
                 <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-muted">
                   {p.cover_url ? (

@@ -80,7 +80,7 @@ function AirportsIndex() {
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {airports.map((a: any, i: number) => (
-            <Link key={a.id} to="/airports/$slug" params={{ slug: a.slug }} className="group">
+            <Link key={a.id} to="/{-$locale}/airports/$slug" params={(prev: Record<string, string>) => ({ ...prev, slug: a.slug })} className="group">
               <article className="hover-lift h-full flex flex-col rounded-2xl border border-border bg-card p-7">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground group-hover:bg-gold group-hover:text-primary transition-colors">
