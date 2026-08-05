@@ -77,7 +77,7 @@ function RoutesIndex() {
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {routes.map((r: any, i: number) => (
-            <Link key={r.id} to="/{-$locale}/routes/$slug" params={(prev) => ({ ...prev, slug: r.slug })} className="group">
+            <Link key={r.id} to="/{-$locale}/routes/$slug" params={(prev: Record<string, string>) => ({ ...prev, slug: r.slug })} className="group">
               <article className="hover-lift h-full flex flex-col rounded-2xl border border-border bg-card p-7">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground group-hover:bg-gold group-hover:text-primary transition-colors">
