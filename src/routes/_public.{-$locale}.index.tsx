@@ -271,7 +271,7 @@ function Home() {
             { icon: Briefcase, slug: "corporate", ar: "نقل الشركات", en: "Business Travel", desc_ar: "عقود شهرية وحلول للمدراء التنفيذيين.", desc_en: "Monthly contracts and executive road-shows." },
             { icon: Building2, slug: "hotel-transfer", ar: "نقل الفنادق", en: "Hotel & Private", desc_ar: "خدمة مخصصة لضيوف الفنادق والفعاليات الخاصة.", desc_en: "White-glove pickups for hotels and events." },
           ].map((s) => (
-            <Link key={s.slug} to="/p/$slug" params={{ slug: s.slug }} className="group">
+            <Link key={s.slug} to="/{-$locale}/p/$slug" params={(prev) => ({ ...prev, slug: s.slug })} className="group">
               <article className="hover-lift h-full flex flex-col rounded-2xl border border-border bg-card p-7">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground mb-6 group-hover:bg-gold group-hover:text-primary transition-colors">
                   <s.icon className="h-5 w-5" />
@@ -318,7 +318,7 @@ function Home() {
                 <a href={waLink()} target="_blank" rel="noopener"><MessageCircle className="h-5 w-5 me-2" /> {ar ? "احجز الآن" : "Book transfer"}</a>
               </Button>
               <Button asChild size="lg" variant="outline" className="rounded-full border-primary-foreground/20 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 h-12 px-6">
-                <Link to="/p/$slug" params={{ slug: "airport-transfer" }}>{ar ? "تفاصيل خدمة استقبال المطار" : "See airport transfer details"}</Link>
+                <Link to="/{-$locale}/p/$slug" params={(prev) => ({ ...prev, slug: "airport-transfer" })}>{ar ? "تفاصيل خدمة استقبال المطار" : "See airport transfer details"}</Link>
               </Button>
             </div>
           </div>
@@ -334,7 +334,7 @@ function Home() {
               {ar ? "سيارات مصانة بعناية، لكل نوع رحلة." : "A meticulously maintained fleet, for every kind of journey."}
             </h2>
           </div>
-          <Button asChild variant="outline" className="rounded-full"><Link to="/fleet">{ar ? "استعرض الأسطول" : "View full fleet"} <ArrowRight className="h-4 w-4 ms-2 rtl:rotate-180" /></Link></Button>
+          <Button asChild variant="outline" className="rounded-full"><Link to="/{-$locale}/fleet">{ar ? "استعرض الأسطول" : "View full fleet"} <ArrowRight className="h-4 w-4 ms-2 rtl:rotate-180" /></Link></Button>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {data.fleet.slice(0, 3).map((c: any, i: number) => {
@@ -342,7 +342,7 @@ function Home() {
             const img = categoryImage(c, i);
             const alt = categoryAlt(c, locale);
             return (
-              <Link key={c.id} to="/fleet" className="group">
+              <Link key={c.id} to="/{-$locale}/fleet" className="group">
                 <article className="hover-lift overflow-hidden rounded-2xl border border-border bg-card">
                   <div className="aspect-[4/3] overflow-hidden bg-primary">
                     <img src={img} alt={alt} width={1200} height={800} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -417,7 +417,7 @@ function Home() {
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {data.cities.slice(0, 6).map((c) => (
-              <Link key={c.id} to="/p/$slug" params={{ slug: c.slug }} className="group rounded-2xl border border-border bg-card p-6 hover:border-gold transition-colors">
+              <Link key={c.id} to="/{-$locale}/p/$slug" params={(prev) => ({ ...prev, slug: c.slug })} className="group rounded-2xl border border-border bg-card p-6 hover:border-gold transition-colors">
                 <MapPin className="h-5 w-5 text-gold mb-3" />
                 <div className="font-display text-xl mb-1">{ar ? c.title_ar : c.title_en}</div>
                 <div className="text-sm text-muted-foreground line-clamp-1">{ar ? c.subtitle_ar : c.subtitle_en}</div>
@@ -474,7 +474,7 @@ function Home() {
             ))}
           </Accordion>
           <div className="text-center mt-8">
-            <Button asChild variant="outline" className="rounded-full"><Link to="/faq">{ar ? "كل الأسئلة" : "See all questions"} <ArrowRight className="h-4 w-4 ms-2 rtl:rotate-180" /></Link></Button>
+            <Button asChild variant="outline" className="rounded-full"><Link to="/{-$locale}/faq">{ar ? "كل الأسئلة" : "See all questions"} <ArrowRight className="h-4 w-4 ms-2 rtl:rotate-180" /></Link></Button>
           </div>
         </section>
       )}
