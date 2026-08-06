@@ -10,7 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SitemapPostsDotxmlRouteImport } from './routes/sitemap-posts[.]xml'
+import { Route as SitemapPagesDotxmlRouteImport } from './routes/sitemap-pages[.]xml'
+import { Route as SitemapIndexDotxmlRouteImport } from './routes/sitemap-index[.]xml'
 import { Route as SitemapImagesDotxmlRouteImport } from './routes/sitemap-images[.]xml'
+import { Route as SitemapCategoriesDotxmlRouteImport } from './routes/sitemap-categories[.]xml'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -112,9 +116,29 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapPostsDotxmlRoute = SitemapPostsDotxmlRouteImport.update({
+  id: '/sitemap-posts.xml',
+  path: '/sitemap-posts.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapPagesDotxmlRoute = SitemapPagesDotxmlRouteImport.update({
+  id: '/sitemap-pages.xml',
+  path: '/sitemap-pages.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapIndexDotxmlRoute = SitemapIndexDotxmlRouteImport.update({
+  id: '/sitemap-index.xml',
+  path: '/sitemap-index.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapImagesDotxmlRoute = SitemapImagesDotxmlRouteImport.update({
   id: '/sitemap-images.xml',
   path: '/sitemap-images.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapCategoriesDotxmlRoute = SitemapCategoriesDotxmlRouteImport.update({
+  id: '/sitemap-categories.xml',
+  path: '/sitemap-categories.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
@@ -675,7 +699,11 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
   '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
+  '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
+  '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
+  '/sitemap-posts.xml': typeof SitemapPostsDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
   '/admin/airports': typeof AuthenticatedAdminAirportsRoute
@@ -774,7 +802,11 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
   '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
+  '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
+  '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
+  '/sitemap-posts.xml': typeof SitemapPostsDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/airports': typeof AuthenticatedAdminAirportsRoute
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
@@ -873,7 +905,11 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap-categories.xml': typeof SitemapCategoriesDotxmlRoute
   '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
+  '/sitemap-index.xml': typeof SitemapIndexDotxmlRoute
+  '/sitemap-pages.xml': typeof SitemapPagesDotxmlRoute
+  '/sitemap-posts.xml': typeof SitemapPostsDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_public/{-$locale}': typeof PublicChar123LocaleChar125RouteWithChildren
   '/_authenticated/admin/airports': typeof AuthenticatedAdminAirportsRoute
@@ -974,7 +1010,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/robots.txt'
+    | '/sitemap-categories.xml'
     | '/sitemap-images.xml'
+    | '/sitemap-index.xml'
+    | '/sitemap-pages.xml'
+    | '/sitemap-posts.xml'
     | '/sitemap.xml'
     | '/{-$locale}'
     | '/admin/airports'
@@ -1073,7 +1113,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/robots.txt'
+    | '/sitemap-categories.xml'
     | '/sitemap-images.xml'
+    | '/sitemap-index.xml'
+    | '/sitemap-pages.xml'
+    | '/sitemap-posts.xml'
     | '/sitemap.xml'
     | '/admin/airports'
     | '/admin/analytics'
@@ -1171,7 +1215,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/robots.txt'
+    | '/sitemap-categories.xml'
     | '/sitemap-images.xml'
+    | '/sitemap-index.xml'
+    | '/sitemap-pages.xml'
+    | '/sitemap-posts.xml'
     | '/sitemap.xml'
     | '/_public/{-$locale}'
     | '/_authenticated/admin/airports'
@@ -1271,7 +1319,11 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapCategoriesDotxmlRoute: typeof SitemapCategoriesDotxmlRoute
   SitemapImagesDotxmlRoute: typeof SitemapImagesDotxmlRoute
+  SitemapIndexDotxmlRoute: typeof SitemapIndexDotxmlRoute
+  SitemapPagesDotxmlRoute: typeof SitemapPagesDotxmlRoute
+  SitemapPostsDotxmlRoute: typeof SitemapPostsDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   PublicChar123LocaleChar125Route: typeof PublicChar123LocaleChar125RouteWithChildren
   ApiPublicHooksProcessQueuesRoute: typeof ApiPublicHooksProcessQueuesRoute
@@ -1286,11 +1338,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap-posts.xml': {
+      id: '/sitemap-posts.xml'
+      path: '/sitemap-posts.xml'
+      fullPath: '/sitemap-posts.xml'
+      preLoaderRoute: typeof SitemapPostsDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap-pages.xml': {
+      id: '/sitemap-pages.xml'
+      path: '/sitemap-pages.xml'
+      fullPath: '/sitemap-pages.xml'
+      preLoaderRoute: typeof SitemapPagesDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap-index.xml': {
+      id: '/sitemap-index.xml'
+      path: '/sitemap-index.xml'
+      fullPath: '/sitemap-index.xml'
+      preLoaderRoute: typeof SitemapIndexDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap-images.xml': {
       id: '/sitemap-images.xml'
       path: '/sitemap-images.xml'
       fullPath: '/sitemap-images.xml'
       preLoaderRoute: typeof SitemapImagesDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap-categories.xml': {
+      id: '/sitemap-categories.xml'
+      path: '/sitemap-categories.xml'
+      fullPath: '/sitemap-categories.xml'
+      preLoaderRoute: typeof SitemapCategoriesDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/robots.txt': {
@@ -2256,7 +2336,11 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapCategoriesDotxmlRoute: SitemapCategoriesDotxmlRoute,
   SitemapImagesDotxmlRoute: SitemapImagesDotxmlRoute,
+  SitemapIndexDotxmlRoute: SitemapIndexDotxmlRoute,
+  SitemapPagesDotxmlRoute: SitemapPagesDotxmlRoute,
+  SitemapPostsDotxmlRoute: SitemapPostsDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   PublicChar123LocaleChar125Route: PublicChar123LocaleChar125RouteWithChildren,
   ApiPublicHooksProcessQueuesRoute: ApiPublicHooksProcessQueuesRoute,
