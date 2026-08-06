@@ -87,7 +87,7 @@ export function PublicHeader() {
             asChild
             variant="ghost"
             size="sm"
-            aria-label={t("toggle_lang")}
+            aria-label="انظر لمشكل سرعة\n\n ايضا \n ملفات  سيت ماب انظر كيف هي"
             className="rounded-full gap-1.5"
             onClick={(e) => {
               // Persist the preference so future prefix-less URLs redirect correctly.
