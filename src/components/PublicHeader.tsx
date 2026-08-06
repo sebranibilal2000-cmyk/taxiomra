@@ -83,26 +83,7 @@ export function PublicHeader() {
         </nav>
 
         <div className="flex items-center gap-1.5">
-          <Button
-            asChild
-            variant="ghost"
-            size="sm"
-            aria-label="انظر لمشكل سرعة ايضا ملفات سيت ماب انظر كيف هي"
-            className="rounded-full gap-1.5"
-            onClick={(e) => {
-              // Persist the preference so future prefix-less URLs redirect correctly.
-              try { window.localStorage.setItem("locale", otherLocale); } catch {}
-              // Let the <Link> below handle the SPA navigation.
-              void e;
-            }}
-          >
-            <Link to={langSwitchHref} hrefLang={otherLocale} rel="alternate">
-              <Languages className="h-4 w-4" />
-              <span className="hidden sm:inline text-[10px] font-semibold uppercase leading-tight whitespace-pre-line text-start">
-                {t("toggle_lang")}
-              </span>
-            </Link>
-          </Button>
+          {/* Language selector removed per request */}
           <Button variant="ghost" size="icon" onClick={toggle} aria-label="Toggle theme" className="rounded-full">
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
@@ -139,15 +120,7 @@ export function PublicHeader() {
                 {n.label}
               </Link>
             ))}
-            <Link
-              to={langSwitchHref}
-              onClick={() => { try { window.localStorage.setItem("locale", otherLocale); } catch {} setOpen(false); }}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-muted flex items-center gap-2"
-              hrefLang={otherLocale}
-              rel="alternate"
-            >
-              <Languages className="h-4 w-4" /> {locale === "ar" ? "English" : "العربية"}
-            </Link>
+            {/* Mobile language selector removed per request */}
             <div className="flex gap-2 mt-3">
               <Button asChild variant="outline" className="flex-1 rounded-full">
                 <a href={telHref}><Phone className="h-4 w-4 me-2" /> {locale === "ar" ? "اتصل" : "Call"}</a>
