@@ -146,7 +146,7 @@ export function PublicHeader() {
               hrefLang={otherLocale}
               rel="alternate"
             >
-              <Languages className="h-4 w-4" /> {otherLocale === "en" ? "English" : "العربية"}
+              <Languages className="h-4 w-4" /> {otherLocale === "en" ? "English" : "هل صحيح تلك بينات؟"}
             </Link>
             <div className="flex gap-2 mt-3">
               <Button asChild variant="outline" className="flex-1 rounded-full">
