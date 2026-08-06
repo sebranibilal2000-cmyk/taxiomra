@@ -96,7 +96,7 @@ export function PublicHeader() {
             <Link to={langSwitchHref} hrefLang={otherLocale} rel="alternate">
               <Languages className="h-4 w-4" />
               <span className="hidden sm:inline text-[10px] font-semibold uppercase leading-tight whitespace-pre-line text-start">
-                {otherLocale === "en" ? "English" : "هل البنات في الصورة الخاصة بقوقل كونسول صحيحة؟"}
+                {otherLocale === "en" ? "English" : "العربية"}
               </span>
             </Link>
           </Button>
@@ -146,7 +146,7 @@ export function PublicHeader() {
               hrefLang={otherLocale}
               rel="alternate"
             >
-              <Languages className="h-4 w-4" /> {otherLocale === "en" ? "English" : "هل البنات في الصورة الخاصة بقوقل كونسول صحيحة؟"}
+              <Languages className="h-4 w-4" /> {otherLocale === "en" ? "English" : "العربية"}
             </Link>
             <div className="flex gap-2 mt-3">
               <Button asChild variant="outline" className="flex-1 rounded-full">
