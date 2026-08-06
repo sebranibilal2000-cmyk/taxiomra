@@ -27,4 +27,8 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
+Sitemap: https://omrataxi-sa.online/sitemap-index.xml
 Sitemap: https://omrataxi-sa.online/sitemap.xml
+Sitemap: https://omrataxi-sa.online/sitemap-posts.xml
+Sitemap: https://omrataxi-sa.online/sitemap-pages.xml
+Sitemap: https://omrataxi-sa.online/sitemap-categories.xml
