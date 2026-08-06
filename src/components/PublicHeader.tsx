@@ -83,7 +83,23 @@ export function PublicHeader() {
         </nav>
 
         <div className="flex items-center gap-1.5">
-          {/* Language selector removed per request */}
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            aria-label={otherLocale === "en" ? "Switch to English" : "التبديل للعربية"}
+            className="rounded-full gap-1.5"
+            onClick={() => {
+              try { window.localStorage.setItem("locale", otherLocale); } catch {}
+            }}
+          >
+            <Link to={langSwitchHref} hrefLang={otherLocale} rel="alternate">
+              <Languages className="h-4 w-4" />
+              <span className="hidden sm:inline text-[10px] font-semibold uppercase leading-tight whitespace-pre-line text-start">
+                {otherLocale === "en" ? "English" : "العربية"}
+              </span>
+            </Link>
+          </Button>
           <Button variant="ghost" size="icon" onClick={toggle} aria-label="Toggle theme" className="rounded-full">
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
@@ -120,7 +136,18 @@ export function PublicHeader() {
                 {n.label}
               </Link>
             ))}
-            {/* Mobile language selector removed per request */}
+            <Link
+              to={langSwitchHref}
+              onClick={() => { 
+                try { window.localStorage.setItem("locale", otherLocale); } catch {} 
+                setOpen(false); 
+              }}
+              className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-muted flex items-center gap-2"
+              hrefLang={otherLocale}
+              rel="alternate"
+            >
+              <Languages className="h-4 w-4" /> {otherLocale === "en" ? "English" : "العربية"}
+            </Link>
             <div className="flex gap-2 mt-3">
               <Button asChild variant="outline" className="flex-1 rounded-full">
                 <a href={telHref}><Phone className="h-4 w-4 me-2" /> {locale === "ar" ? "اتصل" : "Call"}</a>
