@@ -87,7 +87,7 @@ export function PublicHeader() {
             asChild
             variant="ghost"
             size="sm"
-            aria-label="رتب سيتماب \nلاني يجب  ان اعرف كم صفحة  ارشفت \n\n ايضا   حل مشكل  قوقل كونسول"
+            aria-label="انظر لمشكل سرعة ايضا ملفات سيت ماب انظر كيف هي"
             className="rounded-full gap-1.5"
             onClick={(e) => {
               // Persist the preference so future prefix-less URLs redirect correctly.
