@@ -27,5 +27,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://taxiomra.lovable.app/sitemap.xml
-Sitemap: https://taxiomra.lovable.app/sitemap-images.xml
+Sitemap: https://omrataxi-sa.online/sitemap.xml
