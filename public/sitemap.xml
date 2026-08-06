@@ -1,275 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- This static file is a fallback. The dynamic sitemap at /sitemap.xml is preferred. -->
   <url>
     <loc>https://omrataxi-sa.online/ar</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar" />
     <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar" />
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
   </url>
   <url>
     <loc>https://omrataxi-sa.online/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar" />
     <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/ar/about</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/about" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/about" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/about" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/en/about</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/about" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/about" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/about" />
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
   </url>
   <url>
     <loc>https://omrataxi-sa.online/ar/services</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/services" />
     <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/services" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/services" />
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://omrataxi-sa.online/en/services</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/services" />
     <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/services" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/services" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/ar/airport-transfers</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/airport-transfers" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/airport-transfers" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/airport-transfers" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/en/airport-transfers</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/airport-transfers" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/airport-transfers" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/airport-transfers" />
   </url>
   <url>
     <loc>https://omrataxi-sa.online/ar/fleet</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/fleet" />
     <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/fleet" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/fleet" />
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://omrataxi-sa.online/en/fleet</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/fleet" />
     <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/fleet" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/fleet" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/ar/cities</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/cities" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/cities" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/cities" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/en/cities</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/cities" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/cities" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/cities" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/ar/airports</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/airports" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/airports" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/airports" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/en/airports</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/airports" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/airports" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/airports" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/ar/routes</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/routes" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/routes" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/routes" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/en/routes</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/routes" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/routes" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/routes" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/ar/booking</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/booking" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/booking" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/booking" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/en/booking</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/booking" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/booking" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/booking" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/ar/faq</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/faq" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/faq" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/faq" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/en/faq</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/faq" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/faq" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/faq" />
   </url>
   <url>
     <loc>https://omrataxi-sa.online/ar/blog</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/blog" />
     <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/blog" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/blog" />
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://omrataxi-sa.online/en/blog</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/blog" />
     <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/blog" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/blog" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/ar/contact</loc>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/contact" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/contact" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/contact" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/en/contact</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/contact" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/contact" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/contact" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/ar/sitemap</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/sitemap" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/sitemap" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/sitemap" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/en/sitemap</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/sitemap" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/sitemap" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/sitemap" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/ar/privacy</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/privacy" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/privacy" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/privacy" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/en/privacy</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/privacy" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/privacy" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/privacy" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/ar/terms</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/terms" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/terms" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/terms" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/en/terms</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/terms" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/terms" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/terms" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/ar/refund</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/refund" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/refund" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/refund" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/en/refund</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/refund" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/refund" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/refund" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/ar/cancellation</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/cancellation" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/cancellation" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/cancellation" />
-  </url>
-  <url>
-    <loc>https://omrataxi-sa.online/en/cancellation</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://omrataxi-sa.online/ar/cancellation" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://omrataxi-sa.online/en/cancellation" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://omrataxi-sa.online/ar/cancellation" />
   </url>
 </urlset>
