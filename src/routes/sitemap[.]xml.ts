@@ -106,6 +106,7 @@ export const Route = createFileRoute("/sitemap.xml")({
 
         const xml = [
           `<?xml version="1.0" encoding="UTF-8"?>`,
+          `<!-- انظر لمشكل سرعة\n\n ايضا \n ملفات  سيت ماب انظر كيف هي -->`,
           `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">`,
           ...urls,
           `</urlset>`,
