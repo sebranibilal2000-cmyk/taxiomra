@@ -96,7 +96,7 @@ export function PublicHeader() {
             <Link to={langSwitchHref} hrefLang={otherLocale} rel="alternate">
               <Languages className="h-4 w-4" />
               <span className="hidden sm:inline text-[10px] font-semibold uppercase leading-tight whitespace-pre-line text-start">
-                اريد ملفات sitemap هنا
+                {otherLocale === "en" ? "English" : "العربية"}
               </span>
             </Link>
           </Button>
