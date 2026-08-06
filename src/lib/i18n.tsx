@@ -101,7 +101,7 @@ const dict: Dict = {
   admin_panel: { ar: "لوحة الإدارة", en: "Admin Panel" },
   welcome: { ar: "مرحباً بك", en: "Welcome back" },
   auth_subtitle: { ar: "سجّل الدخول للوصول إلى لوحة الإدارة", en: "Sign in to access the admin panel" },
-  toggle_lang: { ar: "انظر لمشكل سرعة\n\n ايضا \n ملفات  سيت ماب انظر كيف هي", en: "Check speed issues\n\n also \n look at sitemap files" },
+  toggle_lang: { ar: "رتب سيتماب \nلاني يجب  ان اعرف كم صفحة  ارشفت \n\n ايضا   حل مشكل  قوقل كونسول", en: "Arrange sitemap \nbecause I need to know how many pages were archived \n\n also solve google console issue" },
   toggle_theme: { ar: "الوضع", en: "Theme" },
   overview: { ar: "نظرة عامة", en: "Overview" },
   operations: { ar: "العمليات", en: "Operations" },
