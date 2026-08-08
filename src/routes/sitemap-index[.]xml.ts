@@ -16,6 +16,7 @@ export const Route = createFileRoute("/sitemap-index.xml")({
 
         const xml = [
           `<?xml version="1.0" encoding="UTF-8"?>`,
+          `<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>`,
           `<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
           ...sitemaps.map(s => `  <sitemap>\n    <loc>${BASE_URL}${s}</loc>\n  </sitemap>`),
           `</sitemapindex>`,
