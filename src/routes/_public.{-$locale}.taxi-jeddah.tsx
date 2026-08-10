@@ -1,22 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Phone, CheckCircle2, Car, Users, Luggage, MapPin, Clock, Shield, Plane } from "lucide-react";
+import { MessageCircle, Phone, CheckCircle2, Car, Users, Luggage, MapPin, Clock, Shield, Plane, ArrowRight, Building2 } from "lucide-react";
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
 
 const FAQ_AR = [
-  { q: "كيف يمكنني حجز تاكسي في جدة؟", a: "يمكنك حجز تاكسي جدة بسهولة عبر واتساب أو الاتصال المباشر. نوفر خدمة فورية أو حجوزات مسبقة للرحلات الخاصة ورجال الأعمال والعائلات." },
-  { q: "هل تتوفر خدمة التوصيل بين أحياء جدة؟", a: "نعم، نقدم خدمة التوصيل الاحترافي بين جميع أحياء جدة (مثل الحمراء، الروضة، أبحر، البلد) بأسعار تنافسية وسيارات حديثة." },
-  { q: "ما هي أنواع السيارات المتوفرة في جدة؟", a: "يتضمن أسطولنا سيارات سيدان حديثة (كامري/سوناتا)، سيارات دفع رباعي عائلية (تاهو/جي إم سي)، وفانات كبيرة للرحلات الجماعية." },
-  { q: "هل توفرون خدمة استقبال من مطار جدة؟", a: "نعم، نحن متخصصون في استقبال المطار وتوصيل المسافرين من مطار الملك عبدالعزيز إلى أي وجهة داخل جدة أو مكة." },
+  { q: "كيف يمكنني حجز تاكسي في جدة؟", a: "يمكنك حجز تاكسي جدة بسهولة عبر واتساب أو الاتصال المباشر. نوفر خدمة فورية أو حجوزات مسبقة للرحلات الخاصة والعائلية وخدمات النقل لرجال الأعمال." },
+  { q: "هل تتوفر خدمة التوصيل بين أحياء جدة؟", a: "نعم، نقدم خدمة التوصيل الاحترافي بين جميع أحياء ومناطق جدة الكبرى بما في ذلك الحمراء، الروضة، أبحر، حي الشاطئ، ومنطقة البلد التاريخية." },
+  { q: "ما هي الوجهات المتاحة من مدينة جدة؟", a: "نوفر رحلات مباشرة من جدة إلى مكة المكرمة، المدينة المنورة، والطائف، بالإضافة إلى خدمة النقل المتخصصة من وإلى مطار الملك عبدالعزيز الدولي." },
+  { q: "ما هي أنواع السيارات المتوفرة في أسطول جدة؟", a: "يتضمن أسطولنا سيارات سيدان حديثة مريحة، سيارات دفع رباعي واسعة للعائلات، وفانات كبيرة للرحلات الجماعية ونقل المعتمرين." },
 ];
 
 const FAQ_EN = [
   { q: "How can I book a taxi in Jeddah?", a: "You can easily book a Jeddah taxi via WhatsApp or direct call. We offer instant pickups or pre-booked private transfers for business, families, and individuals." },
-  { q: "Do you offer transfers between Jeddah districts?", a: "Yes, we provide professional transfers between all Jeddah districts (e.g., Al Hamra, Al Rawdah, Obhur, Al Balad) with modern vehicles." },
-  { q: "What types of vehicles are available in Jeddah?", a: "Our fleet includes modern sedans (Camry/Sonata), family SUVs (Tahoe/GMC), and large vans for group travel." },
-  { q: "Do you provide meet and greet at Jeddah Airport?", a: "Yes, we specialize in airport meet-and-greet services, transferring passengers from KAIA (JED) to any destination in Jeddah or Makkah." },
+  { q: "Do you offer transfers between Jeddah districts?", a: "Yes, we provide professional transfers between all major Jeddah districts including Al Hamra, Al Rawdah, Obhur, Ash Shati, and the historical Al Balad area." },
+  { q: "What destinations are available from Jeddah?", a: "We provide direct transfers from Jeddah to Makkah, Madinah, and Taif, in addition to specialized transport to and from King Abdulaziz International Airport (KAIA)." },
+  { q: "What types of vehicles are available in the Jeddah fleet?", a: "Our fleet includes modern comfortable sedans, spacious SUVs for families, and large vans for group travel and Umrah transfers." },
 ];
 
 export const Route = createFileRoute("/_public/{-$locale}/taxi-jeddah")({
@@ -140,38 +140,49 @@ function TaxiJeddahPage() {
       </section>
 
       <section className="mb-16">
-        <h2 className="font-display text-3xl mb-8 border-b pb-4">{ar ? "خدماتنا في جدة" : "Our Services in Jeddah"}</h2>
+        <h2 className="font-display text-3xl mb-8 border-b pb-4">{ar ? "تغطية شاملة لخدمات النقل في جدة" : "Comprehensive Transfer Coverage in Jeddah"}</h2>
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-4">
-            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Car className="h-5 w-5 text-gold" /> {ar ? "التوصيل من وإلى مطار جدة" : "Jeddah Airport Transfers"}</h3>
+            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Plane className="h-5 w-5 text-gold" /> {ar ? "نقل مطار الملك عبدالعزيز (JED)" : "King Abdulaziz Airport (JED) Transfers"}</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {ar 
-                ? "نقدم أفضل خدمة استقبال وتوصيل من مطار الملك عبدالعزيز الدولي (JED). نوفر خدمة تتبع الرحلات لضمان وجود السائق في انتظارك عند الوصول."
-                : "We offer the best meet-and-greet and transfer service from King Abdulaziz International Airport (JED). We provide flight tracking to ensure your driver is waiting upon arrival."}
+                ? "سواء كنت قادماً إلى جدة أو مغادراً منها، نوفر خدمة استقبال وتوصيل دقيقة من وإلى مطار الملك عبدالعزيز الدولي. نضمن لك رحلة مريحة وسلسة وتتبعاً دقيقاً لمواعيد رحلات الطيران."
+                : "Whether arriving in or departing from Jeddah, we provide precise meet-and-greet services from KAIA. We ensure a comfortable, smooth journey with accurate flight tracking."}
+            </p>
+            <Link to={withLocale(locale, "/jeddah-airport-taxi")} className="text-gold text-sm font-medium hover:underline inline-flex items-center">
+              {ar ? "تفاصيل تاكسي المطار" : "Airport Taxi Details"} <ArrowRight className="h-4 w-4 ms-1 rtl:rotate-180" />
+            </Link>
+          </div>
+          <div className="space-y-4">
+            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Building2 className="h-5 w-5 text-gold" /> {ar ? "توصيل الفنادق والوجهات السياحية" : "Hotel & Tourist Transfers"}</h3>
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              {ar 
+                ? "نخدم جميع الفنادق الرئيسية في جدة والمناطق الحيوية مثل الواجهة البحرية، الكورنيش، ومنطقة البلد التاريخية. تنقل براحة تامة بين وجهاتك المفضلة في العروس."
+                : "We serve all major hotels in Jeddah and vibrant areas like the Waterfront, Corniche, and the historic Al Balad district. Travel in total comfort between your favorite destinations."}
             </p>
           </div>
           <div className="space-y-4">
-            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Users className="h-5 w-5 text-gold" /> {ar ? "الرحلات العائلية والخاصة" : "Family & Private Trips"}</h3>
+            <h3 className="text-xl font-bold inline-flex items-center gap-2"><MapPin className="h-5 w-5 text-gold" /> {ar ? "رحلات بين المدن (مكة والمدينة)" : "Intercity Trips (Makkah & Madinah)"}</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {ar 
-                ? "سيارات واسعة تناسب العائلات الكبيرة مع مساحة كافية للحقائب. رحلات خاصة مريحة وآمنة لجميع أفراد الأسرة."
-                : "Spacious vehicles suitable for large families with enough luggage space. Comfortable and safe private trips for all family members."}
+                ? "نوفر مسارات مباشرة ومنتظمة من جدة إلى مكة المكرمة لخدمة المعتمرين والزوار، بالإضافة إلى رحلات خاصة إلى المدينة المنورة والطائف بأسعار ثابتة."
+                : "We provide direct and regular routes from Jeddah to Makkah serving pilgrims and visitors, as well as private trips to Madinah and Taif at fixed prices."}
             </p>
+            <div className="flex flex-wrap gap-x-4 gap-y-2 pt-1">
+              <Link to={withLocale(locale, "/jeddah-to-makkah-taxi")} className="text-gold text-xs font-medium hover:underline">
+                {ar ? "تاكسي جدة إلى مكة" : "Jeddah to Makkah Taxi"}
+              </Link>
+              <Link to={withLocale(locale, "/taxi-madinah")} className="text-gold text-xs font-medium hover:underline">
+                {ar ? "تاكسي المدينة المنورة" : "Madinah Taxi"}
+              </Link>
+            </div>
           </div>
           <div className="space-y-4">
-            <h3 className="text-xl font-bold inline-flex items-center gap-2"><MapPin className="h-5 w-5 text-gold" /> {ar ? "التنقل بين الأحياء والشركات" : "Corporate & Inter-District"}</h3>
+            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Users className="h-5 w-5 text-gold" /> {ar ? "خدمات النقل العائلي والخاص" : "Family & Private Transport"}</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {ar 
-                ? "خدمات مخصصة لرجال الأعمال والشركات للتنقل داخل جدة. وصول سريع ومظهر احترافي لجميع مشاويركم."
-                : "Tailored services for business travelers and corporations within Jeddah. Quick arrivals and professional appearance for all your rides."}
-            </p>
-          </div>
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold inline-flex items-center gap-2"><MapPin className="h-5 w-5 text-gold" /> {ar ? "رحلات إلى مكة والمدن القريبة" : "Trips to Makkah & Nearby Cities"}</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              {ar 
-                ? "نوفر خدمة النقل المباشر من جدة إلى مكة المكرمة، ثول، والمدينة المنورة بأسعار ثابتة ومنافسة."
-                : "We provide direct transfer services from Jeddah to Makkah, Thuwal, and Madinah at competitive fixed prices."}
+                ? "حلول نقل متكاملة للعائلات والمجموعات السياحية. سيارات واسعة ومريحة تضمن الخصوصية والأمان لجميع أفراد الأسرة خلال تجولهم في مدينة جدة."
+                : "Integrated transport solutions for families and tourist groups. Spacious and comfortable vehicles ensure privacy and safety for all family members during their Jeddah tour."}
             </p>
           </div>
         </div>

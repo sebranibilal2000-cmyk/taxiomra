@@ -1,22 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Phone, CheckCircle2, Plane, Clock, Shield, MapPin, Luggage, Star } from "lucide-react";
+import { MessageCircle, Phone, CheckCircle2, Plane, Clock, Shield, MapPin, Luggage, Star, ArrowRight } from "lucide-react";
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
 
 const FAQ_AR = [
-  { q: "أين أجد السائق في مطار جدة؟", a: "سيكون السائق بانتظارك في صالة الوصول فور خروجك من منطقة الجمارك، حاملاً لافتة عليها اسمك للتسهيل عليك." },
-  { q: "هل يشمل السعر وقت الانتظار إذا تأخرت الرحلة؟", a: "نعم، نحن نتابع رحلتك عبر رقم الرحلة ونقوم بتعديل موعد الاستقبال تلقائياً. كما نوفر فترة انتظار مجانية كافية بعد هبوط الطائرة." },
-  { q: "هل تتوفر كراسي للأطفال؟", a: "نعم، يمكنك طلب مقعد طفل عند الحجز لضمان سلامة أطفالك خلال الرحلة." },
-  { q: "ما هي المسافة من مطار جدة إلى مكة؟", a: "المسافة حوالي 90-100 كم وتستغرق الرحلة عادة بين 60 إلى 90 دقيقة حسب حركة المرور." },
+  { q: "أين أجد السائق في مطار جدة؟", a: "سيكون السائق بانتظارك في صالة الوصول فور خروجك من منطقة الجمارك في مطار الملك عبدالعزيز الدولي (الصالة رقم 1 أو الصالة الشمالية)، حاملاً لافتة عليها اسمك للتسهيل عليك." },
+  { q: "ما هي الوجهات المتاحة من مطار جدة (JED)؟", a: "نوفر رحلات مباشرة من مطار جدة إلى مكة المكرمة لخدمة المعتمرين، وإلى المدينة المنورة، وجميع فنادق وأحياء مدينة جدة، بالإضافة إلى الطائف." },
+  { q: "كيف تتعاملون مع تأخر رحلات الطيران؟", a: "نحن نتابع رحلتك عبر رقم الرحلة ونقوم بتعديل موعد الاستقبال تلقائياً في حال التأخير. كما نوفر فترة انتظار مجانية كافية بعد هبوط الطائرة لتتمكن من إنهاء الإجراءات." },
+  { q: "هل تتوفر كراسي للأطفال في سيارات المطار؟", a: "نعم، يمكنك طلب مقعد طفل عند الحجز لضمان سلامة أطفالك خلال الرحلة من المطار إلى وجهتك." },
 ];
 
 const FAQ_EN = [
-  { q: "Where do I find my driver at Jeddah Airport?", a: "Your driver will be waiting for you in the arrivals hall as soon as you exit the customs area, holding a sign with your name on it for easy recognition." },
-  { q: "Does the price include waiting time if my flight is delayed?", a: "Yes, we monitor your flight via the flight number and adjust the pickup time automatically. We also provide sufficient free waiting time after landing." },
-  { q: "Are child seats available?", a: "Yes, you can request a child seat when booking to ensure your children's safety during the trip." },
-  { q: "How far is Jeddah Airport from Makkah?", a: "The distance is about 90-100 km, and the trip usually takes between 60 to 90 minutes depending on traffic." },
+  { q: "Where do I find my driver at Jeddah Airport (JED)?", a: "Your driver will be waiting for you in the arrivals hall of KAIA (Terminal 1 or North Terminal) as soon as you exit the customs area, holding a sign with your name on it." },
+  { q: "What destinations are available from Jeddah Airport?", a: "We provide direct transfers from Jeddah Airport to Makkah (for Umrah pilgrims), Madinah, all Jeddah hotels and districts, and Taif." },
+  { q: "How do you handle flight delays?", a: "We monitor your flight via the flight number and adjust the pickup time automatically. We also provide sufficient free waiting time after landing for you to clear customs." },
+  { q: "Are child seats available for airport transfers?", a: "Yes, you can request a child seat when booking to ensure your children's safety during the trip from the airport to your destination." },
 ];
 
 export const Route = createFileRoute("/_public/{-$locale}/jeddah-airport-taxi")({
@@ -137,15 +137,15 @@ function JeddahAirportTaxiPage() {
 
       <div className="grid lg:grid-cols-2 gap-12 mb-20 items-center">
         <div className="space-y-8">
-          <h2 className="font-display text-3xl md:text-4xl">{ar ? "تغطية كاملة لمطار الملك عبدالعزيز (JED)" : "Full Coverage of KAIA Airport (JED)"}</h2>
+          <h2 className="font-display text-3xl md:text-4xl">{ar ? "خدمات النقل المتخصصة من مطار جدة (JED)" : "Specialized Transfer Services from KAIA (JED)"}</h2>
           <div className="space-y-6">
             <div className="flex gap-4">
               <div className="h-10 w-10 shrink-0 rounded-full bg-primary/5 flex items-center justify-center text-gold">
                 <CheckCircle2 className="h-6 w-6" />
               </div>
               <div>
-                <h4 className="font-bold">{ar ? "الصالة رقم 1 (الجديدة)" : "Terminal 1 (New)"}</h4>
-                <p className="text-sm text-muted-foreground">{ar ? "خدمة مستمرة من وإلى الصالة الجديدة بجدة." : "Non-stop service to and from Jeddah's new terminal."}</p>
+                <h4 className="font-bold">{ar ? "النقل إلى مكة المكرمة" : "Transfers to Makkah"}</h4>
+                <p className="text-sm text-muted-foreground">{ar ? "خدمة مباشرة للمعتمرين والزوار من المطار إلى فنادق مكة." : "Direct service for Umrah pilgrims and visitors from the airport to Makkah hotels."}</p>
               </div>
             </div>
             <div className="flex gap-4">
@@ -153,8 +153,8 @@ function JeddahAirportTaxiPage() {
                 <CheckCircle2 className="h-6 w-6" />
               </div>
               <div>
-                <h4 className="font-bold">{ar ? "الصالة الشمالية" : "North Terminal"}</h4>
-                <p className="text-sm text-muted-foreground">{ar ? "توصيل واستقبال المسافرين عبر الصالة الشمالية لجميع شركات الطيران." : "Pickup and drop-off for passengers via the North Terminal for all airlines."}</p>
+                <h4 className="font-bold">{ar ? "نقل داخل جدة" : "Transfers within Jeddah"}</h4>
+                <p className="text-sm text-muted-foreground">{ar ? "توصيل سريع ومريح من المطار إلى جميع فنادق وأحياء جدة." : "Quick and comfortable transit from the airport to all Jeddah hotels and districts."}</p>
               </div>
             </div>
             <div className="flex gap-4">
@@ -162,24 +162,26 @@ function JeddahAirportTaxiPage() {
                 <CheckCircle2 className="h-6 w-6" />
               </div>
               <div>
-                <h4 className="font-bold">{ar ? "متابعة الرحلات" : "Flight Tracking"}</h4>
-                <p className="text-sm text-muted-foreground">{ar ? "نستخدم أنظمة متطورة لمتابعة حالة رحلتك لضمان عدم الانتظار." : "We use advanced systems to track your flight status to ensure no waiting."}</p>
+                <h4 className="font-bold">{ar ? "رحلات للمدن الأخرى" : "Intercity Trips"}</h4>
+                <p className="text-sm text-muted-foreground">{ar ? "مسارات منظمة من المطار إلى المدينة المنورة والطائف بسيارات مريحة." : "Structured routes from the airport to Madinah and Taif in comfortable vehicles."}</p>
               </div>
             </div>
           </div>
         </div>
         <div className="bg-muted rounded-3xl p-8 border border-border">
-          <h3 className="text-2xl font-bold mb-6">{ar ? "وجهات المطار الأكثر طلباً" : "Top Airport Destinations"}</h3>
+          <h3 className="text-2xl font-bold mb-6">{ar ? "وجهات النقل المفضلة" : "Popular Transfer Destinations"}</h3>
           <ul className="space-y-4">
             {[
-              { label_ar: "مطار جدة ← مكة المكرمة", label_en: "JED Airport → Makkah", time: "60-90 min" },
-              { label_ar: "مطار جدة ← فنادق جدة", label_en: "JED Airport → Jeddah Hotels", time: "20-40 min" },
-              { label_ar: "مطار جدة ← محطة قطار الحرمين", label_en: "JED Airport → Haramain Station", time: "15-25 min" },
-              { label_ar: "مطار جدة ← المدينة المنورة", label_en: "JED Airport → Madinah", time: "4.5 - 5 hours" },
+              { label_ar: "مطار جدة ← مكة المكرمة", label_en: "JED Airport → Makkah", path: "/jeddah-to-makkah-taxi" },
+              { label_ar: "مطار جدة ← المدينة المنورة", label_en: "JED Airport → Madinah", path: "/taxi-madinah" },
+              { label_ar: "مطار جدة ← فنادق جدة", label_en: "JED Airport → Jeddah City", path: "/taxi-jeddah" },
+              { label_ar: "مطار جدة ← الطائف", label_en: "JED Airport → Taif", path: "/taxi-taif" },
             ].map((d, i) => (
-              <li key={i} className="flex items-center justify-between p-4 rounded-xl bg-card border border-border/50">
-                <span className="font-medium text-sm">{ar ? d.label_ar : d.label_en}</span>
-                <span className="text-xs px-2 py-1 rounded-md bg-muted text-muted-foreground">{d.time}</span>
+              <li key={i}>
+                <Link to={withLocale(locale, d.path)} className="flex items-center justify-between p-4 rounded-xl bg-card border border-border/50 hover:border-gold transition-colors">
+                  <span className="font-medium text-sm">{ar ? d.label_ar : d.label_en}</span>
+                  <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                </Link>
               </li>
             ))}
           </ul>

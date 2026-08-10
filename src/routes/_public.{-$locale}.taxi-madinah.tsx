@@ -6,13 +6,17 @@ import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
 
 const FAQ_AR = [
-  { q: "كيف أحجز تاكسي في المدينة المنورة؟", a: "عبر واتساب أو الاتصال. نوفر رحلات للمسجد النبوي، المزارات، ومطار المدينة." },
-  { q: "هل توفرون خدمة التوصيل بين مكة والمدينة؟", a: "نعم، هذه من خدماتنا الأساسية، نوفر رحلات مريحة وآمنة بين الحرمين الشريفين." },
+  { q: "كيف أحجز تاكسي في المدينة المنورة؟", a: "يمكنك الحجز بسهولة عبر واتساب أو الاتصال المباشر. نوفر رحلات للمسجد النبوي الشريف، المزارات النبوية، ومطار المدينة المنورة (PRINCE MOHAMMAD BIN ABDULAZIZ AIRPORT)." },
+  { q: "هل توفرون خدمة التوصيل بين مكة والمدينة؟", a: "نعم، نقدم خدمة النقل المباشر والآمن بين الحرمين الشريفين بسيارات حديثة مجهزة للرحلات الطويلة، مع الاستقبال من فنادق مكة أو المدينة." },
+  { q: "ما هي أهم الوجهات السياحية في المدينة التي تخدمونها؟", a: "نوفر رحلات للمزارات مثل مسجد قباء، وجبل أحد، ومقبرة البقيع، بالإضافة إلى المجمعات التجارية والفنادق المحيطة بالمسجد النبوي." },
+  { q: "هل لديكم خدمة استقبال من مطار المدينة المنورة؟", a: "نعم، نوفر خدمة الاستقبال بالاسم من مطار الأمير محمد بن عبدالعزيز الدولي وتوصيلك إلى وجهتك بكل راحة وأمان." },
 ];
 
 const FAQ_EN = [
-  { q: "How to book a taxi in Madinah?", a: "Via WhatsApp or call. We provide trips to Prophet's Mosque, sites, and Madinah Airport." },
-  { q: "Do you offer transfers between Makkah and Madinah?", a: "Yes, this is one of our core services, providing comfortable trips between the two Holy Mosques." },
+  { q: "How to book a taxi in Madinah?", a: "You can book easily via WhatsApp or direct call. We provide trips to the Prophet's Mosque, holy sites, and Madinah Airport (Prince Mohammad Bin Abdulaziz International Airport)." },
+  { q: "Do you offer transfers between Makkah and Madinah?", a: "Yes, we offer direct and safe transfer services between the two Holy Mosques with modern vehicles equipped for long distances, picking you up from hotels in Makkah or Madinah." },
+  { q: "What are the major sites you serve in Madinah?", a: "We provide trips to sites like Quba Mosque, Mount Uhud, and Al Baqi, as well as shopping malls and hotels surrounding the Prophet's Mosque." },
+  { q: "Do you provide airport pickups at Madinah Airport?", a: "Yes, we offer meet-and-greet services at Prince Mohammad Bin Abdulaziz International Airport, taking you to your destination with comfort and safety." },
 ];
 
 export const Route = createFileRoute("/_public/{-$locale}/taxi-madinah")({
@@ -52,23 +56,24 @@ function MadinahTaxiPage() {
           <Button asChild size="lg" className="rounded-full"><a href={waLink(ar ? "أرغب بحجز تاكسي في المدينة" : "Book taxi in Madinah")}><MessageCircle className="h-5 w-5 me-2" /> {ar ? "حجز الآن" : "Book Now"}</a></Button>
         </div>
       </header>
-      <section className="grid md:grid-cols-3 gap-6 mb-16">
+      <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
         {[
-          { icon: Building2, t_ar: "للمسجد النبوي", t_en: "To Prophet's Mosque" },
-          { icon: Plane, t_ar: "مطار المدينة", t_en: "Madinah Airport" },
-          { icon: MapPin, t_ar: "بين مكة والمدينة", t_en: "Makkah-Madinah Transfer", path: "/taxi-makkah" }
+          { icon: Building2, t_ar: "زيارة المسجد النبوي", t_en: "Prophet's Mosque Visits" },
+          { icon: Plane, t_ar: "مطار المدينة الدولي", t_en: "Madinah Airport (MED)" },
+          { icon: MapPin, t_ar: "بين الحرمين الشريفين", t_en: "Makkah-Madinah Transfers", path: "/makkah-to-madinah-taxi" },
+          { icon: Star, t_ar: "المزارات النبوية", t_en: "Historical Ziyarat Sites" },
         ].map((s, i) => (
-          <div key={i} className="p-6 border rounded-2xl bg-card">
+          <div key={i} className="p-6 border rounded-2xl bg-card hover:shadow-md transition-shadow">
             {s.path ? (
-              <Link to={withLocale(locale, s.path)} className="group">
+              <Link to={withLocale(locale, s.path)} className="group flex flex-col h-full">
                 <s.icon className="h-10 w-10 text-gold mb-4 group-hover:scale-110 transition-transform" />
                 <h3 className="font-bold group-hover:text-gold transition-colors">{ar ? s.t_ar : s.t_en}</h3>
               </Link>
             ) : (
-              <>
+              <div className="flex flex-col h-full">
                 <s.icon className="h-10 w-10 text-gold mb-4" />
                 <h3 className="font-bold">{ar ? s.t_ar : s.t_en}</h3>
-              </>
+              </div>
             )}
           </div>
         ))}

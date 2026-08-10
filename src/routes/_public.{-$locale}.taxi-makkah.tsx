@@ -6,15 +6,17 @@ import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
 
 const FAQ_AR = [
-  { q: "كيف أحجز تاكسي في مكة؟", a: "يمكنك حجز تاكسي مكة عبر واتساب أو الاتصال. نوفر رحلات داخل مكة، من وإلى الحرم، ومن وإلى مطار جدة." },
-  { q: "هل لديكم توصيل من مطار جدة إلى فنادق مكة؟", a: "نعم، نقدم خدمة توصيل مباشرة ومريحة من مطار الملك عبدالعزيز بجدة إلى جميع فنادق مكة المكرمة." },
-  { q: "هل السيارات مهيأة للرحلات العائلية في مكة؟", a: "نعم، نوفر سيارات عائلية واسعة ومريحة لضمان راحة عائلتك خلال زيارة مكة." },
+  { q: "كيف يمكنني حجز تاكسي في مكة؟", a: "يمكنك حجز تاكسي مكة بسهولة عبر واتساب أو الاتصال المباشر. نوفر رحلات داخلية في مكة، وتوصيل للحرم المكي، وخدمات النقل إلى مطار جدة والمدينة المنورة." },
+  { q: "ما هي خدمات النقل المتوفرة للمعتمرين؟", a: "نقدم خدمات متكاملة لنقل المعتمرين من مطار جدة إلى فنادق مكة، ورحلات التنقل بين مكة والمدينة المنورة، بالإضافة إلى التوصيل إلى محطة قطار الحرمين." },
+  { q: "هل لديكم توصيل من مطار جدة إلى فنادق مكة؟", a: "نعم، نحن متخصصون في النقل من مطار الملك عبدالعزيز بجدة مباشرة إلى جميع فنادق مكة المكرمة في أي وقت على مدار 24 ساعة." },
+  { q: "هل السيارات مهيأة للعائلات والمجموعات؟", a: "بالتأكيد، نوفر فانات وسيارات عائلية واسعة ومريحة لضمان راحة وسلامة العائلات خلال زيارتهم لمكة والمشاعر المقدسة." },
 ];
 
 const FAQ_EN = [
-  { q: "How can I book a taxi in Makkah?", a: "You can book a Makkah taxi via WhatsApp or phone. We offer trips within Makkah, to/from the Haram, and transfers to/from Jeddah Airport." },
-  { q: "Do you provide transfers from Jeddah Airport to Makkah hotels?", a: "Yes, we offer direct and comfortable transfer services from King Abdulaziz International Airport in Jeddah to all hotels in Makkah." },
-  { q: "Are vehicles suitable for family trips in Makkah?", a: "Yes, we provide spacious and comfortable family vehicles to ensure your family's comfort during your visit to Makkah." },
+  { q: "How can I book a taxi in Makkah?", a: "You can easily book a Makkah taxi via WhatsApp or direct call. We offer local trips in Makkah, Haram transfers, and transport services to Jeddah Airport and Madinah." },
+  { q: "What transport services are available for pilgrims?", a: "We offer comprehensive services for Umrah pilgrims from Jeddah Airport to Makkah hotels, intercity transfers between Makkah and Madinah, and Haramain station pickups." },
+  { q: "Do you provide transfers from Jeddah Airport to Makkah hotels?", a: "Yes, we specialize in direct transfers from KAIA in Jeddah to all Makkah hotels 24/7." },
+  { q: "Are the vehicles suitable for families and groups?", a: "Certainly, we provide spacious and comfortable vans and family SUVs to ensure the comfort and safety of families visiting Makkah and the Holy Sites." },
 ];
 
 export const Route = createFileRoute("/_public/{-$locale}/taxi-makkah")({
@@ -54,23 +56,24 @@ function MakkahTaxiPage() {
           <Button asChild size="lg" className="rounded-full"><a href={waLink(ar ? "أرغب بحجز تاكسي في مكة" : "Book taxi in Makkah")}><MessageCircle className="h-5 w-5 me-2" /> {ar ? "حجز الآن" : "Book Now"}</a></Button>
         </div>
       </header>
-      <section className="grid md:grid-cols-3 gap-6 mb-16">
+      <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
         {[
-          { icon: Car, t_ar: "تنقل داخل مكة", t_en: "In-City Transfer" },
-          { icon: Building2, t_ar: "توصيل للفنادق", t_en: "Hotel Transfers" },
-          { icon: Plane, t_ar: "مطار جدة ← مكة", t_en: "Jeddah Airport → Makkah", path: "/jeddah-airport-taxi" }
+          { icon: Car, t_ar: "تنقل داخل مكة", t_en: "Makkah City Transfers" },
+          { icon: Building2, t_ar: "نقل الحرم والفنادق", t_en: "Haram & Hotel Transfers" },
+          { icon: Plane, t_ar: "مطار جدة ← مكة", t_en: "Jeddah Airport ← Makkah", path: "/jeddah-to-makkah-taxi" },
+          { icon: MapPin, t_ar: "مكة ← المدينة", t_en: "Makkah ← Madinah", path: "/makkah-to-madinah-taxi" },
         ].map((s, i) => (
-          <div key={i} className="p-6 border rounded-2xl bg-card">
+          <div key={i} className="p-6 border rounded-2xl bg-card hover:shadow-md transition-shadow">
             {s.path ? (
-              <Link to={withLocale(locale, s.path)} className="group">
+              <Link to={withLocale(locale, s.path)} className="group flex flex-col h-full">
                 <s.icon className="h-10 w-10 text-gold mb-4 group-hover:scale-110 transition-transform" />
                 <h3 className="font-bold group-hover:text-gold transition-colors">{ar ? s.t_ar : s.t_en}</h3>
               </Link>
             ) : (
-              <>
+              <div className="flex flex-col h-full">
                 <s.icon className="h-10 w-10 text-gold mb-4" />
                 <h3 className="font-bold">{ar ? s.t_ar : s.t_en}</h3>
-              </>
+              </div>
             )}
           </div>
         ))}
