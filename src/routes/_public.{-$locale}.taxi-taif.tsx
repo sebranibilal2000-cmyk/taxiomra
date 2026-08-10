@@ -1,18 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Phone, CheckCircle2, MapPin, Clock, Shield, Star, Car } from "lucide-react";
+import { MessageCircle, Phone, CheckCircle2, Car, MapPin, Clock, Shield, Star, Mountain, Plane } from "lucide-react";
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
 
 const FAQ_AR = [
-  { q: "كيف أحجز تاكسي في الطائف؟", a: "احجز بسهولة عبر واتساب. نوفر توصيلاً من وإلى مطار الطائف، المعالم السياحية، ومكة المكرمة." },
-  { q: "هل تتوفر رحلات من الطائف إلى مكة؟", a: "نعم، نقدم رحلات مباشرة ومريحة بين الطائف ومكة المكرمة." },
+  { q: "هل توفرون توصيل من جدة إلى الطائف؟", a: "نعم، نقدم خدمة التوصيل المباشر بين جدة والطائف، وبين مكة والطائف بأسعار مميزة." },
+  { q: "هل تتوفر سيارات للرحلات السياحية في الطائف؟", a: "بالتأكيد، لدينا سائقون على دراية بأجمل المواقع السياحية في الطائف مثل الهدا والشفا." },
 ];
 
 const FAQ_EN = [
-  { q: "How to book a taxi in Taif?", a: "Book easily via WhatsApp. We provide transfers to/from Taif Airport, tourist spots, and Makkah." },
-  { q: "Are trips from Taif to Makkah available?", a: "Yes, we offer comfortable direct trips between Taif and Makkah." },
+  { q: "Do you offer transfers from Jeddah to Taif?", a: "Yes, we provide direct transfer services between Jeddah and Taif, and between Makkah and Taif at special rates." },
+  { q: "Are cars available for sightseeing in Taif?", a: "Certainly, we have drivers familiar with the most beautiful tourist spots in Taif like Al Hada and Ash Shafa." },
 ];
 
 export const Route = createFileRoute("/_public/{-$locale}/taxi-taif")({
@@ -20,37 +20,43 @@ export const Route = createFileRoute("/_public/{-$locale}/taxi-taif")({
     const locale = params.locale ?? "ar";
     const ar = locale === "ar";
     const url = `${SITE.url}/${locale}/taxi-taif`;
-    const title = ar ? "تاكسي الطائف | حجز توصيل سريع ومريح - تاكسي العمرة" : "Taxi Taif | Reliable Transfers - Omra Taxi";
-    const description = ar ? "احجز تاكسي الطائف الآن. توصيل المطار، جولات سياحية، ورحلات إلى مكة بسيارات حديثة." : "Book your Taif taxi. Airport transfers, sightseeing, and Makkah trips with modern cars.";
+    const title = ar ? "تاكسي الطائف | توصيل من مطار جدة ومكة للطائف - تاكسي العمرة" : "Taif Taxi | Transfers from Jeddah & Makkah to Taif - Omra Taxi";
+    const description = ar ? "احجز تاكسي الطائف الآن. رحلات عائلية وسياحية مريحة، توصيل من مطار جدة ومكة المكرمة إلى الطائف بأسعار ثابتة وأمان تام." : "Book Taif taxi now. Comfortable family and tourist trips, transfers from Jeddah Airport and Makkah to Taif with fixed prices and full safety.";
     return {
-      meta: [{ title }, { name: "description", content: description }],
+      meta: [{ title }, { name: "description", content: description }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:url", content: url }],
       links: [{ rel: "canonical", href: url }],
       scripts: [
-        { type: "application/ld+json", children: JSON.stringify(breadcrumbJsonLd([{ name: ar ? "الرئيسية" : "Home", url: `${SITE.url}/${locale}` }, { name: ar ? "تاكسي الطائف" : "Taxi Taif", url }])) },
-        { type: "application/ld+json", children: JSON.stringify(faqPageJsonLd(ar ? FAQ_AR : FAQ_EN)) }
-      ],
+        { type: "application/ld+json", children: JSON.stringify(breadcrumbJsonLd([{ name: ar ? "الرئيسية" : "Home", url: `${SITE.url}/${locale}` }, { name: ar ? "تاكسي الطائف" : "Taif Taxi", url }])) },
+        { type: "application/ld+json", children: JSON.stringify(faqPageJsonLd(ar ? FAQ_AR : FAQ_EN)) },
+        { type: "application/ld+json", children: JSON.stringify(serviceJsonLd({ name: ar ? "تاكسي الطائف" : "Taif Taxi", description, url, areaServed: "Taif" })) }
+      ]
     };
   },
-  component: () => <TaxiCityPage city={ {ar: "الطائف", en: "Taif"} } faqs={FAQ_AR} faqsEn={FAQ_EN} />,
+  component: TaifTaxiPage,
 });
 
-function TaxiCityPage({ city, faqs, faqsEn }: { city: { ar: string; en: string }, faqs: any[], faqsEn: any[] }) {
+function TaifTaxiPage() {
   const { locale } = useI18n();
   const ar = locale === "ar";
   return (
     <article className="container-tight py-16">
-      <header className="mb-12">
-        <h1 className="font-display text-4xl md:text-5xl mb-6">{ar ? `تاكسي ${city.ar}` : `Taxi ${city.en}`}</h1>
-        <p className="text-lg text-muted-foreground">{ar ? `خدمة نقل مريحة في ${city.ar}، احجز رحلتك الآن.` : `Reliable transport in ${city.en}, book your ride now.`}</p>
-        <div className="flex gap-4 mt-6">
-           <Button asChild><a href={waLink()}><MessageCircle className="me-2"/>{ar ? "واتساب" : "WhatsApp"}</a></Button>
+      <nav className="text-sm text-muted-foreground mb-4">
+        <Link to={withLocale(locale, "/")} className="hover:text-foreground">{ar ? "الرئيسية" : "Home"}</Link>
+        <span className="mx-2">/</span>
+        <span className="text-foreground">{ar ? "تاكسي الطائف" : "Taif Taxi"}</span>
+      </nav>
+      <header className="space-y-6 mb-16">
+        <h1 className="font-display text-4xl md:text-5xl">{ar ? "تاكسي الطائف: بوابة المصيف" : "Taif Taxi: The Gateway to the Summer Capital"}</h1>
+        <p className="text-lg text-muted-foreground max-w-2xl">{ar ? "رحلات يومية وسياحية من جدة ومكة إلى الطائف. استمتع بأجواء الطائف الرائعة مع خدماتنا المتميزة." : "Daily and tourist trips from Jeddah and Makkah to Taif. Enjoy Taif's wonderful atmosphere with our premium services."}</p>
+        <div className="flex gap-4">
+          <Button asChild size="lg" className="rounded-full"><a href={waLink(ar ? "أرغب بحجز تاكسي في الطائف" : "Book taxi in Taif")}><MessageCircle className="h-5 w-5 me-2" /> {ar ? "حجز الآن" : "Book Now"}</a></Button>
         </div>
       </header>
-      <section className="space-y-6">
-        {(ar ? faqs : faqsEn).map((f, i) => (
+      <section className="grid md:grid-cols-3 gap-6 mb-16">
+        {[{icon: Mountain, t: ar ? "رحلات سياحية" : "Tourist Trips"}, {icon: MapPin, t: ar ? "مكة ← الطائف" : "Makkah → Taif"}, {icon: Plane, t: ar ? "مطار جدة ← الطائف" : "Jeddah Airport → Taif"}].map((s, i) => (
           <div key={i} className="p-6 border rounded-2xl bg-card">
-            <h3 className="font-bold mb-2">{f.q}</h3>
-            <p className="text-sm text-muted-foreground">{f.a}</p>
+            <s.icon className="h-10 w-10 text-gold mb-4" />
+            <h3 className="font-bold">{s.t}</h3>
           </div>
         ))}
       </section>

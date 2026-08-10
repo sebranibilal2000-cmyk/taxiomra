@@ -19,7 +19,30 @@ export const Route = createFileRoute("/sitemap-pages.xml")({
           route_page: "/routes",
         };
 
+        const staticPaths = [
+          "/taxi-jeddah",
+          "/jeddah-airport-taxi",
+          "/taxi-makkah",
+          "/taxi-madinah",
+          "/taxi-taif",
+          "/taxi-riyadh",
+          "/taxi-dammam",
+          "/guide/taxi-fares",
+          "/about",
+          "/fleet",
+          "/contact",
+          "/faq",
+        ];
+
         const urls: string[] = [];
+        
+        // Add static localized pages
+        for (const path of staticPaths) {
+          for (const lang of LOCALES) {
+            urls.push(`  <url>\n    <loc>${BASE_URL}/${lang}${path}</loc>\n  </url>`);
+          }
+        }
+
         for (const p of pages ?? []) {
           const prefix = typeToPrefix[p.page_type as string] ?? "/p";
           for (const lang of LOCALES) {
