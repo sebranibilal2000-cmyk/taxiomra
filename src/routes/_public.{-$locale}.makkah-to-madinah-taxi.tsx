@@ -4,6 +4,7 @@ import { MessageCircle, Phone, CheckCircle2, MapPin, Clock, Shield, Plane } from
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
+import { getPriceForRoute } from "@/lib/pricing.functions";
 
 const FAQ_AR = [
   { q: "كم تستغرق الرحلة من مكة إلى المدينة بالتاكسي؟", a: "تستغرق الرحلة عادة ما بين 4 إلى 5 ساعات حسب حركة المرور وسرعة الطريق، ونحرص على توفير سيارات مريحة لهذه المسافة." },
@@ -12,9 +13,9 @@ const FAQ_AR = [
 ];
 
 const FAQ_EN = [
-  { q: "How long is the taxi ride from Makkah to Madinah?", a: "The journey usually takes 4 to 5 hours depending on traffic. We ensure comfortable vehicles for this long-distance trip." },
-  { q: "Do you offer hotel-to-hotel transfers?", a: "Yes, our service is door-to-door. We pick you up from your hotel in Makkah and drop you off directly at your destination in Madinah." },
-  { q: "Can we book for a large group?", a: "Yes, we provide large vans and family SUVs that accommodate groups with ample luggage space." },
+  { q: "Can I travel from Makkah to Madinah by private taxi?", a: "Yes, we provide comfortable intercity transfers between Makkah and Madinah. Our professional drivers will pick you up from your Makkah hotel and drop you off at your destination in Madinah." },
+  { q: "How much is a private transfer from Makkah to Madinah?", a: `The price for a private taxi from Makkah to Madinah starts from ${getPriceForRoute('makkah-to-med', 'economyPrice')} SAR. Contact us on WhatsApp for a final quote.` },
+  { q: "How long is the taxi ride from Makkah to Madinah?", a: "The distance is approximately 450 km, and the journey usually takes around 4 to 5 hours with a private chauffeur." },
 ];
 
 export const Route = createFileRoute("/_public/{-$locale}/makkah-to-madinah-taxi")({
@@ -24,10 +25,10 @@ export const Route = createFileRoute("/_public/{-$locale}/makkah-to-madinah-taxi
     const url = `${SITE.url}/${locale}/makkah-to-madinah-taxi`;
     const title = ar 
       ? "تاكسي من مكة إلى المدينة | توصيل بين الحرمين بأسعار ثابتة - تاكسي العمرة" 
-      : "Makkah to Madinah Taxi | Direct Transfer Between the Two Holy Mosques - Omra Taxi";
+      : "Makkah to Madinah Taxi | Private Umrah Transfer - Umrah Taxi Saudi";
     const description = ar 
       ? "احجز تاكسي مكة إلى المدينة المنورة الآن. خدمة توصيل مريحة وآمنة بين الحرمين الشريفين بسيارات حديثة وسائقين محترفين. حجز سهل وسعر ثابت." 
-      : "Book Makkah to Madinah taxi now. Comfortable and safe transfer between the Two Holy Mosques with modern cars and professional drivers. Easy booking and fixed rates.";
+      : "Book your Makkah to Madinah private taxi for a comfortable Umrah transfer between the Two Holy Mosques. Door-to-door hotel transfers with professional drivers and fixed rates.";
     return {
       meta: [
         { title }, 
@@ -37,7 +38,7 @@ export const Route = createFileRoute("/_public/{-$locale}/makkah-to-madinah-taxi
         { property: "og:url", content: url },
         { name: "keywords", content: ar 
           ? "توصيل من مكة الى المدينة، تاكسي مكة المدينة، حجز سيارة من مكة الى المدينة، نقل بين الحرمين" 
-          : "Makkah to Madinah taxi, Makkah to Madinah transfer, book car from Makkah to Madinah" 
+          : "Makkah to Madinah taxi, Makkah to Madinah private taxi, Makkah to Madinah transfer, taxi from Makkah to Madinah, private transfer Makkah to Madinah, Umrah taxi Makkah to Madinah, Makkah hotel to Madinah hotel transfer" 
         }
       ],
       links: [{ rel: "canonical", href: url }],
@@ -64,12 +65,12 @@ function MakkahToMadinahTaxiPage() {
       
       <header className="space-y-6 mb-16">
         <h1 className="font-display text-4xl md:text-5xl lg:text-6xl leading-tight text-balance">
-          {ar ? "توصيل من مكة المكرمة إلى المدينة المنورة" : "Transfer from Makkah to Madinah"}
+          {ar ? "توصيل من مكة المكرمة إلى المدينة المنورة" : "Makkah to Madinah Taxi"}
         </h1>
         <p className="text-xl text-muted-foreground max-w-3xl leading-relaxed">
           {ar 
             ? "رحلة إيمانية مريحة بين الحرمين الشريفين. نوفر لك أفضل خدمة تاكسي من مكة إلى المدينة المنورة بسيارات حديثة مجهزة للرحلات الطويلة لضمان راحتك." 
-            : "A comfortable spiritual journey between the Two Holy Mosques. We provide the best taxi service from Makkah to Madinah with modern vehicles equipped for long trips."}
+            : "A comfortable spiritual journey between the Two Holy Mosques. We provide the best private taxi service from Makkah to Madinah with modern vehicles equipped for long trips and professional chauffeurs."}
         </p>
         <div className="flex flex-wrap gap-4 pt-4">
           <Button asChild size="lg" className="rounded-full h-14 px-8 bg-primary shadow-lg">
@@ -143,10 +144,10 @@ function MakkahToMadinahTaxiPage() {
       </section>
 
       <div className="flex flex-wrap gap-4 text-sm font-medium pt-8 border-t mb-16">
-        <span>{ar ? "مسارات قد تهمك:" : "Routes you might like:"}</span>
-        <Link to={withLocale(locale, "/taxi-makkah")} className="text-gold hover:underline">{ar ? "تاكسي مكة" : "Makkah Taxi"}</Link>
-        <Link to={withLocale(locale, "/taxi-madinah")} className="text-gold hover:underline">{ar ? "تاكسي المدينة" : "Madinah Taxi"}</Link>
-        <Link to={withLocale(locale, "/jeddah-to-makkah-taxi")} className="text-gold hover:underline">{ar ? "تاكسي من جدة إلى مكة" : "Jeddah to Makkah Taxi"}</Link>
+        <span>{ar ? "مسارات قد تهمك:" : "Related Umrah Routes:"}</span>
+        <Link to={withLocale(locale, "/madinah-to-makkah-taxi")} className="text-gold hover:underline">{ar ? "المدينة إلى مكة" : "Madinah to Makkah"}</Link>
+        <Link to={withLocale(locale, "/makkah-to-jeddah-taxi")} className="text-gold hover:underline">{ar ? "مكة إلى جدة" : "Makkah to Jeddah"}</Link>
+        <Link to={withLocale(locale, "/jeddah-to-makkah-taxi")} className="text-gold hover:underline">{ar ? "جدة إلى مكة" : "Jeddah to Makkah"}</Link>
       </div>
 
       <div className="rounded-3xl bg-gold text-primary p-8 md:p-16 text-center">

@@ -26,8 +26,8 @@ export const Route = createFileRoute("/_public/{-$locale}/taxi-madinah")({
     const locale = params.locale ?? "ar";
     const ar = locale === "ar";
     const url = `${SITE.url}/${locale}/taxi-madinah`;
-    const title = ar ? "تاكسي المدينة المنورة | توصيل للمسجد النبوي والمطار - تاكسي العمرة" : "Madinah Taxi | Prophet's Mosque & Airport Transfers - Omra Taxi";
-    const description = ar ? "احجز تاكسي المدينة المنورة الآن. خدمة استقبال من المطار وتوصيل للمسجد النبوي والفنادق بأسعار ثابتة. سيارات حديثة وسائقون محترفون." : "Book Madinah taxi now. Airport meet & greet, Prophet's Mosque and hotel transfers at fixed rates. Modern cars and professional drivers.";
+    const title = ar ? "تاكسي المدينة المنورة | توصيل للمسجد النبوي والمطار - تاكسي العمرة" : "Madinah Taxi | Prophet's Mosque & Airport Transfers - Umrah Taxi Saudi";
+    const description = ar ? "احجز تاكسي المدينة المنورة الآن. خدمة استقبال من المطار وتوصيل للمسجد النبوي والفنادق بأسعار ثابتة. سيارات حديثة وسائقون محترفون." : "Book your private Madinah taxi for Prophet's Mosque transfers, airport pickups at MED, and hotel drop-offs. Professional private transportation in Madinah for families and pilgrims.";
     return {
       meta: [{ title }, { name: "description", content: description }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:url", content: url }],
       links: [{ rel: "canonical", href: url }],
@@ -52,8 +52,9 @@ function MadinahTaxiPage() {
         <span className="text-foreground">{ar ? "تاكسي المدينة المنورة" : "Madinah Taxi"}</span>
       </nav>
       <header className="space-y-6 mb-16">
-        <h1 className="font-display text-4xl md:text-5xl">{ar ? "تاكسي المدينة المنورة: راحة زوار المسجد النبوي" : "Madinah Taxi: Comfort for Visitors"}</h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">{ar ? "نفتخر بخدمتكم في طيبة الطيبة. توصيل آمن ومريح لجميع وجهاتكم في المدينة المنورة." : "We are proud to serve you in Madinah. Safe and comfortable transfers to all your destinations."}</p>
+        <h1 className="font-display text-4xl md:text-5xl">{ar ? "تاكسي المدينة المنورة: راحة زوار المسجد النبوي" : "Madinah Taxi & Private Transportation"}</h1>
+        <p className="text-lg text-muted-foreground max-w-2xl">{ar ? "نفتخر بخدمتكم في طيبة الطيبة. توصيل آمن ومريح لجميع وجهاتكم في المدينة المنورة." : "We are proud to serve you in the Prophet's City. Safe and comfortable private transfers to the Masjid al-Nabawi, holy sites, and Prince Mohammad Bin Abdulaziz International Airport (MED)."}</p>
+
         <div className="flex gap-4">
           <Button asChild size="lg" className="rounded-full"><a href={waLink(ar ? "أرغب بحجز تاكسي في المدينة" : "Book taxi in Madinah")}><MessageCircle className="h-5 w-5 me-2" /> {ar ? "حجز الآن" : "Book Now"}</a></Button>
         </div>

@@ -23,7 +23,7 @@ const pickNum = (key: string, fallback: number): number => {
 
 // --- Fallback defaults (used only when VITE_SITE_* is not provided). ---
 const DEFAULTS = {
-  brandEn: "Omra Taxi",
+  brandEn: "Umrah Taxi Saudi",
   brandAr: "تاكسي العمرة",
   legalEn: "Omra Taxi",
   legalAr: "تاكسي العمرة",
