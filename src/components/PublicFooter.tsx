@@ -64,9 +64,11 @@ export function PublicFooter() {
           <ul className="space-y-2.5 text-sm text-primary-foreground/70">
             <li><Link to={l("/about")} className="hover:text-gold transition">{ar ? "من نحن" : "About"}</Link></li>
             <li><Link to={l("/blog")} className="hover:text-gold transition">{ar ? "المدونة" : "Journal"}</Link></li>
-            <li><Link to={l("/guide/taxi-fares")} className="hover:text-gold transition">{ar ? "أسعار التاكسي من مطار جدة" : "Jeddah Airport fare guide"}</Link></li>
-            <li><Link to={l("/faq")} className="hover:text-gold transition">FAQ</Link></li>
-            
+            <li><Link to={l("/guide/taxi-fares")} className="hover:text-gold transition">{ar ? "دليل الأسعار" : "Fare guide"}</Link></li>
+            <li><Link to={l("/taxi-jeddah")} className="hover:text-gold transition">{ar ? "تاكسي جدة" : "Taxi Jeddah"}</Link></li>
+            <li><Link to={l("/taxi-makkah")} className="hover:text-gold transition">{ar ? "تاكسي مكة" : "Taxi Makkah"}</Link></li>
+            <li><Link to={l("/taxi-madinah")} className="hover:text-gold transition">{ar ? "تاكسي المدينة" : "Taxi Madinah"}</Link></li>
+            <li><Link to={l("/jeddah-airport-taxi")} className="hover:text-gold transition">{ar ? "تاكسي المطار" : "Airport Taxi"}</Link></li>
           </ul>
         </div>
 
