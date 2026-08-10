@@ -26,8 +26,8 @@ export const Route = createFileRoute("/_public/{-$locale}/taxi-makkah")({
     const locale = params.locale ?? "ar";
     const ar = locale === "ar";
     const url = `${SITE.url}/${locale}/taxi-makkah`;
-    const title = ar ? "تاكسي مكة | توصيل للحرم وفنادق مكة - تاكسي العمرة" : "Makkah Taxi | Haram & Hotel Transfers - Omra Taxi";
-    const description = ar ? "احجز تاكسي مكة للتنقل داخل المدينة أو من مطار جدة. خدمة موثوقة لزوار الحرم والعائلات بأسعار ثابتة. سيارات حديثة وسائقون محترفون." : "Book a Makkah taxi for city transfers or from Jeddah Airport. Reliable service for Haram visitors and families with fixed rates. Modern cars and professional drivers.";
+    const title = ar ? "تاكسي مكة | توصيل للحرم وفنادق مكة - تاكسي العمرة" : "Makkah Taxi | Private Umrah & Hotel Transfers - Umrah Taxi Saudi";
+    const description = ar ? "احجز تاكسي مكة للتنقل داخل المدينة أو من مطار جدة. خدمة موثوقة لزوار الحرم والعائلات بأسعار ثابتة. سيارات حديثة وسائقون محترفون." : "Book your private Makkah taxi for Umrah transfers, Haram pickups, and hotel drop-offs. Professional private transportation in Makkah for pilgrims and families.";
     return {
       meta: [{ title }, { name: "description", content: description }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:url", content: url }],
       links: [{ rel: "canonical", href: url }],
@@ -52,8 +52,8 @@ function MakkahTaxiPage() {
         <span className="text-foreground">{ar ? "تاكسي مكة" : "Makkah Taxi"}</span>
       </nav>
       <header className="space-y-6 mb-16">
-        <h1 className="font-display text-4xl md:text-5xl">{ar ? "تاكسي مكة المكرمة: تنقل بكل روحانية" : "Makkah Taxi: Travel with Spirit"}</h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">{ar ? "خدمة توصيل مريحة وموثوقة داخل مكة ومن مطار جدة. هدفنا راحتك وسلامتك." : "Comfortable and reliable transfer service within Makkah and from Jeddah airport. Your comfort and safety are our goal."}</p>
+        <h1 className="font-display text-4xl md:text-5xl">{ar ? "تاكسي مكة المكرمة: تنقل بكل روحانية" : "Makkah Taxi & Private Umrah Transportation"}</h1>
+        <p className="text-lg text-muted-foreground max-w-2xl">{ar ? "خدمة توصيل مريحة وموثوقة داخل مكة ومن مطار جدة. هدفنا راحتك وسلامتك." : "Comfortable and reliable private transfer services in Makkah and from Jeddah Airport. We provide door-to-door transportation for Umrah pilgrims and international tourists."}</p>
         <div className="flex gap-4">
           <Button asChild size="lg" className="rounded-full"><a href={waLink(ar ? "أرغب بحجز تاكسي في مكة" : "Book taxi in Makkah")}><MessageCircle className="h-5 w-5 me-2" /> {ar ? "حجز الآن" : "Book Now"}</a></Button>
         </div>
