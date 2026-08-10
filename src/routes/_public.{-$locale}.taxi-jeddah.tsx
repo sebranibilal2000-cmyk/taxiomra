@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Phone, CheckCircle2, Car, Users, Luggage, MapPin, Clock, Shield, Plane, ArrowRight, Building2 } from "lucide-react";
+import { MessageCircle, Phone, CheckCircle2, Car, Users, Luggage, MapPin, Clock, Shield, Plane, ArrowRight, Building2, Star } from "lucide-react";
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
@@ -13,10 +13,10 @@ const FAQ_AR = [
 ];
 
 const FAQ_EN = [
-  { q: "How can I book a taxi in Jeddah?", a: "You can easily book a Jeddah taxi via WhatsApp or direct call. We offer instant pickups or pre-booked private transfers for business, families, and individuals." },
-  { q: "Do you offer transfers between Jeddah districts?", a: "Yes, we provide professional transfers between all major Jeddah districts including Al Hamra, Al Rawdah, Obhur, Ash Shati, and the historical Al Balad area." },
-  { q: "What destinations are available from Jeddah?", a: "We provide direct transfers from Jeddah to Makkah, Madinah, and Taif, in addition to specialized transport to and from King Abdulaziz International Airport (KAIA)." },
-  { q: "What types of vehicles are available in the Jeddah fleet?", a: "Our fleet includes modern comfortable sedans, spacious SUVs for families, and large vans for group travel and Umrah transfers." },
+  { q: "How can I book a private taxi in Jeddah?", a: "Booking is simple via WhatsApp or a direct phone call. We offer on-demand pickups and pre-arranged private transfers for tourists, business travelers, and families across Jeddah." },
+  { q: "Does your service cover all Jeddah districts?", a: "Yes, our professional chauffeurs operate throughout Jeddah, including major residential and business hubs like Al Hamra, Al Rawdah, Obhur, Ash Shati, and the historic Al Balad district." },
+  { q: "Which destinations can I travel to from Jeddah?", a: "Beyond city transfers, we provide intercity transportation from Jeddah to Makkah, Madinah, and Taif, as well as dedicated connections to King Abdulaziz International Airport (JED)." },
+  { q: "What should I expect for hotel pickups in Jeddah?", a: "We provide door-to-door service. Your driver will meet you at your hotel entrance or lobby at the scheduled time, assisting with luggage for a stress-free start to your journey." },
 ];
 
 export const Route = createFileRoute("/_public/{-$locale}/taxi-jeddah")({
@@ -26,19 +26,15 @@ export const Route = createFileRoute("/_public/{-$locale}/taxi-jeddah")({
     const url = `${SITE.url}/${locale}/taxi-jeddah`;
     const title = ar
       ? "تاكسي جدة | حجز توصيل داخل جدة بسيارات حديثة - تاكسي العمرة"
-      : "Jeddah Taxi | Private Airport & Hotel Transfers - Umrah Taxi Saudi";
+      : "Jeddah Taxi | Private Transfers & Hotel Pickups - Umrah Taxi Saudi";
     const description = ar
       ? "احجز تاكسي جدة الآن. نوفر سيارات حديثة مع سائقين محترفين للتوصيل داخل أحياء جدة، الرحلات العائلية، والشركات. خدمة موثوقة على مدار الساعة بأسعار ثابتة."
-      : "Book your private Jeddah taxi for airport pickups, hotel transfers, and city travel. Reliable 24/7 transportation in Jeddah for international visitors and families.";
+      : "Reliable private taxi in Jeddah for hotel transfers, business travel, and city trips. Professional 24/7 transportation across Jeddah districts for international visitors.";
     
     return {
       meta: [
         { title },
         { name: "description", content: description },
-        { name: "keywords", content: ar 
-            ? "تاكسي جدة, حجز تاكسي جدة, رقم تاكسي جدة, تاكسي في جدة, توصيل داخل جدة, سيارة مع سائق جدة" 
-            : "Jeddah Taxi, Jeddah Taxi service, book taxi Jeddah, Jeddah private transfer, Jeddah airport taxi, Jeddah hotel transfer, private chauffeur Jeddah" 
-        },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:type", content: "website" },
@@ -54,7 +50,7 @@ export const Route = createFileRoute("/_public/{-$locale}/taxi-jeddah")({
           children: JSON.stringify(
             breadcrumbJsonLd([
               { name: ar ? "الرئيسية" : "Home", url: `${SITE.url}/${locale}` },
-              { name: ar ? "تاكسي جدة" : "Taxi Jeddah", url },
+              { name: ar ? "تاكسي جدة" : "Jeddah Taxi", url },
             ]),
           ),
         },
@@ -66,7 +62,7 @@ export const Route = createFileRoute("/_public/{-$locale}/taxi-jeddah")({
           type: "application/ld+json",
           children: JSON.stringify(
             serviceJsonLd({
-              name: ar ? "تاكسي جدة" : "Jeddah Taxi Service",
+              name: ar ? "تاكسي جدة" : "Jeddah Private Taxi Service",
               description,
               url,
               areaServed: "Jeddah",
@@ -93,16 +89,16 @@ function TaxiJeddahPage() {
       </nav>
 
       <header className="max-w-3xl space-y-5 mb-12">
-        <span className="eyebrow"><span className="h-px w-8 bg-gold" />{ar ? "خدمات التوصيل في جدة" : "Jeddah Transfer Services"}</span>
+        <span className="eyebrow"><span className="h-px w-8 bg-gold" />{ar ? "خدمات التوصيل في جدة" : "Premium Jeddah City Transfers"}</span>
         <h1 className="font-display text-4xl md:text-5xl leading-tight text-balance">
           {ar
             ? "تاكسي جدة - الحل الأمثل للتنقل براحة وأمان"
-            : "Jeddah Taxi - Private Transfers & Airport Pickups"}
+            : "Jeddah Taxi | Private Transfers & Hotel Pickups"}
         </h1>
         <p className="text-lg text-muted-foreground leading-relaxed">
           {ar
             ? "سواء كنت في رحلة عمل، زيارة عائلية، أو تحتاج للتنقل بين أحياء جدة ومطار الملك عبدالعزيز، نوفر لك أسطولاً من السيارات الحديثة والسائقين ذوي الخبرة لضمان وصولك في الموعد المحدد."
-            : "Whether you need a Jeddah airport taxi from King Abdulaziz International Airport (JED), a hotel transfer, or private family transportation between Jeddah districts, our professional chauffeurs are ready to serve you 24/7."}
+            : "Navigate the vibrant city of Jeddah with our professional chauffeur services. Whether you are traveling for business, a family vacation, or need a reliable transfer between Jeddah districts, our fleet is at your service 24/7."}
         </p>
         <div className="flex flex-wrap gap-3">
           <Button asChild size="lg" className="rounded-full">
@@ -118,11 +114,11 @@ function TaxiJeddahPage() {
 
       <section className="grid gap-8 md:grid-cols-3 mb-16">
         {[
-          { icon: Clock, title_ar: "متاح 24/7", title_en: "Available 24/7", desc_ar: "خدماتنا متوفرة على مدار الساعة لتلبية احتياجاتك في أي وقت.", desc_en: "Our services are available around the clock to meet your needs anytime." },
-          { icon: Shield, title_ar: "أمان وموثوقية", title_en: "Safe & Reliable", desc_ar: "سائقون محترفون ومعتمدون لضمان أقصى درجات الأمان.", desc_en: "Professional and vetted drivers to ensure maximum safety." },
-          { icon: Plane, title_ar: "مطار جدة", title_en: "Jeddah Airport", desc_ar: "سهولة التوصيل من وإلى مطار الملك عبدالعزيز الدولي.", desc_en: "Easy transfers to and from King Abdulaziz International Airport.", path: "/jeddah-airport-taxi" },
+          { icon: Building2, title_ar: "توصيل الفنادق", title_en: "Hotel Transfers", desc_ar: "خدمة من الباب إلى الباب لجميع فنادق ومنتجعات جدة.", desc_en: "Door-to-door private transfers for all Jeddah hotels and coastal resorts." },
+          { icon: Star, title_ar: "خدمة رجال الأعمال", title_en: "Business Travel", desc_ar: "تنقل بخصوصية تامة بين مراكز الأعمال والمؤتمرات.", desc_en: "Professional chauffeur service for meetings and corporate hubs." },
+          { icon: Plane, title_ar: "اتصال المطار", title_en: "Airport Connections", desc_ar: "ربط سلس مع مطار الملك عبدالعزيز الدولي.", desc_en: "Seamlessly connect with King Abdulaziz International Airport (JED).", path: "/jeddah-airport-taxi" },
         ].map((item, idx) => (
-          <div key={idx} className="p-6 rounded-2xl border border-border bg-card">
+          <div key={idx} className="p-6 rounded-2xl border border-border bg-card shadow-sm">
             {item.path ? (
               <Link to={withLocale(locale, item.path)} className="group">
                 <item.icon className="h-10 w-10 text-gold mb-4 group-hover:scale-110 transition-transform" />
@@ -140,62 +136,62 @@ function TaxiJeddahPage() {
       </section>
 
       <section className="mb-16">
-        <h2 className="font-display text-3xl mb-8 border-b pb-4">{ar ? "تغطية شاملة لخدمات النقل في جدة" : "Comprehensive Transfer Coverage in Jeddah"}</h2>
+        <h2 className="font-display text-3xl mb-8 border-b pb-4">{ar ? "تغطية شاملة لخدمات النقل في جدة" : "Explore Jeddah with Private Transportation"}</h2>
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-4">
-            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Plane className="h-5 w-5 text-gold" /> {ar ? "نقل مطار الملك عبدالعزيز (JED)" : "King Abdulaziz Airport (JED) Transfers"}</h3>
+            <h3 className="text-xl font-bold inline-flex items-center gap-2"><MapPin className="h-5 w-5 text-gold" /> {ar ? "الأحياء والمناطق الحيوية" : "Districts & Key Destinations"}</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {ar 
-                ? "سواء كنت قادماً إلى جدة أو مغادراً منها، نوفر خدمة استقبال وتوصيل دقيقة من وإلى مطار الملك عبدالعزيز الدولي. نضمن لك رحلة مريحة وسلسة وتتبعاً دقيقاً لمواعيد رحلات الطيران."
-                : "Whether arriving in or departing from Jeddah, we provide precise meet-and-greet services from KAIA. We ensure a comfortable, smooth journey with accurate flight tracking."}
+                ? "نخدم جميع أحياء جدة بما في ذلك الواجهة البحرية، الكورنيش، منطقة البلد التاريخية، ومراكز التسوق الكبرى. تنقل براحة تامة بين وجهاتك المفضلة."
+                : "Our Jeddah taxi service covers all major residential and commercial areas. From the modern Jeddah Waterfront and Corniche to the historical charm of Al Balad, we ensure you reach your destination comfortably."}
+            </p>
+          </div>
+          <div className="space-y-4">
+            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Plane className="h-5 w-5 text-gold" /> {ar ? "النقل من المطار" : "Airport Transfers"}</h3>
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              {ar 
+                ? "إذا كنت بحاجة إلى وسيلة نقل مخصصة من مطار جدة إلى وسط المدينة أو العكس، فإن سائقينا يضمنون لك رحلة هادئة وتوقيتات دقيقة."
+                : "Arriving at JED? We provide specialized airport taxi services to take you directly to your residence or hotel without the hassle of long queues."}
             </p>
             <Link to={withLocale(locale, "/jeddah-airport-taxi")} className="text-gold text-sm font-medium hover:underline inline-flex items-center">
-              {ar ? "تفاصيل تاكسي المطار" : "Airport Taxi Details"} <ArrowRight className="h-4 w-4 ms-1 rtl:rotate-180" />
+              {ar ? "تفاصيل تاكسي المطار" : "Jeddah Airport Taxi Details"} <ArrowRight className="h-4 w-4 ms-1 rtl:rotate-180" />
             </Link>
           </div>
           <div className="space-y-4">
-            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Building2 className="h-5 w-5 text-gold" /> {ar ? "توصيل الفنادق والوجهات السياحية" : "Hotel & Tourist Transfers"}</h3>
+            <h3 className="text-xl font-bold inline-flex items-center gap-2"><ArrowRight className="h-5 w-5 text-gold" /> {ar ? "مسارات من جدة إلى المدن الأخرى" : "Intercity Transfers from Jeddah"}</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {ar 
-                ? "نخدم جميع الفنادق الرئيسية في جدة والمناطق الحيوية مثل الواجهة البحرية، الكورنيش، ومنطقة البلد التاريخية. تنقل براحة تامة بين وجهاتك المفضلة في العروس."
-                : "We serve all major hotels in Jeddah and vibrant areas like the Waterfront, Corniche, and the historic Al Balad district. Travel in total comfort between your favorite destinations."}
-            </p>
-          </div>
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold inline-flex items-center gap-2"><MapPin className="h-5 w-5 text-gold" /> {ar ? "رحلات بين المدن (مكة والمدينة)" : "Intercity Trips (Makkah & Madinah)"}</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              {ar 
-                ? "نوفر مسارات مباشرة ومنتظمة من جدة إلى مكة المكرمة لخدمة المعتمرين والزوار، بالإضافة إلى رحلات خاصة إلى المدينة المنورة والطائف بأسعار ثابتة."
-                : "We provide direct and regular routes from Jeddah to Makkah serving pilgrims and visitors, as well as private trips to Madinah and Taif at fixed prices."}
+                ? "نوفر مسارات مباشرة من جدة إلى مكة المكرمة والمدينة المنورة والطائف، مما يجعلنا الخيار الأول للمعتمرين والسياح الدوليين."
+                : "We are the preferred choice for pilgrims and international travelers requiring intercity transfers from Jeddah to Makkah, Madinah, or Taif."}
             </p>
             <div className="flex flex-wrap gap-x-4 gap-y-2 pt-1">
               <Link to={withLocale(locale, "/jeddah-to-makkah-taxi")} className="text-gold text-xs font-medium hover:underline">
                 {ar ? "تاكسي جدة إلى مكة" : "Jeddah to Makkah Taxi"}
               </Link>
-              <Link to={withLocale(locale, "/taxi-madinah")} className="text-gold text-xs font-medium hover:underline">
-                {ar ? "تاكسي المدينة المنورة" : "Madinah Taxi"}
+              <Link to={withLocale(locale, "/jeddah-to-madinah-taxi")} className="text-gold text-xs font-medium hover:underline">
+                {ar ? "تاكسي جدة إلى المدينة" : "Jeddah to Madinah Taxi"}
               </Link>
             </div>
           </div>
           <div className="space-y-4">
-            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Users className="h-5 w-5 text-gold" /> {ar ? "خدمات النقل العائلي والخاص" : "Family & Private Transport"}</h3>
+            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Users className="h-5 w-5 text-gold" /> {ar ? "النقل العائلي" : "Family & Group Transport"}</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {ar 
-                ? "حلول نقل متكاملة للعائلات والمجموعات السياحية. سيارات واسعة ومريحة تضمن الخصوصية والأمان لجميع أفراد الأسرة خلال تجولهم في مدينة جدة."
-                : "Integrated transport solutions for families and tourist groups. Spacious and comfortable vehicles ensure privacy and safety for all family members during their Jeddah tour."}
+                ? "سيارات واسعة ومريحة تضمن الخصوصية والأمان لجميع أفراد الأسرة خلال تجولهم في مدينة جدة أو حضور المناسبات."
+                : "Traveling with family? Our spacious SUVs and vans are perfect for groups, providing ample room for luggage and ensuring a safe, private environment."}
             </p>
           </div>
         </div>
       </section>
 
       <section className="mb-16">
-        <h2 className="font-display text-3xl mb-8">{ar ? "لماذا تختار تاكسي العمرة؟" : "Why Choose Omra Taxi?"}</h2>
+        <h2 className="font-display text-3xl mb-8">{ar ? "لماذا تختار تاكسي العمرة في جدة؟" : "Why Choose Our Jeddah Taxi Service?"}</h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {[
-            { t_ar: "سيارات حديثة", t_en: "Modern Cars", d_ar: "نستخدم أحدث موديلات السيارات المريحة.", d_en: "We use the latest comfortable car models." },
-            { t_ar: "سائقون محترفون", t_en: "Professional Drivers", d_ar: "سائقونا مدربون وعلى دراية كاملة بطرق جدة.", d_en: "Our drivers are trained and fully aware of Jeddah roads." },
-            { t_ar: "أسعار ثابتة", t_en: "Fixed Prices", d_ar: "لا توجد رسوم خفية، السعر متفق عليه مسبقاً.", d_en: "No hidden fees, price agreed upon in advance." },
-            { t_ar: "سهولة الحجز", t_en: "Easy Booking", d_ar: "احجز رحلتك خلال ثوانٍ عبر واتساب.", d_en: "Book your trip in seconds via WhatsApp." },
+            { t_ar: "دقة المواعيد", t_en: "Always Punctual", d_ar: "نلتزم بمواعيدنا لضمان عدم تأخرك.", d_en: "We value your time and guarantee on-time arrivals." },
+            { t_ar: "سائقون محترفون", t_en: "Expert Drivers", d_ar: "سائقونا على دراية كاملة بجميع طرق جدة.", d_en: "Local chauffeurs with deep knowledge of Jeddah." },
+            { t_ar: "أسعار شفافة", t_en: "Fixed Pricing", d_ar: "السعر المتفق عليه هو ما ستدفعه.", d_en: "No hidden fees—know your fare before you travel." },
+            { t_ar: "أسطول حديث", t_en: "Modern Fleet", d_ar: "سيارات نظيفة ومعقمة ومكيفة بالكامل.", d_en: "Clean, air-conditioned vehicles for ultimate comfort." },
           ].map((item, idx) => (
             <div key={idx} className="flex gap-3">
               <CheckCircle2 className="h-5 w-5 text-gold shrink-0 mt-1" />
@@ -209,7 +205,7 @@ function TaxiJeddahPage() {
       </section>
 
       <section className="mb-16">
-        <h2 className="font-display text-3xl mb-8 border-b pb-4">{ar ? "الأسئلة الشائعة عن تاكسي جدة" : "FAQs about Jeddah Taxi"}</h2>
+        <h2 className="font-display text-3xl mb-8 border-b pb-4">{ar ? "الأسئلة الشائعة عن تاكسي جدة" : "Jeddah Taxi FAQ"}</h2>
         <div className="space-y-4">
           {faqs.map((f) => (
             <div key={f.q} className="rounded-2xl border border-border bg-card p-6">
@@ -218,18 +214,23 @@ function TaxiJeddahPage() {
             </div>
           ))}
         </div>
+        <div className="mt-8 flex flex-wrap gap-4 text-sm font-medium">
+          <span>{ar ? "روابط مفيدة:" : "Related Services:"}</span>
+          <Link to={withLocale(locale, "/taxi-makkah")} className="text-gold hover:underline">{ar ? "تاكسي مكة" : "Makkah Taxi"}</Link>
+          <Link to={withLocale(locale, "/jeddah-airport-taxi")} className="text-gold hover:underline">{ar ? "تاكسي مطار جدة" : "Jeddah Airport Taxi"}</Link>
+        </div>
       </section>
 
-      <div className="rounded-2xl bg-primary text-primary-foreground p-8 md:p-12 text-center">
-        <h2 className="font-display text-3xl mb-4">{ar ? "احجز تاكسي جدة الآن" : "Book Your Jeddah Taxi Now"}</h2>
+      <div className="rounded-2xl bg-primary text-primary-foreground p-8 md:p-12 text-center shadow-xl">
+        <h2 className="font-display text-3xl mb-4">{ar ? "احجز تاكسي جدة الآن" : "Ready to Explore Jeddah?"}</h2>
         <p className="text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
           {ar 
             ? "فريقنا بانتظار خدمتك على مدار الساعة. احصل على رحلة مريحة وآمنة داخل مدينة جدة." 
-            : "Our team is waiting to serve you 24/7. Get a comfortable and safe ride within Jeddah."}
+            : "Whether it's a quick trip to the mall or a full day of meetings, book your private Jeddah taxi now for a stress-free experience."}
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
           <Button asChild size="lg" className="bg-gold text-primary hover:bg-gold-soft h-14 px-8 text-lg rounded-full">
-            <a href={waLink(ar ? "أرغب بحجز تاكسي في جدة" : "I'd like to book a taxi in Jeddah")} target="_blank" rel="noopener">
+            <a href={waLink(ar ? "أرغب بحجز تاكسي في جدة" : "I'd like to book a private taxi in Jeddah")} target="_blank" rel="noopener">
               <MessageCircle className="h-6 w-6 me-2" /> {ar ? "تواصل عبر واتساب" : "Contact via WhatsApp"}
             </a>
           </Button>
