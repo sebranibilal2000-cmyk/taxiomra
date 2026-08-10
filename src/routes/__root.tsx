@@ -127,7 +127,7 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
       <head><HeadContent /></head>
-      <body>{children}<Scripts /></body>
+      <body className="hydrated">{children}<Scripts /></body>
     </html>
   );
 }

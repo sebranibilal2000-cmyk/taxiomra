@@ -41,7 +41,11 @@ export const Route = createFileRoute("/_public/{-$locale}")({
       throw redirect({ to: target, replace: true });
     }
   },
-  loader: ({ location }) => ({ pathname: location.pathname }),
+  loader: ({ location }) => {
+    return { pathname: location.pathname };
+  },
+  staleTime: 60000,
+  gcTime: 300000,
   head: ({ params, loaderData }) => {
     const locale = (params.locale ?? DEFAULT_LOCALE) as Locale;
     const pathname = loaderData?.pathname ?? `/${locale}`;
