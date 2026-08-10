@@ -16,7 +16,7 @@ const FAQ_AR = [
 
 const FAQ_EN = [
   { q: "Where do I find my driver at Jeddah Airport (JED)?", a: "Your driver will be waiting for you in the arrivals hall of KAIA (Terminal 1 or North Terminal) as soon as you exit the customs area, holding a sign with your name on it." },
-  { q: "What destinations are available from Jeddah Airport?", a: `We provide direct transfers from Jeddah Airport to Makkah (from ${getPriceForRoute('jeddah-apt-makkah')} SAR), Madinah (from ${getPriceForRoute('jeddah-apt-madinah')} SAR), all Jeddah hotels and districts, and Taif.` },
+  { q: "What destinations are available from Jeddah Airport?", a: `We provide direct transfers from Jeddah Airport to Makkah (from ${getPriceForRoute('apt-jed-to-makkah')} SAR), Madinah (from ${getPriceForRoute('apt-jed-to-med')} SAR), all Jeddah hotels and districts, and Taif.` },
   { q: "How do you handle flight delays?", a: "We monitor your flight via the flight number and adjust the pickup time automatically. We also provide sufficient free waiting time after landing for you to clear customs." },
   { q: "Are child seats available for airport transfers?", a: "Yes, you can request a child seat when booking to ensure your children's safety during the trip from the airport to your destination." },
 ];
