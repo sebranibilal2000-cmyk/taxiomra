@@ -28,10 +28,10 @@ export const Route = createFileRoute("/_public/{-$locale}/jeddah-airport-taxi")(
     const url = `${SITE.url}/${locale}/jeddah-airport-taxi`;
     const title = ar
       ? "تاكسي مطار جدة | استقبال وتوصيل مطار الملك عبدالعزيز - تاكسي العمرة"
-      : "Jeddah Airport Taxi | KAIA Airport Transfers & Meet & Greet - Omra Taxi";
+      : "Jeddah Airport Taxi | KAIA Airport Transfers & Pickup - Umrah Taxi Saudi";
     const description = ar
       ? "أفضل خدمة تاكسي مطار جدة (JED). استقبال من صالة الوصول، متابعة الرحلات، وأسعار ثابتة إلى مكة وجدة. احجز رحلتك الموثوقة من مطار الملك عبدالعزيز الآن."
-      : "Top-rated Jeddah Airport Taxi service (JED). Meet and greet from the arrivals hall, flight tracking, and fixed fares to Makkah and Jeddah. Book your reliable transfer now.";
+      : "Jeddah Airport Taxi service at KAIA (JED). Private airport pickup, meet and greet, and transfers to Makkah and Jeddah hotels. Reliable 24/7 service for international Umrah pilgrims.";
     
     return {
       meta: [
@@ -39,7 +39,7 @@ export const Route = createFileRoute("/_public/{-$locale}/jeddah-airport-taxi")(
         { name: "description", content: description },
         { name: "keywords", content: ar 
             ? "تاكسي مطار جدة, توصيل مطار جدة, استقبال مطار جدة, تاكسي من مطار جدة, مطار الملك عبدالعزيز تاكسي" 
-            : "Jeddah Airport Taxi, JED airport transfer, Jeddah airport pickup, airport taxi Saudi Arabia" 
+            : "Jeddah Airport Taxi, Jeddah Airport pickup, JED airport transfer, King Abdulaziz Airport to Makkah, Jeddah Airport Umrah transfer, airport transfer Jeddah to Makkah" 
         },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
@@ -101,12 +101,12 @@ function JeddahAirportTaxiPage() {
         <h1 className="font-display text-4xl md:text-5xl lg:text-6xl leading-tight">
           {ar
             ? "تاكسي مطار جدة: استقبالك يبدأ بابتسامة"
-            : "Jeddah Airport Taxi: Your Journey Starts Here"}
+            : "Jeddah Airport Taxi & Private Pickups"}
         </h1>
         <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
           {ar
             ? "ودع عناء البحث عن وسيلة نقل عند وصولك إلى مطار الملك عبدالعزيز. نحن نضمن لك استقبالاً فاخراً وتوصيلاً آمناً بأسعار ثابتة ومنافسة."
-            : "Forget the hassle of finding transport upon arrival at King Abdulaziz International Airport. We guarantee a luxury meet-and-greet and a safe transfer at fixed, competitive prices."}
+            : "Avoid the wait at King Abdulaziz International Airport (JED). We provide professional airport pickups, meet-and-greet services, and private transfers for international visitors and families arriving in Saudi Arabia."}
         </p>
         <div className="flex flex-wrap gap-4 pt-4">
           <Button asChild size="lg" className="rounded-full h-14 px-8 bg-primary hover:bg-primary/90 shadow-lg">
