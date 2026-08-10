@@ -6,17 +6,17 @@ import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
 
 const FAQ_AR = [
-  { q: "كيف يمكنني حجز تاكسي في جدة؟", a: "يمكنك حجز تاكسي جدة بسهولة عبر واتساب أو الاتصال المباشر. نوفر خدمة فورية أو حجوزات مسبقة للرحلات الخاصة ورجال الأعمال والعائلات." },
-  { q: "هل تتوفر خدمة التوصيل بين أحياء جدة؟", a: "نعم، نقدم خدمة التوصيل الاحترافي بين جميع أحياء جدة (مثل الحمراء، الروضة، أبحر، البلد) بأسعار تنافسية وسيارات حديثة." },
-  { q: "ما هي أنواع السيارات المتوفرة في جدة؟", a: "يتضمن أسطولنا سيارات سيدان حديثة (كامري/سوناتا)، سيارات دفع رباعي عائلية (تاهو/جي إم سي)، وفانات كبيرة للرحلات الجماعية." },
-  { q: "هل توفرون خدمة استقبال من مطار جدة؟", a: "نعم، نحن متخصصون في استقبال المطار وتوصيل المسافرين من مطار الملك عبدالعزيز إلى أي وجهة داخل جدة أو مكة." },
+  { q: "كيف يمكنني حجز تاكسي في جدة؟", a: "يمكنك حجز تاكسي جدة بسهولة عبر واتساب أو الاتصال المباشر. نوفر خدمة فورية أو حجوزات مسبقة للرحلات الخاصة والعائلية وخدمات النقل لرجال الأعمال." },
+  { q: "هل تتوفر خدمة التوصيل بين أحياء جدة؟", a: "نعم، نقدم خدمة التوصيل الاحترافي بين جميع أحياء ومناطق جدة الكبرى بما في ذلك الحمراء، الروضة، أبحر، حي الشاطئ، ومنطقة البلد التاريخية." },
+  { q: "ما هي الوجهات المتاحة من مدينة جدة؟", a: "نوفر رحلات مباشرة من جدة إلى مكة المكرمة، المدينة المنورة، والطائف، بالإضافة إلى خدمة النقل المتخصصة من وإلى مطار الملك عبدالعزيز الدولي." },
+  { q: "ما هي أنواع السيارات المتوفرة في أسطول جدة؟", a: "يتضمن أسطولنا سيارات سيدان حديثة مريحة، سيارات دفع رباعي واسعة للعائلات، وفانات كبيرة للرحلات الجماعية ونقل المعتمرين." },
 ];
 
 const FAQ_EN = [
   { q: "How can I book a taxi in Jeddah?", a: "You can easily book a Jeddah taxi via WhatsApp or direct call. We offer instant pickups or pre-booked private transfers for business, families, and individuals." },
-  { q: "Do you offer transfers between Jeddah districts?", a: "Yes, we provide professional transfers between all Jeddah districts (e.g., Al Hamra, Al Rawdah, Obhur, Al Balad) with modern vehicles." },
-  { q: "What types of vehicles are available in Jeddah?", a: "Our fleet includes modern sedans (Camry/Sonata), family SUVs (Tahoe/GMC), and large vans for group travel." },
-  { q: "Do you provide meet and greet at Jeddah Airport?", a: "Yes, we specialize in airport meet-and-greet services, transferring passengers from KAIA (JED) to any destination in Jeddah or Makkah." },
+  { q: "Do you offer transfers between Jeddah districts?", a: "Yes, we provide professional transfers between all major Jeddah districts including Al Hamra, Al Rawdah, Obhur, Ash Shati, and the historical Al Balad area." },
+  { q: "What destinations are available from Jeddah?", a: "We provide direct transfers from Jeddah to Makkah, Madinah, and Taif, in addition to specialized transport to and from King Abdulaziz International Airport (KAIA)." },
+  { q: "What types of vehicles are available in the Jeddah fleet?", a: "Our fleet includes modern comfortable sedans, spacious SUVs for families, and large vans for group travel and Umrah transfers." },
 ];
 
 export const Route = createFileRoute("/_public/{-$locale}/taxi-jeddah")({
