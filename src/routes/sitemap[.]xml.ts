@@ -41,6 +41,9 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/taxi-dammam", changefreq: "weekly", priority: "0.9" },
           { path: "/jeddah-to-makkah-taxi", changefreq: "weekly", priority: "0.9" },
           { path: "/makkah-to-madinah-taxi", changefreq: "weekly", priority: "0.9" },
+          { path: "/madinah-to-makkah-taxi", changefreq: "weekly", priority: "0.9" },
+          { path: "/makkah-to-taif-taxi", changefreq: "weekly", priority: "0.9" },
+          { path: "/taif-to-makkah-taxi", changefreq: "weekly", priority: "0.9" },
 
           
           { path: "/guide/taxi-fares", changefreq: "monthly", priority: "0.8" },
