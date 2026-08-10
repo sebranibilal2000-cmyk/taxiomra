@@ -24,6 +24,7 @@ import { Route as PublicChar123LocaleChar125IndexRouteImport } from './routes/_p
 import { Route as PublicChar123LocaleChar125VehiclesRouteImport } from './routes/_public.{-$locale}.vehicles'
 import { Route as PublicChar123LocaleChar125ThankYouRouteImport } from './routes/_public.{-$locale}.thank-you'
 import { Route as PublicChar123LocaleChar125TermsRouteImport } from './routes/_public.{-$locale}.terms'
+import { Route as PublicChar123LocaleChar125TaxiTaifRouteImport } from './routes/_public.{-$locale}.taxi-taif'
 import { Route as PublicChar123LocaleChar125TaxiMakkahRouteImport } from './routes/_public.{-$locale}.taxi-makkah'
 import { Route as PublicChar123LocaleChar125TaxiMadinahRouteImport } from './routes/_public.{-$locale}.taxi-madinah'
 import { Route as PublicChar123LocaleChar125TaxiJeddahRouteImport } from './routes/_public.{-$locale}.taxi-jeddah'
@@ -192,6 +193,12 @@ const PublicChar123LocaleChar125TermsRoute =
   PublicChar123LocaleChar125TermsRouteImport.update({
     id: '/terms',
     path: '/terms',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125TaxiTaifRoute =
+  PublicChar123LocaleChar125TaxiTaifRouteImport.update({
+    id: '/taxi-taif',
+    path: '/taxi-taif',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
 const PublicChar123LocaleChar125TaxiMakkahRoute =
@@ -803,6 +810,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/taxi-jeddah': typeof PublicChar123LocaleChar125TaxiJeddahRoute
   '/{-$locale}/taxi-madinah': typeof PublicChar123LocaleChar125TaxiMadinahRoute
   '/{-$locale}/taxi-makkah': typeof PublicChar123LocaleChar125TaxiMakkahRoute
+  '/{-$locale}/taxi-taif': typeof PublicChar123LocaleChar125TaxiTaifRoute
   '/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
   '/{-$locale}/thank-you': typeof PublicChar123LocaleChar125ThankYouRoute
   '/{-$locale}/vehicles': typeof PublicChar123LocaleChar125VehiclesRouteWithChildren
@@ -909,6 +917,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/taxi-jeddah': typeof PublicChar123LocaleChar125TaxiJeddahRoute
   '/{-$locale}/taxi-madinah': typeof PublicChar123LocaleChar125TaxiMadinahRoute
   '/{-$locale}/taxi-makkah': typeof PublicChar123LocaleChar125TaxiMakkahRoute
+  '/{-$locale}/taxi-taif': typeof PublicChar123LocaleChar125TaxiTaifRoute
   '/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
   '/{-$locale}/thank-you': typeof PublicChar123LocaleChar125ThankYouRoute
   '/{-$locale}/vehicles': typeof PublicChar123LocaleChar125VehiclesRouteWithChildren
@@ -1017,6 +1026,7 @@ export interface FileRoutesById {
   '/_public/{-$locale}/taxi-jeddah': typeof PublicChar123LocaleChar125TaxiJeddahRoute
   '/_public/{-$locale}/taxi-madinah': typeof PublicChar123LocaleChar125TaxiMadinahRoute
   '/_public/{-$locale}/taxi-makkah': typeof PublicChar123LocaleChar125TaxiMakkahRoute
+  '/_public/{-$locale}/taxi-taif': typeof PublicChar123LocaleChar125TaxiTaifRoute
   '/_public/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
   '/_public/{-$locale}/thank-you': typeof PublicChar123LocaleChar125ThankYouRoute
   '/_public/{-$locale}/vehicles': typeof PublicChar123LocaleChar125VehiclesRouteWithChildren
@@ -1126,6 +1136,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/taxi-jeddah'
     | '/{-$locale}/taxi-madinah'
     | '/{-$locale}/taxi-makkah'
+    | '/{-$locale}/taxi-taif'
     | '/{-$locale}/terms'
     | '/{-$locale}/thank-you'
     | '/{-$locale}/vehicles'
@@ -1232,6 +1243,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/taxi-jeddah'
     | '/{-$locale}/taxi-madinah'
     | '/{-$locale}/taxi-makkah'
+    | '/{-$locale}/taxi-taif'
     | '/{-$locale}/terms'
     | '/{-$locale}/thank-you'
     | '/{-$locale}/vehicles'
@@ -1339,6 +1351,7 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/taxi-jeddah'
     | '/_public/{-$locale}/taxi-madinah'
     | '/_public/{-$locale}/taxi-makkah'
+    | '/_public/{-$locale}/taxi-taif'
     | '/_public/{-$locale}/terms'
     | '/_public/{-$locale}/thank-you'
     | '/_public/{-$locale}/vehicles'
@@ -1486,6 +1499,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/{-$locale}/terms'
       preLoaderRoute: typeof PublicChar123LocaleChar125TermsRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
+    }
+    '/_public/{-$locale}/taxi-taif': {
+      id: '/_public/{-$locale}/taxi-taif'
+      path: '/taxi-taif'
+      fullPath: '/{-$locale}/taxi-taif'
+      preLoaderRoute: typeof PublicChar123LocaleChar125TaxiTaifRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
     '/_public/{-$locale}/taxi-makkah': {
@@ -2328,6 +2348,7 @@ interface PublicChar123LocaleChar125RouteChildren {
   PublicChar123LocaleChar125TaxiJeddahRoute: typeof PublicChar123LocaleChar125TaxiJeddahRoute
   PublicChar123LocaleChar125TaxiMadinahRoute: typeof PublicChar123LocaleChar125TaxiMadinahRoute
   PublicChar123LocaleChar125TaxiMakkahRoute: typeof PublicChar123LocaleChar125TaxiMakkahRoute
+  PublicChar123LocaleChar125TaxiTaifRoute: typeof PublicChar123LocaleChar125TaxiTaifRoute
   PublicChar123LocaleChar125TermsRoute: typeof PublicChar123LocaleChar125TermsRoute
   PublicChar123LocaleChar125ThankYouRoute: typeof PublicChar123LocaleChar125ThankYouRoute
   PublicChar123LocaleChar125VehiclesRoute: typeof PublicChar123LocaleChar125VehiclesRouteWithChildren
@@ -2383,6 +2404,8 @@ const PublicChar123LocaleChar125RouteChildren: PublicChar123LocaleChar125RouteCh
       PublicChar123LocaleChar125TaxiMadinahRoute,
     PublicChar123LocaleChar125TaxiMakkahRoute:
       PublicChar123LocaleChar125TaxiMakkahRoute,
+    PublicChar123LocaleChar125TaxiTaifRoute:
+      PublicChar123LocaleChar125TaxiTaifRoute,
     PublicChar123LocaleChar125TermsRoute: PublicChar123LocaleChar125TermsRoute,
     PublicChar123LocaleChar125ThankYouRoute:
       PublicChar123LocaleChar125ThankYouRoute,
@@ -2440,3 +2463,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
