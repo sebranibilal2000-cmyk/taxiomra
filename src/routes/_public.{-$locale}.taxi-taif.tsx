@@ -26,8 +26,8 @@ export const Route = createFileRoute("/_public/{-$locale}/taxi-taif")({
     const locale = params.locale ?? "ar";
     const ar = locale === "ar";
     const url = `${SITE.url}/${locale}/taxi-taif`;
-    const title = ar ? "تاكسي الطائف | توصيل من مطار جدة ومكة للطائف - تاكسي العمرة" : "Taif Taxi | Transfers from Jeddah & Makkah to Taif - Omra Taxi";
-    const description = ar ? "احجز تاكسي الطائف الآن. رحلات عائلية وسياحية مريحة، توصيل من مطار جدة ومكة المكرمة إلى الطائف بأسعار ثابتة وأمان تام." : "Book Taif taxi now. Comfortable family and tourist trips, transfers from Jeddah Airport and Makkah to Taif with fixed prices and full safety.";
+    const title = ar ? "تاكسي الطائف | توصيل من مطار جدة ومكة للطائف - تاكسي العمرة" : "Taif Taxi | Private Transfers from Jeddah & Makkah - Umrah Taxi Saudi";
+    const description = ar ? "احجز تاكسي الطائف الآن. رحلات عائلية وسياحية مريحة، توصيل من مطار جدة ومكة المكرمة إلى الطائف بأسعار ثابتة وأمان تام." : "Book your private Taif taxi for day trips from Makkah, airport transfers from Jeddah, and local sightseeing. Comfortable family transportation and professional chauffeurs.";
     return {
       meta: [{ title }, { name: "description", content: description }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:url", content: url }],
       links: [{ rel: "canonical", href: url }],
@@ -52,8 +52,8 @@ function TaifTaxiPage() {
         <span className="text-foreground">{ar ? "تاكسي الطائف" : "Taif Taxi"}</span>
       </nav>
       <header className="space-y-6 mb-16">
-        <h1 className="font-display text-4xl md:text-5xl">{ar ? "تاكسي الطائف: بوابة المصيف" : "Taif Taxi: The Gateway to the Summer Capital"}</h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">{ar ? "رحلات يومية وسياحية من جدة ومكة إلى الطائف. استمتع بأجواء الطائف الرائعة مع خدماتنا المتميزة." : "Daily and tourist trips from Jeddah and Makkah to Taif. Enjoy Taif's wonderful atmosphere with our premium services."}</p>
+        <h1 className="font-display text-4xl md:text-5xl">{ar ? "تاكسي الطائف: بوابة المصيف" : "Taif Taxi & Private Sightseeing Transfers"}</h1>
+        <p className="text-lg text-muted-foreground max-w-2xl">{ar ? "رحلات يومية وسياحية من جدة ومكة إلى الطائف. استمتع بأجواء الطائف الرائعة مع خدماتنا المتميزة." : "Reliable private taxi services for tourists and families traveling from Jeddah or Makkah to the beautiful mountains of Taif. We offer day trips and intercity transfers."}</p>
         <div className="flex gap-4">
           <Button asChild size="lg" className="rounded-full"><a href={waLink(ar ? "أرغب بحجز تاكسي في الطائف" : "Book taxi in Taif")}><MessageCircle className="h-5 w-5 me-2" /> {ar ? "حجز الآن" : "Book Now"}</a></Button>
         </div>
