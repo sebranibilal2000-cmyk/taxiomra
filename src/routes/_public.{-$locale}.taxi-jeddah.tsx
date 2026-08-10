@@ -26,10 +26,10 @@ export const Route = createFileRoute("/_public/{-$locale}/taxi-jeddah")({
     const url = `${SITE.url}/${locale}/taxi-jeddah`;
     const title = ar
       ? "تاكسي جدة | حجز توصيل داخل جدة بسيارات حديثة - تاكسي العمرة"
-      : "Taxi Jeddah | Book Private Transfers in Jeddah - Omra Taxi";
+      : "Jeddah Taxi | Private Airport & Hotel Transfers - Umrah Taxi Saudi";
     const description = ar
       ? "احجز تاكسي جدة الآن. نوفر سيارات حديثة مع سائقين محترفين للتوصيل داخل أحياء جدة، الرحلات العائلية، والشركات. خدمة موثوقة على مدار الساعة بأسعار ثابتة."
-      : "Book your Jeddah taxi now. Modern cars with professional drivers for city transfers, family trips, and corporate travel. Reliable 24/7 service with fixed fares.";
+      : "Book your private Jeddah taxi for airport pickups, hotel transfers, and city travel. Reliable 24/7 transportation in Jeddah for international visitors and families.";
     
     return {
       meta: [
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/_public/{-$locale}/taxi-jeddah")({
         { name: "description", content: description },
         { name: "keywords", content: ar 
             ? "تاكسي جدة, حجز تاكسي جدة, رقم تاكسي جدة, تاكسي في جدة, توصيل داخل جدة, سيارة مع سائق جدة" 
-            : "Taxi Jeddah, Jeddah Taxi service, book taxi Jeddah, Jeddah private transfer, chauffeur Jeddah" 
+            : "Jeddah Taxi, Jeddah Taxi service, book taxi Jeddah, Jeddah private transfer, Jeddah airport taxi, Jeddah hotel transfer, private chauffeur Jeddah" 
         },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
@@ -97,12 +97,12 @@ function TaxiJeddahPage() {
         <h1 className="font-display text-4xl md:text-5xl leading-tight text-balance">
           {ar
             ? "تاكسي جدة - الحل الأمثل للتنقل براحة وأمان"
-            : "Taxi Jeddah - Your Ultimate Choice for Comfort & Safety"}
+            : "Jeddah Taxi - Private Transfers & Airport Pickups"}
         </h1>
         <p className="text-lg text-muted-foreground leading-relaxed">
           {ar
             ? "سواء كنت في رحلة عمل، زيارة عائلية، أو تحتاج للتنقل بين أحياء جدة ومطار الملك عبدالعزيز، نوفر لك أسطولاً من السيارات الحديثة والسائقين ذوي الخبرة لضمان وصولك في الموعد المحدد."
-            : "Whether you are on a business trip, a family visit, or need to travel between Jeddah neighborhoods and KAIA airport, we provide a modern fleet and experienced drivers to ensure you arrive on time."}
+            : "Whether you need a Jeddah airport taxi from King Abdulaziz International Airport (JED), a hotel transfer, or private family transportation between Jeddah districts, our professional chauffeurs are ready to serve you 24/7."}
         </p>
         <div className="flex flex-wrap gap-3">
           <Button asChild size="lg" className="rounded-full">
