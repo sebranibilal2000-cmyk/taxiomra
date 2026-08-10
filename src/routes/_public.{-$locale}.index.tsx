@@ -14,6 +14,8 @@ import heroImg from "@/assets/hero-luxury-car.jpg";
 import airportImg from "@/assets/airport-transfer.jpg";
 import businessImg from "@/assets/business-travel.jpg";
 import { categoryImage, categoryAlt, FALLBACK_FLEET_IMAGES } from "@/lib/fleet-images";
+import { getPriceForRoute } from "@/lib/pricing.functions";
+
 
 const homeOpts = () => queryOptions({
   queryKey: ["public", "home"],
@@ -170,8 +172,8 @@ function Home() {
             </h1>
             <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
               {ar
-                ? "خدمة التوصيل من مطار جدة إلى مكة على مدار الساعة — سيارات حديثة، سائقون محترفون، وأسعار ثابتة. احجز في دقيقة عبر واتساب أو الاتصال."
-                : "Reliable Jeddah Airport to Makkah transfers, 24/7 — modern vehicles, professional drivers and fixed fares. Book in under a minute via WhatsApp or phone."}
+                ? `خدمة التوصيل من مطار جدة إلى مكة على مدار الساعة بأسعار تبدأ من ${getPriceForRoute('jeddah-apt-makkah')} ريال فقط — سيارات حديثة، سائقون محترفون. احجز في دقيقة.`
+                : `Reliable Jeddah Airport to Makkah transfers from only ${getPriceForRoute('jeddah-apt-makkah')} SAR — modern vehicles, professional drivers. Book in under a minute.`}
             </p>
             <div className="flex flex-wrap gap-3">
               <Button asChild size="lg" className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-elegant h-12 px-6">

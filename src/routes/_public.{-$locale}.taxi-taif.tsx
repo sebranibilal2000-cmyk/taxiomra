@@ -4,16 +4,18 @@ import { MessageCircle, Phone, CheckCircle2, Car, MapPin, Clock, Shield, Star, M
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
+import { getPriceForRoute } from "@/lib/pricing.functions";
+
 
 const FAQ_AR = [
-  { q: "هل توفرون توصيل من جدة أو مكة إلى الطائف؟", a: "نعم، نحن متخصصون في تقديم خدمة التوصيل المباشر من مطار الملك عبدالعزيز بجدة ومن فنادق مكة المكرمة إلى جميع مناطق الطائف (الهدا، الشفا، وسط المدينة) بسيارات حديثة مريحة." },
+  { q: "هل توفرون توصيل من جدة أو مكة إلى الطائف؟", a: `نعم، نحن متخصصون في تقديم خدمة التوصيل المباشر من مطار الملك عبدالعزيز بجدة ومن فنادق مكة المكرمة إلى جميع مناطق الطائف بسعر يبدأ من ${getPriceForRoute('jeddah-apt-makkah') === '250' ? 'اطلب السعر' : getPriceForRoute('jeddah-apt-makkah')} (تواصل معنا للتأكيد).` },
   { q: "هل تتوفر سيارات للرحلات السياحية في الطائف؟", a: "بالتأكيد، لدينا سائقون محترفون على دراية كاملة بأجمل المواقع السياحية والمنتزهات في الطائف مثل جبل دكا ومنتزه الردف لضمان جولة سياحية ممتعة." },
   { q: "ما هي أنواع السيارات المتاحة لرحلات الطائف؟", a: "نوفر سيارات سيدان مريحة، وسيارات دفع رباعي عائلية واسعة تناسب طبيعة الطرق الجبلية في الطائف، بالإضافة إلى فانات للمجموعات الكبيرة." },
   { q: "هل يمكن حجز استقبال من مطار الطائف الدولي؟", a: "نعم، نوفر خدمة الاستقبال والتوصيل من وإلى مطار الطائف الدولي لجميع الوجهات المحلية والمدن المجاورة." },
 ];
 
 const FAQ_EN = [
-  { q: "Do you offer transfers from Jeddah or Makkah to Taif?", a: "Yes, we specialize in providing direct transfer services from Jeddah KAIA and Makkah hotels to all areas of Taif (Al Hada, Ash Shafa, City Center) with modern comfortable vehicles." },
+  { q: "Do you offer transfers from Jeddah or Makkah to Taif?", a: `Yes, we specialize in providing direct transfer services from Jeddah KAIA and Makkah hotels to all areas of Taif (request quote for exact fare).` },
   { q: "Are cars available for sightseeing tours in Taif?", a: "Certainly, we have professional drivers who are fully aware of the most beautiful tourist sites and parks in Taif, such as Jabal Daka and Arruddaf Park, to ensure an enjoyable tour." },
   { q: "What types of vehicles are available for Taif trips?", a: "We provide comfortable sedans, spacious family SUVs suitable for Taif's mountain roads, and vans for large groups." },
   { q: "Can I book a pickup from Taif International Airport?", a: "Yes, we provide meet-and-greet and transfer services to and from Taif International Airport to all local destinations and neighboring cities." },

@@ -12,7 +12,7 @@ import { breadcrumbJsonLd, faqPageJsonLd } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 
 const FAQ = [
-  { q_ar: "كم سعر التاكسي من مكة إلى جدة؟", a_ar: "يبدأ السعر من 190 ريال لسيارة السيدان. نؤكد السعر النهائي قبل الرحلة.", q_en: "How much is a taxi from Makkah to Jeddah?", a_en: "Fares start from 190 SAR for a sedan. We confirm the final fare before your trip." },
+  { q_ar: "كم سعر التاكسي من مكة إلى جدة؟", a_ar: `يبدأ السعر من ${getPriceForRoute('makkah-jeddah-apt', 'sedan') || '190'} ريال لسيارة السيدان. نؤكد السعر النهائي قبل الرحلة.`, q_en: "How much is a taxi from Makkah to Jeddah?", a_en: `Fares start from ${getPriceForRoute('makkah-jeddah-apt', 'sedan') || '190'} SAR for a sedan. We confirm the final fare before your trip.` },
   { q_ar: "هل الأسعار ثابتة؟", a_ar: "نعم، جميع الأسعار ثابتة ومعروفة مسبقاً قبل الحجز.", q_en: "Are fares fixed?", a_en: "Yes, all fares are fixed and known before you book." }
 ];
 
