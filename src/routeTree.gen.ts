@@ -25,6 +25,7 @@ import { Route as PublicChar123LocaleChar125VehiclesRouteImport } from './routes
 import { Route as PublicChar123LocaleChar125ThankYouRouteImport } from './routes/_public.{-$locale}.thank-you'
 import { Route as PublicChar123LocaleChar125TermsRouteImport } from './routes/_public.{-$locale}.terms'
 import { Route as PublicChar123LocaleChar125TaxiMakkahRouteImport } from './routes/_public.{-$locale}.taxi-makkah'
+import { Route as PublicChar123LocaleChar125TaxiMadinahRouteImport } from './routes/_public.{-$locale}.taxi-madinah'
 import { Route as PublicChar123LocaleChar125TaxiJeddahRouteImport } from './routes/_public.{-$locale}.taxi-jeddah'
 import { Route as PublicChar123LocaleChar125SitemapRouteImport } from './routes/_public.{-$locale}.sitemap'
 import { Route as PublicChar123LocaleChar125SearchRouteImport } from './routes/_public.{-$locale}.search'
@@ -197,6 +198,12 @@ const PublicChar123LocaleChar125TaxiMakkahRoute =
   PublicChar123LocaleChar125TaxiMakkahRouteImport.update({
     id: '/taxi-makkah',
     path: '/taxi-makkah',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125TaxiMadinahRoute =
+  PublicChar123LocaleChar125TaxiMadinahRouteImport.update({
+    id: '/taxi-madinah',
+    path: '/taxi-madinah',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
 const PublicChar123LocaleChar125TaxiJeddahRoute =
@@ -794,6 +801,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/search': typeof PublicChar123LocaleChar125SearchRoute
   '/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
   '/{-$locale}/taxi-jeddah': typeof PublicChar123LocaleChar125TaxiJeddahRoute
+  '/{-$locale}/taxi-madinah': typeof PublicChar123LocaleChar125TaxiMadinahRoute
   '/{-$locale}/taxi-makkah': typeof PublicChar123LocaleChar125TaxiMakkahRoute
   '/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
   '/{-$locale}/thank-you': typeof PublicChar123LocaleChar125ThankYouRoute
@@ -899,6 +907,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/search': typeof PublicChar123LocaleChar125SearchRoute
   '/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
   '/{-$locale}/taxi-jeddah': typeof PublicChar123LocaleChar125TaxiJeddahRoute
+  '/{-$locale}/taxi-madinah': typeof PublicChar123LocaleChar125TaxiMadinahRoute
   '/{-$locale}/taxi-makkah': typeof PublicChar123LocaleChar125TaxiMakkahRoute
   '/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
   '/{-$locale}/thank-you': typeof PublicChar123LocaleChar125ThankYouRoute
@@ -1006,6 +1015,7 @@ export interface FileRoutesById {
   '/_public/{-$locale}/search': typeof PublicChar123LocaleChar125SearchRoute
   '/_public/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
   '/_public/{-$locale}/taxi-jeddah': typeof PublicChar123LocaleChar125TaxiJeddahRoute
+  '/_public/{-$locale}/taxi-madinah': typeof PublicChar123LocaleChar125TaxiMadinahRoute
   '/_public/{-$locale}/taxi-makkah': typeof PublicChar123LocaleChar125TaxiMakkahRoute
   '/_public/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
   '/_public/{-$locale}/thank-you': typeof PublicChar123LocaleChar125ThankYouRoute
@@ -1114,6 +1124,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/search'
     | '/{-$locale}/sitemap'
     | '/{-$locale}/taxi-jeddah'
+    | '/{-$locale}/taxi-madinah'
     | '/{-$locale}/taxi-makkah'
     | '/{-$locale}/terms'
     | '/{-$locale}/thank-you'
@@ -1219,6 +1230,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/search'
     | '/{-$locale}/sitemap'
     | '/{-$locale}/taxi-jeddah'
+    | '/{-$locale}/taxi-madinah'
     | '/{-$locale}/taxi-makkah'
     | '/{-$locale}/terms'
     | '/{-$locale}/thank-you'
@@ -1325,6 +1337,7 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/search'
     | '/_public/{-$locale}/sitemap'
     | '/_public/{-$locale}/taxi-jeddah'
+    | '/_public/{-$locale}/taxi-madinah'
     | '/_public/{-$locale}/taxi-makkah'
     | '/_public/{-$locale}/terms'
     | '/_public/{-$locale}/thank-you'
@@ -1480,6 +1493,13 @@ declare module '@tanstack/react-router' {
       path: '/taxi-makkah'
       fullPath: '/{-$locale}/taxi-makkah'
       preLoaderRoute: typeof PublicChar123LocaleChar125TaxiMakkahRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
+    }
+    '/_public/{-$locale}/taxi-madinah': {
+      id: '/_public/{-$locale}/taxi-madinah'
+      path: '/taxi-madinah'
+      fullPath: '/{-$locale}/taxi-madinah'
+      preLoaderRoute: typeof PublicChar123LocaleChar125TaxiMadinahRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
     '/_public/{-$locale}/taxi-jeddah': {
@@ -2306,6 +2326,7 @@ interface PublicChar123LocaleChar125RouteChildren {
   PublicChar123LocaleChar125SearchRoute: typeof PublicChar123LocaleChar125SearchRoute
   PublicChar123LocaleChar125SitemapRoute: typeof PublicChar123LocaleChar125SitemapRoute
   PublicChar123LocaleChar125TaxiJeddahRoute: typeof PublicChar123LocaleChar125TaxiJeddahRoute
+  PublicChar123LocaleChar125TaxiMadinahRoute: typeof PublicChar123LocaleChar125TaxiMadinahRoute
   PublicChar123LocaleChar125TaxiMakkahRoute: typeof PublicChar123LocaleChar125TaxiMakkahRoute
   PublicChar123LocaleChar125TermsRoute: typeof PublicChar123LocaleChar125TermsRoute
   PublicChar123LocaleChar125ThankYouRoute: typeof PublicChar123LocaleChar125ThankYouRoute
@@ -2358,6 +2379,8 @@ const PublicChar123LocaleChar125RouteChildren: PublicChar123LocaleChar125RouteCh
       PublicChar123LocaleChar125SitemapRoute,
     PublicChar123LocaleChar125TaxiJeddahRoute:
       PublicChar123LocaleChar125TaxiJeddahRoute,
+    PublicChar123LocaleChar125TaxiMadinahRoute:
+      PublicChar123LocaleChar125TaxiMadinahRoute,
     PublicChar123LocaleChar125TaxiMakkahRoute:
       PublicChar123LocaleChar125TaxiMakkahRoute,
     PublicChar123LocaleChar125TermsRoute: PublicChar123LocaleChar125TermsRoute,
