@@ -16,7 +16,7 @@ const FAQ_EN = [
 ];
 
 export const Route = createFileRoute("/_public/{-$locale}/taxi-dammam")({
-  head: [{ params }: any] => {
+  head: ({ params }: any) => {
     const locale = params.locale ?? "ar";
     const ar = locale === "ar";
     const url = `${SITE.url}/${locale}/taxi-dammam`;
