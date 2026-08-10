@@ -82,35 +82,40 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       return { headSettings: {} as Record<string, string> };
     }
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      ...extraHeadMeta(loaderData?.headSettings ?? {}),
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: `${SITE.brand.en} | Jeddah Airport Taxi to Makkah` },
-      { name: "description", content: "Book your Jeddah Airport to Makkah taxi with Omra Taxi. Fixed prices, professional drivers, modern vehicles and 24/7 airport transfer service." },
-      { name: "theme-color", content: "#0d0d0d" },
-      { property: "og:site_name", content: SITE.brand.en },
-      { property: "og:title", content: `${SITE.brand.en} | Jeddah Airport Taxi to Makkah` },
-      { property: "og:description", content: "Book your Jeddah Airport to Makkah taxi with Omra Taxi. Fixed prices, professional drivers, modern vehicles and 24/7 airport transfer service." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { title: "تاكسي العمرة | التوصيل من مطار جدة إلى مكة" },
-      { property: "og:title", content: "تاكسي العمرة | التوصيل من مطار جدة إلى مكة" },
-      { name: "twitter:title", content: "تاكسي العمرة | التوصيل من مطار جدة إلى مكة" },
-      { name: "twitter:description", content: "خدمة تاكسي العمرة والتوصيل من مطار جدة إلى مكة المكرمة. أسعار ثابتة، سيارات حديثة، وخدمة 24 ساعة." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/yTgJBA4SfjVCi3apFH5XARkLEQi1/social-images/social-1783936969962-Gemini_Generated_Image_9nz6uv9nz6uv9nz6-removebg-preview.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/yTgJBA4SfjVCi3apFH5XARkLEQi1/social-images/social-1783936969962-Gemini_Generated_Image_9nz6uv9nz6uv9nz6-removebg-preview.webp" },
-    ],
-    links: [
-      { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", sizes: "any" },
-      { rel: "icon", type: "image/x-icon", sizes: "32x32", href: "/favicon.ico" },
-      { rel: "icon", type: "image/x-icon", sizes: "16x16", href: "/favicon.ico" },
-      { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
-      { rel: "manifest", href: "/site.webmanifest" },
-    ],
-  }),
+  head: ({ loaderData, matches }) => {
+    // Determine the title based on the route hierarchy: 
+    // Child routes should have passed their titles up if possible, 
+    // or we fall back to a safe site default.
+    const lastMatch = matches[matches.length - 1];
+    const routeTitle = (lastMatch?.meta as any)?.find((m: any) => m.title)?.title;
+    
+    // Fallback: If no page-specific title, provide a sensible default.
+    const defaultTitle = `${SITE.brand.en} | ${SITE.brand.ar}`;
+    const effectiveTitle = routeTitle || defaultTitle;
+
+    return {
+      meta: [
+        ...extraHeadMeta(loaderData?.headSettings ?? {}),
+        { charSet: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { title: effectiveTitle },
+        { name: "theme-color", content: "#0d0d0d" },
+        { property: "og:site_name", content: SITE.brand.en },
+        { property: "og:title", content: effectiveTitle },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: effectiveTitle },
+        { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/yTgJBA4SfjVCi3apFH5XARkLEQi1/social-images/social-1783936969962-Gemini_Generated_Image_9nz6uv9nz6uv9nz6-removebg-preview.webp" },
+        { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/yTgJBA4SfjVCi3apFH5XARkLEQi1/social-images/social-1783936969962-Gemini_Generated_Image_9nz6uv9nz6uv9nz6-removebg-preview.webp" },
+      ],
+      links: [
+        { rel: "stylesheet", href: appCss },
+        { rel: "icon", href: "/favicon.ico", sizes: "any" },
+        { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+        { rel: "manifest", href: "/site.webmanifest" },
+      ],
+    };
+  },
 
   shellComponent: RootShell,
   component: RootComponent,
