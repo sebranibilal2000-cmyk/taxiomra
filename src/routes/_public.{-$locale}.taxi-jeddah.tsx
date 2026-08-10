@@ -140,38 +140,49 @@ function TaxiJeddahPage() {
       </section>
 
       <section className="mb-16">
-        <h2 className="font-display text-3xl mb-8 border-b pb-4">{ar ? "خدماتنا في جدة" : "Our Services in Jeddah"}</h2>
+        <h2 className="font-display text-3xl mb-8 border-b pb-4">{ar ? "تغطية شاملة لخدمات النقل في جدة" : "Comprehensive Transfer Coverage in Jeddah"}</h2>
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-4">
-            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Car className="h-5 w-5 text-gold" /> {ar ? "التوصيل من وإلى مطار جدة" : "Jeddah Airport Transfers"}</h3>
+            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Plane className="h-5 w-5 text-gold" /> {ar ? "نقل مطار الملك عبدالعزيز (JED)" : "King Abdulaziz Airport (JED) Transfers"}</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {ar 
-                ? "نقدم أفضل خدمة استقبال وتوصيل من مطار الملك عبدالعزيز الدولي (JED). نوفر خدمة تتبع الرحلات لضمان وجود السائق في انتظارك عند الوصول."
-                : "We offer the best meet-and-greet and transfer service from King Abdulaziz International Airport (JED). We provide flight tracking to ensure your driver is waiting upon arrival."}
+                ? "سواء كنت قادماً إلى جدة أو مغادراً منها، نوفر خدمة استقبال وتوصيل دقيقة من وإلى مطار الملك عبدالعزيز الدولي. نضمن لك رحلة مريحة وسلسة وتتبعاً دقيقاً لمواعيد رحلات الطيران."
+                : "Whether arriving in or departing from Jeddah, we provide precise meet-and-greet services from KAIA. We ensure a comfortable, smooth journey with accurate flight tracking."}
+            </p>
+            <Link to={withLocale(locale, "/jeddah-airport-taxi")} className="text-gold text-sm font-medium hover:underline inline-flex items-center">
+              {ar ? "تفاصيل تاكسي المطار" : "Airport Taxi Details"} <ArrowRight className="h-4 w-4 ms-1 rtl:rotate-180" />
+            </Link>
+          </div>
+          <div className="space-y-4">
+            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Building2 className="h-5 w-5 text-gold" /> {ar ? "توصيل الفنادق والوجهات السياحية" : "Hotel & Tourist Transfers"}</h3>
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              {ar 
+                ? "نخدم جميع الفنادق الرئيسية في جدة والمناطق الحيوية مثل الواجهة البحرية، الكورنيش، ومنطقة البلد التاريخية. تنقل براحة تامة بين وجهاتك المفضلة في العروس."
+                : "We serve all major hotels in Jeddah and vibrant areas like the Waterfront, Corniche, and the historic Al Balad district. Travel in total comfort between your favorite destinations."}
             </p>
           </div>
           <div className="space-y-4">
-            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Users className="h-5 w-5 text-gold" /> {ar ? "الرحلات العائلية والخاصة" : "Family & Private Trips"}</h3>
+            <h3 className="text-xl font-bold inline-flex items-center gap-2"><MapPin className="h-5 w-5 text-gold" /> {ar ? "رحلات بين المدن (مكة والمدينة)" : "Intercity Trips (Makkah & Madinah)"}</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {ar 
-                ? "سيارات واسعة تناسب العائلات الكبيرة مع مساحة كافية للحقائب. رحلات خاصة مريحة وآمنة لجميع أفراد الأسرة."
-                : "Spacious vehicles suitable for large families with enough luggage space. Comfortable and safe private trips for all family members."}
+                ? "نوفر مسارات مباشرة ومنتظمة من جدة إلى مكة المكرمة لخدمة المعتمرين والزوار، بالإضافة إلى رحلات خاصة إلى المدينة المنورة والطائف بأسعار ثابتة."
+                : "We provide direct and regular routes from Jeddah to Makkah serving pilgrims and visitors, as well as private trips to Madinah and Taif at fixed prices."}
             </p>
+            <div className="flex flex-wrap gap-x-4 gap-y-2 pt-1">
+              <Link to={withLocale(locale, "/jeddah-to-makkah-taxi")} className="text-gold text-xs font-medium hover:underline">
+                {ar ? "تاكسي جدة إلى مكة" : "Jeddah to Makkah Taxi"}
+              </Link>
+              <Link to={withLocale(locale, "/taxi-madinah")} className="text-gold text-xs font-medium hover:underline">
+                {ar ? "تاكسي المدينة المنورة" : "Madinah Taxi"}
+              </Link>
+            </div>
           </div>
           <div className="space-y-4">
-            <h3 className="text-xl font-bold inline-flex items-center gap-2"><MapPin className="h-5 w-5 text-gold" /> {ar ? "التنقل بين الأحياء والشركات" : "Corporate & Inter-District"}</h3>
+            <h3 className="text-xl font-bold inline-flex items-center gap-2"><Users className="h-5 w-5 text-gold" /> {ar ? "خدمات النقل العائلي والخاص" : "Family & Private Transport"}</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {ar 
-                ? "خدمات مخصصة لرجال الأعمال والشركات للتنقل داخل جدة. وصول سريع ومظهر احترافي لجميع مشاويركم."
-                : "Tailored services for business travelers and corporations within Jeddah. Quick arrivals and professional appearance for all your rides."}
-            </p>
-          </div>
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold inline-flex items-center gap-2"><MapPin className="h-5 w-5 text-gold" /> {ar ? "رحلات إلى مكة والمدن القريبة" : "Trips to Makkah & Nearby Cities"}</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              {ar 
-                ? "نوفر خدمة النقل المباشر من جدة إلى مكة المكرمة، ثول، والمدينة المنورة بأسعار ثابتة ومنافسة."
-                : "We provide direct transfer services from Jeddah to Makkah, Thuwal, and Madinah at competitive fixed prices."}
+                ? "حلول نقل متكاملة للعائلات والمجموعات السياحية. سيارات واسعة ومريحة تضمن الخصوصية والأمان لجميع أفراد الأسرة خلال تجولهم في مدينة جدة."
+                : "Integrated transport solutions for families and tourist groups. Spacious and comfortable vehicles ensure privacy and safety for all family members during their Jeddah tour."}
             </p>
           </div>
         </div>
