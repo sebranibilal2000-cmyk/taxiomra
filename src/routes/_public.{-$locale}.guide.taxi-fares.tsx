@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getPricingData } from "@/lib/pricing.functions";
+import { getPricingData, getPriceForRoute } from "@/lib/pricing.functions";
 import { useI18n, withLocale } from "@/lib/i18n";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
