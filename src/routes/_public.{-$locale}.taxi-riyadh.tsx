@@ -4,18 +4,20 @@ import { MessageCircle, Phone, CheckCircle2, Car, MapPin, Clock, Shield, Star, B
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
+import { getPriceForRoute } from "@/lib/pricing.functions";
+
 
 const FAQ_AR = [
   { q: "هل توفرون استقبال من مطار الملك خالد بالرياض (RUH)؟", a: "نعم، نقدم خدمة الاستقبال بالاسم والتوصيل الاحترافي من وإلى مطار الملك خالد الدولي لجميع أحياء الرياض، الفنادق، ومركز الملك عبدالله المالي." },
   { q: "ما هي مناطق التغطية لتاكسي الرياض؟", a: "نخدم جميع أحياء العاصمة بما في ذلك المناطق التجارية الكبرى (العليا، النخيل، الملقا) والمناطق السياحية مثل الدرعية، بالإضافة إلى الرحلات الطويلة خارج المدينة." },
-  { q: "هل لديكم رحلات من الرياض إلى مكة المكرمة؟", a: "نعم، نوفر سيارات حديثة فاخرة ومريحة مخصصة للرحلات الطويلة بين الرياض ومكة المكرمة والمدينة المنورة لخدمة المعتمرين والزوار." },
+  { q: "هل لديكم رحلات من الرياض إلى مكة المكرمة؟", a: `نعم، نوفر سيارات حديثة فاخرة ومريحة مخصصة للرحلات الطويلة بين الرياض ومكة المكرمة (بأسعار تبدأ من ${getPriceForRoute('riyadh-makkah') || 'اطلب السعر'}).` },
   { q: "هل تتوفر خدمات النقل لرجال الأعمال في الرياض؟", a: "بالتأكيد، نوفر سيارات فاخرة وسائقين محترفين للتنقل بين الاجتماعات والمؤتمرات داخل مدينة الرياض مع الالتزام التام بالمواعيد." },
 ];
 
 const FAQ_EN = [
   { q: "Do you provide airport pickups at King Khalid Airport (RUH)?", a: "Yes, we offer meet-and-greet services and professional transfers to and from King Khalid International Airport for all Riyadh districts, hotels, and KAFD." },
   { q: "What are the coverage areas for Riyadh Taxi?", a: "We serve all capital districts, including major business areas (Olaya, An Nakheel, Al Malqa), tourist sites like Diriyah, and long-distance trips outside the city." },
-  { q: "Do you have trips from Riyadh to Makkah?", a: "Yes, we provide modern luxury cars dedicated for long-distance trips between Riyadh and Makkah or Madinah for pilgrims and visitors." },
+  { q: "Do you have trips from Riyadh to Makkah?", a: `Yes, we provide modern luxury cars for long-distance trips between Riyadh and Makkah (from ${getPriceForRoute('riyadh-makkah') || 'Request Quote'}).` },
   { q: "Are business transport services available in Riyadh?", a: "Certainly, we provide premium cars and professional drivers for transit between meetings and conferences within Riyadh with full commitment to punctuality." },
 ];
 

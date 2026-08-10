@@ -4,15 +4,16 @@ import { MessageCircle, Phone, CheckCircle2, Car, MapPin, Clock, Shield, Plane, 
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
+import { getPriceForRoute } from "@/lib/pricing.functions";
 
 const FAQ_AR = [
-  { q: "كم سعر التاكسي من مطار جدة إلى مكة؟", a: "تختلف الأسعار حسب نوع السيارة المختار (سيدان، عائلية، أو فان). نحن نقدم أسعاراً ثابتة تبدأ من أسعار منافسة جداً تشمل الاستقبال والانتظار." },
+  { q: "كم سعر التاكسي من مطار جدة إلى مكة؟", a: `يبدأ سعر التاكسي من مطار جدة إلى مكة المكرمة من ${getPriceForRoute('jeddah-apt-makkah', 'sedan')} ريال لسيارة السيدان. السعر ثابت ويشمل الاستقبال والانتظار.` },
   { q: "كيف أجد السائق في المطار؟", a: "سيكون السائق بانتظارك في صالة الوصول حاملاً لوحة عليها اسمك للتسهيل عليك، وسيقوم بمساعدتك في حمل الحقائب." },
   { q: "هل الخدمة متوفرة لرحلات الفجر؟", a: "نعم، خدماتنا متوفرة على مدار 24 ساعة طوال أيام الأسبوع. يمكنك الحجز المسبق لضمان وجود السائق فور وصولك." },
 ];
 
 const FAQ_EN = [
-  { q: "What is the taxi fare from Jeddah Airport to Makkah?", a: "Fares vary based on the vehicle type (Sedan, SUV, or Van). We offer fixed, competitive rates that include meet-and-greet and waiting time." },
+  { q: "What is the taxi fare from Jeddah Airport to Makkah?", a: `Taxi fares from Jeddah Airport to Makkah start from ${getPriceForRoute('jeddah-apt-makkah', 'sedan')} SAR for a sedan. This is a fixed rate including meet-and-greet and waiting time.` },
   { q: "How do I find my driver at the airport?", a: "Your driver will be waiting in the arrivals hall with a nameboard for easy identification and will assist you with your luggage." },
   { q: "Is service available for late-night or early-morning flights?", a: "Yes, our services are available 24/7. We recommend pre-booking to ensure your driver is ready when you land." },
 ];

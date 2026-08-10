@@ -4,18 +4,20 @@ import { MessageCircle, Phone, CheckCircle2, Car, MapPin, Clock, Shield, Star, B
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
+import { getPriceForRoute } from "@/lib/pricing.functions";
+
 
 const FAQ_AR = [
   { q: "هل توفرون خدمة التوصيل لمطار الملك فهد بالدمام (DMM)؟", a: "نعم، نقدم خدمة التوصيل والاستقبال الاحترافي من وإلى مطار الملك فهد الدولي لجميع مدن المنطقة الشرقية (الدمام، الخبر، الظهران، الجبيل)." },
   { q: "ما هي مناطق الخدمة في المنطقة الشرقية؟", a: "نخدم مدينة الدمام بالكامل، بالإضافة إلى الخبر، الظهران، الجبيل، والقطيف، مع توفير رحلات خاصة للمطار ورحلات بين المدن." },
-  { q: "هل تتوفر رحلات من الدمام إلى مكة والمدينة؟", a: "نعم، نوفر خدمة الرحلات الطويلة من المنطقة الشرقية إلى مكة المكرمة والمدينة المنورة بسيارات حديثة مريحة مخصصة للمسافات البعيدة." },
+  { q: "هل تتوفر رحلات من الدمام إلى مكة والمدينة؟", a: `نعم، نوفر خدمة الرحلات الطويلة من المنطقة الشرقية إلى مكة المكرمة والمدينة المنورة (بأسعار تبدأ من ${getPriceForRoute('dammam-makkah') || 'اطلب السعر'}).` },
   { q: "كيف يمكنني حجز تاكسي في الدمام أو الخبر؟", a: "يمكنك الحجز فوراً عبر واتساب أو الاتصال الهاتفي. فريقنا متاح على مدار الساعة لتأمين رحلتك في أسرع وقت ممكن." },
 ];
 
 const FAQ_EN = [
   { q: "Do you provide transfers to Dammam Airport (DMM)?", a: "Yes, we offer professional transfer and meet-and-greet services to and from King Fahd International Airport for all Eastern Province cities (Dammam, Khobar, Dhahran, Jubail)." },
   { q: "What are the service areas in the Eastern Province?", a: "We serve the entire city of Dammam, plus Khobar, Dhahran, Jubail, and Qatif, providing private airport transfers and intercity trips." },
-  { q: "Are there trips from Dammam to Makkah and Madinah?", a: "Yes, we provide long-distance trip services from the Eastern Province to Makkah and Madinah with modern vehicles specialized for long distances." },
+  { q: "Are there trips from Dammam to Makkah and Madinah?", a: `Yes, we provide long-distance trips from the Eastern Province to Makkah and Madinah (from ${getPriceForRoute('dammam-makkah') || 'Request Quote'}).` },
   { q: "How can I book a taxi in Dammam or Khobar?", a: "You can book instantly via WhatsApp or phone. Our team is available 24/7 to secure your trip as quickly as possible." },
 ];
 

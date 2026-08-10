@@ -4,17 +4,19 @@ import { MessageCircle, Phone, CheckCircle2, Car, MapPin, Clock, Shield, Star, B
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
+import { getPriceForRoute } from "@/lib/pricing.functions";
+
 
 const FAQ_AR = [
   { q: "كيف أحجز تاكسي في المدينة المنورة؟", a: "يمكنك الحجز بسهولة عبر واتساب أو الاتصال المباشر. نوفر رحلات للمسجد النبوي الشريف، المزارات النبوية، ومطار المدينة المنورة (PRINCE MOHAMMAD BIN ABDULAZIZ AIRPORT)." },
-  { q: "هل توفرون خدمة التوصيل بين مكة والمدينة؟", a: "نعم، نقدم خدمة النقل المباشر والآمن بين الحرمين الشريفين بسيارات حديثة مجهزة للرحلات الطويلة، مع الاستقبال من فنادق مكة أو المدينة." },
+  { q: "هل توفرون خدمة التوصيل بين مكة والمدينة؟", a: `نعم، نقدم خدمة النقل المباشر والآمن بين الحرمين الشريفين بسعر يبدأ من ${getPriceForRoute('makkah-madinah')} ريال لسيارة السيدان.` },
   { q: "ما هي أهم الوجهات السياحية في المدينة التي تخدمونها؟", a: "نوفر رحلات للمزارات مثل مسجد قباء، وجبل أحد، ومقبرة البقيع، بالإضافة إلى المجمعات التجارية والفنادق المحيطة بالمسجد النبوي." },
   { q: "هل لديكم خدمة استقبال من مطار المدينة المنورة؟", a: "نعم، نوفر خدمة الاستقبال بالاسم من مطار الأمير محمد بن عبدالعزيز الدولي وتوصيلك إلى وجهتك بكل راحة وأمان." },
 ];
 
 const FAQ_EN = [
   { q: "How to book a taxi in Madinah?", a: "You can book easily via WhatsApp or direct call. We provide trips to the Prophet's Mosque, holy sites, and Madinah Airport (Prince Mohammad Bin Abdulaziz International Airport)." },
-  { q: "Do you offer transfers between Makkah and Madinah?", a: "Yes, we offer direct and safe transfer services between the two Holy Mosques with modern vehicles equipped for long distances, picking you up from hotels in Makkah or Madinah." },
+  { q: "Do you offer transfers between Makkah and Madinah?", a: `Yes, we offer direct and safe transfer services between the two Holy Mosques starting from ${getPriceForRoute('makkah-madinah')} SAR for a sedan.` },
   { q: "What are the major sites you serve in Madinah?", a: "We provide trips to sites like Quba Mosque, Mount Uhud, and Al Baqi, as well as shopping malls and hotels surrounding the Prophet's Mosque." },
   { q: "Do you provide airport pickups at Madinah Airport?", a: "Yes, we offer meet-and-greet services at Prince Mohammad Bin Abdulaziz International Airport, taking you to your destination with comfort and safety." },
 ];
