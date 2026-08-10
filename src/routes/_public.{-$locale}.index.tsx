@@ -407,28 +407,45 @@ function Home() {
       </section>
 
       {/* ============ POPULAR ROUTES ============ */}
-      {data.cities.length > 0 && (
-        <section className="container-tight py-20 md:py-28">
-          <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
-            <div className="space-y-4">
-              <Eyebrow>{ar ? "الوجهات" : "Destinations"}</Eyebrow>
-              <h2 className="font-display text-4xl md:text-5xl leading-tight">{ar ? "الطرق الأكثر طلباً" : "Most travelled routes"}</h2>
-            </div>
+      <section className="container-tight py-20 md:py-28">
+        <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
+          <div className="space-y-4">
+            <Eyebrow>{ar ? "الوجهات" : "Destinations"}</Eyebrow>
+            <h2 className="font-display text-4xl md:text-5xl leading-tight">{ar ? "الطرق الأكثر طلباً" : "Most travelled routes"}</h2>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {data.cities.slice(0, 6).map((c) => (
-              <Link key={c.id} to="/{-$locale}/p/$slug" params={(prev: Record<string, string>) => ({ ...prev, slug: c.slug })} className="group rounded-2xl border border-border bg-card p-6 hover:border-gold transition-colors">
-                <MapPin className="h-5 w-5 text-gold mb-3" />
-                <div className="font-display text-xl mb-1">{ar ? c.title_ar : c.title_en}</div>
-                <div className="text-sm text-muted-foreground line-clamp-1">{ar ? c.subtitle_ar : c.subtitle_en}</div>
-                <span className="mt-4 inline-flex items-center gap-1 text-xs uppercase tracking-wider text-gold opacity-0 group-hover:opacity-100 transition-opacity">
-                  {ar ? "عرض" : "View"} <ArrowRight className="h-3 w-3 rtl:rotate-180" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { slug: "taxi-jeddah", ar: "تاكسي جدة", en: "Taxi Jeddah", sub_ar: "توصيل داخل جدة", sub_en: "Jeddah city transfers" },
+            { slug: "jeddah-airport-taxi", ar: "تاكسي مطار جدة", en: "Jeddah Airport Taxi", sub_ar: "استقبال من المطار", sub_en: "Airport meet & greet" },
+            { slug: "taxi-makkah", ar: "تاكسي مكة", en: "Taxi Makkah", sub_ar: "نقل الحرم والفنادق", sub_en: "Haram & hotel transfers" },
+            { slug: "taxi-madinah", ar: "تاكسي المدينة المنورة", en: "Taxi Madinah", sub_ar: "زيارات الحرم والمدينة", sub_en: "Prophet's Mosque transfers" },
+            { slug: "taxi-taif", ar: "تاكسي الطائف", en: "Taxi Taif", sub_ar: "توصيل المطار والمنتزهات", sub_en: "Airport & resort transfers" },
+            { slug: "taxi-riyadh", ar: "تاكسي الرياض", en: "Taxi Riyadh", sub_ar: "توصيل العاصمة والمطار", sub_en: "Capital & airport rides" },
+            { slug: "taxi-dammam", ar: "تاكسي الدمام", en: "Taxi Dammam", sub_ar: "نقل المنطقة الشرقية", sub_en: "Eastern Province transfers" },
+          ].map((c) => (
+            <Link key={c.slug} to="/{-$locale}/$slug" params={(prev: any) => ({ ...prev, slug: c.slug })} className="group rounded-2xl border border-border bg-card p-6 hover:border-gold transition-colors">
+              <MapPin className="h-5 w-5 text-gold mb-3" />
+              <div className="font-display text-xl mb-1">{ar ? c.ar : c.en}</div>
+              <div className="text-sm text-muted-foreground line-clamp-1">{ar ? c.sub_ar : c.sub_en}</div>
+              <span className="mt-4 inline-flex items-center gap-1 text-xs uppercase tracking-wider text-gold opacity-0 group-hover:opacity-100 transition-opacity">
+                {ar ? "عرض" : "View"} <ArrowRight className="h-3 w-3 rtl:rotate-180" />
+              </span>
+            </Link>
+          ))}
+          {data.cities.slice(0, 4).map((c) => (
+            <Link key={c.id} to="/{-$locale}/p/$slug" params={(prev: Record<string, string>) => ({ ...prev, slug: c.slug })} className="group rounded-2xl border border-border bg-card p-6 hover:border-gold transition-colors">
+              <MapPin className="h-5 w-5 text-gold mb-3" />
+              <div className="font-display text-xl mb-1">{ar ? c.title_ar : c.title_en}</div>
+              <div className="text-sm text-muted-foreground line-clamp-1">{ar ? c.subtitle_ar : c.subtitle_en}</div>
+              <span className="mt-4 inline-flex items-center gap-1 text-xs uppercase tracking-wider text-gold opacity-0 group-hover:opacity-100 transition-opacity">
+                {ar ? "عرض" : "View"} <ArrowRight className="h-3 w-3 rtl:rotate-180" />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
 
       {/* ============ TESTIMONIALS ============ */}
       {data.testimonials.length > 0 && (

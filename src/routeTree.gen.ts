@@ -24,9 +24,12 @@ import { Route as PublicChar123LocaleChar125IndexRouteImport } from './routes/_p
 import { Route as PublicChar123LocaleChar125VehiclesRouteImport } from './routes/_public.{-$locale}.vehicles'
 import { Route as PublicChar123LocaleChar125ThankYouRouteImport } from './routes/_public.{-$locale}.thank-you'
 import { Route as PublicChar123LocaleChar125TermsRouteImport } from './routes/_public.{-$locale}.terms'
+import { Route as PublicChar123LocaleChar125TaxiTaifRouteImport } from './routes/_public.{-$locale}.taxi-taif'
+import { Route as PublicChar123LocaleChar125TaxiRiyadhRouteImport } from './routes/_public.{-$locale}.taxi-riyadh'
 import { Route as PublicChar123LocaleChar125TaxiMakkahRouteImport } from './routes/_public.{-$locale}.taxi-makkah'
 import { Route as PublicChar123LocaleChar125TaxiMadinahRouteImport } from './routes/_public.{-$locale}.taxi-madinah'
 import { Route as PublicChar123LocaleChar125TaxiJeddahRouteImport } from './routes/_public.{-$locale}.taxi-jeddah'
+import { Route as PublicChar123LocaleChar125TaxiDammamRouteImport } from './routes/_public.{-$locale}.taxi-dammam'
 import { Route as PublicChar123LocaleChar125SitemapRouteImport } from './routes/_public.{-$locale}.sitemap'
 import { Route as PublicChar123LocaleChar125SearchRouteImport } from './routes/_public.{-$locale}.search'
 import { Route as PublicChar123LocaleChar125RefundPolicyRouteImport } from './routes/_public.{-$locale}.refund-policy'
@@ -194,6 +197,18 @@ const PublicChar123LocaleChar125TermsRoute =
     path: '/terms',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
+const PublicChar123LocaleChar125TaxiTaifRoute =
+  PublicChar123LocaleChar125TaxiTaifRouteImport.update({
+    id: '/taxi-taif',
+    path: '/taxi-taif',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125TaxiRiyadhRoute =
+  PublicChar123LocaleChar125TaxiRiyadhRouteImport.update({
+    id: '/taxi-riyadh',
+    path: '/taxi-riyadh',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
 const PublicChar123LocaleChar125TaxiMakkahRoute =
   PublicChar123LocaleChar125TaxiMakkahRouteImport.update({
     id: '/taxi-makkah',
@@ -210,6 +225,12 @@ const PublicChar123LocaleChar125TaxiJeddahRoute =
   PublicChar123LocaleChar125TaxiJeddahRouteImport.update({
     id: '/taxi-jeddah',
     path: '/taxi-jeddah',
+    getParentRoute: () => PublicChar123LocaleChar125Route,
+  } as any)
+const PublicChar123LocaleChar125TaxiDammamRoute =
+  PublicChar123LocaleChar125TaxiDammamRouteImport.update({
+    id: '/taxi-dammam',
+    path: '/taxi-dammam',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
 const PublicChar123LocaleChar125SitemapRoute =
@@ -800,9 +821,12 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/refund-policy': typeof PublicChar123LocaleChar125RefundPolicyRoute
   '/{-$locale}/search': typeof PublicChar123LocaleChar125SearchRoute
   '/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
+  '/{-$locale}/taxi-dammam': typeof PublicChar123LocaleChar125TaxiDammamRoute
   '/{-$locale}/taxi-jeddah': typeof PublicChar123LocaleChar125TaxiJeddahRoute
   '/{-$locale}/taxi-madinah': typeof PublicChar123LocaleChar125TaxiMadinahRoute
   '/{-$locale}/taxi-makkah': typeof PublicChar123LocaleChar125TaxiMakkahRoute
+  '/{-$locale}/taxi-riyadh': typeof PublicChar123LocaleChar125TaxiRiyadhRoute
+  '/{-$locale}/taxi-taif': typeof PublicChar123LocaleChar125TaxiTaifRoute
   '/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
   '/{-$locale}/thank-you': typeof PublicChar123LocaleChar125ThankYouRoute
   '/{-$locale}/vehicles': typeof PublicChar123LocaleChar125VehiclesRouteWithChildren
@@ -906,9 +930,12 @@ export interface FileRoutesByTo {
   '/{-$locale}/refund-policy': typeof PublicChar123LocaleChar125RefundPolicyRoute
   '/{-$locale}/search': typeof PublicChar123LocaleChar125SearchRoute
   '/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
+  '/{-$locale}/taxi-dammam': typeof PublicChar123LocaleChar125TaxiDammamRoute
   '/{-$locale}/taxi-jeddah': typeof PublicChar123LocaleChar125TaxiJeddahRoute
   '/{-$locale}/taxi-madinah': typeof PublicChar123LocaleChar125TaxiMadinahRoute
   '/{-$locale}/taxi-makkah': typeof PublicChar123LocaleChar125TaxiMakkahRoute
+  '/{-$locale}/taxi-riyadh': typeof PublicChar123LocaleChar125TaxiRiyadhRoute
+  '/{-$locale}/taxi-taif': typeof PublicChar123LocaleChar125TaxiTaifRoute
   '/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
   '/{-$locale}/thank-you': typeof PublicChar123LocaleChar125ThankYouRoute
   '/{-$locale}/vehicles': typeof PublicChar123LocaleChar125VehiclesRouteWithChildren
@@ -1014,9 +1041,12 @@ export interface FileRoutesById {
   '/_public/{-$locale}/refund-policy': typeof PublicChar123LocaleChar125RefundPolicyRoute
   '/_public/{-$locale}/search': typeof PublicChar123LocaleChar125SearchRoute
   '/_public/{-$locale}/sitemap': typeof PublicChar123LocaleChar125SitemapRoute
+  '/_public/{-$locale}/taxi-dammam': typeof PublicChar123LocaleChar125TaxiDammamRoute
   '/_public/{-$locale}/taxi-jeddah': typeof PublicChar123LocaleChar125TaxiJeddahRoute
   '/_public/{-$locale}/taxi-madinah': typeof PublicChar123LocaleChar125TaxiMadinahRoute
   '/_public/{-$locale}/taxi-makkah': typeof PublicChar123LocaleChar125TaxiMakkahRoute
+  '/_public/{-$locale}/taxi-riyadh': typeof PublicChar123LocaleChar125TaxiRiyadhRoute
+  '/_public/{-$locale}/taxi-taif': typeof PublicChar123LocaleChar125TaxiTaifRoute
   '/_public/{-$locale}/terms': typeof PublicChar123LocaleChar125TermsRoute
   '/_public/{-$locale}/thank-you': typeof PublicChar123LocaleChar125ThankYouRoute
   '/_public/{-$locale}/vehicles': typeof PublicChar123LocaleChar125VehiclesRouteWithChildren
@@ -1123,9 +1153,12 @@ export interface FileRouteTypes {
     | '/{-$locale}/refund-policy'
     | '/{-$locale}/search'
     | '/{-$locale}/sitemap'
+    | '/{-$locale}/taxi-dammam'
     | '/{-$locale}/taxi-jeddah'
     | '/{-$locale}/taxi-madinah'
     | '/{-$locale}/taxi-makkah'
+    | '/{-$locale}/taxi-riyadh'
+    | '/{-$locale}/taxi-taif'
     | '/{-$locale}/terms'
     | '/{-$locale}/thank-you'
     | '/{-$locale}/vehicles'
@@ -1229,9 +1262,12 @@ export interface FileRouteTypes {
     | '/{-$locale}/refund-policy'
     | '/{-$locale}/search'
     | '/{-$locale}/sitemap'
+    | '/{-$locale}/taxi-dammam'
     | '/{-$locale}/taxi-jeddah'
     | '/{-$locale}/taxi-madinah'
     | '/{-$locale}/taxi-makkah'
+    | '/{-$locale}/taxi-riyadh'
+    | '/{-$locale}/taxi-taif'
     | '/{-$locale}/terms'
     | '/{-$locale}/thank-you'
     | '/{-$locale}/vehicles'
@@ -1336,9 +1372,12 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/refund-policy'
     | '/_public/{-$locale}/search'
     | '/_public/{-$locale}/sitemap'
+    | '/_public/{-$locale}/taxi-dammam'
     | '/_public/{-$locale}/taxi-jeddah'
     | '/_public/{-$locale}/taxi-madinah'
     | '/_public/{-$locale}/taxi-makkah'
+    | '/_public/{-$locale}/taxi-riyadh'
+    | '/_public/{-$locale}/taxi-taif'
     | '/_public/{-$locale}/terms'
     | '/_public/{-$locale}/thank-you'
     | '/_public/{-$locale}/vehicles'
@@ -1488,6 +1527,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicChar123LocaleChar125TermsRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
+    '/_public/{-$locale}/taxi-taif': {
+      id: '/_public/{-$locale}/taxi-taif'
+      path: '/taxi-taif'
+      fullPath: '/{-$locale}/taxi-taif'
+      preLoaderRoute: typeof PublicChar123LocaleChar125TaxiTaifRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
+    }
+    '/_public/{-$locale}/taxi-riyadh': {
+      id: '/_public/{-$locale}/taxi-riyadh'
+      path: '/taxi-riyadh'
+      fullPath: '/{-$locale}/taxi-riyadh'
+      preLoaderRoute: typeof PublicChar123LocaleChar125TaxiRiyadhRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
+    }
     '/_public/{-$locale}/taxi-makkah': {
       id: '/_public/{-$locale}/taxi-makkah'
       path: '/taxi-makkah'
@@ -1507,6 +1560,13 @@ declare module '@tanstack/react-router' {
       path: '/taxi-jeddah'
       fullPath: '/{-$locale}/taxi-jeddah'
       preLoaderRoute: typeof PublicChar123LocaleChar125TaxiJeddahRouteImport
+      parentRoute: typeof PublicChar123LocaleChar125Route
+    }
+    '/_public/{-$locale}/taxi-dammam': {
+      id: '/_public/{-$locale}/taxi-dammam'
+      path: '/taxi-dammam'
+      fullPath: '/{-$locale}/taxi-dammam'
+      preLoaderRoute: typeof PublicChar123LocaleChar125TaxiDammamRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
     '/_public/{-$locale}/sitemap': {
@@ -2325,9 +2385,12 @@ interface PublicChar123LocaleChar125RouteChildren {
   PublicChar123LocaleChar125RefundPolicyRoute: typeof PublicChar123LocaleChar125RefundPolicyRoute
   PublicChar123LocaleChar125SearchRoute: typeof PublicChar123LocaleChar125SearchRoute
   PublicChar123LocaleChar125SitemapRoute: typeof PublicChar123LocaleChar125SitemapRoute
+  PublicChar123LocaleChar125TaxiDammamRoute: typeof PublicChar123LocaleChar125TaxiDammamRoute
   PublicChar123LocaleChar125TaxiJeddahRoute: typeof PublicChar123LocaleChar125TaxiJeddahRoute
   PublicChar123LocaleChar125TaxiMadinahRoute: typeof PublicChar123LocaleChar125TaxiMadinahRoute
   PublicChar123LocaleChar125TaxiMakkahRoute: typeof PublicChar123LocaleChar125TaxiMakkahRoute
+  PublicChar123LocaleChar125TaxiRiyadhRoute: typeof PublicChar123LocaleChar125TaxiRiyadhRoute
+  PublicChar123LocaleChar125TaxiTaifRoute: typeof PublicChar123LocaleChar125TaxiTaifRoute
   PublicChar123LocaleChar125TermsRoute: typeof PublicChar123LocaleChar125TermsRoute
   PublicChar123LocaleChar125ThankYouRoute: typeof PublicChar123LocaleChar125ThankYouRoute
   PublicChar123LocaleChar125VehiclesRoute: typeof PublicChar123LocaleChar125VehiclesRouteWithChildren
@@ -2377,12 +2440,18 @@ const PublicChar123LocaleChar125RouteChildren: PublicChar123LocaleChar125RouteCh
       PublicChar123LocaleChar125SearchRoute,
     PublicChar123LocaleChar125SitemapRoute:
       PublicChar123LocaleChar125SitemapRoute,
+    PublicChar123LocaleChar125TaxiDammamRoute:
+      PublicChar123LocaleChar125TaxiDammamRoute,
     PublicChar123LocaleChar125TaxiJeddahRoute:
       PublicChar123LocaleChar125TaxiJeddahRoute,
     PublicChar123LocaleChar125TaxiMadinahRoute:
       PublicChar123LocaleChar125TaxiMadinahRoute,
     PublicChar123LocaleChar125TaxiMakkahRoute:
       PublicChar123LocaleChar125TaxiMakkahRoute,
+    PublicChar123LocaleChar125TaxiRiyadhRoute:
+      PublicChar123LocaleChar125TaxiRiyadhRoute,
+    PublicChar123LocaleChar125TaxiTaifRoute:
+      PublicChar123LocaleChar125TaxiTaifRoute,
     PublicChar123LocaleChar125TermsRoute: PublicChar123LocaleChar125TermsRoute,
     PublicChar123LocaleChar125ThankYouRoute:
       PublicChar123LocaleChar125ThankYouRoute,

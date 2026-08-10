@@ -66,9 +66,13 @@ export function PublicFooter() {
             <li><Link to={l("/blog")} className="hover:text-gold transition">{ar ? "المدونة" : "Journal"}</Link></li>
             <li><Link to={l("/guide/taxi-fares")} className="hover:text-gold transition">{ar ? "دليل الأسعار" : "Fare guide"}</Link></li>
             <li><Link to={l("/taxi-jeddah")} className="hover:text-gold transition">{ar ? "تاكسي جدة" : "Taxi Jeddah"}</Link></li>
+            <li><Link to={l("/jeddah-airport-taxi")} className="hover:text-gold transition">{ar ? "تاكسي المطار" : "Airport Taxi"}</Link></li>
             <li><Link to={l("/taxi-makkah")} className="hover:text-gold transition">{ar ? "تاكسي مكة" : "Taxi Makkah"}</Link></li>
             <li><Link to={l("/taxi-madinah")} className="hover:text-gold transition">{ar ? "تاكسي المدينة" : "Taxi Madinah"}</Link></li>
-            <li><Link to={l("/jeddah-airport-taxi")} className="hover:text-gold transition">{ar ? "تاكسي المطار" : "Airport Taxi"}</Link></li>
+            <li><Link to={l("/taxi-taif")} className="hover:text-gold transition">{ar ? "تاكسي الطائف" : "Taxi Taif"}</Link></li>
+            <li><Link to={l("/taxi-riyadh")} className="hover:text-gold transition">{ar ? "تاكسي الرياض" : "Taxi Riyadh"}</Link></li>
+            <li><Link to={l("/taxi-dammam")} className="hover:text-gold transition">{ar ? "تاكسي الدمام" : "Taxi Dammam"}</Link></li>
+
           </ul>
         </div>
 
