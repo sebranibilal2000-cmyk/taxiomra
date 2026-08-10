@@ -25,10 +25,10 @@ export const Route = createFileRoute("/_public/{-$locale}/jeddah-to-makkah-taxi"
     const url = `${SITE.url}/${locale}/jeddah-to-makkah-taxi`;
     const title = ar 
       ? "تاكسي من مطار جدة إلى مكة | حجز توصيل مباشر 24 ساعة - تاكسي العمرة" 
-      : "Jeddah Airport to Makkah Taxi | Book 24/7 Direct Transfer - Omra Taxi";
+      : "Jeddah to Makkah Taxi | Private Umrah Transfer - Umrah Taxi Saudi";
     const description = ar 
       ? "احجز أفضل تاكسي من مطار جدة إلى مكة المكرمة. خدمة استقبال احترافية، سيارات حديثة، وأسعار ثابتة للمعتمرين والزوار. احجز رحلتك الآن في أقل من دقيقة." 
-      : "Book the best taxi from Jeddah Airport to Makkah. Professional meet & greet, modern vehicles, and fixed rates for pilgrims and visitors. Book in under a minute.";
+      : "Reliable Jeddah to Makkah taxi service for Umrah pilgrims. Private Jeddah Airport to Makkah transfers with professional drivers and fixed rates. Book your hotel transfer now.";
     return {
       meta: [
         { title }, 
@@ -38,7 +38,7 @@ export const Route = createFileRoute("/_public/{-$locale}/jeddah-to-makkah-taxi"
         { property: "og:url", content: url },
         { name: "keywords", content: ar 
           ? "توصيل من مطار جدة الى مكة، تاكسي مطار جدة مكة، حجز سيارة من مطار جدة الى مكة، مواصلات مطار جدة مكة" 
-          : "Jeddah airport to Makkah taxi, Jeddah to Makkah transfer, book car from Jeddah airport to Makkah" 
+          : "Jeddah to Makkah taxi, Jeddah to Makkah private taxi, Jeddah to Makkah transfer, Jeddah Airport to Makkah, taxi from Jeddah to Makkah, private transfer Jeddah to Makkah, Jeddah airport transfer to Makkah, Makkah hotel transfer, Umrah transfer from Jeddah" 
         }
       ],
       links: [{ rel: "canonical", href: url }],
@@ -65,12 +65,13 @@ function JeddahToMakkahTaxiPage() {
       
       <header className="space-y-6 mb-16">
         <h1 className="font-display text-4xl md:text-5xl lg:text-6xl leading-tight">
-          {ar ? "تاكسي من مطار جدة إلى مكة المكرمة" : "Taxi from Jeddah Airport to Makkah"}
+          {ar ? "تاكسي من مطار جدة إلى مكة المكرمة" : "Jeddah to Makkah Taxi"}
         </h1>
         <p className="text-xl text-muted-foreground max-w-3xl leading-relaxed">
           {ar 
             ? "نقدم خدمة توصيل مباشرة ومريحة من مطار الملك عبدالعزيز الدولي بجدة إلى قلب مكة المكرمة. سواء كنت قادماً للعمرة أو الزيارة، نحن نضمن لك وصولاً آمناً وسلساً." 
-            : "We provide direct and comfortable transfer services from King Abdulaziz International Airport in Jeddah to the heart of Makkah. Safe and smooth journeys for pilgrims and visitors."}
+            : "Direct and comfortable private taxi services from Jeddah and King Abdulaziz International Airport (JED) to the heart of Makkah. The perfect Umrah transfer for pilgrims, families, and international visitors."}
+
         </p>
         <div className="flex flex-wrap gap-4 pt-4">
           <Button asChild size="lg" className="rounded-full h-14 px-8 bg-primary shadow-lg">
