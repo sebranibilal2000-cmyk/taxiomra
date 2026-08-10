@@ -1,0 +1,223 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
+import { MessageCircle, Phone, CheckCircle2, Plane, Clock, Shield, MapPin, Luggage, Star } from "lucide-react";
+import { useI18n, withLocale } from "@/lib/i18n";
+import { SITE, waLink, telLink } from "@/lib/site-info";
+import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
+
+const FAQ_AR = [
+  { q: "أين أجد السائق في مطار جدة؟", a: "سيكون السائق بانتظارك في صالة الوصول فور خروجك من منطقة الجمارك، حاملاً لافتة عليها اسمك للتسهيل عليك." },
+  { q: "هل يشمل السعر وقت الانتظار إذا تأخرت الرحلة؟", a: "نعم، نحن نتابع رحلتك عبر رقم الرحلة ونقوم بتعديل موعد الاستقبال تلقائياً. كما نوفر فترة انتظار مجانية كافية بعد هبوط الطائرة." },
+  { q: "هل تتوفر كراسي للأطفال؟", a: "نعم، يمكنك طلب مقعد طفل عند الحجز لضمان سلامة أطفالك خلال الرحلة." },
+  { q: "ما هي المسافة من مطار جدة إلى مكة؟", a: "المسافة حوالي 90-100 كم وتستغرق الرحلة عادة بين 60 إلى 90 دقيقة حسب حركة المرور." },
+];
+
+const FAQ_EN = [
+  { q: "Where do I find my driver at Jeddah Airport?", a: "Your driver will be waiting for you in the arrivals hall as soon as you exit the customs area, holding a sign with your name on it for easy recognition." },
+  { q: "Does the price include waiting time if my flight is delayed?", a: "Yes, we monitor your flight via the flight number and adjust the pickup time automatically. We also provide sufficient free waiting time after landing." },
+  { q: "Are child seats available?", a: "Yes, you can request a child seat when booking to ensure your children's safety during the trip." },
+  { q: "How far is Jeddah Airport from Makkah?", a: "The distance is about 90-100 km, and the trip usually takes between 60 to 90 minutes depending on traffic." },
+];
+
+export const Route = createFileRoute("/_public/{-$locale}/jeddah-airport-taxi")({
+  head: ({ params }) => {
+    const locale = params.locale ?? "ar";
+    const ar = locale === "ar";
+    const url = `${SITE.url}/${locale}/jeddah-airport-taxi`;
+    const title = ar
+      ? "تاكسي مطار جدة | استقبال وتوصيل مطار الملك عبدالعزيز - تاكسي العمرة"
+      : "Jeddah Airport Taxi | KAIA Airport Transfers & Meet & Greet - Omra Taxi";
+    const description = ar
+      ? "أفضل خدمة تاكسي مطار جدة (JED). استقبال من صالة الوصول، متابعة الرحلات، وأسعار ثابتة إلى مكة وجدة. احجز رحلتك الموثوقة من مطار الملك عبدالعزيز الآن."
+      : "Top-rated Jeddah Airport Taxi service (JED). Meet and greet from the arrivals hall, flight tracking, and fixed fares to Makkah and Jeddah. Book your reliable transfer now.";
+    
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { name: "keywords", content: ar 
+            ? "تاكسي مطار جدة, توصيل مطار جدة, استقبال مطار جدة, تاكسي من مطار جدة, مطار الملك عبدالعزيز تاكسي" 
+            : "Jeddah Airport Taxi, JED airport transfer, Jeddah airport pickup, airport taxi Saudi Arabia" 
+        },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: url },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: ar ? "الرئيسية" : "Home", url: `${SITE.url}/${locale}` },
+              { name: ar ? "تاكسي مطار جدة" : "Jeddah Airport Taxi", url },
+            ]),
+          ),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(faqPageJsonLd(ar ? FAQ_AR : FAQ_EN)),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(
+            serviceJsonLd({
+              name: ar ? "تاكسي مطار جدة" : "Jeddah Airport Taxi Service",
+              description,
+              url,
+              areaServed: "Jeddah Airport",
+            })
+          ),
+        },
+      ],
+    };
+  },
+  component: JeddahAirportTaxiPage,
+});
+
+function JeddahAirportTaxiPage() {
+  const { locale } = useI18n();
+  const ar = locale === "ar";
+  const faqs = ar ? FAQ_AR : FAQ_EN;
+
+  return (
+    <article className="container-tight py-16 md:py-24">
+      <nav aria-label={ar ? "مسار التنقل" : "Breadcrumb"} className="text-sm text-muted-foreground mb-4">
+        <Link to={withLocale(locale, "/")} className="hover:text-foreground">{ar ? "الرئيسية" : "Home"}</Link>
+        <span className="mx-2">/</span>
+        <span aria-current="page" className="text-foreground">{ar ? "تاكسي مطار جدة" : "Jeddah Airport Taxi"}</span>
+      </nav>
+
+      <header className="max-w-4xl space-y-6 mb-16">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 text-gold text-xs font-bold uppercase tracking-wider">
+          <Plane className="h-3.5 w-3.5" /> {ar ? "خدمة المطار المتميزة" : "Premium Airport Service"}
+        </div>
+        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl leading-tight">
+          {ar
+            ? "تاكسي مطار جدة: استقبالك يبدأ بابتسامة"
+            : "Jeddah Airport Taxi: Your Journey Starts Here"}
+        </h1>
+        <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
+          {ar
+            ? "ودع عناء البحث عن وسيلة نقل عند وصولك إلى مطار الملك عبدالعزيز. نحن نضمن لك استقبالاً فاخراً وتوصيلاً آمناً بأسعار ثابتة ومنافسة."
+            : "Forget the hassle of finding transport upon arrival at King Abdulaziz International Airport. We guarantee a luxury meet-and-greet and a safe transfer at fixed, competitive prices."}
+        </p>
+        <div className="flex flex-wrap gap-4 pt-4">
+          <Button asChild size="lg" className="rounded-full h-14 px-8 bg-primary hover:bg-primary/90 shadow-lg">
+            <a href={waLink(ar ? "أرغب بحجز تاكسي من مطار جدة" : "I'd like to book a taxi from Jeddah Airport")} target="_blank" rel="noopener">
+              <MessageCircle className="h-5 w-5 me-2" /> {ar ? "احجز الآن عبر واتساب" : "Book Now via WhatsApp"}
+            </a>
+          </Button>
+          <Button asChild size="lg" variant="outline" className="rounded-full h-14 px-8 border-border">
+            <a href={telLink()}><Phone className="h-5 w-5 me-2" /> {SITE.phone}</a>
+          </Button>
+        </div>
+      </header>
+
+      <section className="mb-20 grid gap-6 md:grid-cols-4">
+        {[
+          { icon: Star, title: ar ? "خدمة VIP" : "VIP Service", desc: ar ? "استقبال شخصي بالاسم" : "Meet & greet by name" },
+          { icon: Clock, title: ar ? "دقة المواعيد" : "Punctuality", desc: ar ? "سائقك بانتظارك دائماً" : "Your driver is always on time" },
+          { icon: Shield, title: ar ? "أسعار ثابتة" : "Fixed Fares", desc: ar ? "بدون رسوم مخفية" : "No hidden charges" },
+          { icon: Luggage, title: ar ? "مساعدة الحقائب" : "Luggage Help", desc: ar ? "سائقنا يساعدك دائماً" : "Free luggage assistance" },
+        ].map((item, i) => (
+          <div key={i} className="bg-card border border-border rounded-2xl p-6 text-center hover:shadow-md transition-shadow">
+            <div className="mx-auto h-12 w-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center mb-4">
+              <item.icon className="h-6 w-6" />
+            </div>
+            <h3 className="font-bold mb-1">{item.title}</h3>
+            <p className="text-xs text-muted-foreground">{item.desc}</p>
+          </div>
+        ))}
+      </section>
+
+      <div className="grid lg:grid-cols-2 gap-12 mb-20 items-center">
+        <div className="space-y-8">
+          <h2 className="font-display text-3xl md:text-4xl">{ar ? "تغطية كاملة لمطار الملك عبدالعزيز (JED)" : "Full Coverage of KAIA Airport (JED)"}</h2>
+          <div className="space-y-6">
+            <div className="flex gap-4">
+              <div className="h-10 w-10 shrink-0 rounded-full bg-primary/5 flex items-center justify-center text-gold">
+                <CheckCircle2 className="h-6 w-6" />
+              </div>
+              <div>
+                <h4 className="font-bold">{ar ? "الصالة رقم 1 (الجديدة)" : "Terminal 1 (New)"}</h4>
+                <p className="text-sm text-muted-foreground">{ar ? "خدمة مستمرة من وإلى الصالة الجديدة بجدة." : "Non-stop service to and from Jeddah's new terminal."}</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="h-10 w-10 shrink-0 rounded-full bg-primary/5 flex items-center justify-center text-gold">
+                <CheckCircle2 className="h-6 w-6" />
+              </div>
+              <div>
+                <h4 className="font-bold">{ar ? "الصالة الشمالية" : "North Terminal"}</h4>
+                <p className="text-sm text-muted-foreground">{ar ? "توصيل واستقبال المسافرين عبر الصالة الشمالية لجميع شركات الطيران." : "Pickup and drop-off for passengers via the North Terminal for all airlines."}</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="h-10 w-10 shrink-0 rounded-full bg-primary/5 flex items-center justify-center text-gold">
+                <CheckCircle2 className="h-6 w-6" />
+              </div>
+              <div>
+                <h4 className="font-bold">{ar ? "متابعة الرحلات" : "Flight Tracking"}</h4>
+                <p className="text-sm text-muted-foreground">{ar ? "نستخدم أنظمة متطورة لمتابعة حالة رحلتك لضمان عدم الانتظار." : "We use advanced systems to track your flight status to ensure no waiting."}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="bg-muted rounded-3xl p-8 border border-border">
+          <h3 className="text-2xl font-bold mb-6">{ar ? "وجهات المطار الأكثر طلباً" : "Top Airport Destinations"}</h3>
+          <ul className="space-y-4">
+            {[
+              { label_ar: "مطار جدة ← مكة المكرمة", label_en: "JED Airport → Makkah", time: "60-90 min" },
+              { label_ar: "مطار جدة ← فنادق جدة", label_en: "JED Airport → Jeddah Hotels", time: "20-40 min" },
+              { label_ar: "مطار جدة ← محطة قطار الحرمين", label_en: "JED Airport → Haramain Station", time: "15-25 min" },
+              { label_ar: "مطار جدة ← المدينة المنورة", label_en: "JED Airport → Madinah", time: "4.5 - 5 hours" },
+            ].map((d, i) => (
+              <li key={i} className="flex items-center justify-between p-4 rounded-xl bg-card border border-border/50">
+                <span className="font-medium text-sm">{ar ? d.label_ar : d.label_en}</span>
+                <span className="text-xs px-2 py-1 rounded-md bg-muted text-muted-foreground">{d.time}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <section className="mb-20">
+        <h2 className="font-display text-3xl mb-8 border-b pb-4">{ar ? "الأسئلة الشائعة عن تاكسي المطار" : "Airport Taxi FAQs"}</h2>
+        <div className="grid gap-4 md:grid-cols-2">
+          {faqs.map((f) => (
+            <div key={f.q} className="rounded-2xl border border-border bg-card p-6">
+              <h3 className="font-medium mb-2">{f.q}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-2xl bg-gold/10 border border-gold/20 p-8 md:p-12 text-center">
+        <h2 className="font-display text-3xl mb-4 text-primary">{ar ? "هل أنت مستعد للهبوط في جدة؟" : "Ready to land in Jeddah?"}</h2>
+        <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
+          {ar 
+            ? "احجز تاكسي المطار الآن ودعنا نهتم بك فور وصولك. خدمة احترافية تليق بك." 
+            : "Book your airport taxi now and let us take care of you upon arrival. Professional service that suits you."}
+        </p>
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Button asChild size="lg" className="rounded-full bg-primary hover:bg-primary/90">
+            <a href={waLink(ar ? "أرغب بحجز استقبال من مطار جدة" : "I'd like to book a pickup from Jeddah Airport")} target="_blank" rel="noopener">
+              <MessageCircle className="h-5 w-5 me-2" /> {ar ? "حجز عبر واتساب" : "WhatsApp Booking"}
+            </a>
+          </Button>
+          <Button asChild size="lg" variant="outline" className="rounded-full">
+            <a href={telLink()}>
+              <Phone className="h-5 w-5 me-2" /> {SITE.phone}
+            </a>
+          </Button>
+        </div>
+      </section>
+    </article>
+  );
+}
