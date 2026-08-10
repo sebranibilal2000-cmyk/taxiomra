@@ -13,9 +13,9 @@ const FAQ_AR = [
 ];
 
 const FAQ_EN = [
-  { q: "What is the taxi fare from Jeddah Airport to Makkah?", a: `Taxi fares from Jeddah Airport to Makkah start from ${getPriceForRoute('apt-jed-to-makkah', 'economyPrice')} SAR for a sedan. This is a fixed rate including meet-and-greet and waiting time.` },
-  { q: "How do I find my driver at the airport?", a: "Your driver will be waiting in the arrivals hall with a nameboard for easy identification and will assist you with your luggage." },
-  { q: "Is service available for late-night or early-morning flights?", a: "Yes, our services are available 24/7. We recommend pre-booking to ensure your driver is ready when you land." },
+  { q: "How much is a taxi from Jeddah Airport to Makkah?", a: `Private taxi fares from Jeddah Airport to Makkah start from ${getPriceForRoute('apt-jed-to-makkah', 'economyPrice')} SAR. This is a fixed price for the entire vehicle, not per person.` },
+  { q: "Can I book a private taxi for Umrah?", a: "Yes, we specialize in private Umrah transportation. You can book a dedicated vehicle for your family or group for a direct transfer to your hotel in Makkah." },
+  { q: "How long does Jeddah Airport to Makkah take?", a: "The journey typically takes about 1 hour and 15 minutes, depending on traffic and the location of your hotel in Makkah." },
 ];
 
 export const Route = createFileRoute("/_public/{-$locale}/jeddah-to-makkah-taxi")({
@@ -136,9 +136,9 @@ function JeddahToMakkahTaxiPage() {
       </section>
 
       <div className="flex flex-wrap gap-4 text-sm font-medium border-t pt-8 mb-16">
-        <span>{ar ? "مسارات أخرى ذات صلة:" : "Other related routes:"}</span>
-        <Link to={withLocale(locale, "/taxi-makkah")} className="text-gold hover:underline">{ar ? "تاكسي مكة" : "Makkah Taxi"}</Link>
-        <Link to={withLocale(locale, "/taxi-madinah")} className="text-gold hover:underline">{ar ? "تاكسي المدينة" : "Madinah Taxi"}</Link>
+        <span>{ar ? "مسارات أخرى ذات صلة:" : "Related Umrah Routes:"}</span>
+        <Link to={withLocale(locale, "/makkah-to-madinah-taxi")} className="text-gold hover:underline">{ar ? "مكة إلى المدينة" : "Makkah to Madinah"}</Link>
+        <Link to={withLocale(locale, "/makkah-to-jeddah-taxi")} className="text-gold hover:underline">{ar ? "مكة إلى جدة" : "Makkah to Jeddah"}</Link>
         <Link to={withLocale(locale, "/jeddah-airport-taxi")} className="text-gold hover:underline">{ar ? "تاكسي مطار جدة" : "Jeddah Airport Taxi"}</Link>
       </div>
 
