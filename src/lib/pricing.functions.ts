@@ -91,10 +91,15 @@ export const getPricingData = createServerFn({ method: "GET" }).handler(async ()
   return PRICING_DATA;
 });
 
-export const getPriceForRoute = (routeId: string, vehicleType: 'economyPrice' | 'suvPrice' | 'vipPrice' = 'economyPrice') => {
+export const getPriceForRoute = (routeId: string, vehicleType: 'economyPrice' | 'suvPrice' | 'vipPrice' = 'economyPrice', locale: 'ar' | 'en' = 'ar') => {
   const route = PRICING_DATA.find(r => r.id === routeId);
   if (!route) return null;
   const price = route[vehicleType];
-  if (!price || price === "اطلب السعر") return null;
+  if (!price) return null;
+  
+  if (price === "اطلب السعر") {
+    return locale === 'ar' ? "اطلب السعر" : "Contact us for a quote";
+  }
+  
   return price;
 };
