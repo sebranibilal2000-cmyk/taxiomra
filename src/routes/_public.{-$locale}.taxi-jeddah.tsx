@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Phone, CheckCircle2, Car, Users, Luggage, MapPin, Clock, Shield } from "lucide-react";
+import { MessageCircle, Phone, CheckCircle2, Car, Users, Luggage, MapPin, Clock, Shield, Plane } from "lucide-react";
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
@@ -120,11 +120,20 @@ function TaxiJeddahPage() {
         {[
           { icon: Clock, title_ar: "متاح 24/7", title_en: "Available 24/7", desc_ar: "خدماتنا متوفرة على مدار الساعة لتلبية احتياجاتك في أي وقت.", desc_en: "Our services are available around the clock to meet your needs anytime." },
           { icon: Shield, title_ar: "أمان وموثوقية", title_en: "Safe & Reliable", desc_ar: "سائقون محترفون ومعتمدون لضمان أقصى درجات الأمان.", desc_en: "Professional and vetted drivers to ensure maximum safety." },
-          { icon: MapPin, title_ar: "تغطية شاملة", title_en: "Full Coverage", desc_ar: "نغطي جميع أحياء جدة والوجهات السياحية والتجارية.", desc_en: "We cover all Jeddah neighborhoods, tourist, and business destinations." },
+          { icon: Plane, title_ar: "مطار جدة", title_en: "Jeddah Airport", desc_ar: "سهولة التوصيل من وإلى مطار الملك عبدالعزيز الدولي.", desc_en: "Easy transfers to and from King Abdulaziz International Airport.", path: "/jeddah-airport-taxi" },
         ].map((item, idx) => (
           <div key={idx} className="p-6 rounded-2xl border border-border bg-card">
-            <item.icon className="h-10 w-10 text-gold mb-4" />
-            <h3 className="text-xl font-bold mb-2">{ar ? item.title_ar : item.title_en}</h3>
+            {item.path ? (
+              <Link to={withLocale(locale, item.path)} className="group">
+                <item.icon className="h-10 w-10 text-gold mb-4 group-hover:scale-110 transition-transform" />
+                <h3 className="text-xl font-bold mb-2 group-hover:text-gold transition-colors">{ar ? item.title_ar : item.title_en}</h3>
+              </Link>
+            ) : (
+              <>
+                <item.icon className="h-10 w-10 text-gold mb-4" />
+                <h3 className="text-xl font-bold mb-2">{ar ? item.title_ar : item.title_en}</h3>
+              </>
+            )}
             <p className="text-sm text-muted-foreground leading-relaxed">{ar ? item.desc_ar : item.desc_en}</p>
           </div>
         ))}

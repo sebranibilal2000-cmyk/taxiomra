@@ -196,6 +196,12 @@ function JeddahAirportTaxiPage() {
             </div>
           ))}
         </div>
+        <div className="mt-8 flex flex-wrap gap-4 text-sm font-medium">
+          <span>{ar ? "خدماتنا في مدن أخرى:" : "Our services in other cities:"}</span>
+          <Link to={withLocale(locale, "/taxi-makkah")} className="text-gold hover:underline">{ar ? "تاكسي مكة" : "Makkah Taxi"}</Link>
+          <Link to={withLocale(locale, "/taxi-madinah")} className="text-gold hover:underline">{ar ? "تاكسي المدينة" : "Madinah Taxi"}</Link>
+          <Link to={withLocale(locale, "/taxi-jeddah")} className="text-gold hover:underline">{ar ? "توصيل داخل جدة" : "Jeddah City Transfer"}</Link>
+        </div>
       </section>
 
       <section className="rounded-2xl bg-gold/10 border border-gold/20 p-8 md:p-12 text-center">

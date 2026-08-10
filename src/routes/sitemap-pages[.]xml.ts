@@ -39,7 +39,9 @@ export const Route = createFileRoute("/sitemap-pages.xml")({
         // Add static localized pages
         for (const path of staticPaths) {
           for (const lang of LOCALES) {
-            urls.push(`  <url>\n    <loc>${BASE_URL}/${lang}${path}</loc>\n  </url>`);
+            const loc = `${BASE_URL}/${lang}${path}`;
+            const alternates = LOCALES.map(l => `    <xhtml:link rel="alternate" hreflang="${l}" href="${BASE_URL}/${l}${path}" />`).join("\n");
+            urls.push(`  <url>\n    <loc>${loc}</loc>\n${alternates}\n    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE_URL}/ar${path}" />\n  </url>`);
           }
         }
 
@@ -53,12 +55,12 @@ export const Route = createFileRoute("/sitemap-pages.xml")({
         const xml = [
           `<?xml version="1.0" encoding="UTF-8"?>`,
           `<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>`,
-          `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
+          `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">`,
           ...urls,
           `</urlset>`,
         ].join("\n");
 
-        return new Response(xml, { headers: { "Content-Type": "application/xml; charset=utf-8" } });
+        return new Response(xml, { headers: { "Content-Type": "application/xml; charset=utf-8", "X-Content-Type-Options": "nosniff" } });
       },
     },
   },

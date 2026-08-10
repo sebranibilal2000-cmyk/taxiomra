@@ -53,10 +53,23 @@ function TaifTaxiPage() {
         </div>
       </header>
       <section className="grid md:grid-cols-3 gap-6 mb-16">
-        {[{icon: Mountain, t: ar ? "رحلات سياحية" : "Tourist Trips"}, {icon: MapPin, t: ar ? "مكة ← الطائف" : "Makkah → Taif"}, {icon: Plane, t: ar ? "مطار جدة ← الطائف" : "Jeddah Airport → Taif"}].map((s, i) => (
+        {[
+          { icon: Mountain, t_ar: "رحلات سياحية", t_en: "Tourist Trips" },
+          { icon: MapPin, t_ar: "مكة ← الطائف", t_en: "Makkah → Taif", path: "/taxi-makkah" },
+          { icon: Plane, t_ar: "مطار جدة ← الطائف", t_en: "Jeddah Airport → Taif", path: "/jeddah-airport-taxi" }
+        ].map((s, i) => (
           <div key={i} className="p-6 border rounded-2xl bg-card">
-            <s.icon className="h-10 w-10 text-gold mb-4" />
-            <h3 className="font-bold">{s.t}</h3>
+            {s.path ? (
+              <Link to={withLocale(locale, s.path)} className="group">
+                <s.icon className="h-10 w-10 text-gold mb-4 group-hover:scale-110 transition-transform" />
+                <h3 className="font-bold group-hover:text-gold transition-colors">{ar ? s.t_ar : s.t_en}</h3>
+              </Link>
+            ) : (
+              <>
+                <s.icon className="h-10 w-10 text-gold mb-4" />
+                <h3 className="font-bold">{ar ? s.t_ar : s.t_en}</h3>
+              </>
+            )}
           </div>
         ))}
       </section>
