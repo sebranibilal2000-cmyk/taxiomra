@@ -47,10 +47,10 @@ export const Route = createFileRoute("/_public/{-$locale}/")({
   head: ({ params, loaderData }: any) => {
     const locale = (params?.locale === "en" ? "en" : "ar") as "ar" | "en";
     const isEn = locale === "en";
-    const titleAr = `التوصيل من مطار جدة إلى مكة | تاكسي من مطار جدة إلى مكة - تاكسي العمرة`;
-    const titleEn = `Jeddah Airport to Makkah Transfer | Taxi from Jeddah Airport — Omra Taxi`;
+    const titleAr = `تاكسي مطار جدة إلى مكة | تاكسي العمرة - توصيل 24 ساعة`;
+    const titleEn = `Umrah Taxi | Jeddah, Makkah & Madinah Taxi`;
     const descAr = "احجز خدمة التوصيل من مطار جدة إلى مكة مع تاكسي العمرة. نوفر سيارات حديثة، سائقين محترفين، استقبال من مطار الملك عبدالعزيز، أسعار ثابتة، وخدمة متوفرة 24 ساعة لجميع رحلات العمرة والزيارة.";
-    const descEn = "Book your Jeddah Airport to Makkah transfer with Omra Taxi. Modern cars, professional drivers, meet & greet at King Abdulaziz Airport, fixed fares and 24-hour service for Umrah and Ziyarah trips.";
+    const descEn = "Private Umrah Taxi in Saudi Arabia – Jeddah Airport to Makkah, Makkah to Madinah & Madinah to Jeddah. Book your private taxi online or via WhatsApp.";
     const ogTitleAr = `التوصيل من مطار جدة إلى مكة | تاكسي العمرة`;
     const ogTitleEn = `Jeddah Airport to Makkah Transfer | Omra Taxi`;
     const ogDescAr = "أفضل خدمة تاكسي من مطار جدة إلى مكة بسيارات حديثة وأسعار ثابتة وخدمة 24/7. احجز رحلتك الآن مع تاكسي العمرة.";
@@ -162,18 +162,18 @@ function Home() {
       <section className="relative overflow-hidden -mt-20 pt-20 bg-background">
         <div className="container-tight grid gap-10 lg:grid-cols-12 lg:gap-14 py-14 md:py-24 items-center">
           <div className="lg:col-span-6 space-y-8 animate-fade-in">
-            <Eyebrow>{ar ? "تاكسي العمرة" : "Omra Taxi"}</Eyebrow>
+            <Eyebrow>{ar ? "تاكسي العمرة" : "Umrah Taxi Saudi"}</Eyebrow>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-balance">
               {ar ? (
                 <>تاكسي من <em className="text-gold not-italic">مطار جدة</em> إلى مكة المكرمة</>
               ) : (
-                <>Jeddah Airport Taxi <em className="text-gold italic">to Makkah</em></>
+                <>Private Umrah Taxi <em className="text-gold italic">in Saudi Arabia</em></>
               )}
             </h1>
             <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
               {ar
                 ? `خدمة التوصيل من مطار جدة إلى مكة على مدار الساعة بأسعار تبدأ من ${getPriceForRoute('apt-jed-to-makkah')} ريال فقط — سيارات حديثة، سائقون محترفون. احجز في دقيقة.`
-                : `Reliable Jeddah Airport to Makkah transfers from only ${getPriceForRoute('apt-jed-to-makkah')} SAR — modern vehicles, professional drivers. Book in under a minute.`}
+                : `Private Umrah taxi and airport transfers from only ${getPriceForRoute('apt-jed-to-makkah')} SAR — modern vehicles, professional drivers. Book your Jeddah Airport to Makkah ride in under a minute.`}
             </p>
             <div className="flex flex-wrap gap-3">
               <Button asChild size="lg" className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-elegant h-12 px-6">
