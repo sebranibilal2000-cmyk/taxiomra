@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getPricingData, getPriceForRoute } from "@/lib/pricing.functions";
 import { useI18n, withLocale } from "@/lib/i18n";
