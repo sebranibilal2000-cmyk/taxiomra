@@ -24,10 +24,10 @@ export const Route = createFileRoute("/_public/{-$locale}/makkah-to-madinah-taxi
     const url = `${SITE.url}/${locale}/makkah-to-madinah-taxi`;
     const title = ar 
       ? "تاكسي من مكة إلى المدينة | توصيل بين الحرمين بأسعار ثابتة - تاكسي العمرة" 
-      : "Makkah to Madinah Taxi | Direct Transfer Between the Two Holy Mosques - Omra Taxi";
+      : "Makkah to Madinah Taxi | Private Umrah Transfer - Umrah Taxi Saudi";
     const description = ar 
       ? "احجز تاكسي مكة إلى المدينة المنورة الآن. خدمة توصيل مريحة وآمنة بين الحرمين الشريفين بسيارات حديثة وسائقين محترفين. حجز سهل وسعر ثابت." 
-      : "Book Makkah to Madinah taxi now. Comfortable and safe transfer between the Two Holy Mosques with modern cars and professional drivers. Easy booking and fixed rates.";
+      : "Book your Makkah to Madinah private taxi for a comfortable Umrah transfer between the Two Holy Mosques. Door-to-door hotel transfers with professional drivers and fixed rates.";
     return {
       meta: [
         { title }, 
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/_public/{-$locale}/makkah-to-madinah-taxi
         { property: "og:url", content: url },
         { name: "keywords", content: ar 
           ? "توصيل من مكة الى المدينة، تاكسي مكة المدينة، حجز سيارة من مكة الى المدينة، نقل بين الحرمين" 
-          : "Makkah to Madinah taxi, Makkah to Madinah transfer, book car from Makkah to Madinah" 
+          : "Makkah to Madinah taxi, Makkah to Madinah private taxi, Makkah to Madinah transfer, taxi from Makkah to Madinah, private transfer Makkah to Madinah, Umrah taxi Makkah to Madinah, Makkah hotel to Madinah hotel transfer" 
         }
       ],
       links: [{ rel: "canonical", href: url }],
@@ -64,12 +64,12 @@ function MakkahToMadinahTaxiPage() {
       
       <header className="space-y-6 mb-16">
         <h1 className="font-display text-4xl md:text-5xl lg:text-6xl leading-tight text-balance">
-          {ar ? "توصيل من مكة المكرمة إلى المدينة المنورة" : "Transfer from Makkah to Madinah"}
+          {ar ? "توصيل من مكة المكرمة إلى المدينة المنورة" : "Makkah to Madinah Taxi"}
         </h1>
         <p className="text-xl text-muted-foreground max-w-3xl leading-relaxed">
           {ar 
             ? "رحلة إيمانية مريحة بين الحرمين الشريفين. نوفر لك أفضل خدمة تاكسي من مكة إلى المدينة المنورة بسيارات حديثة مجهزة للرحلات الطويلة لضمان راحتك." 
-            : "A comfortable spiritual journey between the Two Holy Mosques. We provide the best taxi service from Makkah to Madinah with modern vehicles equipped for long trips."}
+            : "A comfortable spiritual journey between the Two Holy Mosques. We provide the best private taxi service from Makkah to Madinah with modern vehicles equipped for long trips and professional chauffeurs."}
         </p>
         <div className="flex flex-wrap gap-4 pt-4">
           <Button asChild size="lg" className="rounded-full h-14 px-8 bg-primary shadow-lg">
