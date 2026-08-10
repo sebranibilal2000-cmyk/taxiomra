@@ -55,10 +55,23 @@ function MakkahTaxiPage() {
         </div>
       </header>
       <section className="grid md:grid-cols-3 gap-6 mb-16">
-        {[{icon: Car, t: ar ? "تنقل داخل مكة" : "In-City Transfer"}, {icon: Building2, t: ar ? "توصيل للفنادق" : "Hotel Transfers"}, {icon: Plane, t: ar ? "مطار جدة ← مكة" : "Jeddah Airport → Makkah"}].map((s, i) => (
+        {[
+          { icon: Car, t_ar: "تنقل داخل مكة", t_en: "In-City Transfer" },
+          { icon: Building2, t_ar: "توصيل للفنادق", t_en: "Hotel Transfers" },
+          { icon: Plane, t_ar: "مطار جدة ← مكة", t_en: "Jeddah Airport → Makkah", path: "/jeddah-airport-taxi" }
+        ].map((s, i) => (
           <div key={i} className="p-6 border rounded-2xl bg-card">
-            <s.icon className="h-10 w-10 text-gold mb-4" />
-            <h3 className="font-bold">{s.t}</h3>
+            {s.path ? (
+              <Link to={withLocale(locale, s.path)} className="group">
+                <s.icon className="h-10 w-10 text-gold mb-4 group-hover:scale-110 transition-transform" />
+                <h3 className="font-bold group-hover:text-gold transition-colors">{ar ? s.t_ar : s.t_en}</h3>
+              </Link>
+            ) : (
+              <>
+                <s.icon className="h-10 w-10 text-gold mb-4" />
+                <h3 className="font-bold">{ar ? s.t_ar : s.t_en}</h3>
+              </>
+            )}
           </div>
         ))}
       </section>

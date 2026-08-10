@@ -53,10 +53,23 @@ function DammamTaxiPage() {
         </div>
       </header>
       <section className="grid md:grid-cols-3 gap-6 mb-16">
-        {[{icon: Plane, t: ar ? "مطار الملك فهد" : "King Fahd Airport"}, {icon: Building2, t: ar ? "المنطقة الشرقية" : "Eastern Province"}, {icon: MapPin, t: ar ? "رحلات بين المدن" : "Inter-City Trips"}].map((s, i) => (
+        {[
+          { icon: Plane, t_ar: "مطار الملك فهد", t_en: "King Fahd Airport" },
+          { icon: Building2, t_ar: "المنطقة الشرقية", t_en: "Eastern Province" },
+          { icon: MapPin, t_ar: "رحلات بين المدن", t_en: "Inter-City Trips", path: "/taxi-riyadh" }
+        ].map((s, i) => (
           <div key={i} className="p-6 border rounded-2xl bg-card">
-            <s.icon className="h-10 w-10 text-gold mb-4" />
-            <h3 className="font-bold">{s.t}</h3>
+            {s.path ? (
+              <Link to={withLocale(locale, s.path)} className="group">
+                <s.icon className="h-10 w-10 text-gold mb-4 group-hover:scale-110 transition-transform" />
+                <h3 className="font-bold group-hover:text-gold transition-colors">{ar ? s.t_ar : s.t_en}</h3>
+              </Link>
+            ) : (
+              <>
+                <s.icon className="h-10 w-10 text-gold mb-4" />
+                <h3 className="font-bold">{ar ? s.t_ar : s.t_en}</h3>
+              </>
+            )}
           </div>
         ))}
       </section>
