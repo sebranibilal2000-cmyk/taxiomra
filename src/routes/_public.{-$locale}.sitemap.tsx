@@ -57,6 +57,10 @@ function HtmlSitemap() {
     { p: "/fleet", label: isAr ? "الأسطول" : "Fleet" },
     { p: "/airport-transfers", label: isAr ? "نقل المطار" : "Airport Transfers" },
     
+    { path: "/taxi-jeddah", label: isAr ? "تاكسي جدة" : "Taxi Jeddah" },
+    { path: "/jeddah-airport-taxi", label: isAr ? "تاكسي مطار جدة" : "Jeddah Airport Taxi" },
+    { path: "/taxi-makkah", label: isAr ? "تاكسي مكة" : "Taxi Makkah" },
+    { path: "/taxi-madinah", label: isAr ? "تاكسي المدينة المنورة" : "Taxi Madinah" },
     { p: "/blog", label: isAr ? "المدونة" : "Blog" },
     { p: "/faq", label: "FAQ" },
     { p: "/contact", label: isAr ? "اتصل بنا" : "Contact" },
@@ -78,9 +82,9 @@ function HtmlSitemap() {
     <section className="mb-8">
       <h2 className="mb-3 border-b border-border pb-2 font-serif text-xl">{title}</h2>
       <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
-        {items.map((i) => (
-          <li key={i.p}>
-            <Link to={pfx(i.p)} className="text-sm text-muted-foreground hover:text-foreground hover:underline">{i.label}</Link>
+        {items.map((i: any) => (
+          <li key={i.p || i.path}>
+            <Link to={pfx(i.p || i.path)} className="text-sm text-muted-foreground hover:text-foreground hover:underline">{i.label}</Link>
           </li>
         ))}
       </ul>
