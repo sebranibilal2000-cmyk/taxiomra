@@ -172,8 +172,8 @@ function Home() {
             </h1>
             <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
               {ar
-                ? `خدمة التوصيل من مطار جدة إلى مكة على مدار الساعة بأسعار تبدأ من ${getPriceForRoute('jeddah-apt-makkah')} ريال فقط — سيارات حديثة، سائقون محترفون. احجز في دقيقة.`
-                : `Reliable Jeddah Airport to Makkah transfers from only ${getPriceForRoute('jeddah-apt-makkah')} SAR — modern vehicles, professional drivers. Book in under a minute.`}
+                ? `خدمة التوصيل من مطار جدة إلى مكة على مدار الساعة بأسعار تبدأ من ${getPriceForRoute('apt-jed-to-makkah')} ريال فقط — سيارات حديثة، سائقون محترفون. احجز في دقيقة.`
+                : `Reliable Jeddah Airport to Makkah transfers from only ${getPriceForRoute('apt-jed-to-makkah')} SAR — modern vehicles, professional drivers. Book in under a minute.`}
             </p>
             <div className="flex flex-wrap gap-3">
               <Button asChild size="lg" className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-elegant h-12 px-6">
@@ -273,7 +273,7 @@ function Home() {
             { icon: Briefcase, slug: "corporate", ar: "نقل الشركات", en: "Business Travel", desc_ar: "عقود شهرية وحلول للمدراء التنفيذيين.", desc_en: "Monthly contracts and executive road-shows." },
             { icon: Building2, slug: "hotel-transfer", ar: "نقل الفنادق", en: "Hotel & Private", desc_ar: "خدمة مخصصة لضيوف الفنادق والفعاليات الخاصة.", desc_en: "White-glove pickups for hotels and events." },
           ].map((s) => (
-            <Link key={s.slug} to="/{-$locale}/p/$slug" params={(prev: Record<string, string>) => ({ ...prev, slug: s.slug })} className="group">
+            <Link key={s.slug} to="/{-$locale}/p/$slug" params={(prev: any) => ({ ...prev, slug: s.slug })} className="group">
               <article className="hover-lift h-full flex flex-col rounded-2xl border border-border bg-card p-7">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground mb-6 group-hover:bg-gold group-hover:text-primary transition-colors">
                   <s.icon className="h-5 w-5" />

@@ -12,7 +12,7 @@ import { breadcrumbJsonLd, faqPageJsonLd } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 
 const FAQ = [
-  { q_ar: "كم سعر التاكسي من مكة إلى جدة؟", a_ar: `يبدأ السعر من ${getPriceForRoute('makkah-jeddah-apt', 'sedan') || '190'} ريال لسيارة السيدان. نؤكد السعر النهائي قبل الرحلة.`, q_en: "How much is a taxi from Makkah to Jeddah?", a_en: `Fares start from ${getPriceForRoute('makkah-jeddah-apt', 'sedan') || '190'} SAR for a sedan. We confirm the final fare before your trip.` },
+  { q_ar: "كم سعر التاكسي من مكة إلى جدة؟", a_ar: `يبدأ السعر من ${getPriceForRoute('makkah-to-apt-jed', 'economyPrice') || '190'} ريال لسيارة السيدان. نؤكد السعر النهائي قبل الرحلة.`, q_en: "How much is a taxi from Makkah to Jeddah?", a_en: `Fares start from ${getPriceForRoute('makkah-to-apt-jed', 'economyPrice') || '190'} SAR for a sedan. We confirm the final fare before your trip.` },
   { q_ar: "هل الأسعار ثابتة؟", a_ar: "نعم، جميع الأسعار ثابتة ومعروفة مسبقاً قبل الحجز.", q_en: "Are fares fixed?", a_en: "Yes, all fares are fixed and known before you book." }
 ];
 
@@ -78,9 +78,9 @@ function PricingPage() {
                   <CardContent className="p-6 flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="text-lg font-medium">{ar ? `${r.from_ar} ← ${r.to_ar}` : `${r.from_en} → ${r.to_en}`}</div>
                     <div className="flex gap-4 text-sm font-semibold">
-                      {r.sedan && <span className="text-muted-foreground">{ar ? "سيدان:" : "Sedan:"} <span className="text-gold">{r.sedan}</span></span>}
-                      {r.suv && <span className="text-muted-foreground">SUV: <span className="text-gold">{r.suv}</span></span>}
-                      {r.van && <span className="text-muted-foreground">{ar ? "فان:" : "Van:"} <span className="text-gold">{r.van}</span></span>}
+                      {r.economyPrice && <span className="text-muted-foreground">{ar ? "اقتصادية:" : "Economy:"} <span className="text-gold">{r.economyPrice}</span></span>}
+                      {r.suvPrice && <span className="text-muted-foreground">SUV: <span className="text-gold">{r.suvPrice}</span></span>}
+                      {r.vipPrice && <span className="text-muted-foreground">{ar ? "VIP:" : "VIP:"} <span className="text-gold">{r.vipPrice}</span></span>}
                     </div>
                   </CardContent>
                 </Card>
