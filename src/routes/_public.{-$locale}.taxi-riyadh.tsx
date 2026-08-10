@@ -26,8 +26,8 @@ export const Route = createFileRoute("/_public/{-$locale}/taxi-riyadh")({
     const locale = params.locale ?? "ar";
     const ar = locale === "ar";
     const url = `${SITE.url}/${locale}/taxi-riyadh`;
-    const title = ar ? "تاكسي الرياض | حجز توصيل مطار الرياض والرحلات الطويلة - تاكسي العمرة" : "Riyadh Taxi | Book Riyadh Airport & Long Distance Transfers - Omra Taxi";
-    const description = ar ? "احجز تاكسي الرياض الآن. خدمات توصيل احترافية داخل العاصمة، استقبال من مطار الملك خالد، ورحلات بين المدن بسيارات فاخرة وحديثة." : "Book Riyadh taxi now. Professional transfer services within the capital, King Khalid Airport meet & greet, and inter-city trips with luxury modern cars.";
+    const title = ar ? "تاكسي الرياض | حجز توصيل مطار الرياض والرحلات الطويلة - تاكسي العمرة" : "Riyadh Taxi | Riyadh Airport & City Transfers - Umrah Taxi Saudi";
+    const description = ar ? "احجز تاكسي الرياض الآن. خدمات توصيل احترافية داخل العاصمة، استقبال من مطار الملك خالد، ورحلات بين المدن بسيارات فاخرة وحديثة." : "Book your private Riyadh taxi for King Khalid Airport (RUH) pickups, business district transfers, and hotel drop-offs. Professional 24/7 private transportation in Riyadh.";
     return {
       meta: [{ title }, { name: "description", content: description }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:url", content: url }],
       links: [{ rel: "canonical", href: url }],

@@ -26,8 +26,8 @@ export const Route = createFileRoute("/_public/{-$locale}/taxi-dammam")({
     const locale = params.locale ?? "ar";
     const ar = locale === "ar";
     const url = `${SITE.url}/${locale}/taxi-dammam`;
-    const title = ar ? "تاكسي الدمام | توصيل مطار الملك فهد والمنطقة الشرقية - تاكسي العمرة" : "Dammam Taxi | King Fahd Airport & Eastern Province Transfers - Omra Taxi";
-    const description = ar ? "احجز تاكسي الدمام الآن. خدمة موثوقة في المنطقة الشرقية، توصيل من مطار الملك فهد، ورحلات لجميع مناطق المملكة بأسعار ثابتة." : "Book Dammam taxi now. Reliable service in the Eastern Province, King Fahd Airport transfers, and trips to all regions of the Kingdom at fixed rates.";
+    const title = ar ? "تاكسي الدمام | توصيل مطار الملك فهد والمنطقة الشرقية - تاكسي العمرة" : "Dammam Taxi | King Fahd Airport & Eastern Province Transfers - Umrah Taxi Saudi";
+    const description = ar ? "احجز تاكسي الدمام الآن. خدمة موثوقة في المنطقة الشرقية، توصيل من مطار الملك فهد، ورحلات لجميع مناطق المملكة بأسعار ثابتة." : "Book your private Dammam taxi for King Fahd Airport (DMM) transfers, Khobar hotel pickups, and Eastern Province travel. Reliable 24/7 private transportation services.";
     return {
       meta: [{ title }, { name: "description", content: description }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:url", content: url }],
       links: [{ rel: "canonical", href: url }],
