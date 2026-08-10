@@ -1,18 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Phone, CheckCircle2, MapPin, Clock, Shield, Star, Car } from "lucide-react";
+import { MessageCircle, Phone, CheckCircle2, Car, MapPin, Clock, Shield, Star, Building2, Plane } from "lucide-react";
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
 
 const FAQ_AR = [
-  { q: "كيف أحجز تاكسي في الرياض؟", a: "احجز بسهولة عبر واتساب. نوفر توصيلاً من وإلى مطار الملك خالد وجميع أحياء الرياض." },
-  { q: "هل تتوفر رحلات طويلة من الرياض؟", a: "نعم، نقدم خدمة النقل بين الرياض والمدن الأخرى عند الطلب." },
+  { q: "هل توفرون استقبال من مطار الملك خالد بالرياض؟", a: "نعم، نقدم خدمة الاستقبال والتوصيل من وإلى مطار الملك خالد الدولي لجميع أحياء الرياض." },
+  { q: "هل لديكم رحلات بين الرياض ومكة؟", a: "نعم، نوفر سيارات حديثة مخصصة للرحلات الطويلة بين الرياض ومكة المكرمة بأسعار تنافسية." },
 ];
 
 const FAQ_EN = [
-  { q: "How to book a taxi in Riyadh?", a: "Book easily via WhatsApp. We provide transfers to/from KKIA and all Riyadh districts." },
-  { q: "Are long-distance trips available from Riyadh?", a: "Yes, we offer inter-city transfers from Riyadh upon request." },
+  { q: "Do you provide airport pickups at King Khalid Airport?", a: "Yes, we offer meet and greet transfer services to and from King Khalid International Airport for all Riyadh districts." },
+  { q: "Do you have trips between Riyadh and Makkah?", a: "Yes, we provide modern cars dedicated for long-distance trips between Riyadh and Makkah at competitive prices." },
 ];
 
 export const Route = createFileRoute("/_public/{-$locale}/taxi-riyadh")({
@@ -20,37 +20,43 @@ export const Route = createFileRoute("/_public/{-$locale}/taxi-riyadh")({
     const locale = params.locale ?? "ar";
     const ar = locale === "ar";
     const url = `${SITE.url}/${locale}/taxi-riyadh`;
-    const title = ar ? "تاكسي الرياض | حجز سيارة مع سائق - تاكسي العمرة" : "Taxi Riyadh | Professional Chauffeur - Omra Taxi";
-    const description = ar ? "احجز تاكسي الرياض الآن. توصيل المطار، مشاوير داخل الرياض، ورحلات بين المدن." : "Book your Riyadh taxi. Airport transfers, city rides, and inter-city trips.";
+    const title = ar ? "تاكسي الرياض | حجز توصيل مطار الرياض والرحلات الطويلة - تاكسي العمرة" : "Riyadh Taxi | Book Riyadh Airport & Long Distance Transfers - Omra Taxi";
+    const description = ar ? "احجز تاكسي الرياض الآن. خدمات توصيل احترافية داخل العاصمة، استقبال من مطار الملك خالد، ورحلات بين المدن بسيارات فاخرة وحديثة." : "Book Riyadh taxi now. Professional transfer services within the capital, King Khalid Airport meet & greet, and inter-city trips with luxury modern cars.";
     return {
-      meta: [{ title }, { name: "description", content: description }],
+      meta: [{ title }, { name: "description", content: description }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:url", content: url }],
       links: [{ rel: "canonical", href: url }],
       scripts: [
-        { type: "application/ld+json", children: JSON.stringify(breadcrumbJsonLd([{ name: ar ? "الرئيسية" : "Home", url: `${SITE.url}/${locale}` }, { name: ar ? "تاكسي الرياض" : "Taxi Riyadh", url }])) },
-        { type: "application/ld+json", children: JSON.stringify(faqPageJsonLd(ar ? FAQ_AR : FAQ_EN)) }
-      ],
+        { type: "application/ld+json", children: JSON.stringify(breadcrumbJsonLd([{ name: ar ? "الرئيسية" : "Home", url: `${SITE.url}/${locale}` }, { name: ar ? "تاكسي الرياض" : "Riyadh Taxi", url }])) },
+        { type: "application/ld+json", children: JSON.stringify(faqPageJsonLd(ar ? FAQ_AR : FAQ_EN)) },
+        { type: "application/ld+json", children: JSON.stringify(serviceJsonLd({ name: ar ? "تاكسي الرياض" : "Riyadh Taxi", description, url, areaServed: "Riyadh" })) }
+      ]
     };
   },
-  component: () => <TaxiCityPage city={ {ar: "الرياض", en: "Riyadh"} } faqs={FAQ_AR} faqsEn={FAQ_EN} />,
+  component: RiyadhTaxiPage,
 });
 
-function TaxiCityPage({ city, faqs, faqsEn }: { city: { ar: string; en: string }, faqs: any[], faqsEn: any[] }) {
+function RiyadhTaxiPage() {
   const { locale } = useI18n();
   const ar = locale === "ar";
   return (
     <article className="container-tight py-16">
-      <header className="mb-12">
-        <h1 className="font-display text-4xl md:text-5xl mb-6">{ar ? `تاكسي ${city.ar}` : `Taxi ${city.en}`}</h1>
-        <p className="text-lg text-muted-foreground">{ar ? `خدمة نقل مريحة في ${city.ar}، احجز رحلتك الآن.` : `Reliable transport in ${city.en}, book your ride now.`}</p>
-        <div className="flex gap-4 mt-6">
-           <Button asChild><a href={waLink()}><MessageCircle className="me-2"/>{ar ? "واتساب" : "WhatsApp"}</a></Button>
+      <nav className="text-sm text-muted-foreground mb-4">
+        <Link to={withLocale(locale, "/")} className="hover:text-foreground">{ar ? "الرئيسية" : "Home"}</Link>
+        <span className="mx-2">/</span>
+        <span className="text-foreground">{ar ? "تاكسي الرياض" : "Riyadh Taxi"}</span>
+      </nav>
+      <header className="space-y-6 mb-16">
+        <h1 className="font-display text-4xl md:text-5xl">{ar ? "تاكسي الرياض: تنقل بذكاء في العاصمة" : "Riyadh Taxi: Travel Smart in the Capital"}</h1>
+        <p className="text-lg text-muted-foreground max-w-2xl">{ar ? "نوفر لك حلول تنقل متكاملة في مدينة الرياض، من المطار وإلى أي وجهة داخل أو خارج المدينة." : "We provide integrated mobility solutions in Riyadh, from the airport to any destination inside or outside the city."}</p>
+        <div className="flex gap-4">
+          <Button asChild size="lg" className="rounded-full"><a href={waLink(ar ? "أرغب بحجز تاكسي في الرياض" : "Book taxi in Riyadh")}><MessageCircle className="h-5 w-5 me-2" /> {ar ? "حجز الآن" : "Book Now"}</a></Button>
         </div>
       </header>
-      <section className="space-y-6">
-        {(ar ? faqs : faqsEn).map((f, i) => (
+      <section className="grid md:grid-cols-3 gap-6 mb-16">
+        {[{icon: Plane, t: ar ? "مطار الملك خالد" : "King Khalid Airport"}, {icon: Building2, t: ar ? "أحياء الرياض" : "Riyadh Districts"}, {icon: MapPin, t: ar ? "رحلات بين المدن" : "Inter-City Trips"}].map((s, i) => (
           <div key={i} className="p-6 border rounded-2xl bg-card">
-            <h3 className="font-bold mb-2">{f.q}</h3>
-            <p className="text-sm text-muted-foreground">{f.a}</p>
+            <s.icon className="h-10 w-10 text-gold mb-4" />
+            <h3 className="font-bold">{s.t}</h3>
           </div>
         ))}
       </section>
