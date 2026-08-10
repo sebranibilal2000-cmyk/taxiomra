@@ -417,6 +417,8 @@ function Home() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { slug: "taxi-jeddah", ar: "تاكسي جدة", en: "Taxi Jeddah", sub_ar: "توصيل داخل جدة", sub_en: "Jeddah city transfers" },
+            { slug: "jeddah-to-makkah-taxi", ar: "تاكسي من جدة إلى مكة", en: "Jeddah to Makkah Taxi", sub_ar: "توصيل مباشر 24 ساعة", sub_en: "24/7 Direct transfer" },
+            { slug: "makkah-to-madinah-taxi", ar: "تاكسي مكة إلى المدينة", en: "Makkah to Madinah Taxi", sub_ar: "نقل بين الحرمين", sub_en: "Inter-Holy Mosque transfer" },
             { slug: "jeddah-airport-taxi", ar: "تاكسي مطار جدة", en: "Jeddah Airport Taxi", sub_ar: "استقبال من المطار", sub_en: "Airport meet & greet" },
             { slug: "taxi-makkah", ar: "تاكسي مكة", en: "Taxi Makkah", sub_ar: "نقل الحرم والفنادق", sub_en: "Haram & hotel transfers" },
             { slug: "taxi-madinah", ar: "تاكسي المدينة المنورة", en: "Taxi Madinah", sub_ar: "زيارات الحرم والمدينة", sub_en: "Prophet's Mosque transfers" },
