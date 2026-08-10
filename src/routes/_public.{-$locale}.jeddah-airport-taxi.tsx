@@ -8,16 +8,16 @@ import { getPriceForRoute } from "@/lib/pricing.functions";
 
 const FAQ_AR = [
   { q: "أين أجد السائق في مطار جدة؟", a: "سيكون السائق بانتظارك في صالة الوصول فور خروجك من منطقة الجمارك في مطار الملك عبدالعزيز الدولي (الصالة رقم 1 أو الصالة الشمالية)، حاملاً لافتة عليها اسمك للتسهيل عليك." },
-  { q: "ما هي الوجهات المتاحة من مطار جدة (JED)؟", a: `نوفر رحلات مباشرة من مطار جدة إلى مكة المكرمة (بواسطة ${getPriceForRoute('apt-jed-to-makkah')} ريال)، والمدينة المنورة (${getPriceForRoute('apt-jed-to-med')} ريال)، وجميع فنادق وأحياء مدينة جدة، بالإضافة إلى الطائف.` },
-  { q: "كيف تتعاملون مع تأخر رحلات الطيران؟", a: "نحن نتابع رحلتك عبر رقم الرحلة ونقوم بتعديل موعد الاستقبال تلقائياً في حال التأخير. كما نوفر فترة انتظار مجانية كافية بعد هبوط الطائرة لتتمكن من إنهاء الإجراءات." },
-  { q: "هل تتوفر كراسي للأطفال في سيارات المطار؟", a: "نعم، يمكنك طلب مقعد طفل عند الحجز لضمان سلامة أطفالك خلال الرحلة من المطار إلى وجهتك." },
+  { q: "ما هي الوجهات المتاحة من مطار جدة (JED)؟", a: `نوفر رحلات مباشرة من مطار جدة إلى مكة المكرمة (بواسطة ${getPriceForRoute('apt-jed-to-makkah')} ريال)، والمدينة المنورة (${getPriceForRoute('apt-jed-to-med')} ريال)، والطائف، بالإضافة إلى جميع فنادق وأحياء مدينة جدة.` },
+  { q: "كيف يتم التعامل مع تأخر الرحلات؟", a: "نحن نتابع رحلتك عبر رقم الرحلة ونقوم بتعديل موعد الاستقبال تلقائياً في حال التأخير دون أي رسوم إضافية، لضمان وجود السائق عند هبوطك." },
+  { q: "هل يمكنني حجز تاكسي المطار قبل وصولي؟", a: "نعم، ننصح بشدة بالحجز المسبق عبر الموقع أو واتساب لضمان توفر السيارة المناسبة لك فور وصولك إلى مطار الملك عبدالعزيز." },
 ];
 
 const FAQ_EN = [
   { q: "Where do I find my chauffeur at Jeddah Airport (JED)?", a: "After clearing customs and exiting the arrivals hall at King Abdulaziz International Airport (Terminal 1 or North Terminal), your chauffeur will be waiting for you with a personalized sign featuring your name." },
-  { q: "How long does the driver wait if my flight is delayed?", a: "We monitor all flight arrivals in real-time. If your flight is delayed, your pickup time is adjusted automatically at no extra cost, and we include a generous complimentary waiting time for you to collect your luggage." },
+  { q: "How long does the driver wait if my flight is delayed?", a: "We monitor all flight arrivals in real-time. If your flight is delayed, your pickup time is adjusted automatically at no extra cost, and we include a generous complimentary waiting time." },
   { q: "Can I book a transfer from Jeddah Airport to Makkah?", a: `Absolutely. We specialize in private Umrah transfers from Jeddah Airport to all hotels in Makkah. Prices start from ${getPriceForRoute('apt-jed-to-makkah', 'economyPrice', 'en')} and vary by vehicle type.` },
-  { q: "What should I do after arriving at JED airport?", a: "Once you land, simply proceed through immigration and customs. Look for our driver in the designated arrivals area. For a smooth experience, ensure your phone is on and check your WhatsApp for driver details sent prior to landing." },
+  { q: "What should I do after arriving at JED airport?", a: "Once you land, simply proceed through immigration and customs. Look for our driver in the designated arrivals area. For a smooth experience, ensure your phone is on and check your WhatsApp." },
 ];
 
 export const Route = createFileRoute("/_public/{-$locale}/jeddah-airport-taxi")({
@@ -27,10 +27,10 @@ export const Route = createFileRoute("/_public/{-$locale}/jeddah-airport-taxi")(
     const url = `${SITE.url}/${locale}/jeddah-airport-taxi`;
     const title = ar
       ? "تاكسي مطار جدة | استقبال وتوصيل مطار الملك عبدالعزيز - تاكسي العمرة"
-      : "Jeddah Airport Taxi | Private KAIA Pickups & Transfers";
+      : "Jeddah Airport Taxi | Private JED Airport Transfers - Umrah Taxi Saudi";
     const description = ar
-      ? "أفضل خدمة تاكسي مطار جدة (JED). استقبال من صالة الوصول، متابعة الرحلات، وأسعار ثابتة إلى مكة وجدة. احجز رحلتك الموثوقة من مطار الملك عبدالعزيز الآن."
-      : "Professional Jeddah airport taxi service at King Abdulaziz International Airport (JED). Private meet and greet, luggage assistance, and fixed-rate transfers to Makkah and Jeddah hotels.";
+      ? "أفضل خدمة تاكسي مطار جدة (JED). استقبال من صالة الوصول، متابعة الرحلات، وأسعار ثابتة إلى مكة وجدة. احجز رحلتك الموثوقة من مطار الملك عبدالعزيز فور وصولك."
+      : "Private Jeddah Airport Taxi for arrivals at King Abdulaziz International Airport (JED). Professional meet and greet, luggage assistance, and fixed-rate transfers to Makkah, Jeddah and Madinah.";
     
     return {
       meta: [
@@ -95,8 +95,8 @@ function JeddahAirportTaxiPage() {
         </div>
         <h1 className="font-display text-4xl md:text-5xl lg:text-6xl leading-tight">
           {ar
-            ? "تاكسي مطار جدة: استقبالك يبدأ بابتسامة"
-            : "Jeddah Airport Taxi | Private Pickups & Arrivals"}
+            ? "تاكسي مطار جدة"
+            : "Jeddah Airport Taxi"}
         </h1>
         <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
           {ar

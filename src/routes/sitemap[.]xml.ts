@@ -32,20 +32,6 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/cities", changefreq: "weekly", priority: "0.8" },
           { path: "/airports", changefreq: "weekly", priority: "0.8" },
           { path: "/routes", changefreq: "weekly", priority: "0.8" },
-          { path: "/taxi-jeddah", changefreq: "weekly", priority: "0.9" },
-          { path: "/jeddah-airport-taxi", changefreq: "weekly", priority: "0.9" },
-          { path: "/taxi-makkah", changefreq: "weekly", priority: "0.9" },
-          { path: "/taxi-madinah", changefreq: "weekly", priority: "0.9" },
-          { path: "/taxi-taif", changefreq: "weekly", priority: "0.9" },
-          { path: "/taxi-riyadh", changefreq: "weekly", priority: "0.9" },
-          { path: "/taxi-dammam", changefreq: "weekly", priority: "0.9" },
-          { path: "/jeddah-to-makkah-taxi", changefreq: "weekly", priority: "0.9" },
-          { path: "/makkah-to-madinah-taxi", changefreq: "weekly", priority: "0.9" },
-          { path: "/madinah-to-makkah-taxi", changefreq: "weekly", priority: "0.9" },
-          { path: "/makkah-to-taif-taxi", changefreq: "weekly", priority: "0.9" },
-          { path: "/taif-to-makkah-taxi", changefreq: "weekly", priority: "0.9" },
-
-          
           { path: "/guide/taxi-fares", changefreq: "monthly", priority: "0.8" },
           { path: "/booking", changefreq: "monthly", priority: "0.7" },
           { path: "/faq", changefreq: "monthly", priority: "0.6" },
@@ -56,6 +42,28 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/refund", changefreq: "yearly", priority: "0.3" },
           { path: "/cancellation", changefreq: "yearly", priority: "0.3" },
         ];
+        
+        // Define core static routes that have physical files in src/routes/_public.{-$locale}.*.tsx
+        const staticPublicRoutes = [
+          "taxi-jeddah",
+          "jeddah-airport-taxi",
+          "taxi-makkah",
+          "taxi-madinah",
+          "taxi-taif",
+          "taxi-riyadh",
+          "taxi-dammam",
+          "jeddah-to-makkah-taxi",
+          "makkah-to-madinah-taxi",
+          "madinah-to-makkah-taxi",
+          "makkah-to-taif-taxi",
+          "taif-to-makkah-taxi",
+          "jeddah-to-madinah-taxi",
+          "madinah-to-jeddah-taxi",
+        ];
+
+        for (const route of staticPublicRoutes) {
+          entries.push({ path: `/${route}`, changefreq: "weekly", priority: "0.9" });
+        }
         try {
           const [{ data: pages }, { data: posts }, { data: cats }] = await Promise.all([
             sb.from("cms_pages").select("slug,page_type,updated_at").eq("published", true),

@@ -6,16 +6,16 @@ import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
 
 const FAQ_AR = [
-  { q: "كيف يمكنني حجز تاكسي في جدة؟", a: "يمكنك حجز تاكسي جدة بسهولة عبر واتساب أو الاتصال المباشر. نوفر خدمة فورية أو حجوزات مسبقة للرحلات الخاصة والعائلية وخدمات النقل لرجال الأعمال." },
+  { q: "كيف يمكنني حجز تاكسي في جدة؟", a: "يمكنك حجز تاكسي جدة بسهولة عبر واتساب أو الاتصال المباشر. نوفر خدمة فورية أو حجوزات مسبقة للرحلات الخاصة والعائلية وخدمات النقل لرجال الأعمال داخل أحياء جدة." },
   { q: "هل تتوفر خدمة التوصيل بين أحياء جدة؟", a: "نعم، نقدم خدمة التوصيل الاحترافي بين جميع أحياء ومناطق جدة الكبرى بما في ذلك الحمراء، الروضة، أبحر، حي الشاطئ، ومنطقة البلد التاريخية." },
-  { q: "ما هي الوجهات المتاحة من مدينة جدة؟", a: "نوفر رحلات مباشرة من جدة إلى مكة المكرمة، المدينة المنورة، والطائف، بالإضافة إلى خدمة النقل المتخصصة من وإلى مطار الملك عبدالعزيز الدولي." },
+  { q: "هل توفرون خدمة استقبال من فنادق جدة؟", a: "بالتأكيد، نوفر خدمة الاستقبال من باب الفندق في أي مكان داخل جدة، مع سائقين محترفين ومساعدة كاملة في نقل الحقائب." },
   { q: "ما هي أنواع السيارات المتوفرة في أسطول جدة؟", a: "يتضمن أسطولنا سيارات سيدان حديثة مريحة، سيارات دفع رباعي واسعة للعائلات، وفانات كبيرة للرحلات الجماعية ونقل المعتمرين." },
 ];
 
 const FAQ_EN = [
-  { q: "How can I book a private taxi in Jeddah?", a: "Booking is simple via WhatsApp or a direct phone call. We offer on-demand pickups and pre-arranged private transfers for tourists, business travelers, and families across Jeddah." },
+  { q: "How can I book a private taxi in Jeddah?", a: "Booking is simple via WhatsApp or a direct phone call. We offer on-demand pickups and pre-arranged private transfers for tourists, business travelers, and families across Jeddah districts." },
   { q: "Does your service cover all Jeddah districts?", a: "Yes, our professional chauffeurs operate throughout Jeddah, including major residential and business hubs like Al Hamra, Al Rawdah, Obhur, Ash Shati, and the historic Al Balad district." },
-  { q: "Which destinations can I travel to from Jeddah?", a: "Beyond city transfers, we provide intercity transportation from Jeddah to Makkah, Madinah, and Taif, as well as dedicated connections to King Abdulaziz International Airport (JED)." },
+  { q: "Can I book a taxi for local trips within Jeddah?", a: "Yes, we specialize in local transportation within Jeddah, including shopping trips, business meetings, and visiting local attractions with door-to-door service." },
   { q: "What should I expect for hotel pickups in Jeddah?", a: "We provide door-to-door service. Your driver will meet you at your hotel entrance or lobby at the scheduled time, assisting with luggage for a stress-free start to your journey." },
 ];
 
@@ -26,10 +26,10 @@ export const Route = createFileRoute("/_public/{-$locale}/taxi-jeddah")({
     const url = `${SITE.url}/${locale}/taxi-jeddah`;
     const title = ar
       ? "تاكسي جدة | حجز توصيل داخل جدة بسيارات حديثة - تاكسي العمرة"
-      : "Jeddah Taxi | Private Transfers & Hotel Pickups - Umrah Taxi Saudi";
+      : "Jeddah Taxi | Private City & Hotel Transfers - Umrah Taxi Saudi";
     const description = ar
-      ? "احجز تاكسي جدة الآن. نوفر سيارات حديثة مع سائقين محترفين للتوصيل داخل أحياء جدة، الرحلات العائلية، والشركات. خدمة موثوقة على مدار الساعة بأسعار ثابتة."
-      : "Reliable private taxi in Jeddah for hotel transfers, business travel, and city trips. Professional 24/7 transportation across Jeddah districts for international visitors.";
+      ? "احجز تاكسي جدة الآن. نوفر سيارات حديثة مع سائقين محترفين للتوصيل داخل أحياء جدة، الرحلات العائلية، والشركات. خدمة موثوقة على مدار الساعة لخدمة سكان وزوار جدة."
+      : "Private taxi in Jeddah for hotel pickups, city travel and intercity transfers. Book your private Jeddah taxi online or via WhatsApp for reliable 24/7 service.";
     
     return {
       meta: [
@@ -92,8 +92,8 @@ function TaxiJeddahPage() {
         <span className="eyebrow"><span className="h-px w-8 bg-gold" />{ar ? "خدمات التوصيل في جدة" : "Premium Jeddah City Transfers"}</span>
         <h1 className="font-display text-4xl md:text-5xl leading-tight text-balance">
           {ar
-            ? "تاكسي جدة - الحل الأمثل للتنقل براحة وأمان"
-            : "Jeddah Taxi | Private Transfers & Hotel Pickups"}
+            ? "تاكسي جدة"
+            : "Jeddah Taxi"}
         </h1>
         <p className="text-lg text-muted-foreground leading-relaxed">
           {ar
