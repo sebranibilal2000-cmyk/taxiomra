@@ -72,7 +72,19 @@ export const PRICING_DATA: PricingRoute[] = [
     van: "220",
     category: "airport",
   },
-  // --- Makkah ---
+  // --- Makkah to Airports ---
+  {
+    id: "makkah-jeddah-apt",
+    from_ar: "مكة المكرمة",
+    from_en: "Makkah",
+    to_ar: "مطار جدة (JED)",
+    to_en: "Jeddah Airport (JED)",
+    sedan: "190",
+    suv: "اطلب السعر",
+    van: "اطلب السعر",
+    category: "makkah",
+  },
+  // --- Makkah to Madinah ---
   {
     id: "makkah-madinah",
     from_ar: "مكة المكرمة",
@@ -112,6 +124,15 @@ export const PRICING_DATA: PricingRoute[] = [
     sedan: "850",
     category: "madinah",
   },
+  {
+    id: "madinah-jeddah",
+    from_ar: "المدينة المنورة",
+    from_en: "Madinah",
+    to_ar: "جدة",
+    to_en: "Jeddah",
+    sedan: "850",
+    category: "madinah",
+  },
   // --- Riyadh ---
   {
     id: "riyadh-apt-city",
@@ -121,6 +142,15 @@ export const PRICING_DATA: PricingRoute[] = [
     to_en: "Within Riyadh",
     sedan: "اطلب السعر",
     category: "airport",
+  },
+  {
+    id: "riyadh-makkah",
+    from_ar: "الرياض",
+    from_en: "Riyadh",
+    to_ar: "مكة المكرمة",
+    to_en: "Makkah",
+    sedan: "اطلب السعر",
+    category: "riyadh",
   },
   // --- Dammam ---
   {
@@ -132,6 +162,15 @@ export const PRICING_DATA: PricingRoute[] = [
     sedan: "اطلب السعر",
     category: "airport",
   },
+  {
+    id: "dammam-makkah",
+    from_ar: "الدمام",
+    from_en: "Dammam",
+    to_ar: "مكة المكرمة",
+    to_en: "Makkah",
+    sedan: "اطلب السعر",
+    category: "dammam",
+  },
   // --- Taif ---
   {
     id: "taif-apt-city",
@@ -141,6 +180,15 @@ export const PRICING_DATA: PricingRoute[] = [
     to_en: "Within Taif",
     sedan: "اطلب السعر",
     category: "airport",
+  },
+  {
+    id: "taif-makkah",
+    from_ar: "الطائف",
+    from_en: "Taif",
+    to_ar: "مكة المكرمة",
+    to_en: "Makkah",
+    sedan: "اطلب السعر",
+    category: "taif",
   },
 ];
 

@@ -4,17 +4,19 @@ import { MessageCircle, Phone, CheckCircle2, Plane, Clock, Shield, MapPin, Lugga
 import { useI18n, withLocale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { breadcrumbJsonLd, faqPageJsonLd, serviceJsonLd } from "@/lib/seo";
+import { getPriceForRoute } from "@/lib/pricing.functions";
+
 
 const FAQ_AR = [
   { q: "أين أجد السائق في مطار جدة؟", a: "سيكون السائق بانتظارك في صالة الوصول فور خروجك من منطقة الجمارك في مطار الملك عبدالعزيز الدولي (الصالة رقم 1 أو الصالة الشمالية)، حاملاً لافتة عليها اسمك للتسهيل عليك." },
-  { q: "ما هي الوجهات المتاحة من مطار جدة (JED)؟", a: "نوفر رحلات مباشرة من مطار جدة إلى مكة المكرمة لخدمة المعتمرين، وإلى المدينة المنورة، وجميع فنادق وأحياء مدينة جدة، بالإضافة إلى الطائف." },
+  { q: "ما هي الوجهات المتاحة من مطار جدة (JED)؟", a: `نوفر رحلات مباشرة من مطار جدة إلى مكة المكرمة (بواسطة ${getPriceForRoute('jeddah-apt-makkah')} ريال)، والمدينة المنورة (${getPriceForRoute('jeddah-apt-madinah')} ريال)، وجميع فنادق وأحياء مدينة جدة، بالإضافة إلى الطائف.` },
   { q: "كيف تتعاملون مع تأخر رحلات الطيران؟", a: "نحن نتابع رحلتك عبر رقم الرحلة ونقوم بتعديل موعد الاستقبال تلقائياً في حال التأخير. كما نوفر فترة انتظار مجانية كافية بعد هبوط الطائرة لتتمكن من إنهاء الإجراءات." },
   { q: "هل تتوفر كراسي للأطفال في سيارات المطار؟", a: "نعم، يمكنك طلب مقعد طفل عند الحجز لضمان سلامة أطفالك خلال الرحلة من المطار إلى وجهتك." },
 ];
 
 const FAQ_EN = [
   { q: "Where do I find my driver at Jeddah Airport (JED)?", a: "Your driver will be waiting for you in the arrivals hall of KAIA (Terminal 1 or North Terminal) as soon as you exit the customs area, holding a sign with your name on it." },
-  { q: "What destinations are available from Jeddah Airport?", a: "We provide direct transfers from Jeddah Airport to Makkah (for Umrah pilgrims), Madinah, all Jeddah hotels and districts, and Taif." },
+  { q: "What destinations are available from Jeddah Airport?", a: `We provide direct transfers from Jeddah Airport to Makkah (from ${getPriceForRoute('jeddah-apt-makkah')} SAR), Madinah (from ${getPriceForRoute('jeddah-apt-madinah')} SAR), all Jeddah hotels and districts, and Taif.` },
   { q: "How do you handle flight delays?", a: "We monitor your flight via the flight number and adjust the pickup time automatically. We also provide sufficient free waiting time after landing for you to clear customs." },
   { q: "Are child seats available for airport transfers?", a: "Yes, you can request a child seat when booking to ensure your children's safety during the trip from the airport to your destination." },
 ];
