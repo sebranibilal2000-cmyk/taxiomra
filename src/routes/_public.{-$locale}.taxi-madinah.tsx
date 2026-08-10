@@ -56,23 +56,24 @@ function MadinahTaxiPage() {
           <Button asChild size="lg" className="rounded-full"><a href={waLink(ar ? "أرغب بحجز تاكسي في المدينة" : "Book taxi in Madinah")}><MessageCircle className="h-5 w-5 me-2" /> {ar ? "حجز الآن" : "Book Now"}</a></Button>
         </div>
       </header>
-      <section className="grid md:grid-cols-3 gap-6 mb-16">
+      <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
         {[
-          { icon: Building2, t_ar: "للمسجد النبوي", t_en: "To Prophet's Mosque" },
-          { icon: Plane, t_ar: "مطار المدينة", t_en: "Madinah Airport" },
-          { icon: MapPin, t_ar: "بين مكة والمدينة", t_en: "Makkah-Madinah Transfer", path: "/taxi-makkah" }
+          { icon: Building2, t_ar: "زيارة المسجد النبوي", t_en: "Prophet's Mosque Visits" },
+          { icon: Plane, t_ar: "مطار المدينة الدولي", t_en: "Madinah Airport (MED)" },
+          { icon: MapPin, t_ar: "بين الحرمين الشريفين", t_en: "Makkah-Madinah Transfers", path: "/makkah-to-madinah-taxi" },
+          { icon: Star, t_ar: "المزارات النبوية", t_en: "Historical Ziyarat Sites" },
         ].map((s, i) => (
-          <div key={i} className="p-6 border rounded-2xl bg-card">
+          <div key={i} className="p-6 border rounded-2xl bg-card hover:shadow-md transition-shadow">
             {s.path ? (
-              <Link to={withLocale(locale, s.path)} className="group">
+              <Link to={withLocale(locale, s.path)} className="group flex flex-col h-full">
                 <s.icon className="h-10 w-10 text-gold mb-4 group-hover:scale-110 transition-transform" />
                 <h3 className="font-bold group-hover:text-gold transition-colors">{ar ? s.t_ar : s.t_en}</h3>
               </Link>
             ) : (
-              <>
+              <div className="flex flex-col h-full">
                 <s.icon className="h-10 w-10 text-gold mb-4" />
                 <h3 className="font-bold">{ar ? s.t_ar : s.t_en}</h3>
-              </>
+              </div>
             )}
           </div>
         ))}
