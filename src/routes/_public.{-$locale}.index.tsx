@@ -428,14 +428,14 @@ function Home() {
             { slug: "taxi-riyadh", ar: "تاكسي الرياض", en: "Taxi Riyadh", sub_ar: "توصيل العاصمة والمطار", sub_en: "Capital & airport rides" },
             { slug: "taxi-dammam", ar: "تاكسي الدمام", en: "Taxi Dammam", sub_ar: "نقل المنطقة الشرقية", sub_en: "Eastern Province transfers" },
           ].map((c) => (
-            <Link key={c.slug} to="/{-$locale}/$slug" params={(prev: any) => ({ ...prev, slug: c.slug })} className="group rounded-2xl border border-border bg-card p-6 hover:border-gold transition-colors">
+            <a key={c.slug} href={`/${locale}/${c.slug}`} className="group rounded-2xl border border-border bg-card p-6 hover:border-gold transition-colors">
               <MapPin className="h-5 w-5 text-gold mb-3" />
               <div className="font-display text-xl mb-1">{ar ? c.ar : c.en}</div>
               <div className="text-sm text-muted-foreground line-clamp-1">{ar ? c.sub_ar : c.sub_en}</div>
               <span className="mt-4 inline-flex items-center gap-1 text-xs uppercase tracking-wider text-gold opacity-0 group-hover:opacity-100 transition-opacity">
                 {ar ? "عرض" : "View"} <ArrowRight className="h-3 w-3 rtl:rotate-180" />
               </span>
-            </Link>
+            </a>
           ))}
           {data.cities.slice(0, 4).map((c) => (
             <Link key={c.id} to="/{-$locale}/p/$slug" params={(prev: Record<string, string>) => ({ ...prev, slug: c.slug })} className="group rounded-2xl border border-border bg-card p-6 hover:border-gold transition-colors">

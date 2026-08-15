@@ -236,6 +236,10 @@ export type Database = {
           category_id: string | null
           content_ar: string | null
           content_en: string | null
+          content_format: string
+          cover_alt_ar: string | null
+          cover_alt_en: string | null
+          cover_caption: string | null
           cover_url: string | null
           created_at: string
           excerpt_ar: string | null
@@ -244,8 +248,12 @@ export type Database = {
           id: string
           keywords: string[] | null
           meta_description: string | null
+          meta_description_ar: string | null
           meta_title: string | null
+          meta_title_ar: string | null
           og_image_url: string | null
+          primary_keyword_ar: string | null
+          primary_keyword_en: string | null
           published: boolean
           published_at: string | null
           reading_time_min: number | null
@@ -263,6 +271,10 @@ export type Database = {
           category_id?: string | null
           content_ar?: string | null
           content_en?: string | null
+          content_format?: string
+          cover_alt_ar?: string | null
+          cover_alt_en?: string | null
+          cover_caption?: string | null
           cover_url?: string | null
           created_at?: string
           excerpt_ar?: string | null
@@ -271,8 +283,12 @@ export type Database = {
           id?: string
           keywords?: string[] | null
           meta_description?: string | null
+          meta_description_ar?: string | null
           meta_title?: string | null
+          meta_title_ar?: string | null
           og_image_url?: string | null
+          primary_keyword_ar?: string | null
+          primary_keyword_en?: string | null
           published?: boolean
           published_at?: string | null
           reading_time_min?: number | null
@@ -290,6 +306,10 @@ export type Database = {
           category_id?: string | null
           content_ar?: string | null
           content_en?: string | null
+          content_format?: string
+          cover_alt_ar?: string | null
+          cover_alt_en?: string | null
+          cover_caption?: string | null
           cover_url?: string | null
           created_at?: string
           excerpt_ar?: string | null
@@ -298,8 +318,12 @@ export type Database = {
           id?: string
           keywords?: string[] | null
           meta_description?: string | null
+          meta_description_ar?: string | null
           meta_title?: string | null
+          meta_title_ar?: string | null
           og_image_url?: string | null
+          primary_keyword_ar?: string | null
+          primary_keyword_en?: string | null
           published?: boolean
           published_at?: string | null
           reading_time_min?: number | null
@@ -1982,6 +2006,7 @@ export type Database = {
       media_library: {
         Row: {
           alt_text: string | null
+          alt_text_ar: string | null
           caption: string | null
           content_type: string | null
           created_at: string
@@ -1997,6 +2022,7 @@ export type Database = {
         }
         Insert: {
           alt_text?: string | null
+          alt_text_ar?: string | null
           caption?: string | null
           content_type?: string | null
           created_at?: string
@@ -2012,6 +2038,7 @@ export type Database = {
         }
         Update: {
           alt_text?: string | null
+          alt_text_ar?: string | null
           caption?: string | null
           content_type?: string | null
           created_at?: string
