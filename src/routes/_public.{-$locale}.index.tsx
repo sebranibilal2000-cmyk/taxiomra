@@ -435,7 +435,7 @@ function Home() {
               <span className="mt-4 inline-flex items-center gap-1 text-xs uppercase tracking-wider text-gold opacity-0 group-hover:opacity-100 transition-opacity">
                 {ar ? "عرض" : "View"} <ArrowRight className="h-3 w-3 rtl:rotate-180" />
               </span>
-            </Link>
+            </a>
           ))}
           {data.cities.slice(0, 4).map((c) => (
             <Link key={c.id} to="/{-$locale}/p/$slug" params={(prev: Record<string, string>) => ({ ...prev, slug: c.slug })} className="group rounded-2xl border border-border bg-card p-6 hover:border-gold transition-colors">
