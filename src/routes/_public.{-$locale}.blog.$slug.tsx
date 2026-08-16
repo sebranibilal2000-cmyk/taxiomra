@@ -3,13 +3,14 @@ import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { getBlogPost } from "@/lib/public.functions";
 import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/site-info";
+import { renderableContent } from "@/lib/html";
 
 const opts = (slug: string) => queryOptions({
   queryKey: ["public", "blog", slug],
   queryFn: async () => {
     const p = await getBlogPost({ data: { slug } });
     if (!p) throw notFound();
-    return p;
+    return p as any;
   },
 });
 
@@ -17,8 +18,12 @@ export const Route = createFileRoute("/_public/{-$locale}/blog/$slug")({
   loader: ({ context, params }) => context.queryClient.ensureQueryData(opts(params.slug)),
   head: ({ loaderData, params }) => {
     if (!loaderData) return { meta: [{ title: "Not found" }, { name: "robots", content: "noindex" }] };
-    const title = loaderData.meta_title || loaderData.title_en;
-    const desc = loaderData.meta_description || loaderData.excerpt_en || "";
+    const p = loaderData as any;
+    const ar = (params?.locale ?? "ar") === "ar";
+    // Arabic and English metadata are fully independent — no cross-language fallback.
+    const title = ar ? (p.meta_title_ar || p.title_ar) : (p.meta_title || p.title_en);
+    const desc = ar ? (p.meta_description_ar || p.excerpt_ar || "") : (p.meta_description || p.excerpt_en || "");
+    const image = p.og_image_url || p.cover_url;
     return {
       meta: [
         { title },
@@ -26,7 +31,7 @@ export const Route = createFileRoute("/_public/{-$locale}/blog/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "article" },
-        ...(loaderData.cover_url ? [{ property: "og:image", content: loaderData.cover_url }] : []),
+        ...(image ? [{ property: "og:image", content: image }, { name: "twitter:image", content: image }] : []),
       ],
       links: [],
       scripts: [{
@@ -36,8 +41,10 @@ export const Route = createFileRoute("/_public/{-$locale}/blog/$slug")({
           "@type": "Article",
           headline: title,
           description: desc,
-          image: loaderData.cover_url || undefined,
-          datePublished: loaderData.published_at,
+          image: image || undefined,
+          datePublished: p.published_at,
+          dateModified: p.updated_at ?? p.published_at,
+          inLanguage: ar ? "ar" : "en",
           author: { "@type": "Organization", name: SITE.brand.en },
         }),
       }],
@@ -55,13 +62,26 @@ function BlogPost() {
   const { locale } = useI18n();
   const ar = locale === "ar";
   const params = Route.useParams();
-  const { data: p } = useSuspenseQuery(opts(params.slug));
+  const { data } = useSuspenseQuery(opts(params.slug));
+  const p = data as any;
+  const html = renderableContent(ar ? p.content_ar : p.content_en);
+  const coverAlt = (ar ? p.cover_alt_ar : p.cover_alt_en) || (ar ? p.title_ar : p.title_en);
+
   return (
-    <article className="container mx-auto px-4 py-12 max-w-3xl">
-      {p.cover_url && <img src={p.cover_url} alt={ar ? p.title_ar : p.title_en} className="w-full aspect-[16/9] object-cover rounded-2xl mb-8" />}
+    <article className="container mx-auto px-4 py-12 max-w-3xl overflow-x-hidden">
+      {p.cover_url && (
+        <figure className="mb-8">
+          <img src={p.cover_url} alt={coverAlt} width={1200} height={675} loading="eager" decoding="async" className="w-full aspect-[16/9] object-cover rounded-2xl" />
+          {p.cover_caption && <figcaption className="mt-2 text-sm text-muted-foreground text-center">{p.cover_caption}</figcaption>}
+        </figure>
+      )}
       <h1 className="text-3xl md:text-4xl font-bold mb-4">{ar ? p.title_ar : p.title_en}</h1>
-      {p.published_at && <div className="text-sm text-muted-foreground mb-8">{new Date(p.published_at).toLocaleDateString(locale === "ar" ? "ar" : "en")}</div>}
-      <div className="prose prose-neutral dark:prose-invert max-w-none whitespace-pre-line leading-relaxed text-foreground">{ar ? p.content_ar : p.content_en}</div>
+      {p.published_at && <div className="text-sm text-muted-foreground mb-8">{new Date(p.published_at).toLocaleDateString(ar ? "ar" : "en")}</div>}
+      <div
+        className="article-content max-w-none text-foreground"
+        dir={ar ? "rtl" : "ltr"}
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     </article>
   );
 }
