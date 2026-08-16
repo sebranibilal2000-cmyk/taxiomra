@@ -8,7 +8,6 @@ import { TableRow } from "@tiptap/extension-table-row";
 import { TableCell } from "@tiptap/extension-table-cell";
 import { TableHeader } from "@tiptap/extension-table-header";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { MediaPicker } from "./MediaPicker";
 import { sanitizeHtml, renderableContent } from "@/lib/html";
 import {
@@ -139,5 +138,3 @@ export function RichTextEditor({ value, onChange, dir = "ltr", placeholder }: Pr
     </div>
   );
 }
-
-export { Button };
