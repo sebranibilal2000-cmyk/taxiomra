@@ -107,6 +107,7 @@ import { Route as PublicChar123LocaleChar125FleetIndexRouteImport } from './rout
 import { Route as PublicChar123LocaleChar125CitiesIndexRouteImport } from './routes/_public.{-$locale}.cities.index'
 import { Route as PublicChar123LocaleChar125BlogIndexRouteImport } from './routes/_public.{-$locale}.blog.index'
 import { Route as PublicChar123LocaleChar125AirportsIndexRouteImport } from './routes/_public.{-$locale}.airports.index'
+import { Route as ApiPublicMediaSplatRouteImport } from './routes/api/public/media/$'
 import { Route as ApiPublicHooksProcessQueuesRouteImport } from './routes/api/public/hooks/process-queues'
 import { Route as PublicChar123LocaleChar125VehiclesSlugRouteImport } from './routes/_public.{-$locale}.vehicles.$slug'
 import { Route as PublicChar123LocaleChar125ServicesSlugRouteImport } from './routes/_public.{-$locale}.services.$slug'
@@ -687,6 +688,11 @@ const PublicChar123LocaleChar125AirportsIndexRoute =
     path: '/airports/',
     getParentRoute: () => PublicChar123LocaleChar125Route,
   } as any)
+const ApiPublicMediaSplatRoute = ApiPublicMediaSplatRouteImport.update({
+  id: '/api/public/media/$',
+  path: '/api/public/media/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicHooksProcessQueuesRoute =
   ApiPublicHooksProcessQueuesRouteImport.update({
     id: '/api/public/hooks/process-queues',
@@ -885,6 +891,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
   '/{-$locale}/vehicles/$slug': typeof PublicChar123LocaleChar125VehiclesSlugRoute
   '/api/public/hooks/process-queues': typeof ApiPublicHooksProcessQueuesRoute
+  '/api/public/media/$': typeof ApiPublicMediaSplatRoute
   '/{-$locale}/airports/': typeof PublicChar123LocaleChar125AirportsIndexRoute
   '/{-$locale}/blog/': typeof PublicChar123LocaleChar125BlogIndexRoute
   '/{-$locale}/cities/': typeof PublicChar123LocaleChar125CitiesIndexRoute
@@ -999,6 +1006,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
   '/{-$locale}/vehicles/$slug': typeof PublicChar123LocaleChar125VehiclesSlugRoute
   '/api/public/hooks/process-queues': typeof ApiPublicHooksProcessQueuesRoute
+  '/api/public/media/$': typeof ApiPublicMediaSplatRoute
   '/{-$locale}/airports': typeof PublicChar123LocaleChar125AirportsIndexRoute
   '/{-$locale}/blog': typeof PublicChar123LocaleChar125BlogIndexRoute
   '/{-$locale}/cities': typeof PublicChar123LocaleChar125CitiesIndexRoute
@@ -1115,6 +1123,7 @@ export interface FileRoutesById {
   '/_public/{-$locale}/services/$slug': typeof PublicChar123LocaleChar125ServicesSlugRoute
   '/_public/{-$locale}/vehicles/$slug': typeof PublicChar123LocaleChar125VehiclesSlugRoute
   '/api/public/hooks/process-queues': typeof ApiPublicHooksProcessQueuesRoute
+  '/api/public/media/$': typeof ApiPublicMediaSplatRoute
   '/_public/{-$locale}/airports/': typeof PublicChar123LocaleChar125AirportsIndexRoute
   '/_public/{-$locale}/blog/': typeof PublicChar123LocaleChar125BlogIndexRoute
   '/_public/{-$locale}/cities/': typeof PublicChar123LocaleChar125CitiesIndexRoute
@@ -1232,6 +1241,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/services/$slug'
     | '/{-$locale}/vehicles/$slug'
     | '/api/public/hooks/process-queues'
+    | '/api/public/media/$'
     | '/{-$locale}/airports/'
     | '/{-$locale}/blog/'
     | '/{-$locale}/cities/'
@@ -1346,6 +1356,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/services/$slug'
     | '/{-$locale}/vehicles/$slug'
     | '/api/public/hooks/process-queues'
+    | '/api/public/media/$'
     | '/{-$locale}/airports'
     | '/{-$locale}/blog'
     | '/{-$locale}/cities'
@@ -1461,6 +1472,7 @@ export interface FileRouteTypes {
     | '/_public/{-$locale}/services/$slug'
     | '/_public/{-$locale}/vehicles/$slug'
     | '/api/public/hooks/process-queues'
+    | '/api/public/media/$'
     | '/_public/{-$locale}/airports/'
     | '/_public/{-$locale}/blog/'
     | '/_public/{-$locale}/cities/'
@@ -1483,6 +1495,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   PublicChar123LocaleChar125Route: typeof PublicChar123LocaleChar125RouteWithChildren
   ApiPublicHooksProcessQueuesRoute: typeof ApiPublicHooksProcessQueuesRoute
+  ApiPublicMediaSplatRoute: typeof ApiPublicMediaSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -2173,6 +2186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicChar123LocaleChar125AirportsIndexRouteImport
       parentRoute: typeof PublicChar123LocaleChar125Route
     }
+    '/api/public/media/$': {
+      id: '/api/public/media/$'
+      path: '/api/public/media/$'
+      fullPath: '/api/public/media/$'
+      preLoaderRoute: typeof ApiPublicMediaSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/process-queues': {
       id: '/api/public/hooks/process-queues'
       path: '/api/public/hooks/process-queues'
@@ -2620,6 +2640,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   PublicChar123LocaleChar125Route: PublicChar123LocaleChar125RouteWithChildren,
   ApiPublicHooksProcessQueuesRoute: ApiPublicHooksProcessQueuesRoute,
+  ApiPublicMediaSplatRoute: ApiPublicMediaSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
