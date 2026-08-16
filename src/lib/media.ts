@@ -2,7 +2,8 @@
 // The storage bucket stays private; this proxies through our own cached route.
 export function publicMediaUrl(path: string) {
   if (!path) return "";
-  if (/^https?:\/\//i.test(path)) return path;
+  // Already a usable URL (external, or a bundled asset path).
+  if (/^https?:\/\//i.test(path) || path.startsWith("/")) return path;
   return `/api/public/media/${path.split("/").map(encodeURIComponent).join("/")}`;
 }
 
