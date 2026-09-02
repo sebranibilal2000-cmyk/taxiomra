@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
+import { queryOptions } from "@tanstack/react-query";
 import { listCmsPages, listTestimonials, listFaqs, listVehicleCategories } from "@/lib/public.functions";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -154,7 +154,10 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 function Home() {
   const { locale } = useI18n();
   const ar = locale === "ar";
-  const { data } = useSuspenseQuery(homeOpts());
+  // The loader data is already embedded in the SSR response. Reading it here
+  // avoids immediately repeating six RPC calls during hydration, which could
+  // otherwise replace the rendered page with an error on a transient 404.
+  const data = Route.useLoaderData();
 
   return (
     <>
