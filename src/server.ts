@@ -96,8 +96,20 @@ function canonicalHostRedirect(request: Request): Response | null {
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      // Internal router layout ids ("/_public/...") were never real pages.
+      // Serve 410 Gone so crawlers drop them instead of following redirects.
+      if (/^\/_public(\/|$)/.test(new URL(request.url).pathname)) {
+        return applySecurityHeaders(
+          new Response("Gone", {
+            status: 410,
+            headers: { "content-type": "text/plain; charset=utf-8" },
+          }),
+        );
+      }
+
       const hostRedirect = canonicalHostRedirect(request);
       if (hostRedirect) return applySecurityHeaders(hostRedirect);
+
 
       if (isMalformedTemplateUrl(request)) {
         return applySecurityHeaders(
