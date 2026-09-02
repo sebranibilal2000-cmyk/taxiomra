@@ -14,11 +14,31 @@ import {
 } from "@/lib/i18n";
 import { resolveRedirect } from "@/lib/seo-tools.functions";
 
+// Legacy / crawled URLs that never existed as pages → permanent redirect to the
+// closest live page, so Search Console stops reporting them as 404s.
+const LEGACY_REDIRECTS: Record<string, string> = {
+  "/jeddah-airport-to-makkah-taxi": "/jeddah-to-makkah-taxi",
+  "/makkah-to-jeddah-taxi": "/jeddah-to-makkah-taxi",
+  "/jeddah-to-madinah-taxi": "/makkah-to-madinah-taxi",
+  "/madinah-to-jeddah-taxi": "/madinah-to-makkah-taxi",
+  "/services/makkah-to-madinah": "/makkah-to-madinah-taxi",
+  "/services/jeddah-to-makkah": "/jeddah-to-makkah-taxi",
+};
+
 export const Route = createFileRoute("/_public/{-$locale}")({
   beforeLoad: async ({ params, location }) => {
+    const localeLess = location.pathname.replace(/^\/(ar|en)(?=\/|$)/, "") || "/";
+
+    // 0) Static legacy redirects (locale preserved).
+    const legacy = LEGACY_REDIRECTS[localeLess.replace(/\/+$/, "") || "/"];
+    if (legacy) {
+      const loc = isLocale(params.locale) ? (params.locale as Locale) : DEFAULT_LOCALE;
+      throw redirect({ href: withLocale(loc, legacy), replace: true, statusCode: 301 });
+    }
+
     // 1) Redirect manager: check DB-managed 301/302 redirects (locale-agnostic path).
     try {
-      const localeLess = location.pathname.replace(/^\/(ar|en)(?=\/|$)/, "") || "/";
+
       const rd = await resolveRedirect({ data: { path: localeLess } });
       if (rd?.destination_path) {
         throw redirect({ href: rd.destination_path, replace: true });
