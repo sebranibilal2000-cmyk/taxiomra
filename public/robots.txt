@@ -10,6 +10,8 @@ Disallow: /_authenticated/
 Disallow: /api/
 Disallow: /*%7B
 Disallow: /*{
+Disallow: /_public
+
 
 
 # AI / LLM crawlers are welcome (helps AI search visibility)
