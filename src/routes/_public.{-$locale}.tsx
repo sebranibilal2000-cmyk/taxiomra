@@ -48,11 +48,16 @@ export const Route = createFileRoute("/_public/{-$locale}")({
       // ignore lookup errors; continue with locale resolution
     }
 
-    // 2) Bad locale slug → redirect to root; the layout without a param will
-    //    re-run this beforeLoad and pick the preferred locale below.
+    // 2) First segment is not a locale (e.g. /umrah-taxi) → keep the path and
+    //    prefix the default locale in a single 301, instead of dropping to "/".
     if (params.locale !== undefined && !isLocale(params.locale)) {
-      throw redirect({ href: "/", replace: true, statusCode: 301 });
+      throw redirect({
+        href: withLocale(DEFAULT_LOCALE, location.pathname),
+        replace: true,
+        statusCode: 301,
+      });
     }
+
 
     // 3) Missing prefix → always redirect to Arabic. Do not infer from
     //    browser language, Accept-Language, cookies, localStorage, or cache.
