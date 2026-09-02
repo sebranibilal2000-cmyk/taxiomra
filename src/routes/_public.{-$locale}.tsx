@@ -48,11 +48,23 @@ export const Route = createFileRoute("/_public/{-$locale}")({
       // ignore lookup errors; continue with locale resolution
     }
 
-    // 2) Bad locale slug → redirect to root; the layout without a param will
-    //    re-run this beforeLoad and pick the preferred locale below.
+    // 2) First segment is not a locale (e.g. /umrah-taxi, /makkah-to-jeddah).
+    //    These are legacy unprefixed URLs: map them to their live section in a
+    //    single 301 instead of dropping the path and bouncing through "/".
     if (params.locale !== undefined && !isLocale(params.locale)) {
-      throw redirect({ href: "/", replace: true, statusCode: 301 });
+      const slug = location.pathname.replace(/^\//, "").replace(/\/+$/, "");
+      const single = slug && !slug.includes("/");
+      const target = single
+        ? `/${slug.includes("-to-") ? "routes" : "services"}/${slug}`
+        : location.pathname;
+      throw redirect({
+        href: withLocale(DEFAULT_LOCALE, target),
+        replace: true,
+        statusCode: 301,
+      });
     }
+
+
 
     // 3) Missing prefix → always redirect to Arabic. Do not infer from
     //    browser language, Accept-Language, cookies, localStorage, or cache.
