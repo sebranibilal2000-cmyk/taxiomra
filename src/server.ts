@@ -67,12 +67,30 @@ function applySecurityHeaders(response: Response): Response {
   });
 }
 
+// URLs containing literal template braces (e.g. a schema.org SearchAction
+// urlTemplate accidentally crawled) can bounce between encoded/decoded forms
+// and produce a redirect loop. Serve a clean 404 instead.
+function isMalformedTemplateUrl(request: Request): boolean {
+  const { pathname, search } = new URL(request.url);
+  const raw = pathname + search;
+  return raw.includes("{") || raw.includes("}") || /%7[bd]/i.test(raw);
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      if (isMalformedTemplateUrl(request)) {
+        return applySecurityHeaders(
+          new Response("Not Found", {
+            status: 404,
+            headers: { "content-type": "text/plain; charset=utf-8" },
+          }),
+        );
+      }
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return applySecurityHeaders(await normalizeCatastrophicSsrResponse(response));
+
     } catch (error) {
       console.error(error);
       return applySecurityHeaders(new Response(renderErrorPage(), {

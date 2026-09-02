@@ -8,6 +8,9 @@ Disallow: /auth
 Disallow: /reset-password
 Disallow: /_authenticated/
 Disallow: /api/
+Disallow: /*%7B
+Disallow: /*{
+
 
 # AI / LLM crawlers are welcome (helps AI search visibility)
 User-agent: GPTBot

@@ -31,15 +31,18 @@ export const Route = createFileRoute("/_public/{-$locale}")({
     // 2) Bad locale slug → redirect to root; the layout without a param will
     //    re-run this beforeLoad and pick the preferred locale below.
     if (params.locale !== undefined && !isLocale(params.locale)) {
-      throw redirect({ to: "/", replace: true });
+      throw redirect({ href: "/", replace: true, statusCode: 301 });
     }
 
     // 3) Missing prefix → always redirect to Arabic. Do not infer from
     //    browser language, Accept-Language, cookies, localStorage, or cache.
     if (!params.locale) {
       const target = withLocale(DEFAULT_LOCALE, location.pathname);
-      throw redirect({ to: target, replace: true });
+      // Use `href` (not `to`) so literal braces/odd characters in the path are
+      // not parsed as route params — that produced a self-redirect loop.
+      throw redirect({ href: target, replace: true, statusCode: 301 });
     }
+
   },
   loader: ({ location }) => {
     return { pathname: location.pathname };
