@@ -76,9 +76,29 @@ function isMalformedTemplateUrl(request: Request): boolean {
   return raw.includes("{") || raw.includes("}") || /%7[bd]/i.test(raw);
 }
 
+// Canonical host: force apex + https so www/http duplicates collapse into one
+// indexable URL instead of competing versions in search results.
+const CANONICAL_HOST = "omrataxi-sa.online";
+
+function canonicalHostRedirect(request: Request): Response | null {
+  const url = new URL(request.url);
+  const host = (request.headers.get("host") ?? url.host).toLowerCase();
+  const bareHost = host.replace(/^www\./, "");
+  if (bareHost !== CANONICAL_HOST) return null;
+
+  const proto = (request.headers.get("x-forwarded-proto") ?? url.protocol.replace(":", "")).toLowerCase();
+  if (host === CANONICAL_HOST && proto === "https") return null;
+
+  const target = `https://${CANONICAL_HOST}${url.pathname}${url.search}`;
+  return new Response(null, { status: 301, headers: { Location: target } });
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const hostRedirect = canonicalHostRedirect(request);
+      if (hostRedirect) return applySecurityHeaders(hostRedirect);
+
       if (isMalformedTemplateUrl(request)) {
         return applySecurityHeaders(
           new Response("Not Found", {
