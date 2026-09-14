@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, MessageCircle, ChevronRight } from "lucide-react";
 import { useI18n, withLocale, type Locale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
+import { buildPageSections } from "@/lib/page-content";
 
 export type CmsPageRow = {
   slug: string;
@@ -47,8 +48,8 @@ export function ContentDetail(props: {
   const p = props.page;
   const title = ar ? p.title_ar : p.title_en;
   const subtitle = ar ? p.subtitle_ar : p.subtitle_en;
-  const body = ar ? p.body_ar : p.body_en;
   const heroImg = p.hero_image_url || p.og_image_url;
+  const sections = buildPageSections(p as any, locale);
 
   const bookText = `${title} — ${ar ? "أرغب بالحجز" : "I'd like to book"}`;
 
@@ -110,14 +111,68 @@ export function ContentDetail(props: {
         </div>
       </section>
 
-      {/* Body */}
-      {body && (
-        <section className="container mx-auto px-4 py-12 max-w-4xl">
-          <div className="prose prose-neutral dark:prose-invert max-w-none whitespace-pre-line leading-relaxed text-foreground">
-            {body}
+      {/* Body + generated supporting content */}
+      <section className="container mx-auto px-4 py-12 max-w-4xl space-y-12">
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">{sections.headings.overview}</h2>
+          {sections.intro.map((para, i) => (
+            <p key={i} className="leading-relaxed text-muted-foreground whitespace-pre-line">
+              {para}
+            </p>
+          ))}
+        </div>
+
+        {sections.facts.length > 0 && (
+          <div>
+            <h2 className="text-2xl font-bold mb-4">{sections.headings.facts}</h2>
+            <div className="overflow-x-auto rounded-xl border">
+              <table className="w-full text-sm">
+                <tbody>
+                  {sections.facts.map((f) => (
+                    <tr key={f.label} className="border-b last:border-0">
+                      <th scope="row" className="text-start font-medium p-3 w-1/2 bg-muted/30">
+                        {f.label}
+                      </th>
+                      <td className="p-3">{f.value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </section>
-      )}
+        )}
+
+        <div className="grid gap-8 md:grid-cols-2">
+          <div>
+            <h2 className="text-2xl font-bold mb-4">{sections.headings.included}</h2>
+            <ul className="space-y-2 text-sm text-muted-foreground list-disc ps-5">
+              {sections.included.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold mb-4">{sections.headings.steps}</h2>
+            <ol className="space-y-2 text-sm text-muted-foreground list-decimal ps-5">
+              {sections.steps.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ol>
+          </div>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold mb-4">{sections.headings.faq}</h2>
+          <div className="space-y-5">
+            {sections.faq.map((f) => (
+              <div key={f.q}>
+                <h3 className="font-semibold mb-1">{f.q}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Sticky CTA card */}
       <section className="container mx-auto px-4 pb-12 max-w-4xl">
