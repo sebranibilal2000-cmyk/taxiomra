@@ -47,8 +47,8 @@ export function ContentDetail(props: {
   const p = props.page;
   const title = ar ? p.title_ar : p.title_en;
   const subtitle = ar ? p.subtitle_ar : p.subtitle_en;
-  const body = ar ? p.body_ar : p.body_en;
   const heroImg = p.hero_image_url || p.og_image_url;
+  const sections = buildPageSections(p as any, locale);
 
   const bookText = `${title} — ${ar ? "أرغب بالحجز" : "I'd like to book"}`;
 
