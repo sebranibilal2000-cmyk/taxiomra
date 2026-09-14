@@ -19,8 +19,8 @@ import { resolveRedirect } from "@/lib/seo-tools.functions";
 const LEGACY_REDIRECTS: Record<string, string> = {
   "/jeddah-airport-to-makkah-taxi": "/jeddah-to-makkah-taxi",
   "/makkah-to-jeddah-taxi": "/jeddah-to-makkah-taxi",
-  "/jeddah-to-madinah-taxi": "/makkah-to-madinah-taxi",
-  "/madinah-to-jeddah-taxi": "/madinah-to-makkah-taxi",
+  "/jeddah-to-madinah-taxi": "/routes/jeddah-to-madinah",
+  "/madinah-to-jeddah-taxi": "/routes/madinah-to-jeddah",
   "/services/makkah-to-madinah": "/makkah-to-madinah-taxi",
   "/services/jeddah-to-makkah": "/jeddah-to-makkah-taxi",
 };
