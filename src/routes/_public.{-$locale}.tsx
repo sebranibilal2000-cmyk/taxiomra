@@ -27,6 +27,12 @@ const LEGACY_REDIRECTS: Record<string, string> = {
 
 export const Route = createFileRoute("/_public/{-$locale}")({
   beforeLoad: async ({ params, location }) => {
+    // Static files (images, fonts, uploaded assets) must never go through the
+    // locale/legacy redirect stack — prefixing them with /ar broke every image.
+    if (/\.[a-z0-9]{2,5}$/i.test(location.pathname) || /^\/(__l5e|assets|fleet)\//.test(location.pathname)) {
+      return;
+    }
+
     const localeLess = location.pathname.replace(/^\/(ar|en)(?=\/|$)/, "") || "/";
 
     // 0) Static legacy redirects (locale preserved).
