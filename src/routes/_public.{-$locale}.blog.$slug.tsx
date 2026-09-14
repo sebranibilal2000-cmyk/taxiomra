@@ -4,6 +4,7 @@ import { getBlogPost } from "@/lib/public.functions";
 import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/site-info";
 import { renderableContent } from "@/lib/html";
+import { isIndexable } from "@/lib/content-quality";
 
 const opts = (slug: string) => queryOptions({
   queryKey: ["public", "blog", slug],
@@ -24,6 +25,9 @@ export const Route = createFileRoute("/_public/{-$locale}/blog/$slug")({
     const title = ar ? (p.meta_title_ar || p.title_ar) : (p.meta_title || p.title_en);
     const desc = ar ? (p.meta_description_ar || p.excerpt_ar || "") : (p.meta_description || p.excerpt_en || "");
     const image = p.og_image_url || p.cover_url;
+    // Thin drafts must not be submitted for indexing — Google flags them as
+    // soft 404s and that damages crawling of the rest of the site.
+    const thin = !isIndexable(ar ? p.content_ar : p.content_en);
     return {
       meta: [
         { title },
@@ -31,6 +35,7 @@ export const Route = createFileRoute("/_public/{-$locale}/blog/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "article" },
+        ...(thin ? [{ name: "robots", content: "noindex, follow" }] : []),
         ...(image ? [{ property: "og:image", content: image }, { name: "twitter:image", content: image }] : []),
       ],
       links: [],

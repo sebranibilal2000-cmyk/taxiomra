@@ -6,6 +6,7 @@ import { Phone, MessageCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { buildCmsHead, breadcrumbJsonLd } from "@/lib/seo";
+import { buildPageSections, faqJsonLdFor } from "@/lib/page-content";
 
 const opts = (slug: string) => queryOptions({
   queryKey: ["public", "page", slug],
@@ -27,6 +28,7 @@ export const Route = createFileRoute("/_public/{-$locale}/p/$slug")({
         { name: "Home", url: "/" },
         { name: loaderData.title_en, url: `/p/${params.slug}` },
       ])) },
+      { type: "application/ld+json", children: JSON.stringify(faqJsonLdFor(loaderData as any, (params?.locale ?? "ar") === "ar" ? "ar" : "en")) },
     ];
     return head;
   },
@@ -43,6 +45,7 @@ function PageDetail() {
   const ar = locale === "ar";
   const params = Route.useParams();
   const { data: p } = useSuspenseQuery(opts(params.slug));
+  const sections = buildPageSections(p as any, ar ? "ar" : "en");
 
   return (
     <>
@@ -57,6 +60,60 @@ function PageDetail() {
         <div className="prose prose-neutral dark:prose-invert max-w-none whitespace-pre-line leading-relaxed text-foreground">
           {ar ? p.body_ar : p.body_en}
         </div>
+        <div className="mt-12 space-y-12">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold">{sections.headings.overview}</h2>
+            {sections.intro.map((para, i) => (
+              <p key={i} className="leading-relaxed text-muted-foreground whitespace-pre-line">{para}</p>
+            ))}
+          </div>
+
+          {sections.facts.length > 0 && (
+            <div>
+              <h2 className="text-2xl font-bold mb-4">{sections.headings.facts}</h2>
+              <div className="overflow-x-auto rounded-xl border">
+                <table className="w-full text-sm">
+                  <tbody>
+                    {sections.facts.map((f) => (
+                      <tr key={f.label} className="border-b last:border-0">
+                        <th scope="row" className="text-start font-medium p-3 w-1/2 bg-muted/30">{f.label}</th>
+                        <td className="p-3">{f.value}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          <div className="grid gap-8 md:grid-cols-2">
+            <div>
+              <h2 className="text-2xl font-bold mb-4">{sections.headings.included}</h2>
+              <ul className="space-y-2 text-sm text-muted-foreground list-disc ps-5">
+                {sections.included.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold mb-4">{sections.headings.steps}</h2>
+              <ol className="space-y-2 text-sm text-muted-foreground list-decimal ps-5">
+                {sections.steps.map((item) => <li key={item}>{item}</li>)}
+              </ol>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-bold mb-4">{sections.headings.faq}</h2>
+            <div className="space-y-5">
+              {sections.faq.map((f) => (
+                <div key={f.q}>
+                  <h3 className="font-semibold mb-1">{f.q}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{f.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         <div className="mt-10 rounded-2xl border bg-muted/30 p-6 text-center">
           <h2 className="text-xl font-bold mb-3">{ar ? "احجز هذه الخدمة الآن" : "Book this service now"}</h2>
           <p className="text-sm text-muted-foreground mb-5">{ar ? "تواصل مع فريق الحجز مباشرة عبر واتساب أو الاتصال." : "Contact our dispatch team directly via WhatsApp or a phone call."}</p>
