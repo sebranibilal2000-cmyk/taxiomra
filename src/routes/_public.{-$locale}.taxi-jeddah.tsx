@@ -168,7 +168,7 @@ function TaxiJeddahPage() {
               <Link to={withLocale(locale, "/jeddah-to-makkah-taxi")} className="text-gold text-xs font-medium hover:underline">
                 {ar ? "تاكسي جدة إلى مكة" : "Jeddah to Makkah Taxi"}
               </Link>
-              <Link to={withLocale(locale, "/jeddah-to-madinah-taxi")} className="text-gold text-xs font-medium hover:underline">
+              <Link to={withLocale(locale, "/routes/jeddah-to-madinah")} className="text-gold text-xs font-medium hover:underline">
                 {ar ? "تاكسي جدة إلى المدينة" : "Jeddah to Madinah Taxi"}
               </Link>
             </div>

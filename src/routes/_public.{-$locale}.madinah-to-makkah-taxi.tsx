@@ -136,7 +136,7 @@ function MadinahToMakkahTaxiPage() {
         <span>{ar ? "روابط ذات صلة:" : "Related Routes:"}</span>
         <Link to={withLocale(locale, "/makkah-to-madinah-taxi")} className="text-gold hover:underline">{ar ? "تاكسي مكة إلى المدينة" : "Makkah to Madinah Taxi"}</Link>
         <Link to={withLocale(locale, "/taxi-madinah")} className="text-gold hover:underline">{ar ? "تاكسي المدينة" : "Madinah Taxi"}</Link>
-        <Link to={withLocale(locale, "/madinah-to-jeddah-taxi")} className="text-gold hover:underline">{ar ? "المدينة إلى جدة" : "Madinah to Jeddah"}</Link>
+        <Link to={withLocale(locale, "/routes/madinah-to-jeddah")} className="text-gold hover:underline">{ar ? "المدينة إلى جدة" : "Madinah to Jeddah"}</Link>
       </div>
     </article>
   );

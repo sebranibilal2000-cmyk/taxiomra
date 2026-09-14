@@ -170,7 +170,7 @@ function JeddahAirportTaxiPage() {
           <ul className="space-y-4">
             {[
               { label_ar: "مطار جدة ← مكة المكرمة", label_en: "JED Airport to Makkah", path: "/jeddah-airport-to-makkah-taxi" },
-              { label_ar: "مطار جدة ← المدينة المنورة", label_en: "JED Airport to Madinah", path: "/jeddah-to-madinah-taxi" },
+              { label_ar: "مطار جدة ← المدينة المنورة", label_en: "JED Airport to Madinah", path: "/routes/jeddah-to-madinah" },
               { label_ar: "مطار جدة ← فنادق جدة", label_en: "JED Airport to Jeddah City", path: "/taxi-jeddah" },
               { label_ar: "مطار جدة ← الطائف", label_en: "JED Airport to Taif", path: "/taxi-taif" },
             ].map((d, i) => (
