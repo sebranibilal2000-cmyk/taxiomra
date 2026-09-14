@@ -57,8 +57,6 @@ export const Route = createFileRoute("/sitemap.xml")({
           "madinah-to-makkah-taxi",
           "makkah-to-taif-taxi",
           "taif-to-makkah-taxi",
-          "jeddah-to-madinah-taxi",
-          "madinah-to-jeddah-taxi",
         ];
 
         for (const route of staticPublicRoutes) {
