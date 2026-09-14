@@ -2,6 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { getCmsPageByType, listRelatedCmsPages } from "@/lib/public.functions";
 import { buildCmsHead, breadcrumbJsonLd } from "@/lib/seo";
+import { faqJsonLdFor } from "@/lib/page-content";
 import { ContentDetail } from "@/components/public/ContentDetail";
 import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/site-info";
@@ -50,6 +51,10 @@ export const Route = createFileRoute("/_public/{-$locale}/cities/$slug")({
             { name: p.title_en, url },
           ]),
         ),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(faqJsonLdFor(p as any, (params.locale ?? "ar") as "ar" | "en")),
       },
     ];
     return head;
