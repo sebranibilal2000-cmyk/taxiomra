@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createClient } from "@supabase/supabase-js";
 import { SITE } from "@/lib/site-info";
+import { isIndexable } from "@/lib/content-quality";
 
 const BASE_URL = SITE.url;
 const LOCALES = ["ar", "en"] as const;
@@ -10,11 +11,13 @@ export const Route = createFileRoute("/sitemap-posts.xml")({
     handlers: {
       GET: async () => {
         const sb = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_PUBLISHABLE_KEY!);
-        const { data: posts } = await sb.from("blog_posts").select("slug,updated_at").eq("published", true);
+        const { data: posts } = await sb.from("blog_posts").select("slug,updated_at,content_ar,content_en").eq("published", true);
 
         const urls: string[] = [];
         for (const p of posts ?? []) {
           for (const lang of LOCALES) {
+            const body = lang === "ar" ? (p as any).content_ar : (p as any).content_en;
+            if (!isIndexable(body)) continue; // thin posts stay out of the sitemap
             urls.push(`  <url>\n    <loc>${BASE_URL}/${lang}/blog/${p.slug}</loc>\n    <lastmod>${p.updated_at?.slice(0, 10)}</lastmod>\n  </url>`);
           }
         }
