@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, MessageCircle, ChevronRight } from "lucide-react";
 import { useI18n, withLocale, type Locale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
+import { buildPageSections } from "@/lib/page-content";
 
 export type CmsPageRow = {
   slug: string;
