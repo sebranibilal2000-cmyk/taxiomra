@@ -63,7 +63,7 @@ function endpoints(title: string, locale: Locale): { from: string; to: string } 
 export function buildPageSections(page: DetailPageData, locale: Locale): PageSections {
   const ar = locale === "ar";
   const title = ar ? page.title_ar : page.title_en;
-  const subtitle = (ar ? page.subtitle_ar : page.subtitle_en) ?? "";
+  
   const en = page.subtitle_en ?? "";
 
   const distance = num(/(\d+)\s*km/i, en);
@@ -126,9 +126,8 @@ export function buildPageSections(page: DetailPageData, locale: Locale): PageSec
         : `We operate around the clock, seven days a week, and bookings can be rescheduled or cancelled in advance without hassle.`,
     );
   }
-  if (subtitle) intro.push(subtitle);
-  const body = ar ? page.body_ar : page.body_en;
-  if (body && body.trim().length > 0) intro.push(body.trim());
+  // The page hero renders the subtitle and each page renders its own CMS body,
+  // so neither is repeated inside the generated overview.
 
   // ---------- Facts ----------
   const facts: FactRow[] = [];
