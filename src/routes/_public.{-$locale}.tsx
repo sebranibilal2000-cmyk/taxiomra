@@ -13,6 +13,7 @@ import {
   type Locale,
 } from "@/lib/i18n";
 import { resolveRedirect } from "@/lib/seo-tools.functions";
+import { CANONICAL_REDIRECTS } from "@/lib/canonical-redirects";
 
 // Legacy / crawled URLs that never existed as pages → permanent redirect to the
 // closest live page, so Search Console stops reporting them as 404s.
@@ -35,8 +36,9 @@ export const Route = createFileRoute("/_public/{-$locale}")({
 
     const localeLess = location.pathname.replace(/^\/(ar|en)(?=\/|$)/, "") || "/";
 
-    // 0) Static legacy redirects (locale preserved).
-    const legacy = LEGACY_REDIRECTS[localeLess.replace(/\/+$/, "") || "/"];
+    // 0) Static legacy + canonical-consolidation redirects (locale preserved).
+    const cleanPath = localeLess.replace(/\/+$/, "") || "/";
+    const legacy = LEGACY_REDIRECTS[cleanPath] ?? CANONICAL_REDIRECTS[cleanPath];
     if (legacy) {
       const loc = isLocale(params.locale) ? (params.locale as Locale) : DEFAULT_LOCALE;
       throw redirect({ href: withLocale(loc, legacy), replace: true, statusCode: 301 });

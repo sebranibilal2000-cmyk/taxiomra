@@ -5,6 +5,7 @@ import { ArrowRight, Plane, Building2, Briefcase, MapPin, Car, Sparkles } from "
 import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/site-info";
 import { breadcrumbJsonLd, serviceJsonLd } from "@/lib/seo";
+import { isConsolidatedDuplicate } from "@/lib/canonical-redirects";
 
 const opts = () => queryOptions({
   queryKey: ["public", "services"],
@@ -69,7 +70,7 @@ function Services() {
         </p>
       </div>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {all.map((s, i) => {
+        {all.filter((s: any) => !isConsolidatedDuplicate(`/services/${s.slug}`)).map((s, i) => {
           const Icon = ICON[s.slug] ?? ICON[s.page_type] ?? Sparkles;
           return (
             <Link key={s.id} to="/{-$locale}/p/$slug" params={(prev: Record<string, string>) => ({ ...prev, slug: s.slug })} className="group">

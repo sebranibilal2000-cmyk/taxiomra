@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createClient } from "@supabase/supabase-js";
 import { SITE } from "@/lib/site-info";
+import { isConsolidatedDuplicate } from "@/lib/canonical-redirects";
 
 const BASE_URL = SITE.url;
 const LOCALES = ["ar", "en"] as const;
@@ -49,6 +50,7 @@ export const Route = createFileRoute("/sitemap-pages.xml")({
 
         for (const p of pages ?? []) {
           const prefix = typeToPrefix[p.page_type as string] ?? "/p";
+          if (isConsolidatedDuplicate(`${prefix}/${p.slug}`)) continue;
           for (const lang of LOCALES) {
             urls.push(`  <url>\n    <loc>${BASE_URL}/${lang}${prefix}/${p.slug}</loc>\n    <lastmod>${p.updated_at?.slice(0, 10)}</lastmod>\n  </url>`);
           }

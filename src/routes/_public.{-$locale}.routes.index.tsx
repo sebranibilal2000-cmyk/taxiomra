@@ -5,6 +5,7 @@ import { ArrowRight, Route as RouteIcon } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { absoluteUrl, brandTitle } from "@/lib/site-info";
 import { breadcrumbJsonLd } from "@/lib/seo";
+import { isConsolidatedDuplicate } from "@/lib/canonical-redirects";
 
 const opts = () =>
   queryOptions({
@@ -76,7 +77,7 @@ function RoutesIndex() {
         </p>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {routes.map((r: any, i: number) => (
+          {routes.filter((r: any) => !isConsolidatedDuplicate(`/routes/${r.slug}`)).map((r: any, i: number) => (
             <Link key={r.id} to="/{-$locale}/routes/$slug" params={(prev: Record<string, string>) => ({ ...prev, slug: r.slug })} className="group">
               <article className="hover-lift h-full flex flex-col rounded-2xl border border-border bg-card p-7">
                 <div className="flex items-center justify-between mb-6">
