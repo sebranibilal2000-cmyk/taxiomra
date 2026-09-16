@@ -72,6 +72,9 @@ function applySecurityHeaders(response: Response): Response {
 // and produce a redirect loop. Serve a clean 404 instead.
 function isMalformedTemplateUrl(request: Request): boolean {
   const { pathname, search } = new URL(request.url);
+  // Internal RPC / API calls legitimately carry JSON payloads (encoded braces)
+  // in the query string — never treat those as malformed crawler URLs.
+  if (/^\/(_serverFn|api|_build|@|node_modules)(\/|$)/.test(pathname)) return false;
   const raw = pathname + search;
   return raw.includes("{") || raw.includes("}") || /%7[bd]/i.test(raw);
 }
