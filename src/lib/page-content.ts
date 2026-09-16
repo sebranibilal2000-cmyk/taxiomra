@@ -63,7 +63,7 @@ function endpoints(title: string, locale: Locale): { from: string; to: string } 
 export function buildPageSections(page: DetailPageData, locale: Locale): PageSections {
   const ar = locale === "ar";
   const title = ar ? page.title_ar : page.title_en;
-  const subtitle = (ar ? page.subtitle_ar : page.subtitle_en) ?? "";
+  
   const en = page.subtitle_en ?? "";
 
   const distance = num(/(\d+)\s*km/i, en);
