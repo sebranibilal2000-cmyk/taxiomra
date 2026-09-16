@@ -124,7 +124,24 @@ export default {
       }
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
+
+      // A stale/unknown server-function id (typically after a deploy or HMR
+      // reload) makes the router throw "forgot to return a response". Answer
+      // the RPC with a clean 404 instead of an HTML 500 that blanks the page.
+      if (
+        response.status >= 500 &&
+        new URL(request.url).pathname.startsWith("/_serverFn")
+      ) {
+        return applySecurityHeaders(
+          new Response(JSON.stringify({ error: "Server function not found" }), {
+            status: 404,
+            headers: { "content-type": "application/json" },
+          }),
+        );
+      }
+
       return applySecurityHeaders(await normalizeCatastrophicSsrResponse(response));
+
 
     } catch (error) {
       console.error(error);
