@@ -126,9 +126,10 @@ export function buildPageSections(page: DetailPageData, locale: Locale): PageSec
         : `We operate around the clock, seven days a week, and bookings can be rescheduled or cancelled in advance without hassle.`,
     );
   }
-  if (subtitle) intro.push(subtitle);
+  // Subtitle is already rendered in the page hero, and the CMS body is
+  // rendered by the page itself — don't repeat either inside the overview.
   const body = ar ? page.body_ar : page.body_en;
-  if (body && body.trim().length > 0) intro.push(body.trim());
+  void body;
 
   // ---------- Facts ----------
   const facts: FactRow[] = [];
