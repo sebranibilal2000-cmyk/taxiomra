@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { CityLongContent } from "@/components/public/CityLongContent";
 import { Card, CardContent } from "@/components/ui/card";
 import { useI18n } from "@/lib/i18n";
 import { Shield, Award, Users, Clock } from "lucide-react";
@@ -75,6 +76,7 @@ function About() {
           </CardContent></Card>
         ))}
       </div>
+      <CityLongContent page="about" />
     </div>
   );
 }

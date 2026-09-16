@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { CityLongContent } from "@/components/public/CityLongContent";
 import { Button } from "@/components/ui/button";
 import { Plane, MessageCircle, Phone, Clock, Luggage, ShieldCheck } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
@@ -55,6 +56,7 @@ function AirportTransfers() {
   ];
   return (
     <>
+      <CityLongContent page="airport-transfers" />
       <section className="container-tight py-16 md:py-24">
         <div className="max-w-3xl space-y-5">
           <span className="eyebrow"><span className="h-px w-8 bg-gold" /><Plane className="h-3 w-3" />{ar ? "نقل المطار" : "Airport Transfers"}</span>
