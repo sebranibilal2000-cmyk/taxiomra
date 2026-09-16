@@ -3,6 +3,7 @@ import type {} from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import { SITE } from "@/lib/site-info";
 import { isIndexable } from "@/lib/content-quality";
+import { isConsolidatedDuplicate } from "@/lib/canonical-redirects";
 
 const BASE_URL = SITE.url; // canonical origin from configuration (VITE_SITE_URL)
 const LOCALES = ["ar", "en"] as const;
@@ -123,6 +124,8 @@ export const Route = createFileRoute("/sitemap.xml")({
 
         const urls: string[] = [];
         for (const entry of entries) {
+          // Consolidated duplicates 301 elsewhere — never advertise them.
+          if (isConsolidatedDuplicate(entry.path)) continue;
           for (const locale of LOCALES) {
             urls.push(buildUrl(entry, locale));
           }
