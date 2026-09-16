@@ -5,6 +5,7 @@ import { ArrowRight, MapPin } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { SITE, absoluteUrl, brandTitle } from "@/lib/site-info";
 import { breadcrumbJsonLd } from "@/lib/seo";
+import { isConsolidatedDuplicate } from "@/lib/canonical-redirects";
 
 const opts = () =>
   queryOptions({
@@ -79,7 +80,7 @@ function CitiesIndex() {
         </p>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {cities.map((c: any, i: number) => (
+          {cities.filter((c: any) => !isConsolidatedDuplicate(`/cities/${c.slug}`)).map((c: any, i: number) => (
             <Link key={c.id} to="/{-$locale}/cities/$slug" params={(prev: Record<string, string>) => ({ ...prev, slug: c.slug })} className="group">
               <article className="hover-lift h-full flex flex-col rounded-2xl border border-border bg-card p-7">
                 <div className="flex items-center justify-between mb-6">
