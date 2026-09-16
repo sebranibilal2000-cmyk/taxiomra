@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { CityLongContent } from "@/components/public/CityLongContent";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Phone, CheckCircle2, MapPin, Clock, Shield, Plane, ArrowRight } from "lucide-react";
 import { useI18n, withLocale } from "@/lib/i18n";
@@ -129,6 +130,7 @@ function MakkahToMadinahTaxiPage() {
         </div>
       </div>
 
+      <CityLongContent page="makkah-to-madinah-taxi" />
       <section className="mb-20">
         <h2 className="font-display text-3xl mb-8 border-b pb-4">{ar ? "الأسئلة الشائعة حول مسار مكة - المدينة" : "Makkah to Madinah FAQs"}</h2>
         <div className="grid gap-4 md:grid-cols-2">
