@@ -1,4 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
+import { CityLongContent } from "@/components/public/CityLongContent";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { getVehicleCategoryByCode, listVehicleCategories } from "@/lib/public.functions";
 import { breadcrumbJsonLd, vehicleJsonLd } from "@/lib/seo";
@@ -180,6 +181,7 @@ function VehicleDetail() {
         </div>
       </section>
 
+      <CityLongContent page={`fleet-${data.row.code}`} />
       {data.related.length > 0 && (
         <section className="container mx-auto px-4 pb-20 max-w-6xl">
           <h2 className="text-2xl font-bold mb-6">
