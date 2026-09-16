@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { CityLongContent } from "@/components/public/CityLongContent";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Phone, CheckCircle2, Car, MapPin, Clock, Shield, Star, Info, Plane, ArrowRight, Luggage } from "lucide-react";
 import { useI18n, withLocale } from "@/lib/i18n";
@@ -184,6 +185,8 @@ function JeddahAirportTaxiPage() {
           </ul>
         </div>
       </div>
+
+      <CityLongContent page="jeddah-airport-taxi" />
 
       <section className="mb-20">
         <h2 className="font-display text-3xl mb-8 border-b pb-4">{ar ? "الأسئلة الشائعة عن تاكسي المطار" : "King Abdulaziz Airport Taxi FAQ"}</h2>
