@@ -6,6 +6,7 @@ import { Phone, MessageCircle, ChevronRight } from "lucide-react";
 import { useI18n, withLocale, type Locale } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { buildPageSections } from "@/lib/page-content";
+import { sanitizeHtml } from "@/lib/html";
 
 export type CmsPageRow = {
   slug: string;
@@ -114,11 +115,18 @@ export function ContentDetail(props: {
 
       {/* Body + generated supporting content */}
       <section className="container mx-auto px-4 py-12 max-w-4xl space-y-12">
-        {body && (
-          <div className="leading-relaxed text-muted-foreground whitespace-pre-line">
-            {body}
-          </div>
-        )}
+        {body &&
+          (/<[a-z][\s\S]*>/i.test(body) ? (
+            <div
+              className="article-content max-w-none"
+              dir={ar ? "rtl" : "ltr"}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(body) }}
+            />
+          ) : (
+            <div className="leading-relaxed text-muted-foreground whitespace-pre-line">
+              {body}
+            </div>
+          ))}
         <div className="space-y-4">
           <h2 className="text-2xl font-bold">{sections.headings.overview}</h2>
           {sections.intro.map((para, i) => (
