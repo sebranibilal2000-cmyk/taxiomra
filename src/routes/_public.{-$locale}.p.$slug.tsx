@@ -7,6 +7,7 @@ import { useI18n } from "@/lib/i18n";
 import { SITE, waLink, telLink } from "@/lib/site-info";
 import { buildCmsHead, breadcrumbJsonLd } from "@/lib/seo";
 import { buildPageSections, faqJsonLdFor } from "@/lib/page-content";
+import { sanitizeHtml } from "@/lib/html";
 
 const opts = (slug: string) => queryOptions({
   queryKey: ["public", "page", slug],
@@ -57,9 +58,17 @@ function PageDetail() {
         </div>
       </section>
       <section className="container mx-auto px-4 py-12 max-w-4xl">
-        <div className="prose prose-neutral dark:prose-invert max-w-none whitespace-pre-line leading-relaxed text-foreground">
-          {ar ? p.body_ar : p.body_en}
-        </div>
+        {/<[a-z][\s\S]*>/i.test((ar ? p.body_ar : p.body_en) ?? "") ? (
+          <div
+            className="article-content max-w-none"
+            dir={ar ? "rtl" : "ltr"}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml((ar ? p.body_ar : p.body_en) ?? "") }}
+          />
+        ) : (
+          <div className="prose prose-neutral dark:prose-invert max-w-none whitespace-pre-line leading-relaxed text-foreground">
+            {ar ? p.body_ar : p.body_en}
+          </div>
+        )}
         <div className="mt-12 space-y-12">
           <div className="space-y-4">
             <h2 className="text-2xl font-bold">{sections.headings.overview}</h2>
