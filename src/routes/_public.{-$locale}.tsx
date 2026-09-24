@@ -62,9 +62,13 @@ export const Route = createFileRoute("/_public/{-$locale}")({
     if (params.locale !== undefined && !isLocale(params.locale)) {
       const slug = location.pathname.replace(/^\//, "").replace(/\/+$/, "");
       const single = slug && !slug.includes("/");
-      const target = single
+      const guess = single
         ? `/${slug.includes("-to-") ? "routes" : "services"}/${slug}`
-        : location.pathname;
+        : location.pathname.replace(/\/+$/, "");
+      // Resolve through the consolidation maps now so the visitor lands on the
+      // final page in ONE hop (no 301 → 301 chains).
+      const target =
+        LEGACY_REDIRECTS[guess] ?? CANONICAL_REDIRECTS[guess] ?? guess;
       throw redirect({
         href: withLocale(DEFAULT_LOCALE, target),
         replace: true,

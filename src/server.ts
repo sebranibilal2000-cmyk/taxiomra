@@ -92,7 +92,9 @@ function canonicalHostRedirect(request: Request): Response | null {
   const proto = (request.headers.get("x-forwarded-proto") ?? url.protocol.replace(":", "")).toLowerCase();
   if (host === CANONICAL_HOST && proto === "https") return null;
 
-  const target = `https://${CANONICAL_HOST}${url.pathname}${url.search}`;
+  // Root goes straight to the default-locale homepage (avoid a 2-hop chain).
+  const path = url.pathname === "/" ? "/ar" : url.pathname;
+  const target = `https://${CANONICAL_HOST}${path}${url.search}`;
   return new Response(null, { status: 301, headers: { Location: target } });
 }
 
