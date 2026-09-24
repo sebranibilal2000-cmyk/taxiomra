@@ -50,6 +50,7 @@ export function ContentDetail(props: {
   const subtitle = ar ? p.subtitle_ar : p.subtitle_en;
   const heroImg = p.hero_image_url || p.og_image_url;
   const sections = buildPageSections(p as any, locale);
+  const body = (ar ? p.body_ar : p.body_en)?.trim() || null;
 
   const bookText = `${title} — ${ar ? "أرغب بالحجز" : "I'd like to book"}`;
 
@@ -113,6 +114,11 @@ export function ContentDetail(props: {
 
       {/* Body + generated supporting content */}
       <section className="container mx-auto px-4 py-12 max-w-4xl space-y-12">
+        {body && (
+          <div className="leading-relaxed text-muted-foreground whitespace-pre-line">
+            {body}
+          </div>
+        )}
         <div className="space-y-4">
           <h2 className="text-2xl font-bold">{sections.headings.overview}</h2>
           {sections.intro.map((para, i) => (
