@@ -10,6 +10,10 @@
  * Paths are locale-less; the redirect keeps the visitor's locale prefix.
  */
 export const CANONICAL_REDIRECTS: Record<string, string> = {
+  // ---- Generic /p/ copies of typed CMS pages ----
+  "/p/luxury-transfer": "/services/luxury-transfer",
+  "/p/king-khalid-ruh": "/airports/airport-king-khalid-international",
+
   // ---- Cities: one page per city, the /taxi-<city> landing page wins ----
   "/cities/city-jeddah": "/taxi-jeddah",
   "/cities/jeddah": "/taxi-jeddah",
