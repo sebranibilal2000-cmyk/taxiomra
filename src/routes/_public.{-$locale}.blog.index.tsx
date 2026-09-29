@@ -4,6 +4,7 @@ import { listBlogPosts } from "@/lib/public.functions";
 import { useI18n } from "@/lib/i18n";
 import { ArrowRight, Clock } from "lucide-react";
 import { SITE } from "@/lib/site-info";
+import { blogCoverImage } from "@/lib/blog-images";
 
 const opts = () => queryOptions({ queryKey: ["public", "blog"], queryFn: () => listBlogPosts() });
 
@@ -56,11 +57,7 @@ function Blog() {
         <Link to="/{-$locale}/blog/$slug" params={(prev: Record<string, string>) => ({ ...prev, slug: featured.slug })} className="group block mb-16">
           <article className="grid gap-8 lg:grid-cols-12 items-center">
             <div className="lg:col-span-7 aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
-              {featured.cover_url ? (
-                <img src={featured.cover_url} alt={ar ? featured.title_ar : featured.title_en} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              ) : (
-                <div className="h-full w-full bg-linear-to-br from-primary to-primary/60" />
-              )}
+              <img src={blogCoverImage(featured)} alt={ar ? featured.title_ar : featured.title_en} loading="eager" decoding="async" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
             <div className="lg:col-span-5 space-y-4">
               <div className="text-xs uppercase tracking-[0.22em] text-gold">{ar ? "المقال المميز" : "Featured"}</div>
@@ -83,11 +80,7 @@ function Blog() {
             <Link key={p.id} to="/{-$locale}/blog/$slug" params={(prev: Record<string, string>) => ({ ...prev, slug: p.slug })} className="group">
               <article className="space-y-4">
                 <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-muted">
-                  {p.cover_url ? (
-                    <img src={p.cover_url} alt={ar ? p.title_ar : p.title_en} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  ) : (
-                    <div className="h-full w-full bg-linear-to-br from-primary/40 to-muted" />
-                  )}
+                  <img src={blogCoverImage(p)} alt={ar ? p.title_ar : p.title_en} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 </div>
                 <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                   <span className="text-gold">{ar ? "دليل" : "Guide"}</span>
