@@ -100,7 +100,16 @@ export const Route = createFileRoute("/_public/{-$locale}")({
     // 3) Missing prefix → always redirect to Arabic. Do not infer from
     //    browser language, Accept-Language, cookies, localStorage, or cache.
     if (!params.locale) {
-      const target = withLocale(DEFAULT_LOCALE, location.pathname);
+      let path = location.pathname;
+      const pm = path.replace(/\/+$/, "").match(/^\/p\/([^/]+)$/);
+      if (pm) {
+        try {
+          const page: any = await getCmsPage({ data: { slug: pm[1] } });
+          const pre = ({ city: "/cities", airport: "/airports", service: "/services", route_page: "/routes" } as Record<string, string>)[page?.page_type];
+          if (pre) path = CANONICAL_REDIRECTS[`${pre}/${pm[1]}`] ?? `${pre}/${pm[1]}`;
+        } catch { /* keep /p/ path */ }
+      }
+      const target = withLocale(DEFAULT_LOCALE, path);
       // Use `href` (not `to`) so literal braces/odd characters in the path are
       // not parsed as route params — that produced a self-redirect loop.
       throw redirect({ href: target, replace: true, statusCode: 301 });
