@@ -1,4 +1,5 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import { CANONICAL_REDIRECTS } from "@/lib/canonical-redirects";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { getCmsPage } from "@/lib/public.functions";
 import { Button } from "@/components/ui/button";
@@ -18,8 +19,23 @@ const opts = (slug: string) => queryOptions({
   },
 });
 
+// Typed CMS pages (city/airport/service/route) have their own section URL;
+// the /p/ copy is a duplicate, so 301 it to the final canonical page.
+const TYPE_PREFIX: Record<string, string> = {
+  city: "/cities", airport: "/airports", service: "/services", route_page: "/routes",
+};
+
 export const Route = createFileRoute("/_public/{-$locale}/p/$slug")({
-  loader: ({ context, params }) => context.queryClient.ensureQueryData(opts(params.slug)),
+  loader: async ({ context, params }) => {
+    const p: any = await context.queryClient.ensureQueryData(opts(params.slug));
+    const prefix = TYPE_PREFIX[p?.page_type];
+    if (prefix) {
+      const typed = `${prefix}/${params.slug}`;
+      const final = CANONICAL_REDIRECTS[typed] ?? typed;
+      throw redirect({ href: `/${params.locale ?? "ar"}${final}`, statusCode: 301 });
+    }
+    return p;
+  },
   head: ({ loaderData, params }) => {
     if (!loaderData) return { meta: [{ title: "Not found" }, { name: "robots", content: "noindex" }] };
     const head = buildCmsHead(loaderData as any);
