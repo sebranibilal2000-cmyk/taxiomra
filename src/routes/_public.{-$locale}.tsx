@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, notFound, Outlet, redirect } from "@tanstack/react-router";
 import { PublicHeader } from "@/components/PublicHeader";
 import { PublicFooter } from "@/components/PublicFooter";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
@@ -35,6 +35,14 @@ export const Route = createFileRoute("/_public/{-$locale}")({
     }
 
     const localeLess = location.pathname.replace(/^\/(ar|en)(?=\/|$)/, "") || "/";
+
+    // Template-placeholder URLs (e.g. a SearchAction urlTemplate crawled with
+    // literal "{search_term_string}") must die here with a 404 — redirecting
+    // them only produced a 301 → 404 chain that Search Console flags as a
+    // redirect error.
+    if (/[{]}|search_term_string/i.test(location.pathname)) {
+      throw notFound();
+    }
 
     // 0) Static legacy + canonical-consolidation redirects (locale preserved).
     const cleanPath = localeLess.replace(/\/+$/, "") || "/";
