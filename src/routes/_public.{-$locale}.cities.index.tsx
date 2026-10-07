@@ -107,6 +107,32 @@ function CitiesIndex() {
           ))}
         </div>
       )}
+
+      <div className="max-w-3xl mt-20 space-y-5 text-muted-foreground leading-relaxed">
+        {ar ? (
+          <>
+            <h2 className="font-display text-3xl text-foreground">دليل التنقل بالتاكسي بين مدن المملكة</h2>
+            <p>نقدّم خدمة تاكسي خاص بسائقين محترفين في أبرز مدن المملكة العربية السعودية، مع تركيز خاص على رحلات المعتمرين والزوار بين جدة ومكة المكرمة والمدينة المنورة. يمكنك الحجز مسبقًا بسعر ثابت معلن قبل الرحلة، دون عدّاد ودون رسوم مفاجئة، مع استقبال من المطار أو الفندق أو أي عنوان تحدده.</p>
+            <h3 className="font-display text-xl text-foreground">المدن المقدسة: مكة المكرمة والمدينة المنورة</h3>
+            <p>أكثر الرحلات طلبًا هي من مطار الملك عبدالعزيز في جدة إلى فنادق الحرم بمكة، ومن مكة إلى المدينة المنورة عبر طريق الهجرة السريع. تستغرق رحلة جدة إلى مكة نحو ساعة، ورحلة مكة إلى المدينة نحو أربع ساعات ونصف، ويتوقف السائق عند الحاجة للصلاة أو الاستراحة، مع سيارات واسعة تتسع للعائلات والأمتعة.</p>
+            <h3 className="font-display text-xl text-foreground">جدة والطائف والمدن الساحلية</h3>
+            <p>في جدة نخدم المطار والكورنيش والفنادق والأحياء التجارية، ونوفّر رحلات إلى الطائف عبر طريق الهدا الجبلي، وإلى ينبع ورابغ على الساحل الغربي. هذه الرحلات مناسبة للعائلات والسياحة الصيفية ورحلات العمل.</p>
+            <h3 className="font-display text-xl text-foreground">الرياض والمنطقة الشرقية والجنوب</h3>
+            <p>نغطي أيضًا الرياض والدمام والخبر والقصيم وأبها وخميس مشيط وجازان ونجران والعلا وتبوك، بما في ذلك التوصيل من المطارات وبين المدن. اختر مدينتك من القائمة أعلاه لمعرفة المسارات المتاحة والأسعار التقريبية ومدة الرحلة، ثم احجز عبر النموذج أو واتساب.</p>
+          </>
+        ) : (
+          <>
+            <h2 className="font-display text-3xl text-foreground">A guide to taxi travel between Saudi cities</h2>
+            <p>We run private taxi transfers with professional drivers across Saudi Arabia's main cities, with a strong focus on Umrah pilgrims and visitors travelling between Jeddah, Makkah and Madinah. Every ride is booked in advance at a fixed price confirmed before you travel — no meter and no surprise fees — with pickup from the airport, your hotel or any address you choose.</p>
+            <h3 className="font-display text-xl text-foreground">The holy cities: Makkah and Madinah</h3>
+            <p>The most requested trips are from King Abdulaziz International Airport in Jeddah to hotels near the Haram in Makkah, and from Makkah to Madinah on the Hijrah highway. Jeddah to Makkah takes about an hour; Makkah to Madinah takes around four and a half hours. Drivers stop for prayer or rest on request, and spacious vehicles fit families and luggage.</p>
+            <h3 className="font-display text-xl text-foreground">Jeddah, Taif and the Red Sea coast</h3>
+            <p>In Jeddah we cover the airport, the Corniche, hotels and business districts, with trips up the Al Hada mountain road to Taif and along the coast to Yanbu and Rabigh — ideal for families, summer trips and business travel.</p>
+            <h3 className="font-display text-xl text-foreground">Riyadh, the Eastern Province and the south</h3>
+            <p>We also serve Riyadh, Dammam, Khobar, Qassim, Abha, Khamis Mushait, Jazan, Najran, AlUla and Tabuk, including airport pickups and intercity rides. Pick your city above to see available routes, typical fares and journey times, then book online or on WhatsApp.</p>
+          </>
+        )}
+      </div>
     </section>
   );
 }
