@@ -83,6 +83,22 @@ function isMalformedTemplateUrl(request: Request): boolean {
 // indexable URL instead of competing versions in search results.
 const CANONICAL_HOST = "omrataxi-sa.online";
 
+const EDGE_LEGACY_REDIRECTS: Record<string, string> = {
+  "/jeddah-airport-to-makkah-taxi": "/jeddah-to-makkah-taxi",
+  "/makkah-to-jeddah-taxi": "/routes/makkah-to-jeddah",
+  "/jeddah-to-madinah-taxi": "/routes/jeddah-to-madinah",
+  "/madinah-to-jeddah-taxi": "/routes/madinah-to-jeddah",
+  "/services/jeddah-airport-to-makkah": "/jeddah-to-makkah-taxi",
+  "/services/makkah-to-madinah": "/makkah-to-madinah-taxi",
+  "/services/jeddah-to-makkah": "/jeddah-to-makkah-taxi",
+  "/city/makkah": "/taxi-makkah",
+  "/city/jeddah": "/taxi-jeddah",
+  "/city/madinah": "/taxi-madinah",
+  "/city/taif": "/taxi-taif",
+  "/city/riyadh": "/taxi-riyadh",
+  "/city/dammam": "/taxi-dammam",
+};
+
 function canonicalHostRedirect(request: Request): Response | null {
   const url = new URL(request.url);
   const host = (request.headers.get("host") ?? url.host).toLowerCase();
@@ -114,6 +130,19 @@ export default {
 
       const hostRedirect = canonicalHostRedirect(request);
       if (hostRedirect) return applySecurityHeaders(hostRedirect);
+
+      // Old crawled URLs with no matching page: the router never runs the
+      // layout redirect for unmatched paths, so map them here in one 301 hop.
+      {
+        const u = new URL(request.url);
+        const m = u.pathname.replace(/\/+$/, "").match(/^(?:\/(ar|en))?(\/.+)$/);
+        const target = m ? EDGE_LEGACY_REDIRECTS[m[2]] : undefined;
+        if (target) {
+          return applySecurityHeaders(
+            new Response(null, { status: 301, headers: { Location: `/${m![1] ?? "ar"}${target}` } }),
+          );
+        }
+      }
 
 
       if (isMalformedTemplateUrl(request)) {
