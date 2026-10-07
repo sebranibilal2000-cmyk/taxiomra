@@ -14,6 +14,7 @@ import {
 } from "@/lib/i18n";
 import { resolveRedirect } from "@/lib/seo-tools.functions";
 import { CANONICAL_REDIRECTS } from "@/lib/canonical-redirects";
+import { getCmsPage } from "@/lib/public.functions";
 
 // Legacy / crawled URLs that never existed as pages → permanent redirect to the
 // closest live page, so Search Console stops reporting them as 404s.
@@ -70,9 +71,19 @@ export const Route = createFileRoute("/_public/{-$locale}")({
     if (params.locale !== undefined && !isLocale(params.locale)) {
       const slug = location.pathname.replace(/^\//, "").replace(/\/+$/, "");
       const single = slug && !slug.includes("/");
-      const guess = single
+      let guess = single
         ? `/${slug.includes("-to-") ? "routes" : "services"}/${slug}`
         : location.pathname.replace(/\/+$/, "");
+      // Unprefixed /p/<slug>: resolve the typed section URL now so the
+      // visitor reaches the final page in one hop instead of /ar/p/... → typed.
+      const pm = guess.match(/^\/p\/([^/]+)$/);
+      if (pm) {
+        try {
+          const page: any = await getCmsPage({ data: { slug: pm[1] } });
+          const pre = ({ city: "/cities", airport: "/airports", service: "/services", route_page: "/routes" } as Record<string, string>)[page?.page_type];
+          if (pre) guess = `${pre}/${pm[1]}`;
+        } catch { /* fall back to /p/ */ }
+      }
       // Resolve through the consolidation maps now so the visitor lands on the
       // final page in ONE hop (no 301 → 301 chains).
       const target =
