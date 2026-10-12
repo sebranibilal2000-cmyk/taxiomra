@@ -2,14 +2,15 @@
 
 User-agent: *
 Allow: /
+# Page data requests must stay crawlable: Google needs them to render pages.
+Allow: /_serverFn/
+Allow: /api/public/media/
 Disallow: /admin
 Disallow: /admin/
 Disallow: /auth
 Disallow: /reset-password
 Disallow: /_authenticated/
 Disallow: /api/
-Disallow: /*%7B
-Disallow: /*{
 Disallow: /_public
 
 
