@@ -213,9 +213,13 @@ export function buildCmsHead(p: {
   robots?: string | null; canonical_url?: string | null;
   keywords?: string[] | null; schema_type?: string | null;
   custom_schema?: unknown;
-}) {
-  const title = p.meta_title || p.title_en;
-  const desc = p.meta_description || p.subtitle_en || "";
+}, locale: "ar" | "en" = "en") {
+  // The stored meta/og fields are English. Arabic pages build their title and
+  // description from the Arabic fields so they match the Arabic page body.
+  const ar = locale === "ar" && !!p.title_ar;
+  const title = ar ? `${p.title_ar} | تاكسي العمرة` : p.meta_title || p.title_en;
+  const desc = ar ? p.subtitle_ar || p.title_ar : p.meta_description || p.subtitle_en || "";
+  if (ar) { p = { ...p, og_title: null, og_description: null }; }
   // Canonical + og:url are emitted by the public layout (URL-aware). Only add
   // page-specific meta here to avoid duplicate canonical/og:url tags.
   const meta: Array<Record<string, string>> = [

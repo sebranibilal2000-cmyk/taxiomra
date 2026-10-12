@@ -38,7 +38,7 @@ export const Route = createFileRoute("/_public/{-$locale}/p/$slug")({
   },
   head: ({ loaderData, params }) => {
     if (!loaderData) return { meta: [{ title: "Not found" }, { name: "robots", content: "noindex" }] };
-    const head = buildCmsHead(loaderData as any);
+    const head = buildCmsHead(loaderData as any, (params.locale ?? "ar") === "en" ? "en" : "ar");
     head.scripts = [
       ...(head.scripts ?? []),
       { type: "application/ld+json", children: JSON.stringify(breadcrumbJsonLd([
