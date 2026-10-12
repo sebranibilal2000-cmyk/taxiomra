@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { createClient } from "@supabase/supabase-js";
 import { SITE } from "@/lib/site-info";
 import { isConsolidatedDuplicate } from "@/lib/canonical-redirects";
+import { isIndexedCms } from "@/lib/index-policy";
 
 const BASE_URL = SITE.url;
 const LOCALES = ["ar", "en"] as const;
@@ -49,6 +50,7 @@ export const Route = createFileRoute("/sitemap-pages.xml")({
         }
 
         for (const p of pages ?? []) {
+          if (!isIndexedCms(p.slug)) continue;
           const prefix = typeToPrefix[p.page_type as string] ?? "/p";
           if (isConsolidatedDuplicate(`${prefix}/${p.slug}`)) continue;
           for (const lang of LOCALES) {

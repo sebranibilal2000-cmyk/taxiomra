@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { isIndexedBlog } from "@/lib/index-policy";
 import { createClient } from "@supabase/supabase-js";
 import { SITE } from "@/lib/site-info";
 import { isIndexable } from "@/lib/content-quality";
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/sitemap-posts.xml")({
 
         const urls: string[] = [];
         for (const p of posts ?? []) {
+          if (!isIndexedBlog((p as any).slug)) continue;
           for (const lang of LOCALES) {
             const body = lang === "ar" ? (p as any).content_ar : (p as any).content_en;
             if (!isIndexable(body)) continue; // thin posts stay out of the sitemap

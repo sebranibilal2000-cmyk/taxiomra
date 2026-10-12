@@ -4,6 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 import { SITE } from "@/lib/site-info";
 import { isIndexable } from "@/lib/content-quality";
 import { isConsolidatedDuplicate } from "@/lib/canonical-redirects";
+import { isIndexedCms, isIndexedBlog } from "@/lib/index-policy";
 
 const BASE_URL = SITE.url; // canonical origin from configuration (VITE_SITE_URL)
 const LOCALES = ["ar", "en"] as const;
@@ -77,6 +78,7 @@ export const Route = createFileRoute("/sitemap.xml")({
             route_page: "/routes",
           };
           for (const p of pages ?? []) {
+            if (!isIndexedCms(p.slug)) continue;
             const prefix = typeToPrefix[(p as any).page_type] ?? "/p";
             entries.push({
               path: `${prefix}/${p.slug}`,
@@ -88,6 +90,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           for (const p of posts ?? []) {
             // Skip thin posts entirely: if neither language has enough content,
             // the URL should not be advertised to search engines.
+            if (!isIndexedBlog(p.slug)) continue;
             if (!isIndexable((p as any).content_ar) && !isIndexable((p as any).content_en)) continue;
             entries.push({ path: `/blog/${p.slug}`, lastmod: p.updated_at?.slice(0, 10), changefreq: "monthly", priority: "0.6" });
           }

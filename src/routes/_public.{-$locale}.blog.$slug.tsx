@@ -5,6 +5,7 @@ import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/site-info";
 import { renderableContent } from "@/lib/html";
 import { isIndexable } from "@/lib/content-quality";
+import { isIndexedBlog } from "@/lib/index-policy";
 import { blogCoverImage } from "@/lib/blog-images";
 
 const opts = (slug: string) => queryOptions({
@@ -28,7 +29,7 @@ export const Route = createFileRoute("/_public/{-$locale}/blog/$slug")({
     const image = p.og_image_url || p.cover_url;
     // Thin drafts must not be submitted for indexing — Google flags them as
     // soft 404s and that damages crawling of the rest of the site.
-    const thin = !isIndexable(ar ? p.content_ar : p.content_en);
+    const thin = !isIndexable(ar ? p.content_ar : p.content_en) || !isIndexedBlog(p.slug);
     return {
       meta: [
         { title },

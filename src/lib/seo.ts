@@ -1,5 +1,6 @@
 // Central SEO helpers: JSON-LD builders + breadcrumb helpers used across public routes.
 import { SITE } from "./site-info";
+import { isIndexedCms } from "./index-policy";
 
 type Loc = { en: string; ar?: string; url: string };
 
@@ -225,7 +226,7 @@ export function buildCmsHead(p: {
   const meta: Array<Record<string, string>> = [
     { title },
     { name: "description", content: desc },
-    { name: "robots", content: p.robots || "index,follow" },
+    { name: "robots", content: isIndexedCms(p.slug) ? p.robots || "index,follow" : "noindex, follow" },
     { property: "og:title", content: p.og_title || title },
     { property: "og:description", content: p.og_description || desc },
     { property: "og:type", content: "website" },
