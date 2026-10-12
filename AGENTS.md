@@ -12,3 +12,4 @@
 - Blog articles without uploaded cover media use stable topic-based local fallback photography, so listing cards and article pages never render blank image areas.
 - The router uses the SSR query integration so server-loaded page data is reused in the browser; a failed client refetch must never replace rendered content (Google flagged that as Soft 404).
 - robots.txt must keep `/_serverFn/` crawlable; Google needs those requests to render pages.
+- Only allow-listed CMS pages and blog posts (src/lib/index-policy.ts) are indexable and in sitemaps; all others render noindex,follow — keeps Google judging a small set of strong pages.
