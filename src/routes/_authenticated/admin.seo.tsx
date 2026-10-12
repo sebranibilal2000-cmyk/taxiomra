@@ -8,8 +8,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, CheckCircle2, RefreshCw } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { SeoReleaseQueue } from "@/components/admin/SeoReleaseQueue";
 
 export const Route = createFileRoute("/_authenticated/admin/seo")({
+  head: () => ({ meta: [{ title: "جدول ومراجعة المحتوى | تاكسي العمرة" }, { name: "description", content: "إدارة مراجعة المحتوى وجدول إتاحته للبحث لدى تاكسي العمرة." }, { property: "og:title", content: "مراجعة المحتوى | تاكسي العمرة" }, { property: "og:description", content: "جدول المحتوى المعتمد ومراجعة السيو." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex, nofollow" }] }),
   component: SeoManager,
 });
 
@@ -46,6 +48,7 @@ function SeoManager() {
         </Button>
       </div>
 
+      <SeoReleaseQueue ar={ar} />
       {isLoading && <p className="text-sm text-muted-foreground">{ar ? "جارٍ تشغيل التدقيق…" : "Running audit…"}</p>}
 
       {c && (
