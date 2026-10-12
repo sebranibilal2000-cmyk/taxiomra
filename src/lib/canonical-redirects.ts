@@ -11,6 +11,7 @@
  */
 export const CANONICAL_REDIRECTS: Record<string, string> = {
   // ---- Generic /p/ copies of typed CMS pages ----
+  "/p/khalid-al-mutairi": "/about", // misfiled testimonial, thin page
   "/p/luxury-transfer": "/services/luxury-transfer",
   "/p/king-khalid-ruh": "/airports/airport-king-khalid-international",
 
