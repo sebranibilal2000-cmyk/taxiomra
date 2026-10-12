@@ -24,7 +24,7 @@ export const Route = createFileRoute("/_public/{-$locale}/services/$slug")({
   head: ({ loaderData, params }) => {
     if (!loaderData) return { meta: [{ title: "Not found" }, { name: "robots", content: "noindex" }] };
     const p: any = loaderData.page;
-    const head = buildCmsHead(p);
+    const head = buildCmsHead(p, (params.locale ?? "ar") === "en" ? "en" : "ar");
     const locale = params.locale ?? "ar";
     const url = `/${locale}/services/${p.slug}`;
     head.scripts = [
