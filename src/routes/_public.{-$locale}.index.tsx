@@ -73,8 +73,6 @@ export const Route = createFileRoute("/_public/{-$locale}/")({
         description: isEn
           ? "Umrah taxi and airport transfer service from Jeddah Airport to Makkah and across Saudi Arabia — easy bookings, fixed fares and modern cars available 24 hours."
           : "خدمة تاكسي العمرة والتوصيل من مطار جدة إلى مكة المكرمة وجميع مدن المملكة، مع حجوزات سهلة، أسعار ثابتة، وسيارات حديثة تعمل على مدار 24 ساعة.",
-        ratingValue: 5,
-        reviewCount: (loaderData?.testimonials ?? []).length,
       }),
       {
         "@context": "https://schema.org",
