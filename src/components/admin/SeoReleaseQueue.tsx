@@ -34,7 +34,7 @@ export function SeoReleaseQueue({ ar }: { ar: boolean }) {
   let date = new Date(q.data?.settings.next_release_at ?? Date.now());
   const ready = q.data?.items.filter(i => i.status === "ready").sort((a,b) => a.priority-b.priority || (a.approved_at ?? "").localeCompare(b.approved_at ?? "")) ?? [];
   for (const i of ready) { dates.set(i.id,date); date = nextReleaseDate(date); }
-  const fmt = (d: Date) => d.toLocaleString(ar ? "ar-SA" : "en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Riyadh" });
+  const fmt = (d: Date) => d.toLocaleString(ar ? "ar-SA-u-ca-gregory" : "en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Riyadh" });
   const filtered = q.data?.items.filter(i => (filter === "all" || i.status === filter) && `${i.title_ar} ${i.title_en} ${i.slug}`.toLowerCase().includes(search.toLowerCase())) ?? [];
   function open(i: Item) { setSelected(i);setChecks({ ...EMPTY_CHECKS, ...(i.checks as Partial<ReviewChecks>) });setUrls(i.competitor_urls.join("\n"));setAdvantage(i.advantage);setNotes(i.notes);setPriority(i.priority); }
   async function submit(status: "ready" | "pending") {
