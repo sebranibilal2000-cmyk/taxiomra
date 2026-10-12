@@ -49,5 +49,5 @@ export const INDEXED_BLOG_SLUGS = new Set<string>([
   "bus-vs-taxi-madinah-makkah",
 ]);
 
-export const isIndexedCms = (slug: string) => INDEXED_CMS_SLUGS.has(slug);
-export const isIndexedBlog = (slug: string) => INDEXED_BLOG_SLUGS.has(slug);
+export const isIndexedCms = (slug: string, released = false) => INDEXED_CMS_SLUGS.has(slug) || released;
+export const isIndexedBlog = (slug: string, released = false) => INDEXED_BLOG_SLUGS.has(slug) || released;

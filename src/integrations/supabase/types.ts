@@ -258,6 +258,7 @@ export type Database = {
           published_at: string | null
           reading_time_min: number | null
           scheduled_at: string | null
+          seo_released: boolean
           slug: string
           status: Database["public"]["Enums"]["blog_status"]
           tags: string[] | null
@@ -293,6 +294,7 @@ export type Database = {
           published_at?: string | null
           reading_time_min?: number | null
           scheduled_at?: string | null
+          seo_released?: boolean
           slug: string
           status?: Database["public"]["Enums"]["blog_status"]
           tags?: string[] | null
@@ -328,6 +330,7 @@ export type Database = {
           published_at?: string | null
           reading_time_min?: number | null
           scheduled_at?: string | null
+          seo_released?: boolean
           slug?: string
           status?: Database["public"]["Enums"]["blog_status"]
           tags?: string[] | null
@@ -685,6 +688,7 @@ export type Database = {
           related_ids: string[]
           robots: string | null
           schema_type: string | null
+          seo_released: boolean
           slug: string
           sort_order: number
           status: Database["public"]["Enums"]["content_status"]
@@ -721,6 +725,7 @@ export type Database = {
           related_ids?: string[]
           robots?: string | null
           schema_type?: string | null
+          seo_released?: boolean
           slug: string
           sort_order?: number
           status?: Database["public"]["Enums"]["content_status"]
@@ -757,6 +762,7 @@ export type Database = {
           related_ids?: string[]
           robots?: string | null
           schema_type?: string | null
+          seo_released?: boolean
           slug?: string
           sort_order?: number
           status?: Database["public"]["Enums"]["content_status"]
@@ -2944,6 +2950,93 @@ export type Database = {
         }
         Relationships: []
       }
+      seo_release_queue: {
+        Row: {
+          advantage: string
+          approved_at: string | null
+          approved_by: string | null
+          approved_revision: string | null
+          checks: Json
+          competitor_urls: string[]
+          content_id: string
+          created_at: string
+          entity_type: string
+          id: string
+          notes: string
+          path: string
+          priority: number
+          released_at: string | null
+          slug: string
+          status: string
+          title_ar: string
+          title_en: string
+          updated_at: string
+        }
+        Insert: {
+          advantage?: string
+          approved_at?: string | null
+          approved_by?: string | null
+          approved_revision?: string | null
+          checks?: Json
+          competitor_urls?: string[]
+          content_id: string
+          created_at?: string
+          entity_type: string
+          id?: string
+          notes?: string
+          path: string
+          priority?: number
+          released_at?: string | null
+          slug: string
+          status?: string
+          title_ar: string
+          title_en: string
+          updated_at?: string
+        }
+        Update: {
+          advantage?: string
+          approved_at?: string | null
+          approved_by?: string | null
+          approved_revision?: string | null
+          checks?: Json
+          competitor_urls?: string[]
+          content_id?: string
+          created_at?: string
+          entity_type?: string
+          id?: string
+          notes?: string
+          path?: string
+          priority?: number
+          released_at?: string | null
+          slug?: string
+          status?: string
+          title_ar?: string
+          title_en?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      seo_release_settings: {
+        Row: {
+          id: boolean
+          last_released_at: string | null
+          next_release_at: string
+          paused: boolean
+        }
+        Insert: {
+          id?: boolean
+          last_released_at?: string | null
+          next_release_at?: string
+          paused?: boolean
+        }
+        Update: {
+          id?: boolean
+          last_released_at?: string | null
+          next_release_at?: string
+          paused?: boolean
+        }
+        Relationships: []
+      }
       settings: {
         Row: {
           description: string | null
@@ -3852,6 +3945,7 @@ export type Database = {
       }
       is_finance: { Args: { _user_id: string }; Returns: boolean }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      process_seo_release: { Args: never; Returns: string }
       recompute_customer_stats: {
         Args: { _customer_id: string }
         Returns: undefined
@@ -3859,6 +3953,10 @@ export type Database = {
       recompute_driver_stats: {
         Args: { _driver_id: string }
         Returns: undefined
+      }
+      seo_content_revision: {
+        Args: { _id: string; _type: string }
+        Returns: string
       }
       user_permissions: {
         Args: { _user_id: string }

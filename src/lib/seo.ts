@@ -214,6 +214,7 @@ export function buildCmsHead(p: {
   robots?: string | null; canonical_url?: string | null;
   keywords?: string[] | null; schema_type?: string | null;
   custom_schema?: unknown;
+  seo_released?: boolean;
 }, locale: "ar" | "en" = "en") {
   // The stored meta/og fields are English. Arabic pages build their title and
   // description from the Arabic fields so they match the Arabic page body.
@@ -226,7 +227,7 @@ export function buildCmsHead(p: {
   const meta: Array<Record<string, string>> = [
     { title },
     { name: "description", content: desc },
-    { name: "robots", content: isIndexedCms(p.slug) ? p.robots || "index,follow" : "noindex, follow" },
+    { name: "robots", content: isIndexedCms(p.slug, p.seo_released) ? p.robots || "index,follow" : "noindex, follow" },
     { property: "og:title", content: p.og_title || title },
     { property: "og:description", content: p.og_description || desc },
     { property: "og:type", content: "website" },

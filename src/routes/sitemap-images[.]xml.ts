@@ -3,6 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import { SITE } from "@/lib/site-info";
+import { isIndexedCms, isIndexedBlog } from "@/lib/index-policy";
+import { isConsolidatedDuplicate } from "@/lib/canonical-redirects";
 
 export const Route = createFileRoute("/sitemap-images.xml")({
   server: {
@@ -17,10 +19,10 @@ export const Route = createFileRoute("/sitemap-images.xml")({
         try {
           const [{ data: pages }, { data: posts }] = await Promise.all([
             sb.from("cms_pages")
-              .select("slug,page_type,title_en,og_image_url,featured_image_url,gallery")
+              .select("slug,page_type,title_en,og_image_url,featured_image_url,gallery,seo_released")
               .eq("published", true),
             sb.from("blog_posts")
-              .select("slug,title_en,og_image_url")
+              .select("slug,title_en,og_image_url,seo_released")
               .eq("published", true),
           ]);
           const prefixOf = (t: string) =>
@@ -36,6 +38,7 @@ export const Route = createFileRoute("/sitemap-images.xml")({
             arr.push({ url, caption });
           };
           for (const p of pages ?? []) {
+            if (!isIndexedCms(p.slug, p.seo_released) || isConsolidatedDuplicate(`/${prefixOf(p.page_type)}/${p.slug}`)) continue;
             const images: { url: string; caption?: string }[] = [];
             seen.clear();
             if ((p as any).featured_image_url) pushImg(images, (p as any).featured_image_url, p.title_en);
@@ -55,6 +58,7 @@ export const Route = createFileRoute("/sitemap-images.xml")({
             }
           }
           for (const p of posts ?? []) {
+            if (!isIndexedBlog(p.slug, p.seo_released)) continue;
             if ((p as any).og_image_url) {
               const imgs = [{ url: (p as any).og_image_url, caption: p.title_en }];
               entries.push({ loc: `/ar/blog/${p.slug}`, images: imgs });

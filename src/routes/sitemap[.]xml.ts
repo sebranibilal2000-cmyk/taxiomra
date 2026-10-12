@@ -67,8 +67,8 @@ export const Route = createFileRoute("/sitemap.xml")({
         }
         try {
           const [{ data: pages }, { data: posts }, { data: cats }] = await Promise.all([
-            sb.from("cms_pages").select("slug,page_type,updated_at").eq("published", true),
-            sb.from("blog_posts").select("slug,updated_at,content_ar,content_en").eq("published", true),
+            sb.from("cms_pages").select("slug,page_type,updated_at,seo_released").eq("published", true),
+            sb.from("blog_posts").select("slug,updated_at,content_ar,content_en,seo_released").eq("published", true),
             sb.from("vehicle_categories").select("code,created_at").eq("is_active", true),
           ]);
           const typeToPrefix: Record<string, string> = {
@@ -78,7 +78,7 @@ export const Route = createFileRoute("/sitemap.xml")({
             route_page: "/routes",
           };
           for (const p of pages ?? []) {
-            if (!isIndexedCms(p.slug)) continue;
+            if (!isIndexedCms(p.slug, p.seo_released)) continue;
             const prefix = typeToPrefix[(p as any).page_type] ?? "/p";
             entries.push({
               path: `${prefix}/${p.slug}`,
@@ -90,7 +90,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           for (const p of posts ?? []) {
             // Skip thin posts entirely: if neither language has enough content,
             // the URL should not be advertised to search engines.
-            if (!isIndexedBlog(p.slug)) continue;
+            if (!isIndexedBlog(p.slug, p.seo_released)) continue;
             if (!isIndexable((p as any).content_ar) && !isIndexable((p as any).content_en)) continue;
             entries.push({ path: `/blog/${p.slug}`, lastmod: p.updated_at?.slice(0, 10), changefreq: "monthly", priority: "0.6" });
           }

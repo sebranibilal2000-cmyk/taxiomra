@@ -29,7 +29,7 @@ export const Route = createFileRoute("/_public/{-$locale}/blog/$slug")({
     const image = p.og_image_url || p.cover_url;
     // Thin drafts must not be submitted for indexing — Google flags them as
     // soft 404s and that damages crawling of the rest of the site.
-    const thin = !isIndexable(ar ? p.content_ar : p.content_en) || !isIndexedBlog(p.slug);
+    const thin = !isIndexable(ar ? p.content_ar : p.content_en) || !isIndexedBlog(p.slug, p.seo_released);
     return {
       meta: [
         { title },
@@ -37,6 +37,7 @@ export const Route = createFileRoute("/_public/{-$locale}/blog/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "article" },
+        { name: "twitter:card", content: "summary_large_image" },
         ...(thin ? [{ name: "robots", content: "noindex, follow" }] : []),
         ...(image ? [{ property: "og:image", content: image }, { name: "twitter:image", content: image }] : []),
       ],

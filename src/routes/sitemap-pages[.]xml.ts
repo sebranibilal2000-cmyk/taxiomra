@@ -12,7 +12,7 @@ export const Route = createFileRoute("/sitemap-pages.xml")({
     handlers: {
       GET: async () => {
         const sb = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_PUBLISHABLE_KEY!);
-        const { data: pages } = await sb.from("cms_pages").select("slug,page_type,updated_at").eq("published", true);
+        const { data: pages } = await sb.from("cms_pages").select("slug,page_type,updated_at,seo_released").eq("published", true);
         
         const typeToPrefix: Record<string, string> = {
           service: "/services",
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/sitemap-pages.xml")({
         }
 
         for (const p of pages ?? []) {
-          if (!isIndexedCms(p.slug)) continue;
+          if (!isIndexedCms(p.slug, p.seo_released)) continue;
           const prefix = typeToPrefix[p.page_type as string] ?? "/p";
           if (isConsolidatedDuplicate(`${prefix}/${p.slug}`)) continue;
           for (const lang of LOCALES) {

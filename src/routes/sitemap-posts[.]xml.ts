@@ -12,11 +12,11 @@ export const Route = createFileRoute("/sitemap-posts.xml")({
     handlers: {
       GET: async () => {
         const sb = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_PUBLISHABLE_KEY!);
-        const { data: posts } = await sb.from("blog_posts").select("slug,updated_at,content_ar,content_en").eq("published", true);
+        const { data: posts } = await sb.from("blog_posts").select("slug,updated_at,content_ar,content_en,seo_released").eq("published", true);
 
         const urls: string[] = [];
         for (const p of posts ?? []) {
-          if (!isIndexedBlog((p as any).slug)) continue;
+          if (!isIndexedBlog(p.slug, p.seo_released)) continue;
           for (const lang of LOCALES) {
             const body = lang === "ar" ? (p as any).content_ar : (p as any).content_en;
             if (!isIndexable(body)) continue; // thin posts stay out of the sitemap
