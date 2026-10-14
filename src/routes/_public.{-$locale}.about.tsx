@@ -76,6 +76,16 @@ function About() {
           </CardContent></Card>
         ))}
       </div>
+      <div className="mt-16 grid gap-6 md:grid-cols-2">
+        <Card><CardContent className="pt-6">
+          <h2 className="text-xl font-bold mb-3">{ar ? "العنوان" : "Our Address"}</h2>
+          <p className="text-muted-foreground">{SITE.address[locale]}</p>
+        </CardContent></Card>
+        <Card><CardContent className="pt-6">
+          <h2 className="text-xl font-bold mb-3">{ar ? "الرقم الضريبي" : "VAT Registration"}</h2>
+          <p className="text-muted-foreground" dir="ltr">{SITE.vatNumber}</p>
+        </CardContent></Card>
+      </div>
       <CityLongContent page="about" />
     </div>
   );
