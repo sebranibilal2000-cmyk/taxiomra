@@ -90,7 +90,7 @@ export function PublicFooter() {
 
       <div className="border-t border-primary-foreground/10">
         <div className="container-tight py-6 flex flex-wrap items-center justify-between gap-3 text-xs text-primary-foreground/50">
-          <span>© {new Date().getFullYear()} {SITE.brand[locale]}. {ar ? "جميع الحقوق محفوظة." : "All rights reserved."}</span>
+          <span>© {new Date().getFullYear()} {SITE.brand[locale]}. {ar ? "جميع الحقوق محفوظة." : "All rights reserved."} {ar ? "الرقم الضريبي:" : "VAT No."} {SITE.vatNumber}</span>
           <div className="flex items-center gap-4 flex-wrap">
             <Link to={l("/privacy")} className="hover:text-gold transition">{ar ? "الخصوصية" : "Privacy"}</Link>
             <Link to={l("/terms")} className="hover:text-gold transition">{ar ? "الشروط" : "Terms"}</Link>
